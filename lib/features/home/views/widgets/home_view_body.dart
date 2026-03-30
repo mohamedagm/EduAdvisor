@@ -10,25 +10,23 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: SingleChildScrollView(
-            child: Column(
-              spacing: 12,
-              children: [
-                WelcomeCard(),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 12,
+            children: [
+              WelcomeCard(),
 
-                SectionHeader(),
+              SectionHeader(),
 
-                RecommendedCoursesBuilder(),
+              RecommendedCoursesBuilder(),
 
-                DegreeProgressIndicator(),
+              DegreeProgressIndicator(),
 
-                RegisterationAlert(),
-              ],
-            ),
+              RegisterationAlert(),
+            ],
           ),
         ),
       ),

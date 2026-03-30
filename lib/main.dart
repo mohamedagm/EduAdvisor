@@ -1,5 +1,5 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/features/home/views/home_view.dart';
+import 'package:edu_advisor/features/main/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeView(),
+      home: MainView(),
     );
   }
 }
