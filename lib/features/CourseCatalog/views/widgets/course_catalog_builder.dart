@@ -1,4 +1,5 @@
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_catalog_item.dart';
+import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_details_sheet.dart';
 import 'package:flutter/material.dart';
 
 class CourseCatalogBuilder extends StatelessWidget {
@@ -12,8 +13,24 @@ class CourseCatalogBuilder extends StatelessWidget {
         return const SizedBox(height: 12);
       },
       itemBuilder: (context, index) {
-        return CourseCatalogItem();
+        return GestureDetector(
+          onTap: () => _showCourseDetails(context),
+
+          child: CourseCatalogItem(),
+        );
       },
     );
   }
+}
+
+void _showCourseDetails(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.white,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+    ),
+    builder: (_) => const CourseDetailsSheet(),
+  );
 }
