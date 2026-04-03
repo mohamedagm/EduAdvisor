@@ -2,6 +2,7 @@ import 'package:edu_advisor/features/AIChat/message_model.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/ai_input_field.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/header_ai_chat.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/message_bubble.dart';
+import 'package:edu_advisor/features/AIChat/views/widgets/quick_actions.dart';
 import 'package:flutter/material.dart';
 
 class AIChatView extends StatefulWidget {
@@ -70,22 +71,44 @@ class _AIChatViewState extends State<AIChatView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            const Header(),
+            Column(
+              children: [
+                const Header(),
 
-            Expanded(
-              child: ListView.builder(
-                controller: scrollController,
-                padding: const EdgeInsets.all(12),
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  return MessageBubble(message: messages[index]);
-                },
-              ),
+                Expanded(
+                  child: ListView.builder(
+                    reverse: true,
+                    controller: scrollController,
+                    padding: const EdgeInsets.all(12),
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      return MessageBubble(
+                        message: messages[messages.length - 1 - index],
+                      );
+                    },
+                  ),
+                ),
+
+                AiInputField(controller: controller, onSend: sendMessage),
+              ],
             ),
-
-            AiInputField(controller: controller, onSend: sendMessage),
+            if (messages.length == 1)
+              Positioned(
+                top: 60,
+                right: 20,
+                left: 20,
+                child: SizedBox(
+                  height: 150,
+                  child: QuickActions(
+                    onActionTap: (action) {
+                      controller.text = action;
+                      sendMessage();
+                    },
+                  ),
+                ),
+              ),
           ],
         ),
       ),

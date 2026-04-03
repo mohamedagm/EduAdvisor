@@ -3,7 +3,8 @@ import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class QuickActions extends StatelessWidget {
-  const QuickActions({super.key});
+  const QuickActions({super.key, required this.onActionTap});
+  final Function(String) onActionTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +33,19 @@ class QuickActions extends StatelessWidget {
           mainAxisSpacing: 10,
         ),
         itemBuilder: (context, index) {
-          return Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.purpleLight,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              actions[index],
-              style: AppTextStyles.poppinsRegular14.copyWith(
-                color: AppColors.gray700,
+          return GestureDetector(
+            onTap: () => onActionTap(actions[index]),
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppColors.purpleLight,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                actions[index],
+                style: AppTextStyles.poppinsRegular14.copyWith(
+                  color: AppColors.gray700,
+                ),
               ),
             ),
           );
