@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/AIChat/ai_chat_view.dart';
 import 'package:edu_advisor/features/CourseCatalog/course_catalog_view.dart';
 import 'package:edu_advisor/features/home/views/home_view.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class _MainViewState extends State<MainView> {
   List<Widget> pages = [
     HomeView(),
     CourseCatalogView(),
-    Container(color: Colors.green),
+    AIChatView(),
     Container(color: Colors.blue),
     Container(color: Colors.yellow),
   ];
