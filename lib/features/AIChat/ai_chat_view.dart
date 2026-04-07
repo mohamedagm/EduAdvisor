@@ -75,7 +75,7 @@ class _AIChatViewState extends State<AIChatView> {
           children: [
             Column(
               children: [
-                const Header(),
+                const HeaderAiChat(),
 
                 Expanded(
                   child: ListView.builder(

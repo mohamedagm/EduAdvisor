@@ -3,8 +3,8 @@ import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class Header extends StatelessWidget {
-  const Header({super.key});
+class HeaderAiChat extends StatelessWidget {
+  const HeaderAiChat({super.key});
 
   @override
   Widget build(BuildContext context) {

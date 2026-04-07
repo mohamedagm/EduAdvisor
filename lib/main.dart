@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/features/main/main_view.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,8 @@ void main() {
       statusBarIconBrightness: Brightness.dark,
     ),
   );
-  runApp(const MainApp());
+
+  runApp(DevicePreview(enabled: false, builder: (context) => const MainApp()));
 }
 
 class MainApp extends StatelessWidget {
