@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import 'course_recommendations_view.dart';
 
 class ServicesView extends StatelessWidget {
   const ServicesView({super.key});
@@ -51,6 +52,14 @@ class ServicesView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildServiceCard(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const CourseRecommendationsView(),
+                  ),
+                );
+              },
               iconBgColor: AppColors.bluePrimary,
               iconData: Icons.lightbulb_outline,
               title: 'Course Recommendation',
@@ -115,61 +124,65 @@ class ServicesView extends StatelessWidget {
     required String title,
     required String subtitle,
     required List<Widget> badges,
+    VoidCallback? onTap,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: iconBgColor,
-              borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: iconBgColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(iconData, color: AppColors.white, size: 24),
             ),
-            child: Icon(iconData, color: AppColors.white, size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                          color: AppColors.gray900,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: AppTextStyles.heading3PoppinsReg16.copyWith(
+                            color: AppColors.gray900,
+                          ),
                         ),
                       ),
-                    ),
-                    const Icon(
-                      Icons.arrow_forward,
-                      color: AppColors.gray400,
-                      size: 20,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  subtitle,
-                  style: AppTextStyles.poppinsRegular14.copyWith(
-                    color: AppColors.gray500,
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: AppColors.gray400,
+                        size: 20,
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 12),
-                Wrap(spacing: 8, runSpacing: 8, children: badges),
-              ],
+                  const SizedBox(height: 6),
+                  Text(
+                    subtitle,
+                    style: AppTextStyles.poppinsRegular14.copyWith(
+                      color: AppColors.gray500,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Wrap(spacing: 8, runSpacing: 8, children: badges),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
