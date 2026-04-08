@@ -1,6 +1,8 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/profile/views/notifications_view.dart';
+import 'package:edu_advisor/features/profile/views/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -28,13 +30,36 @@ class ProfileHeader extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(
-                    Icons.notifications_none,
-                    color: AppColors.white,
-                    size: 24,
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NotificationsView(),
+                        ),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.notifications_none,
+                      color: AppColors.white,
+                      size: 24,
+                    ),
                   ),
                   SizedBox(width: 12),
-                  Icon(Icons.settings, color: AppColors.white, size: 24),
+
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SettingsView()),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.settings,
+                      color: AppColors.white,
+                      size: 24,
+                    ),
+                  ),
                 ],
               ),
             ],
