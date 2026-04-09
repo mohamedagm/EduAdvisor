@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import 'widgets/service_app_bar.dart';
 
 class CourseRecommendationsView extends StatelessWidget {
   const CourseRecommendationsView({super.key});
@@ -9,37 +10,9 @@ class CourseRecommendationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.gray900),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Course Recommendations',
-              style: AppTextStyles.heading1_20b.copyWith(
-                color: AppColors.gray900,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              'AI-powered suggestions for you',
-              style: AppTextStyles.bodyInterRegular12.copyWith(
-                color: AppColors.gray500,
-              ),
-            ),
-          ],
-        ),
-        centerTitle: false,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(color: AppColors.gray200, height: 1),
-        ),
+      appBar: const ServiceAppBar(
+        title: 'Course Recommendations',
+        subtitle: 'AI-powered suggestions for you',
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

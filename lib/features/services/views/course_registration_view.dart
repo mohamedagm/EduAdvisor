@@ -7,6 +7,7 @@ import 'widgets/course_status_card.dart';
 import 'widgets/empty_courses_card.dart';
 import 'widgets/selected_course_item.dart';
 import 'widgets/available_courses_sheet.dart';
+import 'widgets/service_app_bar.dart';
 
 class CourseRegistrationView extends StatefulWidget {
   const CourseRegistrationView({super.key});
@@ -92,35 +93,9 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
         _currentCredits >= _minCredits && _currentCredits <= _maxCredits;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.gray900),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Course Registration',
-              style: AppTextStyles.interRegular16.copyWith(
-                color: AppColors.gray900,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(
-              'Spring 2024 Semester',
-              style: AppTextStyles.bodyInterRegular12.copyWith(
-                color: AppColors.gray500,
-              ),
-            ),
-          ],
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(color: AppColors.gray200, height: 1),
-        ),
+      appBar: const ServiceAppBar(
+        title: 'Course Registration',
+        subtitle: 'Spring 2024 Semester',
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),

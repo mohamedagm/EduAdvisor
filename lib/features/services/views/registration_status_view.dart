@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import 'widgets/registration_summary_box.dart';
 import 'widgets/registration_status_card.dart';
+import 'widgets/service_app_bar.dart';
 
 class RegistrationStatusView extends StatelessWidget {
   const RegistrationStatusView({super.key});
@@ -12,37 +13,9 @@ class RegistrationStatusView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.gray50,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.gray900),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Registration Status',
-              style: AppTextStyles.heading1_20b.copyWith(
-                color: AppColors.gray900,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              'Track your course requests',
-              style: AppTextStyles.bodyInterRegular12.copyWith(
-                color: AppColors.gray500,
-              ),
-            ),
-          ],
-        ),
-        centerTitle: false,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(color: AppColors.gray200, height: 1),
-        ),
+      appBar: const ServiceAppBar(
+        title: 'Registration Status',
+        subtitle: 'Track your course requests',
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
