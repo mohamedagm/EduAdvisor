@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import 'course_recommendations_view.dart';
+import 'registration_status_view.dart';
 import 'course_registration_view.dart';
 
 class ServicesView extends StatelessWidget {
@@ -101,6 +102,14 @@ class ServicesView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildServiceCard(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const RegistrationStatusView(),
+                  ),
+                );
+              },
               iconBgColor: AppColors.successGreen,
               iconData: Icons.check_circle_outline,
               title: 'Registration Status',
