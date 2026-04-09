@@ -1,4 +1,4 @@
-import 'package:edu_advisor/features/AIChat/message_model.dart';
+import 'package:edu_advisor/features/AIChat/models/message_model.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/ai_input_field.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/header_ai_chat.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/message_bubble.dart';

@@ -12,6 +12,13 @@ class WelcomeCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: AppGradients.primary,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.bluePrimary.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -19,9 +26,9 @@ class WelcomeCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 28,
-                child: const Icon(Icons.person, size: 30),
+                child: Icon(Icons.person, size: 30),
               ),
               const SizedBox(width: 12),
               Expanded(

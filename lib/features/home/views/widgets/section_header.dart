@@ -12,7 +12,7 @@ class SectionHeader extends StatelessWidget {
       children: [
         Text(
           'Recommended Courses',
-          style: AppTextStyles.poppinsRegular14.copyWith(
+          style: AppTextStyles.heading3PoppinsReg16.copyWith(
             color: AppColors.gray800,
           ),
         ),

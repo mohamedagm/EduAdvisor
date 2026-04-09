@@ -1,7 +1,7 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
-import 'package:edu_advisor/features/AIChat/message_model.dart';
+import 'package:edu_advisor/features/AIChat/models/message_model.dart';
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {

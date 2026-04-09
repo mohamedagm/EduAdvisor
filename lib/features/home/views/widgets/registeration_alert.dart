@@ -12,8 +12,14 @@ class RegisterationAlert extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.blueLight,
         borderRadius: BorderRadius.circular(16),
-
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: AppColors.infoBlue.withValues(alpha: 0.3)),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.infoBlue.withValues(alpha: 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,10 +30,10 @@ class RegisterationAlert extends StatelessWidget {
             width: 48,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.bluePrimary.withValues(alpha: 0.3),
+              color: AppColors.blueLight,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(Icons.calendar_month, color: AppColors.infoBlue),
+            child: const Icon(Icons.calendar_month, color: AppColors.infoBlue),
           ),
 
           Expanded(
