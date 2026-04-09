@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import 'course_recommendations_view.dart';
+import 'course_registration_view.dart';
 
 class ServicesView extends StatelessWidget {
   const ServicesView({super.key});
@@ -76,6 +77,14 @@ class ServicesView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildServiceCard(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const CourseRegistrationView(),
+                  ),
+                );
+              },
               iconBgColor: const Color(0xFFF97316),
               iconData: Icons.assignment_outlined,
               title: 'Course Registration',
