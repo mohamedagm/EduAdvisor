@@ -3,7 +3,20 @@ import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CourseCard extends StatelessWidget {
-  const CourseCard({super.key});
+  final String imageUrl;
+  final String code;
+  final String title;
+  final String progressPercentage;
+  final String credits;
+
+  const CourseCard({
+    super.key,
+    required this.imageUrl,
+    required this.code,
+    required this.title,
+    required this.progressPercentage,
+    required this.credits,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +38,7 @@ class CourseCard extends StatelessWidget {
                     top: Radius.circular(16),
                   ),
                   child: Image.network(
-                    'https://thumbs.dreamstime.com/b/golf-course-golf-bag-idyllic-forest-cart-summer-landscape-park-69200010.jpg',
+                    imageUrl,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -52,7 +65,7 @@ class CourseCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 3),
                       Text(
-                        '75%',
+                        progressPercentage,
                         style: AppTextStyles.bodyInterMedium14.copyWith(
                           color: AppColors.purplePrimary,
                         ),
@@ -69,9 +82,9 @@ class CourseCard extends StatelessWidget {
               spacing: 4,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Is 311', style: AppTextStyles.poppinsRegular14),
+                Text(code, style: AppTextStyles.poppinsRegular14),
                 Text(
-                  'DATABASE SYSTEMS',
+                  title,
                   style: AppTextStyles.interRegular16.copyWith(
                     color: AppColors.gray600,
                   ),
@@ -90,7 +103,7 @@ class CourseCard extends StatelessWidget {
                         border: Border.all(color: AppColors.gray200),
                       ),
                       child: Text(
-                        '3 Credits',
+                        credits,
                         style: AppTextStyles.interRegular16.copyWith(
                           color: AppColors.gray900,
                         ),
