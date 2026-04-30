@@ -1,6 +1,6 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/login/views/forgot_password.dart';
-import 'package:edu_advisor/features/auth/login/views/student_profile.dart';
 import 'package:edu_advisor/features/auth/signup/views/signup_view.dart';
 import 'package:edu_advisor/features/auth/widgets/auth_card.dart';
 import 'package:edu_advisor/features/auth/widgets/login_form.dart';
@@ -72,7 +72,7 @@ class AdvisorLoginScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProfileImage(),
+                            builder: (context) => AdvisorProfile(),
                           ),
                         );
                       },

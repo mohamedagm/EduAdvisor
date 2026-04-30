@@ -1,23 +1,21 @@
 import 'dart:io';
-
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/advisor_nav/advisor_home_screen.dart';
 import 'package:edu_advisor/features/auth/widgets/skip_botton.dart';
-import 'package:edu_advisor/features/home/views/home_view.dart';
-import 'package:edu_advisor/features/main/main_view.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileImage extends StatefulWidget {
-  const ProfileImage({super.key});
+class AdvisorProfile extends StatefulWidget {
+  const AdvisorProfile({super.key});
 
   @override
-  State<ProfileImage> createState() => _ProfileImageState();
+  State<AdvisorProfile> createState() => _AdvisorProfileState();
 }
 
-class _ProfileImageState extends State<ProfileImage> {
+class _AdvisorProfileState extends State<AdvisorProfile> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
 
@@ -129,23 +127,24 @@ class _ProfileImageState extends State<ProfileImage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HomeView(),/////
+                          builder: (context) => HomeScreen(), /////
                         ),
-                       );
+                      );
                     },
                     buttonText: 'Continue',
                   ),
                   const SizedBox(height: 32),
                   // Skip Button
-                   SkipButton(
-                    onTap:(){
+                  SkipButton(
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const  MainView(),//navigate to advisor
+                          builder: (context) =>
+                            HomeScreen(), //navigate to advisor
                         ),
                       );
-                    } , // You can implement skip functionality if needed
+                    }, // You can implement skip functionality if needed
                   ),
                 ],
               ),

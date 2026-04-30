@@ -41,8 +41,12 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
   @override
   void dispose() {
-    for (var c in controllers) c.dispose();
-    for (var f in focusNodes) f.dispose();
+    for (var c in controllers) {
+      c.dispose();
+    }
+    for (var f in focusNodes) {
+      f.dispose();
+    }
     _timer?.cancel();
     super.dispose();
   }
@@ -64,7 +68,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       resendCountdown = 30;
       statusMessage = 'Code sent! Enter the code below.';
       statusType = StatusType.success;
-      for (var c in controllers) c.clear();
+      for (var c in controllers) {
+        c.clear();
+      }
     });
     _formKey.currentState?.reset();
 
@@ -297,7 +303,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.deepPurple.withOpacity(0.3),
+                              color: Colors.deepPurple.withValues(alpha: 0.3),
                               blurRadius: 12,
                               offset: const Offset(0, 6),
                             ),

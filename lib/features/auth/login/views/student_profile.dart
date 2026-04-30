@@ -3,21 +3,20 @@ import 'dart:io';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/auth/widgets/skip_botton.dart';
-import 'package:edu_advisor/features/home/views/home_view.dart';
 import 'package:edu_advisor/features/main/main_view.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileImage extends StatefulWidget {
-  const ProfileImage({super.key});
+class StudentProfile extends StatefulWidget {
+  const StudentProfile({super.key});
 
   @override
-  State<ProfileImage> createState() => _ProfileImageState();
+  State<StudentProfile> createState() => _StudentProfileState();
 }
 
-class _ProfileImageState extends State<ProfileImage> {
+class _StudentProfileState extends State<StudentProfile> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
 
