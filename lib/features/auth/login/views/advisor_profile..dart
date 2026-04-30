@@ -129,7 +129,7 @@ class _ProfileImageState extends State<ProfileImage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HomeView(),
+                          builder: (context) => const HomeView(),/////
                         ),
                        );
                     },
