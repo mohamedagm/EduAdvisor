@@ -78,7 +78,7 @@ class StudentLoginScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProfileImage(),
+                            builder: (context) => StudentProfile(),
                           ),
                         );
                       },

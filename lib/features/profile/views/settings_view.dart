@@ -277,7 +277,7 @@ class _SettingsViewState extends State<SettingsView> {
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.errorRed.withOpacity(0.4)),
+          border: Border.all(color: AppColors.errorRed.withValues(alpha: 0.4)),
         ),
         alignment: Alignment.center,
         child: Row(

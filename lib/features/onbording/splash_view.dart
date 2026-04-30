@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/features/onbording/first_onbording_view.dart';
 import 'package:flutter/material.dart';
 

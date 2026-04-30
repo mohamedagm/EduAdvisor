@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+
+class RejectionDialog extends StatefulWidget {
+  final Function(String reason) onConfirm;
+
+  const RejectionDialog({super.key, required this.onConfirm});
+
+  @override
+  State<RejectionDialog> createState() => _RejectionDialogState();
+}
+
+class _RejectionDialogState extends State<RejectionDialog> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: const Text(
+        "Reject Registration Request",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Please provide a reason for rejecting this request. This will be shared with the student.",
+            style: TextStyle(color: Colors.grey, fontSize: 13),
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: _controller,
+            maxLines: 4,
+            decoration: InputDecoration(
+              hintText: "Enter rejection reason (e.g., Prerequisites not met...)",
+              hintStyle: const TextStyle(fontSize: 13, color: Colors.grey),
+              filled: true,
+              fillColor: Colors.grey.shade100,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () => Navigator.pop(context),
+                style: OutlinedButton.styleFrom(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  side: const BorderSide(color: Color(0xFFEEEEEE)),
+                ),
+                child: const Text("Cancel", style: TextStyle(color: Colors.black)),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_controller.text.trim().isNotEmpty) {
+                    widget.onConfirm(_controller.text.trim());
+                    Navigator.pop(context);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFF07171), // لون أحمر هادي زي الصورة
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  elevation: 0,
+                ),
+                child: const Text("Confirm Rejection", 
+                    style: TextStyle(color: Colors.white, fontSize: 12)),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
