@@ -39,7 +39,8 @@ class _RejectionDialogState extends State<RejectionDialog> {
             controller: _controller,
             maxLines: 4,
             decoration: InputDecoration(
-              hintText: "Enter rejection reason (e.g., Prerequisites not met...)",
+              hintText:
+                  "Enter rejection reason (e.g., Prerequisites not met...)",
               hintStyle: const TextStyle(fontSize: 13, color: Colors.grey),
               filled: true,
               fillColor: Colors.grey.shade100,
@@ -58,10 +59,15 @@ class _RejectionDialogState extends State<RejectionDialog> {
               child: OutlinedButton(
                 onPressed: () => Navigator.pop(context),
                 style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   side: const BorderSide(color: Color(0xFFEEEEEE)),
                 ),
-                child: const Text("Cancel", style: TextStyle(color: Colors.black)),
+                child: const Text(
+                  "Cancel",
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ),
             const SizedBox(width: 12),
@@ -74,12 +80,18 @@ class _RejectionDialogState extends State<RejectionDialog> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFF07171), // لون أحمر هادي زي الصورة
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  backgroundColor: const Color(
+                    0xFFF07171,
+                  ), // لون أحمر هادي زي الصورة
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   elevation: 0,
                 ),
-                child: const Text("Confirm Rejection", 
-                    style: TextStyle(color: Colors.white, fontSize: 12)),
+                child: const Text(
+                  "Confirm Rejection",
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
               ),
             ),
           ],

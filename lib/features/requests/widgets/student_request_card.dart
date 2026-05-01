@@ -1,4 +1,3 @@
-
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
@@ -36,7 +35,7 @@ class StudentRequestCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-              builder: (context) => RequestDetailsScreen(request: request),
+                builder: (context) => RequestDetailsScreen(request: request),
               ),
             );
           },
@@ -67,7 +66,6 @@ class StudentRequestCard extends StatelessWidget {
 
                 SizedBox(width: avatarSize * 0.3),
 
-               
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +90,6 @@ class StudentRequestCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
 
-                      
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: avatarSize * 0.25,
@@ -114,11 +111,10 @@ class StudentRequestCard extends StatelessWidget {
                   ),
                 ),
 
-               
                 Icon(
                   Icons.chevron_right,
                   size: avatarSize * 0.6,
-                  color:AppColors.gray600,
+                  color: AppColors.gray600,
                 ),
               ],
             ),

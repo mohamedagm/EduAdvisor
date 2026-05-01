@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
- 
-  const VerifyCodeScreen({super.key, });
+  const VerifyCodeScreen({super.key});
 
   @override
   State<VerifyCodeScreen> createState() => _VerifyCodeScreenState();
@@ -126,12 +125,11 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       backgroundColor: AppColors.white,
       body: Column(
         children: [
-       
           GradiantContainer(
             mainText: "Verify Code",
             optionalText: "Don't worry! we'll help you reset it.",
           ),
-         
+
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -144,7 +142,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   borderRadius: const BorderRadius.all(Radius.circular(30)),
                   boxShadow: [
                     BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 10,
                       offset: const Offset(0, -3),
                     ),
@@ -167,7 +165,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                         children: List.generate(otpLength, (index) {
                           return Container(
                             margin: const EdgeInsets.symmetric(horizontal: 4),
-                            width: 44,
+                            width: 40,
                             height: 56,
                             child: TextFormField(
                               controller: controllers[index],
@@ -298,9 +296,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                               AppColors.purplePrimary,
                             ],
                           ),
-                          borderRadius: BorderRadius.circular(
-                            25,
-                          ),
+                          borderRadius: BorderRadius.circular(25),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.deepPurple.withValues(alpha: 0.3),

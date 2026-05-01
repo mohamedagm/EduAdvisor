@@ -3,8 +3,8 @@ import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class GradiantContainer extends StatelessWidget {
-  final String mainText;       
-  final String? optionalText;    
+  final String mainText;
+  final String? optionalText;
 
   const GradiantContainer({
     super.key,
@@ -20,7 +20,7 @@ class GradiantContainer extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: height * 0.38,
+      height: height * 0.39,
       padding: EdgeInsets.symmetric(
         horizontal: width * 0.06,
         vertical: height * 0.08,
@@ -49,22 +49,19 @@ class GradiantContainer extends StatelessWidget {
 
           SizedBox(height: height * 0.02),
 
-        Text(
-  mainText,
-  style: AppTextStyles.heading1_20b.copyWith(
-    color: AppColors.gray50,
-  ),
-  textAlign: TextAlign.center,
-),
+          Text(
+            mainText,
+            style: AppTextStyles.heading1_20b.copyWith(color: AppColors.gray50),
+            textAlign: TextAlign.center,
+          ),
 
-        
           if (optionalText != null) ...[
             SizedBox(height: height * 0.01),
             Text(
               optionalText!,
               style: AppTextStyles.heading3PoppinsReg16.copyWith(
-    color: AppColors.gray50,
-  ),
+                color: AppColors.gray50,
+              ),
               textAlign: TextAlign.center,
             ),
           ],
