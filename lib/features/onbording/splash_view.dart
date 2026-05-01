@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/features/onbording/first_onbording_view.dart';
+import 'package:edu_advisor/features/onbording/onboarding_view.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatefulWidget {
@@ -71,7 +71,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const FirstOnBordaingView(),
+            pageBuilder: (_, __, ___) => const OnboardingView(),
             transitionsBuilder: (_, animation, __, child) => FadeTransition(opacity: animation, child: child),
             transitionDuration: const Duration(milliseconds: 800),
           ),

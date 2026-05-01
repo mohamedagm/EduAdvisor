@@ -1,5 +1,3 @@
-
-
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -24,12 +22,9 @@ class GradientElevatedButton extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          colors: [
-            AppColors.bluePrimary,
-            AppColors.purplePrimary,
-          ],
+          colors: [AppColors.bluePrimary, AppColors.purplePrimary],
         ),
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
             color: const Color.fromARGB(255, 169, 153, 196),
@@ -59,6 +54,3 @@ class GradientElevatedButton extends StatelessWidget {
     );
   }
 }
-
-
-
