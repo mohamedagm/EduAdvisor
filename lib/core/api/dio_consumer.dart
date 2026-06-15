@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:edu_advisor/core/api/api_consumer.dart';
 import 'package:edu_advisor/core/api/api_constants.dart';
 import 'package:edu_advisor/core/api/api_interceptor.dart';
+import 'package:edu_advisor/core/errors/exceptions.dart';
 
 class DioConsumer implements ApiConsumer {
   DioConsumer({Dio? dio, ApiInterceptor? apiInterceptor})
@@ -25,12 +26,16 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
   }) async {
-    final response = await _dio.get(
-      path,
-      queryParameters: queryParameters,
-      options: _buildOptions(headers: headers),
-    );
-    return response.data;
+    try {
+      final response = await _dio.get(
+        path,
+        queryParameters: queryParameters,
+        options: _buildOptions(headers: headers),
+      );
+      return response.data;
+    } on DioException catch (e) {
+      handleDioException(e);
+    }
   }
 
   @override
@@ -41,13 +46,17 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? headers,
     bool isFormData = false,
   }) async {
-    final response = await _dio.post(
-      path,
-      data: _prepareData(data: data, isFormData: isFormData),
-      queryParameters: queryParameters,
-      options: _buildOptions(headers: headers),
-    );
-    return response.data;
+    try {
+      final response = await _dio.post(
+        path,
+        data: _prepareData(data: data, isFormData: isFormData),
+        queryParameters: queryParameters,
+        options: _buildOptions(headers: headers),
+      );
+      return response.data;
+    } on DioException catch (e) {
+      handleDioException(e);
+    }
   }
 
   @override
@@ -58,13 +67,17 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? headers,
     bool isFormData = false,
   }) async {
-    final response = await _dio.put(
-      path,
-      data: _prepareData(data: data, isFormData: isFormData),
-      queryParameters: queryParameters,
-      options: _buildOptions(headers: headers),
-    );
-    return response.data;
+    try {
+      final response = await _dio.put(
+        path,
+        data: _prepareData(data: data, isFormData: isFormData),
+        queryParameters: queryParameters,
+        options: _buildOptions(headers: headers),
+      );
+      return response.data;
+    } on DioException catch (e) {
+      handleDioException(e);
+    }
   }
 
   @override
@@ -75,13 +88,17 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? headers,
     bool isFormData = false,
   }) async {
-    final response = await _dio.patch(
-      path,
-      data: _prepareData(data: data, isFormData: isFormData),
-      queryParameters: queryParameters,
-      options: _buildOptions(headers: headers),
-    );
-    return response.data;
+    try {
+      final response = await _dio.patch(
+        path,
+        data: _prepareData(data: data, isFormData: isFormData),
+        queryParameters: queryParameters,
+        options: _buildOptions(headers: headers),
+      );
+      return response.data;
+    } on DioException catch (e) {
+      handleDioException(e);
+    }
   }
 
   @override
@@ -92,13 +109,17 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? headers,
     bool isFormData = false,
   }) async {
-    final response = await _dio.delete(
-      path,
-      data: _prepareData(data: data, isFormData: isFormData),
-      queryParameters: queryParameters,
-      options: _buildOptions(headers: headers),
-    );
-    return response.data;
+    try {
+      final response = await _dio.delete(
+        path,
+        data: _prepareData(data: data, isFormData: isFormData),
+        queryParameters: queryParameters,
+        options: _buildOptions(headers: headers),
+      );
+      return response.data;
+    } on DioException catch (e) {
+      handleDioException(e);
+    }
   }
 
   Options _buildOptions({Map<String, dynamic>? headers}) {
