@@ -176,6 +176,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
         email: _emailController.text.trim(),
         password: _passwordController.text,
       ),
+      expectedRole: 'Advisor',
     );
   }
 }

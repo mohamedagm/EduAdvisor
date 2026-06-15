@@ -175,6 +175,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
         email: _emailController.text.trim(),
         password: _passwordController.text,
       ),
+      expectedRole: 'Student',
     );
   }
 }

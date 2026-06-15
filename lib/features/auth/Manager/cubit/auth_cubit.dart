@@ -12,10 +12,13 @@ class AuthCubit extends Cubit<AuthState> {
 
   final AuthRepo _authRepo;
 
-  Future<void> login(LoginRequestModel request) async {
+  Future<void> login(
+    LoginRequestModel request, {
+    required String expectedRole,
+  }) async {
     emit(const LoginLoading());
 
-    final result = await _authRepo.login(request);
+    final result = await _authRepo.login(request, expectedRole: expectedRole);
 
     result.fold(
       (failure) => emit(LoginFailure(failure)),

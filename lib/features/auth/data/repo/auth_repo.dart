@@ -21,8 +21,9 @@ class AuthRepo {
   final TokenStorageService _tokenStorageService;
 
   Future<Either<Failure, LoginResponseModel>> login(
-    LoginRequestModel request,
-  ) async {
+    LoginRequestModel request, {
+    required String expectedRole,
+  }) async {
     try {
       final response = await _apiConsumer.post(
         ApiEndpoints.login,
@@ -33,6 +34,17 @@ class AuthRepo {
       final loginResponse = LoginResponseModel.fromJson(
         Map<String, dynamic>.from(apiResponse.data as Map? ?? {}),
       );
+
+      if (!_isExpectedRole(loginResponse.user.role, expectedRole)) {
+        return Left(
+          ServerFailure(
+            ApiResponseModel.message(
+              'This account is not a $expectedRole account',
+              statusCode: 403,
+            ),
+          ),
+        );
+      }
 
       await _tokenStorageService.saveTokens(
         accessToken: loginResponse.accessToken,
@@ -47,6 +59,10 @@ class AuthRepo {
     } catch (e) {
       return Left(ServerFailure(ApiResponseModel.message(e.toString())));
     }
+  }
+
+  bool _isExpectedRole(String actualRole, String expectedRole) {
+    return actualRole.trim().toLowerCase() == expectedRole.trim().toLowerCase();
   }
 
   Future<Either<Failure, ApiResponseModel>> registerStudent(
