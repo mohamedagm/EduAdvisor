@@ -11,10 +11,7 @@ class DioConsumer implements ApiConsumer {
       connectTimeout: ApiConstants.connectTimeout,
       receiveTimeout: ApiConstants.receiveTimeout,
       sendTimeout: ApiConstants.sendTimeout,
-      headers: const {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
+      headers: const {'Accept': 'application/json'},
     );
 
     _dio.interceptors.add(apiInterceptor ?? ApiInterceptor());
@@ -25,15 +22,13 @@ class DioConsumer implements ApiConsumer {
   @override
   Future<dynamic> get(
     String path, {
-    Object? data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
   }) async {
     final response = await _dio.get(
       path,
-      data: data,
       queryParameters: queryParameters,
-      options: Options(headers: headers),
+      options: _buildOptions(headers: headers),
     );
     return response.data;
   }
@@ -44,12 +39,13 @@ class DioConsumer implements ApiConsumer {
     Object? data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    bool isFormData = false,
   }) async {
     final response = await _dio.post(
       path,
-      data: data,
+      data: _prepareData(data: data, isFormData: isFormData),
       queryParameters: queryParameters,
-      options: Options(headers: headers),
+      options: _buildOptions(headers: headers),
     );
     return response.data;
   }
@@ -60,12 +56,13 @@ class DioConsumer implements ApiConsumer {
     Object? data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    bool isFormData = false,
   }) async {
     final response = await _dio.put(
       path,
-      data: data,
+      data: _prepareData(data: data, isFormData: isFormData),
       queryParameters: queryParameters,
-      options: Options(headers: headers),
+      options: _buildOptions(headers: headers),
     );
     return response.data;
   }
@@ -76,12 +73,13 @@ class DioConsumer implements ApiConsumer {
     Object? data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    bool isFormData = false,
   }) async {
     final response = await _dio.patch(
       path,
-      data: data,
+      data: _prepareData(data: data, isFormData: isFormData),
       queryParameters: queryParameters,
-      options: Options(headers: headers),
+      options: _buildOptions(headers: headers),
     );
     return response.data;
   }
@@ -92,13 +90,24 @@ class DioConsumer implements ApiConsumer {
     Object? data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    bool isFormData = false,
   }) async {
     final response = await _dio.delete(
       path,
-      data: data,
+      data: _prepareData(data: data, isFormData: isFormData),
       queryParameters: queryParameters,
-      options: Options(headers: headers),
+      options: _buildOptions(headers: headers),
     );
     return response.data;
+  }
+
+  Options _buildOptions({Map<String, dynamic>? headers}) {
+    return Options(headers: headers);
+  }
+
+  Object? _prepareData({Object? data, required bool isFormData}) {
+    return isFormData && data is Map<String, dynamic>
+        ? FormData.fromMap(data)
+        : data;
   }
 }
