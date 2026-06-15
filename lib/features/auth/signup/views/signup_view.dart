@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/data/models/register_advisor_request_model.dart';
@@ -124,15 +125,21 @@ class _SignupScreenState extends State<SignupScreen> {
                                 const SizedBox(height: 12),
                                 _buildConfirmPasswordField(),
                                 const SizedBox(height: 20),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: GradientElevatedButton(
-                                    buttonText: isLoading
-                                        ? 'Signing Up...'
-                                        : 'Sign Up',
-                                    onPressed: () => _onSignUpPressed(
-                                      context,
-                                      isLoading: isLoading,
+                                IgnorePointer(
+                                  ignoring: isLoading,
+                                  child: Opacity(
+                                    opacity: isLoading ? 0.75 : 1,
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: GradientElevatedButton(
+                                        buttonText: isLoading
+                                            ? 'Signing Up...'
+                                            : 'Sign Up',
+                                        onPressed: () => _onSignUpPressed(
+                                          context,
+                                          isLoading: isLoading,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -159,9 +166,11 @@ class _SignupScreenState extends State<SignupScreen> {
           ? state.response.message
           : (state as RegisterAdvisorSuccess).response.message;
 
-      ScaffoldMessenger.of(
+      AppToast.success(
         context,
-      ).showSnackBar(SnackBar(content: Text(message)));
+        title: 'Registration Successful',
+        description: message,
+      );
 
       Navigator.push(
         context,
@@ -174,9 +183,11 @@ class _SignupScreenState extends State<SignupScreen> {
           ? state.failure.message
           : (state as RegisterAdvisorFailure).failure.message;
 
-      ScaffoldMessenger.of(
+      AppToast.error(
         context,
-      ).showSnackBar(SnackBar(content: Text(message)));
+        title: 'Registration Failed',
+        description: message,
+      );
     }
   }
 

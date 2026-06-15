@@ -16,6 +16,8 @@ class AuthCubit extends Cubit<AuthState> {
     LoginRequestModel request, {
     required String expectedRole,
   }) async {
+    if (state is LoginLoading) return;
+
     emit(const LoginLoading());
 
     final result = await _authRepo.login(request, expectedRole: expectedRole);
@@ -27,6 +29,8 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> registerStudent(RegisterStudentRequestModel request) async {
+    if (state is RegisterStudentLoading) return;
+
     emit(const RegisterStudentLoading());
 
     final result = await _authRepo.registerStudent(request);
@@ -38,6 +42,8 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> registerAdvisor(RegisterAdvisorRequestModel request) async {
+    if (state is RegisterAdvisorLoading) return;
+
     emit(const RegisterAdvisorLoading());
 
     final result = await _authRepo.registerAdvisor(request);

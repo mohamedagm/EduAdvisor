@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
@@ -98,14 +99,22 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 24),
-                        SizedBox(
-                          width: double.infinity,
-                          child: GradientElevatedButton(
-                            buttonText: isLoading
-                                ? 'Logging in...'
-                                : 'Login as advisor',
-                            onPressed: () =>
-                                _onLoginPressed(context, isLoading: isLoading),
+                        IgnorePointer(
+                          ignoring: isLoading,
+                          child: Opacity(
+                            opacity: isLoading ? 0.75 : 1,
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: GradientElevatedButton(
+                                buttonText: isLoading
+                                    ? 'Logging in...'
+                                    : 'Login as advisor',
+                                onPressed: () => _onLoginPressed(
+                                  context,
+                                  isLoading: isLoading,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -150,9 +159,11 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
 
   void _authListener(BuildContext context, AuthState state) {
     if (state is LoginSuccess) {
-      ScaffoldMessenger.of(
+      AppToast.success(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Login successful')));
+        title: 'Login Successful',
+        description: 'Welcome back, ${state.response.user.fullName}',
+      );
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const AdvisorProfile()),
@@ -160,9 +171,11 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
     }
 
     if (state is LoginFailure) {
-      ScaffoldMessenger.of(
+      AppToast.error(
         context,
-      ).showSnackBar(SnackBar(content: Text(state.failure.message)));
+        title: 'Login Failed',
+        description: state.failure.message,
+      );
     }
   }
 
