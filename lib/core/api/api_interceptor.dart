@@ -1,16 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:edu_advisor/core/api/api_constants.dart';
-import 'package:edu_advisor/core/services/secure_storage_keys.dart';
-import 'package:edu_advisor/core/services/secure_storage_service.dart';
+import 'package:edu_advisor/core/services/token_storage_service.dart';
 
 class ApiInterceptor extends Interceptor {
   ApiInterceptor({
     this.language = ApiConstants.defaultLanguage,
-    SecureStorageService? secureStorageService,
-  }) : _secureStorageService = secureStorageService ?? SecureStorageService();
+    TokenStorageService? tokenStorageService,
+  }) : _tokenStorageService = tokenStorageService ?? TokenStorageService();
 
   final String language;
-  final SecureStorageService _secureStorageService;
+  final TokenStorageService _tokenStorageService;
 
   @override
   void onRequest(
@@ -19,9 +18,7 @@ class ApiInterceptor extends Interceptor {
   ) async {
     options.headers['Accept-Language'] = language;
 
-    final accessToken = await _secureStorageService.read(
-      key: SecureStorageKeys.accessToken,
-    );
+    final accessToken = await _tokenStorageService.getAccessToken();
 
     if (accessToken != null && accessToken.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $accessToken';
