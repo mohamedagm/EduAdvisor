@@ -3,6 +3,7 @@ import 'package:edu_advisor/core/api/api_consumer.dart';
 import 'package:edu_advisor/core/api/api_endpoints.dart';
 import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
+import 'package:edu_advisor/core/errors/failures.dart';
 import 'package:edu_advisor/features/auth/data/models/register_advisor_request_model.dart';
 import 'package:edu_advisor/features/auth/data/models/register_student_request_model.dart';
 
@@ -12,7 +13,7 @@ class AuthRepo {
 
   final ApiConsumer _apiConsumer;
 
-  Future<Either<ServerException, ApiResponseModel>> registerStudent(
+  Future<Either<Failure, ApiResponseModel>> registerStudent(
     RegisterStudentRequestModel request,
   ) async {
     try {
@@ -24,13 +25,13 @@ class AuthRepo {
 
       return Right(ApiResponseModel.fromJson(response));
     } on ServerException catch (e) {
-      return Left(e);
+      return Left(ServerFailure(e.apiResponse));
     } catch (e) {
-      return Left(ServerException(ApiResponseModel.message(e.toString())));
+      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
     }
   }
 
-  Future<Either<ServerException, ApiResponseModel>> registerAdvisor(
+  Future<Either<Failure, ApiResponseModel>> registerAdvisor(
     RegisterAdvisorRequestModel request,
   ) async {
     try {
@@ -42,9 +43,9 @@ class AuthRepo {
 
       return Right(ApiResponseModel.fromJson(response));
     } on ServerException catch (e) {
-      return Left(e);
+      return Left(ServerFailure(e.apiResponse));
     } catch (e) {
-      return Left(ServerException(ApiResponseModel.message(e.toString())));
+      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
     }
   }
 }
