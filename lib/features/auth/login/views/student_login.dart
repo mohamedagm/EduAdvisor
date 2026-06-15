@@ -100,7 +100,9 @@ class StudentLoginScreen extends StatelessWidget {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SignupScreen(),
+                            builder: (context) => const SignupScreen(
+                              registerRole: RegisterRole.student,
+                            ),
                           ),
                         ),
                         child: Text(

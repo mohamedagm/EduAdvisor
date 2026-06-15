@@ -86,23 +86,25 @@ class AdvisorLoginScreen extends StatelessWidget {
                     children: [
                       Text(
                         "Don't have an account? ",
-                        style:AppTextStyles.interRegular16.copyWith(
-                          color:AppColors.gray600,
+                        style: AppTextStyles.interRegular16.copyWith(
+                          color: AppColors.gray600,
                         ),
                       ),
                       GestureDetector(
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SignupScreen(),
+                            builder: (context) => const SignupScreen(
+                              registerRole: RegisterRole.advisor,
+                            ),
                           ),
                         ),
                         child: Text(
                           "Sign Up",
                           style: AppTextStyles.bodyInterMedium18.copyWith(
-                          color:AppColors.infoBlue,
+                            color: AppColors.infoBlue,
+                          ),
                         ),
-                        )
                       ),
                     ],
                   ),
