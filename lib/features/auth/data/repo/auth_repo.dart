@@ -25,6 +25,8 @@ class AuthRepo {
     required String expectedRole,
   }) async {
     try {
+      await _tokenStorageService.clearTokens();
+
       final response = await _apiConsumer.post(
         ApiEndpoints.login,
         data: request.toJson(),
