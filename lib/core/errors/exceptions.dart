@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:edu_advisor/core/errors/error_model.dart';
+import 'package:edu_advisor/core/api/api_response_model.dart';
 
 class ServerException implements Exception {
-  const ServerException(this.errorModel);
+  const ServerException(this.apiResponse);
 
-  final ErrorModel errorModel;
+  final ApiResponseModel apiResponse;
 
   @override
-  String toString() => errorModel.message;
+  String toString() => apiResponse.displayMessage;
 }
 
 class CacheException implements Exception {
@@ -19,67 +19,63 @@ class CacheException implements Exception {
   String toString() => message;
 }
 
-Never handleDioException(DioException error) {
-  throw ServerException(_errorModelFromDioException(error));
-}
+void handleDioException(DioException e) {
+  String messageFromStatusCode(int? statusCode) {
+    switch (statusCode) {
+      case 400:
+        return 'Bad request';
+      case 401:
+        return 'Unauthorized';
+      case 403:
+        return 'Forbidden';
+      case 404:
+        return 'Not found';
+      case 409:
+        return 'Conflict';
+      case 422:
+        return 'Validation error';
+      case 500:
+        return 'Internal server error';
+      case 502:
+        return 'Bad gateway';
+      case 503:
+        return 'Service unavailable';
+      default:
+        return 'Something went wrong';
+    }
+  }
 
-ErrorModel _errorModelFromDioException(DioException error) {
-  switch (error.type) {
+  late final ApiResponseModel apiResponse;
+
+  switch (e.type) {
     case DioExceptionType.connectionTimeout:
     case DioExceptionType.sendTimeout:
     case DioExceptionType.receiveTimeout:
-      return ErrorModel.message('Connection timeout');
+      apiResponse = ApiResponseModel.message('Connection timeout');
     case DioExceptionType.badCertificate:
-      return ErrorModel.message('Bad certificate');
+      apiResponse = ApiResponseModel.message('Bad certificate');
     case DioExceptionType.badResponse:
-      return _errorModelFromResponse(
-        statusCode: error.response?.statusCode,
-        response: error.response?.data,
+      final responseData = e.response?.data;
+
+      if (responseData is Map<String, dynamic>) {
+        apiResponse = ApiResponseModel.fromJson(
+          responseData,
+          fallbackStatusCode: e.response?.statusCode,
+        );
+        break;
+      }
+
+      apiResponse = ApiResponseModel.message(
+        messageFromStatusCode(e.response?.statusCode),
+        statusCode: e.response?.statusCode ?? 0,
       );
     case DioExceptionType.cancel:
-      return ErrorModel.message('Request was cancelled');
+      apiResponse = ApiResponseModel.message('Request was cancelled');
     case DioExceptionType.connectionError:
-      return ErrorModel.message('No internet connection');
+      apiResponse = ApiResponseModel.message('No internet connection');
     case DioExceptionType.unknown:
-      return ErrorModel.message('Something went wrong');
-  }
-}
-
-ErrorModel _errorModelFromResponse({
-  required int? statusCode,
-  required dynamic response,
-}) {
-  if (response is Map<String, dynamic>) {
-    return ErrorModel.fromJson(response, fallbackStatusCode: statusCode);
+      apiResponse = ApiResponseModel.message('Something went wrong');
   }
 
-  return ErrorModel.message(
-    _messageFromStatusCode(statusCode),
-    statusCode: statusCode ?? 0,
-  );
-}
-
-String _messageFromStatusCode(int? statusCode) {
-  switch (statusCode) {
-    case 400:
-      return 'Bad request';
-    case 401:
-      return 'Unauthorized';
-    case 403:
-      return 'Forbidden';
-    case 404:
-      return 'Not found';
-    case 409:
-      return 'Conflict';
-    case 422:
-      return 'Validation error';
-    case 500:
-      return 'Internal server error';
-    case 502:
-      return 'Bad gateway';
-    case 503:
-      return 'Service unavailable';
-    default:
-      return 'Something went wrong';
-  }
+  throw ServerException(apiResponse);
 }
