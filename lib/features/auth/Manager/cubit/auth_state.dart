@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
+import 'package:edu_advisor/features/auth/data/models/login_response_model.dart';
 
 abstract class AuthState {
   const AuthState();
@@ -7,6 +8,22 @@ abstract class AuthState {
 
 class AuthInitial extends AuthState {
   const AuthInitial();
+}
+
+class LoginLoading extends AuthState {
+  const LoginLoading();
+}
+
+class LoginSuccess extends AuthState {
+  const LoginSuccess(this.response);
+
+  final LoginResponseModel response;
+}
+
+class LoginFailure extends AuthState {
+  const LoginFailure(this.failure);
+
+  final Failure failure;
 }
 
 class RegisterStudentLoading extends AuthState {

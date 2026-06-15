@@ -1,3 +1,4 @@
+import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
 import 'package:edu_advisor/features/auth/data/models/register_advisor_request_model.dart';
 import 'package:edu_advisor/features/auth/data/models/register_student_request_model.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
@@ -10,6 +11,17 @@ class AuthCubit extends Cubit<AuthState> {
       super(const AuthInitial());
 
   final AuthRepo _authRepo;
+
+  Future<void> login(LoginRequestModel request) async {
+    emit(const LoginLoading());
+
+    final result = await _authRepo.login(request);
+
+    result.fold(
+      (failure) => emit(LoginFailure(failure)),
+      (response) => emit(LoginSuccess(response)),
+    );
+  }
 
   Future<void> registerStudent(RegisterStudentRequestModel request) async {
     emit(const RegisterStudentLoading());
