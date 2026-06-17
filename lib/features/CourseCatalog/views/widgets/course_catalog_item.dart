@@ -1,10 +1,13 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/CourseCatalog/data/models/course_model.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/tag.dart';
 import 'package:flutter/material.dart';
 
 class CourseCatalogItem extends StatelessWidget {
-  const CourseCatalogItem({super.key});
+  const CourseCatalogItem({super.key, required this.course});
+
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class CourseCatalogItem extends StatelessWidget {
                           spacing: 24,
                           children: [
                             Text(
-                              'IS312',
+                              course.displayCode,
                               style: AppTextStyles.heading3PoppinsReg16
                                   .copyWith(color: AppColors.gray800),
                             ),
@@ -48,7 +51,7 @@ class CourseCatalogItem extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                'Medium',
+                                course.displayType,
                                 style: AppTextStyles.bodyInterRegular12
                                     .copyWith(color: Color(0xFFD4A017)),
                               ),
@@ -57,7 +60,7 @@ class CourseCatalogItem extends StatelessWidget {
                         ),
 
                         Text(
-                          'Database Management System',
+                          course.displayName,
                           style: AppTextStyles.interRegular16.copyWith(
                             color: AppColors.gray600,
                           ),
@@ -73,33 +76,38 @@ class CourseCatalogItem extends StatelessWidget {
                 ),
 
                 Row(
-                  children: const [
-                    Icon(
+                  children: [
+                    const Icon(
                       Icons.menu_book_outlined,
                       size: 16,
                       color: Color(0xFF9E9E9E),
                     ),
-                    SizedBox(width: 4),
-                    Text('3 Credits', style: AppTextStyles.bodyInterMedium14),
-                    SizedBox(width: 16),
-                    Icon(
-                      Icons.star_border_rounded,
-                      size: 16,
-                      color: Color(0xFFD4A017),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${course.displayCreditHours} Credits',
+                      style: AppTextStyles.bodyInterMedium14,
                     ),
-                    SizedBox(width: 4),
-                    Text('Recommended', style: AppTextStyles.bodyInterMedium14),
+                    const SizedBox(width: 16),
+                    const Icon(
+                      Icons.school_outlined,
+                      size: 16,
+                      color: Color(0xFF9E9E9E),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Level ${course.standardLevel}',
+                      style: AppTextStyles.bodyInterMedium14,
+                    ),
                   ],
                 ),
 
                 Wrap(
                   spacing: 8,
-                  children: List.generate(
-                    2,
-                    (index) => index == 0
-                        ? Tag(label: 'Data Science')
-                        : Tag(label: 'SoftWare'),
-                  ),
+                  runSpacing: 8,
+                  children: [
+                    Tag(label: course.displayDepartment),
+                    Tag(label: 'Semester ${course.standardSemester}'),
+                  ],
                 ),
               ],
             ),
