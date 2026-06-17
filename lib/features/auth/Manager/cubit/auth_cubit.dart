@@ -53,4 +53,17 @@ class AuthCubit extends Cubit<AuthState> {
       (response) => emit(RegisterAdvisorSuccess(response)),
     );
   }
+
+  Future<void> logout() async {
+    if (state is LogoutLoading) return;
+
+    emit(const LogoutLoading());
+
+    final result = await _authRepo.logout();
+
+    result.fold(
+      (failure) => emit(LogoutFailure(failure)),
+      (response) => emit(LogoutSuccess(response)),
+    );
+  }
 }

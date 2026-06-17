@@ -102,4 +102,44 @@ class AuthRepo {
       return Left(ServerFailure(ApiResponseModel.message(e.toString())));
     }
   }
+
+  Future<Either<Failure, ApiResponseModel>> logout() async {
+    try {
+      final refreshToken = await _tokenStorageService.getRefreshToken();
+
+      if (refreshToken == null || refreshToken.isEmpty) {
+        await _tokenStorageService.clearTokens();
+        return const Right(
+          ApiResponseModel(
+            isSuccess: true,
+            message: 'Logged out successfully',
+            statusCode: 200,
+          ),
+        );
+      }
+
+      final response = await _apiConsumer.post(
+        ApiEndpoints.logout,
+        data: {'refreshToken': refreshToken},
+      );
+
+      await _tokenStorageService.clearTokens();
+
+      final apiResponse = response is Map
+          ? ApiResponseModel.fromJson(Map<String, dynamic>.from(response))
+          : const ApiResponseModel(
+              isSuccess: true,
+              message: 'Logged out successfully',
+              statusCode: 200,
+            );
+
+      return Right(apiResponse);
+    } on ServerException catch (e) {
+      await _tokenStorageService.clearTokens();
+      return Left(ServerFailure(e.apiResponse));
+    } catch (e) {
+      await _tokenStorageService.clearTokens();
+      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
+    }
+  }
 }

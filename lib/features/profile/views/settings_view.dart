@@ -1,4 +1,11 @@
+import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/core/widgets/app_toast.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
+import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -20,44 +27,80 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.gray50,
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(gradient: AppGradients.primary),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.white),
-          onPressed: () => context.pop(),
-        ),
-        title: Text(
-          'Settings',
-          style: AppTextStyles.heading1_20b.copyWith(color: AppColors.white),
-        ),
-        centerTitle: false,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildProfileSection(),
-            const SizedBox(height: 16),
-            _buildNotificationsSection(),
-            const SizedBox(height: 16),
-            _buildPreferencesSection(),
-            const SizedBox(height: 16),
-            _buildSecuritySection(),
-            const SizedBox(height: 16),
-            _buildSupportSection(),
-            const SizedBox(height: 16),
-            _buildLogOutSection(),
-            const SizedBox(height: 32),
-          ],
-        ),
+    return BlocProvider(
+      create: (context) =>
+          AuthCubit(authRepo: AuthRepo(apiConsumer: DioConsumer())),
+      child: BlocConsumer<AuthCubit, AuthState>(
+        listener: _handleAuthState,
+        builder: (context, state) {
+          final isLoggingOut = state is LogoutLoading;
+
+          return Scaffold(
+            backgroundColor: AppColors.gray50,
+            appBar: AppBar(
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(gradient: AppGradients.primary),
+              ),
+              leading: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: AppColors.white,
+                ),
+                onPressed: isLoggingOut ? null : () => context.pop(),
+              ),
+              title: Text(
+                'Settings',
+                style: AppTextStyles.heading1_20b.copyWith(
+                  color: AppColors.white,
+                ),
+              ),
+              centerTitle: false,
+              elevation: 0,
+            ),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildProfileSection(),
+                  const SizedBox(height: 16),
+                  _buildNotificationsSection(),
+                  const SizedBox(height: 16),
+                  _buildPreferencesSection(),
+                  const SizedBox(height: 16),
+                  _buildSecuritySection(),
+                  const SizedBox(height: 16),
+                  _buildSupportSection(),
+                  const SizedBox(height: 16),
+                  _buildLogOutSection(context, isLoggingOut: isLoggingOut),
+                  const SizedBox(height: 32),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
+  }
+
+  void _handleAuthState(BuildContext context, AuthState state) {
+    if (state is LogoutSuccess) {
+      AppToast.success(
+        context,
+        title: 'Logged out',
+        description: state.response.message,
+      );
+      context.go(AppRoutes.chooseUserRole);
+    }
+
+    if (state is LogoutFailure) {
+      AppToast.error(
+        context,
+        title: 'Logged out locally',
+        description: state.failure.message,
+      );
+      context.go(AppRoutes.chooseUserRole);
+    }
   }
 
   Widget _buildCard({required Widget child}) {
@@ -266,7 +309,10 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
-  Widget _buildLogOutSection() {
+  Widget _buildLogOutSection(
+    BuildContext context, {
+    required bool isLoggingOut,
+  }) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -274,25 +320,44 @@ class _SettingsViewState extends State<SettingsView> {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.errorRed.withValues(alpha: 0.2)),
       ),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.errorRed.withValues(alpha: 0.4)),
-        ),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.logout, color: AppColors.errorRed),
-            const SizedBox(width: 8),
-            Text(
-              'Log Out',
-              style: AppTextStyles.bodyInterMedium14.copyWith(
-                color: AppColors.errorRed,
+      child: IgnorePointer(
+        ignoring: isLoggingOut,
+        child: GestureDetector(
+          onTap: () => context.read<AuthCubit>().logout(),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: AppColors.errorRed.withValues(alpha: 0.4),
               ),
             ),
-          ],
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (isLoggingOut) ...[
+                  const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.errorRed,
+                    ),
+                  ),
+                ] else ...[
+                  const Icon(Icons.logout, color: AppColors.errorRed),
+                ],
+                const SizedBox(width: 8),
+                Text(
+                  isLoggingOut ? 'Logging out...' : 'Log Out',
+                  style: AppTextStyles.bodyInterMedium14.copyWith(
+                    color: AppColors.errorRed,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
