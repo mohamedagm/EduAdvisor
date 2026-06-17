@@ -1,10 +1,31 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/user/data/models/current_user_model.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WelcomeCard extends StatelessWidget {
   const WelcomeCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CurrentUserCubit, CurrentUserState>(
+      builder: (context, state) {
+        final user = state is CurrentUserLoaded ? state.user : null;
+
+        return _WelcomeCardContent(user: user);
+      },
+    );
+  }
+}
+
+class _WelcomeCardContent extends StatelessWidget {
+  const _WelcomeCardContent({required this.user});
+
+  final CurrentUserModel? user;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +47,14 @@ class WelcomeCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 28,
-                child: Icon(Icons.person, size: 30),
+                backgroundImage: user?.profileImageUrl?.isNotEmpty == true
+                    ? NetworkImage(user!.profileImageUrl!)
+                    : null,
+                child: user?.profileImageUrl?.isNotEmpty == true
+                    ? null
+                    : const Icon(Icons.person, size: 30),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -42,7 +68,7 @@ class WelcomeCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Mohamed Ahmed',
+                      user?.displayName ?? 'Student',
                       style: AppTextStyles.bodyInterMedium18.copyWith(
                         color: AppColors.white,
                       ),
@@ -66,14 +92,18 @@ class WelcomeCard extends StatelessWidget {
               _StatItem(
                 icon: Icons.school_outlined,
                 label: 'GPA',
-                value: '3.3',
+                value: user?.displayGpa ?? '--',
               ),
               _StatItem(
                 icon: Icons.menu_book_outlined,
                 label: 'Credits',
-                value: '45',
+                value: user?.displayCredits ?? '--',
               ),
-              _StatItem(icon: Icons.trending_up, label: 'Level', value: '4'),
+              _StatItem(
+                icon: Icons.trending_up,
+                label: 'Level',
+                value: user?.displayLevel ?? '--',
+              ),
             ],
           ),
         ],
