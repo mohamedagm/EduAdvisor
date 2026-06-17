@@ -8,9 +8,11 @@ class AiInputField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.onSend,
+    this.isLoading = false,
   });
   final TextEditingController controller;
   final VoidCallback onSend;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,8 @@ class AiInputField extends StatelessWidget {
               ),
               child: TextField(
                 controller: controller,
+                enabled: !isLoading,
+                onSubmitted: (_) => onSend(),
                 decoration: InputDecoration(
                   hintStyle: AppTextStyles.interRegular16.copyWith(
                     color: AppColors.gray400,
@@ -39,14 +43,24 @@ class AiInputField extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           GestureDetector(
-            onTap: onSend,
+            onTap: isLoading ? null : onSend,
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                gradient: AppGradients.ai,
+                color: isLoading ? AppColors.gray300 : null,
+                gradient: isLoading ? null : AppGradients.ai,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(Icons.send, color: Colors.white),
+              child: isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppColors.white,
+                      ),
+                    )
+                  : const Icon(Icons.send, color: Colors.white),
             ),
           ),
         ],
