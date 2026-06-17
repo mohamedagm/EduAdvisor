@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../models/course.dart';
@@ -36,7 +37,7 @@ class AvailableCoursesSheet extends StatelessWidget {
                 ),
               ),
               IconButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => context.pop(),
                 icon: const Icon(Icons.close, color: AppColors.gray500),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),

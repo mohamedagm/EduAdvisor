@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
@@ -6,8 +7,6 @@ import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
-import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
-import 'package:edu_advisor/features/auth/login/views/forgot_password.dart';
 import 'package:edu_advisor/features/auth/signup/views/signup_view.dart';
 import 'package:edu_advisor/features/auth/widgets/auth_card.dart';
 import 'package:edu_advisor/features/auth/widgets/login_form.dart';
@@ -15,6 +14,7 @@ import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class AdvisorLoginScreen extends StatefulWidget {
   const AdvisorLoginScreen({super.key});
@@ -77,13 +77,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ForgotPasswordScreen(),
-                                ),
-                              );
+                              context.push(AppRoutes.forgotPassword);
                             },
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.deepPurple.shade400,
@@ -128,13 +122,8 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SignupScreen(
-                                    registerRole: RegisterRole.advisor,
-                                  ),
-                                ),
+                              onTap: () => context.push(
+                                AppRoutes.signupFor(RegisterRole.advisor.name),
                               ),
                               child: Text(
                                 'Sign Up',
@@ -164,10 +153,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
         title: 'Login Successful',
         description: 'Welcome back, ${state.response.user.fullName}',
       );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const AdvisorProfile()),
-      );
+      context.go(AppRoutes.advisorProfileSetup);
     }
 
     if (state is LoginFailure) {

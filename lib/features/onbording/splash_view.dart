@@ -1,7 +1,8 @@
 import 'dart:async';
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/features/onbording/onboarding_view.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -13,7 +14,7 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
   late final AnimationController _controller;
   late final AnimationController _glowController;
-  
+
   late final Animation<double> _logoScale;
   late final Animation<double> _logoFade;
   late final Animation<double> _chipsFade;
@@ -41,11 +42,17 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     )..repeat(reverse: true);
 
     _logoScale = Tween(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.2, 0.6, curve: Curves.easeOutBack)),
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.2, 0.6, curve: Curves.easeOutBack),
+      ),
     );
 
     _logoFade = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.2, 0.5, curve: Curves.easeIn)),
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.2, 0.5, curve: Curves.easeIn),
+      ),
     );
 
     _glowScale = Tween(begin: 1.0, end: 1.15).animate(
@@ -53,11 +60,17 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     );
 
     _chipsFade = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.6, 1.0, curve: Curves.easeIn)),
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.6, 1.0, curve: Curves.easeIn),
+      ),
     );
 
     _chipsSlide = Tween(begin: const Offset(0, 0.2), end: Offset.zero).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.6, 1.0, curve: Curves.easeOutCubic)),
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.6, 1.0, curve: Curves.easeOutCubic),
+      ),
     );
 
     Future.delayed(const Duration(milliseconds: 400), () {
@@ -68,14 +81,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
   void _startNavigationTimer() {
     _navigationTimer = Timer(const Duration(seconds: 4), () {
       if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const OnboardingView(),
-            transitionsBuilder: (_, animation, __, child) => FadeTransition(opacity: animation, child: child),
-            transitionDuration: const Duration(milliseconds: 800),
-          ),
-        );
+        context.go(AppRoutes.onboarding);
       }
     });
   }
@@ -98,7 +104,10 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppColors.white, AppColors.purplePrimary.withValues(alpha: 0.03)],
+            colors: [
+              AppColors.white,
+              AppColors.purplePrimary.withValues(alpha: 0.03),
+            ],
           ),
         ),
         child: SafeArea(
@@ -136,7 +145,10 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: RadialGradient(
-                    colors: [AppColors.purplePrimary.withValues(alpha: 0.1), Colors.transparent],
+                    colors: [
+                      AppColors.purplePrimary.withValues(alpha: 0.1),
+                      Colors.transparent,
+                    ],
                   ),
                 ),
               ),
@@ -148,7 +160,11 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                 shape: BoxShape.circle,
                 color: AppColors.white,
                 boxShadow: [
-                  BoxShadow(color: Color(0x0D000000), blurRadius: 20, offset: Offset(0, 10)),
+                  BoxShadow(
+                    color: Color(0x0D000000),
+                    blurRadius: 20,
+                    offset: Offset(0, 10),
+                  ),
                 ],
               ),
               child: ClipOval(
@@ -157,7 +173,11 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                   child: Image.asset(
                     'assets/images/EduAdvisor_Logo.png',
                     fit: BoxFit.contain,
-                    errorBuilder: (_, __, ___) => const Icon(Icons.school, size: 70, color: AppColors.purplePrimary),
+                    errorBuilder: (_, __, ___) => const Icon(
+                      Icons.school,
+                      size: 70,
+                      color: AppColors.purplePrimary,
+                    ),
                   ),
                 ),
               ),
@@ -183,7 +203,11 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
         const SizedBox(height: 8),
         Text(
           "Your AI-Powered Academic Companion",
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.gray500),
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: AppColors.gray500,
+          ),
         ),
       ],
     );
@@ -213,7 +237,13 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: AppColors.gray100),
-        boxShadow: const [BoxShadow(color: Color(0x05000000), blurRadius: 10, offset: Offset(0, 4))],
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x05000000),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -222,7 +252,11 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
           const SizedBox(width: 8),
           Text(
             text,
-            style: const TextStyle(color: AppColors.gray800, fontWeight: FontWeight.w600, fontSize: 13),
+            style: const TextStyle(
+              color: AppColors.gray800,
+              fontWeight: FontWeight.w600,
+              fontSize: 13,
+            ),
           ),
         ],
       ),
@@ -238,7 +272,8 @@ class _LoadingDots extends StatefulWidget {
   State<_LoadingDots> createState() => _LoadingDotsState();
 }
 
-class _LoadingDotsState extends State<_LoadingDots> with SingleTickerProviderStateMixin {
+class _LoadingDotsState extends State<_LoadingDots>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1200),
@@ -263,14 +298,18 @@ class _LoadingDotsState extends State<_LoadingDots> with SingleTickerProviderSta
       animation: _controller,
       builder: (context, _) {
         final double progress = (_controller.value - (index * 0.15)) % 1.0;
-        final double bounce = Curves.easeInOut.transform(progress < 0.5 ? progress * 2 : (1 - progress) * 2);
+        final double bounce = Curves.easeInOut.transform(
+          progress < 0.5 ? progress * 2 : (1 - progress) * 2,
+        );
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 4),
           height: 8,
           width: 8,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: widget.color.withValues(alpha: 0.2 + (0.8 * bounce.clamp(0, 1))),
+            color: widget.color.withValues(
+              alpha: 0.2 + (0.8 * bounce.clamp(0, 1)),
+            ),
           ),
           transform: Matrix4.translationValues(0, -6 * bounce, 0),
         );
@@ -278,4 +317,3 @@ class _LoadingDotsState extends State<_LoadingDots> with SingleTickerProviderSta
     );
   }
 }
-

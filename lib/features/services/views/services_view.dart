@@ -1,10 +1,9 @@
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import 'course_recommendations_view.dart';
-import 'registration_status_view.dart';
-import 'course_registration_view.dart';
 
 class ServicesView extends StatelessWidget {
   const ServicesView({super.key});
@@ -55,12 +54,7 @@ class ServicesView extends StatelessWidget {
             const SizedBox(height: 16),
             _buildServiceCard(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const CourseRecommendationsView(),
-                  ),
-                );
+                context.push(AppRoutes.courseRecommendations);
               },
               iconBgColor: AppColors.bluePrimary,
               iconData: Icons.lightbulb_outline,
@@ -79,12 +73,7 @@ class ServicesView extends StatelessWidget {
             const SizedBox(height: 16),
             _buildServiceCard(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const CourseRegistrationView(),
-                  ),
-                );
+                context.push(AppRoutes.courseRegistration);
               },
               iconBgColor: const Color(0xFFF97316),
               iconData: Icons.assignment_outlined,
@@ -103,12 +92,7 @@ class ServicesView extends StatelessWidget {
             const SizedBox(height: 16),
             _buildServiceCard(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const RegistrationStatusView(),
-                  ),
-                );
+                context.push(AppRoutes.registrationStatus);
               },
               iconBgColor: AppColors.successGreen,
               iconData: Icons.check_circle_outline,

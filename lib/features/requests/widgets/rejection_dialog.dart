@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RejectionDialog extends StatefulWidget {
   final Function(String reason) onConfirm;
@@ -57,7 +58,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
           children: [
             Expanded(
               child: OutlinedButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => context.pop(),
                 style: OutlinedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -76,7 +77,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
                 onPressed: () {
                   if (_controller.text.trim().isNotEmpty) {
                     widget.onConfirm(_controller.text.trim());
-                    Navigator.pop(context);
+                    context.pop();
                   }
                 },
                 style: ElevatedButton.styleFrom(

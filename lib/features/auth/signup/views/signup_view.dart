@@ -1,11 +1,11 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/data/models/register_advisor_request_model.dart';
 import 'package:edu_advisor/features/auth/data/models/register_student_request_model.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
-import 'package:edu_advisor/features/auth/login/views/verfy_code_screen.dart';
 import 'package:edu_advisor/features/auth/signup/widgets/custom_text_field.dart';
 import 'package:edu_advisor/features/auth/signup/widgets/signup_filed_label.dart';
 import 'package:edu_advisor/features/auth/signup/widgets/signup_header.dart';
@@ -13,6 +13,7 @@ import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:edu_advisor/valdations/valditors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 enum RegisterRole { student, advisor }
 
@@ -172,10 +173,7 @@ class _SignupScreenState extends State<SignupScreen> {
         description: message,
       );
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const VerifyCodeScreen()),
-      );
+      context.push(AppRoutes.verifyCode);
     }
 
     if (state is RegisterStudentFailure || state is RegisterAdvisorFailure) {

@@ -1,11 +1,12 @@
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
-import 'package:edu_advisor/features/auth/login/views/verfy_code_screen.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/custom_text_button.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
@@ -82,14 +83,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   GradientElevatedButton(
                     buttonText: 'Send Verfication code ',
                     onPressed: () {
-                      // Navigate to verify screen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const VerifyCodeScreen(),
-                        ),
-                      );
+                      context.push(AppRoutes.verifyCode);
                     },
                   ),
 
@@ -107,7 +101,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       ),
                       CustomTextButton(
                         onTap: () {
-                          Navigator.pop(context);
+                          context.pop();
                         },
                         text: 'Back to Login',
                       ),

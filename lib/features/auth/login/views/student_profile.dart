@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/auth/widgets/skip_botton.dart';
-import 'package:edu_advisor/features/main/main_view.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class StudentProfile extends StatefulWidget {
@@ -124,13 +125,7 @@ class _StudentProfileState extends State<StudentProfile> {
                   const SizedBox(height: 32),
                   GradientElevatedButton(
                     onPressed: () {
-                   
-                       Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MainView(),
-                        ),
-                      );
+                      context.go(AppRoutes.studentMain);
                     },
                     buttonText: 'Continue',
                   ),
@@ -138,13 +133,8 @@ class _StudentProfileState extends State<StudentProfile> {
                   // Skip Button
                   SkipButton(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MainView(),
-                        ),
-                      );
-                    }, 
+                      context.go(AppRoutes.studentMain);
+                    },
                   ),
                 ],
               ),

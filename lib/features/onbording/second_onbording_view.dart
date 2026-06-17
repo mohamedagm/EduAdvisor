@@ -7,10 +7,7 @@ import 'package:flutter/material.dart';
 class SecondOnBordaingView extends StatelessWidget {
   final VoidCallback onGetStarted;
 
-  const SecondOnBordaingView({
-    super.key,
-    required this.onGetStarted,
-  });
+  const SecondOnBordaingView({super.key, required this.onGetStarted});
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +56,7 @@ class SecondOnBordaingView extends StatelessWidget {
         const SizedBox(height: 40),
         Text(
           'Track Your Progress',
-          style: AppTextStyles.heading1_20b.copyWith(
-            color: AppColors.gray800,
-          ),
+          style: AppTextStyles.heading1_20b.copyWith(color: AppColors.gray800),
         ),
         const SizedBox(height: 16),
         Padding(

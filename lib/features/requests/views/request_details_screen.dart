@@ -45,8 +45,6 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
         "The request has been moved to the rejected list.",
       );
     }
-
-    // Future.delayed(const Duration(seconds: 1), () => Navigator.pop(context));
   }
 
   void _showSuccessToast(String title, String desc) {

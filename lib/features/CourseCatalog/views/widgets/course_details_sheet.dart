@@ -2,6 +2,7 @@ import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/tag.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CourseDetailsSheet extends StatelessWidget {
   const CourseDetailsSheet({super.key});
@@ -59,7 +60,7 @@ class CourseDetailsSheet extends StatelessWidget {
                       color: AppColors.gray100,
                     ),
                     child: IconButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => context.pop(),
                       padding: EdgeInsets.zero,
                       icon: const Icon(Icons.close, size: 20),
                     ),

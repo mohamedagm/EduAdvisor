@@ -1,6 +1,6 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:edu_advisor/core/routing/app_router.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/features/onbording/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,9 +20,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      home:  SplashView(),
+      routerConfig: appRouter,
     );
   }
 }

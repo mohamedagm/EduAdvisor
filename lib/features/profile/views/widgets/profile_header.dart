@@ -1,12 +1,33 @@
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
-import 'package:edu_advisor/features/profile/views/notifications_view.dart';
-import 'package:edu_advisor/features/profile/views/settings_view.dart';
+import 'package:edu_advisor/features/user/data/models/current_user_model.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CurrentUserCubit, CurrentUserState>(
+      builder: (context, state) {
+        final user = state is CurrentUserLoaded ? state.user : null;
+
+        return _ProfileHeaderContent(user: user);
+      },
+    );
+  }
+}
+
+class _ProfileHeaderContent extends StatelessWidget {
+  const _ProfileHeaderContent({required this.user});
+
+  final CurrentUserModel? user;
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +53,7 @@ class ProfileHeader extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NotificationsView(),
-                        ),
-                      );
+                      context.push(AppRoutes.notifications);
                     },
                     icon: Icon(
                       Icons.notifications_none,
@@ -49,10 +65,7 @@ class ProfileHeader extends StatelessWidget {
 
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SettingsView()),
-                      );
+                      context.push(AppRoutes.settings);
                     },
                     icon: Icon(
                       Icons.settings,
@@ -69,9 +82,14 @@ class ProfileHeader extends StatelessWidget {
 
           Row(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 35,
-                child: Icon(Icons.person, size: 40),
+                backgroundImage: user?.profileImageUrl?.isNotEmpty == true
+                    ? NetworkImage(user!.profileImageUrl!)
+                    : null,
+                child: user?.profileImageUrl?.isNotEmpty == true
+                    ? null
+                    : const Icon(Icons.person, size: 40),
               ),
 
               const SizedBox(width: 16),
@@ -80,14 +98,14 @@ class ProfileHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Aliaa Mohamed",
+                    user?.displayName ?? "Student",
                     style: AppTextStyles.heading3PoppinsReg16.copyWith(
                       color: AppColors.white,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
-                    "ID: 2020345",
+                    "ID: ${user?.displayId ?? '--'}",
                     style: AppTextStyles.bodyInterMedium14.copyWith(
                       color: AppColors.white,
                     ),
@@ -96,7 +114,7 @@ class ProfileHeader extends StatelessWidget {
                   Chip(
                     backgroundColor: AppColors.infoBlue.withValues(alpha: 0.8),
                     label: Text(
-                      "Information System",
+                      user?.displayDepartment ?? "Department",
                       style: AppTextStyles.bodyInterRegular12.copyWith(
                         color: AppColors.white,
                       ),

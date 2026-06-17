@@ -349,7 +349,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
 enum StatusType { error, success, info }
 
-
 ////////Note:
 ///in this screen need to handle tex field validation and error handling
 ///also need to handle resend code and verify code logic with API integration

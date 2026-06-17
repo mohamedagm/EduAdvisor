@@ -23,12 +23,7 @@ class FirstOnBordaingView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CustomTextButton(
-                onTap: onSkip,
-                text: 'Skip',
-              ),
-            ],
+            children: [CustomTextButton(onTap: onSkip, text: 'Skip')],
           ),
         ),
         const Spacer(),
@@ -63,9 +58,7 @@ class FirstOnBordaingView extends StatelessWidget {
         const SizedBox(height: 40),
         Text(
           'AI-Powered Recommendations',
-          style: AppTextStyles.heading1_20b.copyWith(
-            color: AppColors.gray800,
-          ),
+          style: AppTextStyles.heading1_20b.copyWith(color: AppColors.gray800),
         ),
         const SizedBox(height: 16),
         Padding(

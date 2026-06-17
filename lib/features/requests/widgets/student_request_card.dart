@@ -1,8 +1,9 @@
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
-import 'package:edu_advisor/features/requests/views/request_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class StudentRequestCard extends StatelessWidget {
   final StudentRequest request;
@@ -32,12 +33,7 @@ class StudentRequestCard extends StatelessWidget {
 
         return GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RequestDetailsScreen(request: request),
-              ),
-            );
+            context.push(AppRoutes.requestDetails, extra: request);
           },
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),

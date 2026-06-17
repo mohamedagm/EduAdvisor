@@ -1,8 +1,9 @@
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/features/auth/login/views/choose_user_role.dart';
 import 'package:edu_advisor/features/onbording/first_onbording_view.dart';
 import 'package:edu_advisor/features/onbording/second_onbording_view.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -23,17 +24,11 @@ class _OnboardingViewState extends State<OnboardingView> {
   }
 
   void _onSkip() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const ChooseUserRole()),
-    );
+    context.go(AppRoutes.chooseUserRole);
   }
 
   void _onGetStarted() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const ChooseUserRole()),
-    );
+    context.go(AppRoutes.chooseUserRole);
   }
 
   @override
@@ -58,13 +53,8 @@ class _OnboardingViewState extends State<OnboardingView> {
                   });
                 },
                 children: [
-                  FirstOnBordaingView(
-                    onNext: _onNext,
-                    onSkip: _onSkip,
-                  ),
-                  SecondOnBordaingView(
-                    onGetStarted: _onGetStarted,
-                  ),
+                  FirstOnBordaingView(onNext: _onNext, onSkip: _onSkip),
+                  SecondOnBordaingView(onGetStarted: _onGetStarted),
                 ],
               ),
             ),

@@ -1,11 +1,12 @@
 import 'dart:io';
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
-import 'package:edu_advisor/features/advisor_nav/advisor_home_screen.dart';
 import 'package:edu_advisor/features/auth/widgets/skip_botton.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AdvisorProfile extends StatefulWidget {
@@ -123,13 +124,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                   const SizedBox(height: 32),
                   GradientElevatedButton(
                     onPressed: () {
-                      // For now, just navigate to the next screen without validation
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomeScreen(), /////
-                        ),
-                      );
+                      context.go(AppRoutes.advisorMain);
                     },
                     buttonText: 'Continue',
                   ),
@@ -137,14 +132,8 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                   // Skip Button
                   SkipButton(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                            HomeScreen(), //navigate to advisor
-                        ),
-                      );
-                    }, // You can implement skip functionality if needed
+                      context.go(AppRoutes.advisorMain);
+                    },
                   ),
                 ],
               ),

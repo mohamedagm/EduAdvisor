@@ -1,9 +1,8 @@
-
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/features/auth/login/views/advisor_login.dart';
-import 'package:edu_advisor/features/auth/login/views/student_login.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ChooseUserRole extends StatelessWidget {
   const ChooseUserRole({super.key});
@@ -18,12 +17,9 @@ class ChooseUserRole extends StatelessWidget {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-          GradiantContainer(
-  mainText: "Your Academic Success Partner",
- 
-),
+            GradiantContainer(mainText: "Your Academic Success Partner"),
             Container(
-            width: double.infinity,
+              width: double.infinity,
               margin: EdgeInsets.only(
                 top: screenHeight * 0.30, // يبدأ من مسافة متناسبة مع طول الشاشة
                 left: 20,
@@ -70,12 +66,7 @@ class ChooseUserRole extends StatelessWidget {
                     subtitle: "Access courses, grades & schedule",
                     color: AppColors.purplePrimary,
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const StudentLoginScreen(),
-                        ),
-                      );
+                      context.push(AppRoutes.studentLogin);
                     },
                   ),
 
@@ -88,12 +79,7 @@ class ChooseUserRole extends StatelessWidget {
                     subtitle: "Manage students & academic advising",
                     color: AppColors.purplePrimary,
                     onTap: () {
-                       Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => AdvisorLoginScreen(),
-  ),
-);
+                      context.push(AppRoutes.advisorLogin);
                     },
                   ),
 
