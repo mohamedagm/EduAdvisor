@@ -1,5 +1,4 @@
-import 'dart:async';
-import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/core/routing/app_startup_service.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -21,13 +20,13 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
   late final Animation<Offset> _chipsSlide;
   late final Animation<double> _glowScale;
 
-  Timer? _navigationTimer;
+  final AppStartupService _startupService = AppStartupService();
 
   @override
   void initState() {
     super.initState();
     _initAnimations();
-    _startNavigationTimer();
+    _resolveStartupRoute();
   }
 
   void _initAnimations() {
@@ -78,17 +77,21 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     });
   }
 
-  void _startNavigationTimer() {
-    _navigationTimer = Timer(const Duration(seconds: 4), () {
-      if (mounted) {
-        context.go(AppRoutes.onboarding);
-      }
-    });
+  Future<void> _resolveStartupRoute() async {
+    final results = await Future.wait([
+      Future.delayed(const Duration(seconds: 4)),
+      _startupService.resolveInitialRoute(),
+    ]);
+
+    if (!mounted) {
+      return;
+    }
+
+    context.go(results[1] as String);
   }
 
   @override
   void dispose() {
-    _navigationTimer?.cancel();
     _controller.dispose();
     _glowController.dispose();
     super.dispose();
