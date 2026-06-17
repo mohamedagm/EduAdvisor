@@ -8,6 +8,7 @@ class CurrentUserModel {
     required this.rawData,
     this.studentCode,
     this.departmentName,
+    this.phone,
     this.profileImageUrl,
     this.gpa,
     this.completedCreditHours,
@@ -21,6 +22,7 @@ class CurrentUserModel {
   final bool isVerified;
   final String? studentCode;
   final String? departmentName;
+  final String? phone;
   final String? profileImageUrl;
   final num? gpa;
   final num? completedCreditHours;
@@ -44,6 +46,7 @@ class CurrentUserModel {
       isVerified: json['isVerified'] as bool? ?? false,
       studentCode: profile['studentCode'] as String?,
       departmentName: profile['departmentName'] as String?,
+      phone: json['phone'] as String?,
       profileImageUrl: json['profileImageUrl'] as String?,
       gpa: profile['gpa'] as num?,
       completedCreditHours: profile['completedHours'] as num?,
@@ -56,6 +59,7 @@ class CurrentUserModel {
   String get displayId => studentCode?.isNotEmpty == true ? studentCode! : id;
   String get displayDepartment =>
       departmentName?.isNotEmpty == true ? departmentName! : 'Department';
+  String get displayPhone => phone?.isNotEmpty == true ? phone! : 'Not set';
   String get displayGpa => gpa?.toString() ?? '--';
   String get displayCredits => completedCreditHours?.toString() ?? '--';
   String get displayLevel => level?.toString() ?? '--';

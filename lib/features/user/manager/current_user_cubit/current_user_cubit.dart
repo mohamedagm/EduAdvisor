@@ -10,13 +10,20 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
   final UserRepo _userRepo;
 
   Future<void> getMe() async {
-    emit(const CurrentUserLoading());
+    final cachedUser = await _userRepo.getCachedMe();
+
+    if (cachedUser != null) {
+      emit(CurrentUserLoaded(cachedUser));
+    } else {
+      emit(const CurrentUserLoading());
+    }
 
     final result = await _userRepo.getMe();
 
-    result.fold(
-      (failure) => emit(CurrentUserFailure(failure)),
-      (user) => emit(CurrentUserLoaded(user)),
-    );
+    result.fold((failure) {
+      if (cachedUser == null) {
+        emit(CurrentUserFailure(failure));
+      }
+    }, (user) => emit(CurrentUserLoaded(user)));
   }
 }

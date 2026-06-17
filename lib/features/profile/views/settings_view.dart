@@ -4,6 +4,9 @@ import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
+import 'package:edu_advisor/features/user/data/repo/user_repo.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -27,9 +30,18 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          AuthCubit(authRepo: AuthRepo(apiConsumer: DioConsumer())),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              AuthCubit(authRepo: AuthRepo(apiConsumer: DioConsumer())),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CurrentUserCubit(userRepo: UserRepo(apiConsumer: DioConsumer()))
+                ..getMe(),
+        ),
+      ],
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: _handleAuthState,
         builder: (context, state) {
@@ -116,76 +128,90 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   Widget _buildProfileSection() {
-    return _buildCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return BlocBuilder<CurrentUserCubit, CurrentUserState>(
+      builder: (context, state) {
+        final user = state is CurrentUserLoaded ? state.user : null;
+
+        return _buildCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.person_outline, color: AppColors.bluePrimary),
-              const SizedBox(width: 8),
-              Text(
-                'Profile Information',
-                style: AppTextStyles.bodyInterMedium18.copyWith(
-                  color: AppColors.gray800,
+              Row(
+                children: [
+                  const Icon(
+                    Icons.person_outline,
+                    color: AppColors.bluePrimary,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Profile Information',
+                    style: AppTextStyles.bodyInterMedium18.copyWith(
+                      color: AppColors.gray800,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.gray50,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.gray200),
                 ),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: AppColors.gray200,
+                      backgroundImage: user?.profileImageUrl?.isNotEmpty == true
+                          ? NetworkImage(user!.profileImageUrl!)
+                          : null,
+                      child: user?.profileImageUrl?.isNotEmpty == true
+                          ? null
+                          : const Icon(Icons.person, color: AppColors.gray500),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user?.displayName ?? '--',
+                            style: AppTextStyles.bodyInterMedium14.copyWith(
+                              color: AppColors.gray900,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            user?.email ?? '--',
+                            style: AppTextStyles.bodyInterRegular12.copyWith(
+                              color: AppColors.gray500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Icon(Icons.chevron_right, color: AppColors.gray400),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildInfoRow(
+                icon: Icons.mail_outline,
+                title: 'Email',
+                subtitle: user?.email ?? '--',
+              ),
+              const SizedBox(height: 16),
+              _buildInfoRow(
+                icon: Icons.smartphone_outlined,
+                title: 'Phone Number',
+                subtitle: user?.displayPhone ?? '--',
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: AppColors.gray50,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.gray200),
-            ),
-            child: Row(
-              children: [
-                const CircleAvatar(
-                  radius: 20,
-                  backgroundColor: AppColors.gray200,
-                  child: Icon(Icons.person, color: AppColors.gray500),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'ALiaa Mohamed',
-                        style: AppTextStyles.bodyInterMedium14.copyWith(
-                          color: AppColors.gray900,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        'am9177@fayoum.edu.eg',
-                        style: AppTextStyles.bodyInterRegular12.copyWith(
-                          color: AppColors.gray500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Icon(Icons.chevron_right, color: AppColors.gray400),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          _buildInfoRow(
-            icon: Icons.mail_outline,
-            title: 'Email',
-            subtitle: 'am9177@fayoum.edu.eg',
-          ),
-          const SizedBox(height: 16),
-          _buildInfoRow(
-            icon: Icons.smartphone_outlined,
-            title: 'Phone Number',
-            subtitle: 'Not set',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 

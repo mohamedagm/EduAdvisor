@@ -3,18 +3,22 @@ import 'package:edu_advisor/core/api/api_constants.dart';
 import 'package:edu_advisor/core/api/api_endpoints.dart';
 import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/services/token_storage_service.dart';
+import 'package:edu_advisor/core/services/user_cache_service.dart';
 import 'package:flutter/foundation.dart';
 
 class ApiInterceptor extends QueuedInterceptor {
   ApiInterceptor({
     this.language = ApiConstants.defaultLanguage,
     TokenStorageService? tokenStorageService,
+    UserCacheService? userCacheService,
     Dio? refreshDio,
   }) : _tokenStorageService = tokenStorageService ?? TokenStorageService(),
+       _userCacheService = userCacheService ?? UserCacheService(),
        _refreshDio = refreshDio ?? Dio(_refreshBaseOptions());
 
   final String language;
   final TokenStorageService _tokenStorageService;
+  final UserCacheService _userCacheService;
   final Dio _refreshDio;
 
   @override
@@ -52,7 +56,7 @@ class ApiInterceptor extends QueuedInterceptor {
     try {
       final refreshed = await _refreshToken();
       if (!refreshed) {
-        await _tokenStorageService.clearTokens();
+        await _clearSession();
         handler.next(err);
         return;
       }
@@ -61,7 +65,7 @@ class ApiInterceptor extends QueuedInterceptor {
       handler.resolve(retryResponse);
     } catch (e) {
       debugPrint('Refresh token failed: $e');
-      await _tokenStorageService.clearTokens();
+      await _clearSession();
       handler.next(err);
     }
   }
@@ -147,6 +151,11 @@ class ApiInterceptor extends QueuedInterceptor {
     }
 
     return data;
+  }
+
+  Future<void> _clearSession() async {
+    await _tokenStorageService.clearTokens();
+    await _userCacheService.clearCurrentUser();
   }
 
   void _logRequest(RequestOptions options) {
