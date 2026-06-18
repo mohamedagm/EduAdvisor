@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../models/course.dart';
+import '../../data/models/available_course_model.dart';
 import 'course_icon_widget.dart';
 
 class SelectedCourseItem extends StatelessWidget {
-  final Course course;
+  final AvailableCourseModel course;
   final VoidCallback onRemove;
 
   const SelectedCourseItem({
@@ -38,14 +38,14 @@ class SelectedCourseItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      course.id,
+                      course.displayCode,
                       style: AppTextStyles.heading3PoppinsReg16.copyWith(
                         color: AppColors.gray900,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      course.name,
+                      course.displayName,
                       style: AppTextStyles.poppinsRegular14.copyWith(
                         color: AppColors.gray500,
                       ),
@@ -55,33 +55,40 @@ class SelectedCourseItem extends StatelessWidget {
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(color: AppColors.gray300),
                           ),
                           child: Text(
-                            '${course.credits} Credits',
+                            '${course.creditHours} Credits',
                             style: AppTextStyles.bodyInterRegular12.copyWith(
                               color: AppColors.gray900,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        if (course.prerequisites.isNotEmpty) ...[
+                        if (course.isRetake) ...[
                           const SizedBox(width: 8),
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 4),
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.blueLight,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                  color: AppColors.bluePrimary.withValues(alpha: 0.2)),
+                                color: AppColors.bluePrimary.withValues(
+                                  alpha: 0.2,
+                                ),
+                              ),
                             ),
                             child: Text(
-                              'Has Prerequisites',
+                              'Retake',
                               style: AppTextStyles.bodyInterRegular12.copyWith(
                                 color: AppColors.bluePrimary,
                                 fontWeight: FontWeight.w500,
@@ -106,10 +113,10 @@ class SelectedCourseItem extends StatelessWidget {
               ),
             ],
           ),
-          if (course.prerequisites.isNotEmpty) ...[
+          if (course.isRetake) ...[
             const SizedBox(height: 12),
             Text(
-              'Prerequisites: ${course.prerequisites.join(", ")}',
+              'This course is marked as a retake.',
               style: AppTextStyles.bodyInterRegular12.copyWith(
                 color: AppColors.gray500,
               ),

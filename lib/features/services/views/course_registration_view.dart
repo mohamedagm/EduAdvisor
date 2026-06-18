@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/api/dio_consumer.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/theme/app_gradiants.dart';
-import '../models/course.dart';
+import '../data/models/available_course_model.dart';
+import '../data/repo/course_registration_repo.dart';
+import '../manager/course_registration_cubit/course_registration_cubit.dart';
 import 'widgets/course_status_card.dart';
 import 'widgets/empty_courses_card.dart';
 import 'widgets/selected_course_item.dart';
@@ -18,12 +22,12 @@ class CourseRegistrationView extends StatefulWidget {
 }
 
 class _CourseRegistrationViewState extends State<CourseRegistrationView> {
-  final List<Course> _selectedCourses = [];
+  final List<AvailableCourseModel> _selectedCourses = [];
   final int _maxCredits = 18;
   final int _minCredits = 12;
 
   int get _currentCredits =>
-      _selectedCourses.fold(0, (sum, course) => sum + course.credits);
+      _selectedCourses.fold(0, (sum, course) => sum + course.creditHours);
 
   void _showAvailableCourses() {
     showModalBottomSheet(
@@ -38,40 +42,47 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
               backgroundColor: Colors.transparent,
               body: StatefulBuilder(
                 builder: (context, setModalState) {
-                  return AvailableCoursesSheet(
-                    selectedCourseIds: _selectedCourses
-                        .map((e) => e.id)
-                        .toSet(),
-                    onCourseToggled: (course) {
-                      final isSelected = _selectedCourses.any(
-                        (c) => c.id == course.id,
-                      );
-                      if (isSelected) {
-                        setState(() {
-                          _selectedCourses.removeWhere(
-                            (c) => c.id == course.id,
-                          );
-                        });
-                        setModalState(() {});
-                      } else {
-                        if (_currentCredits + course.credits <= _maxCredits) {
+                  return BlocProvider(
+                    create: (context) => CourseRegistrationCubit(
+                      repo: CourseRegistrationRepo(apiConsumer: DioConsumer()),
+                    )..getAvailableCourses(),
+                    child: AvailableCoursesSheet(
+                      selectedCourseIds: _selectedCourses
+                          .map((e) => e.semesterCourseId)
+                          .toSet(),
+                      onCourseToggled: (course) {
+                        final isSelected = _selectedCourses.any(
+                          (c) => c.semesterCourseId == course.semesterCourseId,
+                        );
+                        if (isSelected) {
                           setState(() {
-                            _selectedCourses.add(course);
+                            _selectedCourses.removeWhere(
+                              (c) =>
+                                  c.semesterCourseId == course.semesterCourseId,
+                            );
                           });
                           setModalState(() {});
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Cannot exceed maximum credit limit.',
+                          if (_currentCredits + course.creditHours <=
+                              _maxCredits) {
+                            setState(() {
+                              _selectedCourses.add(course);
+                            });
+                            setModalState(() {});
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'Cannot exceed maximum credit limit.',
+                                ),
+                                backgroundColor: AppColors.errorRed,
+                                behavior: SnackBarBehavior.floating,
                               ),
-                              backgroundColor: AppColors.errorRed,
-                              behavior: SnackBarBehavior.floating,
-                            ),
-                          );
+                            );
+                          }
                         }
-                      }
-                    },
+                      },
+                    ),
                   );
                 },
               ),
@@ -82,9 +93,11 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
     );
   }
 
-  void _removeCourse(Course course) {
+  void _removeCourse(AvailableCourseModel course) {
     setState(() {
-      _selectedCourses.removeWhere((c) => c.id == course.id);
+      _selectedCourses.removeWhere(
+        (c) => c.semesterCourseId == course.semesterCourseId,
+      );
     });
   }
 
