@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/reset_password_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_state.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
+import 'package:edu_advisor/features/auth/data/repo/reset_password_repo.dart';
 import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/login/views/new_pass.dart';
 import 'package:edu_advisor/features/auth/login/views/student_profile.dart';
@@ -89,6 +92,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     context.read<VerifyCodeCubit>().verifyOtp(
           email: widget.email,
           code: otpCode,
+            isFromForgotPassword: widget.isFromForgotPassword,
         );
   }
 
@@ -142,37 +146,25 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
           Future.delayed(const Duration(seconds: 1), () {
             if (mounted) {
-              // 👈 3. هنا السحر كله: شيكنا الأول لو المستخدم جاي من شاشة Forgot Password
-              if (widget.isFromForgotPassword) {
-                // ── 🎯 التوجيه لشاشة تغيير الباسورد وباصينا الإيميل والـ Token (الكود) ──
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => NewPasswordScreen(
-                        role: widget.role,
-                      email: widget.email,
-                      token: otpCode,
-                    ),
-                  ),
-                );
-              } else {
-                // ── 🔄 التوجيه القديم بتاعك الخاص بالـ Register بدون أي تغيير ──
-                if (widget.role == RegisterRole.student) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => StudentProfile(
-                        fullName: state.response.data?['fullName'] ?? '',
-                      ),
-                    ),
-                  );
-                } else {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const AdvisorProfile()),
-                  );
-                }
-              }
+            if (widget.isFromForgotPassword) {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (_) => BlocProvider(
+        create: (_) => ResetPasswordCubit(
+          resetPasswordRepo: ResetPasswordRepo(
+            apiConsumer: DioConsumer(),
+          ),
+        ),
+        child: NewPasswordScreen(
+          role: widget.role,
+          email: widget.email,
+          token: state.response.data ?? '',
+        ),
+      ),
+    ),
+  );
+}
             }
           });
         }
