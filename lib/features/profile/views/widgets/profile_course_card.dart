@@ -1,23 +1,17 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/profile/data/models/student_course_model.dart';
 import 'package:flutter/material.dart';
 
 class ProfileCourseCard extends StatelessWidget {
-  final String code;
-  final String name;
-  final double progress;
-  final int credits;
+  const ProfileCourseCard({super.key, required this.course});
 
-  const ProfileCourseCard({
-    super.key,
-    required this.code,
-    required this.name,
-    required this.progress,
-    required this.credits,
-  });
+  final StudentCourseModel course;
 
   @override
   Widget build(BuildContext context) {
+    final progress = course.progress;
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -51,10 +45,15 @@ class ProfileCourseCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(code, style: AppTextStyles.heading3PoppinsReg16),
+                    Text(
+                      course.displayCode,
+                      style: AppTextStyles.heading3PoppinsReg16,
+                    ),
                     const SizedBox(height: 2),
                     Text(
-                      name,
+                      course.displayName,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.poppinsRegular14.copyWith(
                         color: AppColors.gray600,
                       ),
@@ -73,7 +72,7 @@ class ProfileCourseCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '$credits cr',
+                    '${course.displayCreditHours} cr',
                     style: AppTextStyles.poppinsRegular14.copyWith(
                       color: AppColors.gray600,
                     ),

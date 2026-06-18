@@ -17,6 +17,7 @@ class ApiEndpoints {
   static const String validateToken = '/api/Auth/validate-token';
 
   static const String courses = '/api/v1/Courses';
+  static const String myCourses = '/api/v1/Students/my-courses';
 
   static const String aiAdvisorChat = 'https://advisor.flowlogichub.space/chat';
 }
