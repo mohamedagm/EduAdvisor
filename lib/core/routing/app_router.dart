@@ -12,12 +12,12 @@ import 'package:edu_advisor/features/main/main_view.dart';
 import 'package:edu_advisor/features/onbording/onboarding_view.dart';
 import 'package:edu_advisor/features/onbording/splash_view.dart';
 import 'package:edu_advisor/features/profile/views/notifications_view.dart';
-import 'package:edu_advisor/features/profile/views/settings_view.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
 import 'package:edu_advisor/features/requests/views/request_details_screen.dart';
 import 'package:edu_advisor/features/services/views/course_recommendations_view.dart';
 import 'package:edu_advisor/features/services/views/course_registration_view.dart';
 import 'package:edu_advisor/features/services/views/registration_status_view.dart';
+import 'package:edu_advisor/features/settings/views/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

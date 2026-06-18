@@ -17,7 +17,7 @@ class AppRoutes {
   static const String advisorMain = '/advisor';
 
   static const String notifications = '/profile/notifications';
-  static const String settings = '/profile/settings';
+  static const String settings = '/settings';
 
   static const String courseRecommendations = '/services/recommendations';
   static const String courseRegistration = '/services/registration';
