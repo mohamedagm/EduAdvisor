@@ -1,5 +1,6 @@
 
 import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/login/views/advisor_login.dart';
 import 'package:edu_advisor/features/auth/login/views/student_login.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
@@ -73,7 +74,9 @@ class ChooseUserRole extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const StudentLoginScreen(),
+                          builder: (context) => const StudentLoginScreen(
+                            registerRole: RegisterRole.student,
+                          ),
                         ),
                       );
                     },
