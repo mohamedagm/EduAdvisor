@@ -10,23 +10,22 @@ class VerifyCodeCubit extends Cubit<VerifyCodeState> {
   final VerifyCodeRepo _verifyCodeRepo;
 
   Future<void> verifyOtp({
-    required String email,
-    required String code,
-  }) async {
-    if (state is VerifyOtpLoading) return;
+  required String email,
+  required String code,
+  bool isFromForgotPassword = false, // ✅
+}) async {
+  if (state is VerifyOtpLoading) return;
+  emit(const VerifyOtpLoading());
 
-    emit(const VerifyOtpLoading());
+  final result = isFromForgotPassword
+      ? await _verifyCodeRepo.verifyResetOtp(email: email, code: code) // ✅
+      : await _verifyCodeRepo.verifyOtp(email: email, code: code);
 
-    final result = await _verifyCodeRepo.verifyOtp(
-      email: email,
-      code: code,
-    );
-
-    result.fold(
-      (failure) => emit(VerifyOtpFailure(failure)),
-      (response) => emit(VerifyOtpSuccess(response)),
-    );
-  }
+  result.fold(
+    (failure) => emit(VerifyOtpFailure(failure)),
+    (response) => emit(VerifyOtpSuccess(response)),
+  );
+}
 
   Future<void> resendOtp({required String email}) async {
     if (state is ResendOtpLoading) return;

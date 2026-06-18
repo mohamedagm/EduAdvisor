@@ -4,9 +4,11 @@ import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/departments_cubit.dart';
 import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
+import 'package:edu_advisor/features/auth/data/repo/departments_repo.dart';
 import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/login/views/forgot_password.dart';
 import 'package:edu_advisor/features/auth/signup/views/advisors_signup.dart';
@@ -78,12 +80,12 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.push(
+                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       const ForgotPasswordScreen(
-                                            registerRole: RegisterRole.advisor,
+                                        registerRole: RegisterRole.advisor,
                                       ),
                                 ),
                               );
@@ -132,13 +134,31 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                             ),
                             GestureDetector(
                               onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const  AdvisorSignupScreen(
-                                    registerRole: RegisterRole.advisor,
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (loginContext) => MultiBlocProvider(
+                                      providers: [
+                                        BlocProvider<AuthCubit>(
+                                          create: (context) => AuthCubit(
+                                            authRepo: AuthRepo(
+                                              apiConsumer: DioConsumer(),
+                                            ),
+                                          ),
+                                        ),
+                                        BlocProvider<DepartmentsCubit>(
+                                          create: (context) => DepartmentsCubit(
+                                            departmentsRepo: DepartmentsRepo(
+                                              apiConsumer: DioConsumer(),
+                                            ),
+                                          )..fetchDepartments(),
+                                        ),
+                                      ],
+                                      child: const AdvisorSignupScreen(
+                                        registerRole: RegisterRole.advisor,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
                               child: Text(
                                 'Sign Up',
                                 style: AppTextStyles.bodyInterMedium18.copyWith(

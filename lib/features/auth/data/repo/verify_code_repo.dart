@@ -54,4 +54,20 @@ class VerifyCodeRepo {
       );
     }
   }
+
+
+  Future<Either<Failure, ApiResponseModel>> verifyResetOtp({
+  required String email,
+  required String code,
+}) async {
+  try {
+    final response = await _apiConsumer.post(
+      ApiEndpoints.verifyResetOtp, // ✅ endpoint مختلف
+      data: {'email': email, 'otp': code},
+    );
+    return Right(ApiResponseModel.fromJson(response));
+  } on ServerException catch (e) {
+    return Left(ServerFailure(e.apiResponse));
+  }
+}
 }

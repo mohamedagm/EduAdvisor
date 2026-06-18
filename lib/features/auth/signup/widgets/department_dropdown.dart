@@ -38,6 +38,8 @@ class DepartmentDropdown extends StatelessWidget {
                 value: value,
                 hint: const Text('Select your department'),
                 decoration: InputDecoration(
+                    filled: true,
+        fillColor: Colors.grey.shade200,
                   prefixIcon: const Icon(Icons.business, color: Colors.grey),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   border: OutlineInputBorder(
