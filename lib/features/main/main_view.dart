@@ -8,7 +8,8 @@ import 'package:edu_advisor/features/services/views/services_view.dart';
 import 'package:flutter/material.dart';
 
 class MainView extends StatefulWidget {
-  const MainView({super.key});
+  final String fullName;
+  const MainView({super.key, required this.fullName});
 
   @override
   State<MainView> createState() => _MainViewState();
@@ -17,13 +18,13 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   int currentIndex = 0;
 
-  final List<Widget> pages = const [
-    HomeView(),
-    CourseCatalogView(),
-    AIChatView(),
-    ServicesView(),
-    ProfileView(),
-  ];
+  List<Widget> get pages => [
+        HomeView(fullName: widget.fullName), 
+        const CourseCatalogView(),
+        const AIChatView(),
+        const ServicesView(),
+        const ProfileView(), 
+      ];
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,9 @@ import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeCard extends StatelessWidget {
-  const WelcomeCard({super.key});
+  final String fullName;
+
+  const WelcomeCard({super.key, required this.fullName});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class WelcomeCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Mohamed Ahmed',
+                      fullName,
                       style: AppTextStyles.bodyInterMedium18.copyWith(
                         color: AppColors.white,
                       ),

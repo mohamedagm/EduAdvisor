@@ -57,3 +57,5 @@ class RegisterAdvisorFailure extends AuthState {
 
   final Failure failure;
 }
+
+

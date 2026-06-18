@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class StudentProfile extends StatefulWidget {
-  const StudentProfile({super.key});
+  final String fullName; // 👈 1. ضيفي المتغير هنا عشان الـ widget تقرأه
+
+  const StudentProfile({super.key, required this.fullName}); // 👈 2. خليه مطلوب في الـ Constructor
 
   @override
   State<StudentProfile> createState() => _StudentProfileState();
@@ -25,13 +27,13 @@ class _StudentProfileState extends State<StudentProfile> {
     return Scaffold(
       body: Stack(
         children: [
-          GradiantContainer(
+          const GradiantContainer( // 💡 إضافة const هنا منعا لأي تحذيرات
             mainText: "Complete Your Profile",
             optionalText: "Add a profile photo to personalize your account.",
           ),
 
           Align(
-            alignment: Alignment(0, 0.5),
+            alignment: const Alignment(0, 0.5),
             child: Container(
               padding: const EdgeInsets.all(20),
               margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -83,7 +85,7 @@ class _StudentProfileState extends State<StudentProfile> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
@@ -95,7 +97,7 @@ class _StudentProfileState extends State<StudentProfile> {
                       children: [
                         Row(
                           children: [
-                            Icon(
+                            const Icon( // 💡 إضافة const
                               Icons.help_outline,
                               color: AppColors.infoBlue,
                               size: 20,
@@ -124,11 +126,10 @@ class _StudentProfileState extends State<StudentProfile> {
                   const SizedBox(height: 32),
                   GradientElevatedButton(
                     onPressed: () {
-                   
-                       Navigator.pushReplacement(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const MainView(),
+                          builder: (context) => MainView(fullName: widget.fullName), // 👈 كدا هيقرأها بسلام!
                         ),
                       );
                     },
@@ -141,7 +142,7 @@ class _StudentProfileState extends State<StudentProfile> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const MainView(),
+                          builder: (context) => MainView(fullName: widget.fullName), // 👈 كدا هيقرأها بسلام!
                         ),
                       );
                     }, 
@@ -155,7 +156,6 @@ class _StudentProfileState extends State<StudentProfile> {
     );
   }
 
-  //////////////////////////
   void pickImage() async {
     final XFile? pickedFile = await _picker.pickImage(
       source: ImageSource.gallery,
