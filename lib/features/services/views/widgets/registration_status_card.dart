@@ -1,4 +1,4 @@
-import 'package:edu_advisor/features/services/views/widgets/registeration_course_row.dart';
+import 'package:edu_advisor/features/services/data/models/registration_request_model.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_text_styles.dart';
@@ -6,23 +6,13 @@ import '../../../../../core/theme/app_text_styles.dart';
 enum RegistrationStatusType { pending, approved, rejected }
 
 class RegistrationStatusCard extends StatelessWidget {
-  final RegistrationStatusType status;
-  final List<Map<String, String>> courses;
-  final int totalHours;
-  final String? advisorNote;
-  final String? rejectionReason;
+  const RegistrationStatusCard({super.key, required this.request});
 
-  const RegistrationStatusCard({
-    super.key,
-    required this.status,
-    required this.courses,
-    required this.totalHours,
-    this.advisorNote,
-    this.rejectionReason,
-  });
+  final RegistrationRequestModel request;
 
   @override
   Widget build(BuildContext context) {
+    final status = _statusType(request.status);
     Color borderColor;
     Color color;
     Color badgeBgColor;
@@ -91,32 +81,49 @@ class RegistrationStatusCard extends StatelessWidget {
             ),
           ),
 
-          // Courses
-          ...courses.map(
-            (c) => RegistrationCourseRow(
-              code: c['code']!,
-              name: c['name']!,
-              credits: c['credits']!,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _InfoLine(
+                  icon: Icons.calendar_month_outlined,
+                  title: 'Semester',
+                  value: request.displaySemester,
+                ),
+                const SizedBox(height: 10),
+                _InfoLine(
+                  icon: Icons.menu_book_outlined,
+                  title: 'Courses',
+                  value: '${request.coursesCount} courses',
+                ),
+                const SizedBox(height: 10),
+                _InfoLine(
+                  icon: Icons.schedule_outlined,
+                  title: 'Submitted',
+                  value: request.displaySubmittedAt,
+                ),
+              ],
             ),
           ),
 
           const SizedBox(height: 8),
           const Divider(height: 1, color: AppColors.gray200),
 
-          // Total Credit Hours
+          // Total Courses
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Total Credit Hours',
+                  'Total Courses',
                   style: AppTextStyles.bodyInterMedium14.copyWith(
                     color: AppColors.gray700,
                   ),
                 ),
                 Text(
-                  '$totalHours hours',
+                  '${request.coursesCount}',
                   style: AppTextStyles.bodyInterMedium14.copyWith(
                     color: AppColors.bluePrimary,
                   ),
@@ -164,7 +171,7 @@ class RegistrationStatusCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (advisorNote != null) ...[
+                if (request.notes?.isNotEmpty == true) ...[
                   const SizedBox(height: 16),
                   Container(
                     width: double.infinity,
@@ -179,47 +186,20 @@ class RegistrationStatusCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Advisor Note:',
+                          status == RegistrationStatusType.rejected
+                              ? 'Rejection Reason:'
+                              : 'Advisor Note:',
                           style: AppTextStyles.bodyInterRegular12.copyWith(
                             color: AppColors.gray600,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          advisorNote!,
+                          request.notes!,
                           style: AppTextStyles.bodyInterMedium14.copyWith(
-                            color: AppColors.gray900,
-                            height: 1.4,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-                if (rejectionReason != null) ...[
-                  const SizedBox(height: 12),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: AppColors.redLight,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Rejection Reason:',
-                          style: AppTextStyles.bodyInterRegular12.copyWith(
-                            color: AppColors.gray600,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          rejectionReason!,
-                          style: AppTextStyles.bodyInterMedium14.copyWith(
-                            color: AppColors
-                                .errorRedDark, // Actually a darker shade of red
+                            color: status == RegistrationStatusType.rejected
+                                ? AppColors.errorRedDark
+                                : AppColors.gray900,
                             height: 1.4,
                           ),
                         ),
@@ -232,6 +212,52 @@ class RegistrationStatusCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  RegistrationStatusType _statusType(String status) {
+    switch (status.trim().toLowerCase()) {
+      case 'approved':
+        return RegistrationStatusType.approved;
+      case 'rejected':
+        return RegistrationStatusType.rejected;
+      default:
+        return RegistrationStatusType.pending;
+    }
+  }
+}
+
+class _InfoLine extends StatelessWidget {
+  const _InfoLine({
+    required this.icon,
+    required this.title,
+    required this.value,
+  });
+
+  final IconData icon;
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: AppColors.bluePrimary),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: AppTextStyles.bodyInterRegular12.copyWith(
+            color: AppColors.gray500,
+          ),
+        ),
+        const Spacer(),
+        Text(
+          value,
+          style: AppTextStyles.bodyInterMedium14.copyWith(
+            color: AppColors.gray900,
+          ),
+        ),
+      ],
     );
   }
 }
