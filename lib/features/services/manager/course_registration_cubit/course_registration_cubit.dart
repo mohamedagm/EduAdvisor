@@ -1,4 +1,5 @@
 import 'package:edu_advisor/features/services/data/repo/course_registration_repo.dart';
+import 'package:edu_advisor/features/services/data/models/submit_registration_request_model.dart';
 import 'package:edu_advisor/features/services/manager/course_registration_cubit/course_registration_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +20,25 @@ class CourseRegistrationCubit extends Cubit<CourseRegistrationState> {
     result.fold(
       (failure) => emit(AvailableCoursesFailure(failure)),
       (courses) => emit(AvailableCoursesLoaded(courses)),
+    );
+  }
+
+  Future<void> submitRegistrationRequest(List<String> semesterCourseIds) async {
+    if (state is SubmitRegistrationLoading || semesterCourseIds.isEmpty) {
+      return;
+    }
+
+    emit(const SubmitRegistrationLoading());
+
+    final result = await _repo.submitRegistrationRequest(
+      SubmitRegistrationRequestModel(semesterCourseIds: semesterCourseIds),
+    );
+
+    if (isClosed) return;
+
+    result.fold(
+      (failure) => emit(SubmitRegistrationFailure(failure)),
+      (response) => emit(SubmitRegistrationSuccess(response)),
     );
   }
 }

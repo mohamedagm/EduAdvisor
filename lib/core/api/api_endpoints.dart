@@ -19,6 +19,8 @@ class ApiEndpoints {
   static const String courses = '/api/v1/Courses';
   static const String myCourses = '/api/v1/Students/my-courses';
   static const String availableCourses = '/api/v1/Students/available-courses';
+  static const String registrationRequests =
+      '/api/v1/Students/registration-requests';
 
   static const String aiAdvisorChat = 'https://advisor.flowlogichub.space/chat';
 }

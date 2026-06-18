@@ -5,6 +5,7 @@ import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
 import 'package:edu_advisor/features/services/data/models/available_course_model.dart';
+import 'package:edu_advisor/features/services/data/models/submit_registration_request_model.dart';
 
 class CourseRegistrationRepo {
   const CourseRegistrationRepo({required ApiConsumer apiConsumer})
@@ -28,6 +29,23 @@ class CourseRegistrationRepo {
             )
             .toList(),
       );
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.apiResponse));
+    } catch (e) {
+      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
+    }
+  }
+
+  Future<Either<Failure, ApiResponseModel>> submitRegistrationRequest(
+    SubmitRegistrationRequestModel request,
+  ) async {
+    try {
+      final response = await _apiConsumer.post(
+        ApiEndpoints.registrationRequests,
+        data: request.toJson(),
+      );
+
+      return Right(ApiResponseModel.fromJson(response));
     } on ServerException catch (e) {
       return Left(ServerFailure(e.apiResponse));
     } catch (e) {
