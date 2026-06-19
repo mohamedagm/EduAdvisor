@@ -2,9 +2,10 @@ import 'package:edu_advisor/core/api/api_consumer.dart';
 import 'package:edu_advisor/core/api/api_endpoints.dart';
 import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
+import 'package:edu_advisor/features/AIChat/data/models/ai_chat_request_model.dart';
 
 abstract class AiChatRemoteDataSource {
-  Future<String> askAdvisor(String question);
+  Future<String> askAdvisor(AiChatRequestModel request);
 }
 
 class AiChatRemoteDataSourceImpl implements AiChatRemoteDataSource {
@@ -13,32 +14,11 @@ class AiChatRemoteDataSourceImpl implements AiChatRemoteDataSource {
 
   final ApiConsumer _apiConsumer;
 
-  static const String demoStudentContext = '''
-=== Student data from the system ===
-Response language: English only.
-Name: Mostafa
-Major: Information Systems (IS)
-Level: 3
-Cumulative GPA: 2.85
-Completed credit hours: 85 / 144
-Academic probation: No
-Maximum allowed registration hours: 18
-Available courses: CS311, CS342, IS321
-''';
-
   @override
-  Future<String> askAdvisor(
-    String question, {
-    String studentContext = demoStudentContext,
-    int maxTokens = 500,
-  }) async {
+  Future<String> askAdvisor(AiChatRequestModel request) async {
     final response = await _apiConsumer.post(
       ApiEndpoints.aiAdvisorChat,
-      data: {
-        'student_context': studentContext,
-        'question': '$question\n\nPlease answer in English only.',
-        'max_tokens': maxTokens,
-      },
+      data: request.toJson(),
     );
 
     return _parseAnswer(response);

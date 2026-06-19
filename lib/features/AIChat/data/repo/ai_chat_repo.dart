@@ -3,6 +3,7 @@ import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
 import 'package:edu_advisor/features/AIChat/data/datasources/ai_chat_remote_data_source.dart';
+import 'package:edu_advisor/features/AIChat/data/models/ai_chat_request_model.dart';
 
 class AiChatRepo {
   AiChatRepo({required AiChatRemoteDataSource remoteDataSource})
@@ -10,9 +11,9 @@ class AiChatRepo {
 
   final AiChatRemoteDataSource _remoteDataSource;
 
-  Future<Either<Failure, String>> askAdvisor(String question) async {
+  Future<Either<Failure, String>> askAdvisor(AiChatRequestModel request) async {
     try {
-      final answer = await _remoteDataSource.askAdvisor(question);
+      final answer = await _remoteDataSource.askAdvisor(request);
       return Right(answer);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.apiResponse));

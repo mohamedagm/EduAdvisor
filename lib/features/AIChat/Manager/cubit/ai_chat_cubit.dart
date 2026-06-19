@@ -1,4 +1,5 @@
 import 'package:edu_advisor/features/AIChat/Manager/cubit/ai_chat_state.dart';
+import 'package:edu_advisor/features/AIChat/data/models/ai_chat_request_model.dart';
 import 'package:edu_advisor/features/AIChat/data/repo/ai_chat_repo.dart';
 import 'package:edu_advisor/features/AIChat/models/message_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,8 +11,8 @@ class AiChatCubit extends Cubit<AiChatState> {
 
   final AiChatRepo _aiChatRepo;
 
-  Future<void> sendMessage(String question) async {
-    final trimmedQuestion = question.trim();
+  Future<void> sendMessage(AiChatRequestModel request) async {
+    final trimmedQuestion = request.question.trim();
     if (trimmedQuestion.isEmpty || state.isSending) return;
 
     emit(
@@ -33,7 +34,13 @@ class AiChatCubit extends Cubit<AiChatState> {
       ),
     );
 
-    final result = await _aiChatRepo.askAdvisor(trimmedQuestion);
+    final result = await _aiChatRepo.askAdvisor(
+      AiChatRequestModel(
+        studentId: request.studentId,
+        studentContext: request.studentContext,
+        question: trimmedQuestion,
+      ),
+    );
 
     if (isClosed) return;
 
