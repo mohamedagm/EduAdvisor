@@ -1,21 +1,26 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
-import 'package:edu_advisor/features/auth/data/models/register_advisor_request_model.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/departments_cubit.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/departments_state.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
 import 'package:edu_advisor/features/auth/data/models/register_student_request_model.dart';
-import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
+import 'package:edu_advisor/features/auth/data/register_role.dart';
+import 'package:edu_advisor/features/auth/data/repo/verify_code_repo.dart';
+import 'package:edu_advisor/features/auth/login/views/student_profile.dart';
+import 'package:edu_advisor/features/auth/login/views/verfy_code_screen.dart';
 import 'package:edu_advisor/features/auth/signup/widgets/custom_text_field.dart';
+import 'package:edu_advisor/features/auth/signup/widgets/department_dropdown.dart';
 import 'package:edu_advisor/features/auth/signup/widgets/signup_filed_label.dart';
 import 'package:edu_advisor/features/auth/signup/widgets/signup_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:edu_advisor/valdations/valditors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-
-enum RegisterRole { student, advisor }
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key, required this.registerRole});
@@ -27,15 +32,17 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final _formKey = GlobalKey<FormState>();
+  File? studentProfileImage; // الـ Variable الأساسي هنا
 
+  final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final phoneController = TextEditingController();
+  final studentCodeController = TextEditingController();
   final idController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-
+  String? selectedDepartmentId;
   bool isObscure = true;
 
   bool get isStudent => widget.registerRole == RegisterRole.student;
@@ -43,9 +50,10 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void dispose() {
     nameController.dispose();
+    lastNameController.dispose();
     emailController.dispose();
     passwordController.dispose();
-    phoneController.dispose();
+    studentCodeController.dispose();
     idController.dispose();
     confirmPasswordController.dispose();
     super.dispose();
@@ -55,109 +63,163 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return BlocProvider(
-      create: (context) =>
-          AuthCubit(authRepo: AuthRepo(apiConsumer: DioConsumer())),
-      child: BlocConsumer<AuthCubit, AuthState>(
-        listener: _authListener,
-        builder: (context, state) {
-          final isLoading =
-              state is RegisterStudentLoading ||
-              state is RegisterAdvisorLoading;
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: _authListener,
+      builder: (context, state) {
+        final isLoading =
+            state is RegisterStudentLoading || state is RegisterAdvisorLoading;
 
-          return Scaffold(
-            body: Column(
-              children: [
-                const SignupHeader(),
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.only(
-                      top: screenHeight * 0.01,
-                      bottom: 20,
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 24),
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: const [
-                              BoxShadow(blurRadius: 10, color: Colors.black12),
-                            ],
-                          ),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _buildField(
-                                  label: 'Name',
-                                  hint: 'Enter your name',
-                                  icon: Icons.person,
-                                  controller: nameController,
-                                  validator: Validators.name,
-                                ),
-                                const SizedBox(height: 12),
-                                _buildField(
-                                  label: 'Email',
-                                  hint: 'Email',
-                                  icon: Icons.email,
-                                  controller: emailController,
-                                  validator: Validators.email,
-                                ),
-                                const SizedBox(height: 12),
-                                _buildField(
-                                  label: 'Phone',
-                                  hint: '+02115798392',
-                                  icon: Icons.phone,
-                                  controller: phoneController,
-                                ),
-                                const SizedBox(height: 12),
-                                _buildField(
-                                  label: 'National Id',
-                                  hint: 'Enter your national id',
-                                  icon: Icons.badge,
-                                  controller: idController,
-                                ),
-                                const SizedBox(height: 12),
-                                _buildPasswordField(),
-                                const SizedBox(height: 12),
-                                _buildConfirmPasswordField(),
-                                const SizedBox(height: 20),
-                                IgnorePointer(
-                                  ignoring: isLoading,
-                                  child: Opacity(
-                                    opacity: isLoading ? 0.75 : 1,
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: GradientElevatedButton(
-                                        buttonText: isLoading
-                                            ? 'Signing Up...'
-                                            : 'Sign Up',
-                                        onPressed: () => _onSignUpPressed(
-                                          context,
-                                          isLoading: isLoading,
+        return BlocBuilder<DepartmentsCubit, DepartmentsState>(
+          builder: (context, deptState) {
+            if (deptState is DepartmentsLoading) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+
+            if (deptState is DepartmentsFailure) {
+              return Scaffold(
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Failed to load departments',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      const SizedBox(height: 12),
+                      ElevatedButton(
+                        onPressed: () =>
+                            context.read<DepartmentsCubit>().fetchDepartments(),
+                        child: const Text('Retry'),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            return Scaffold(
+              body: Column(
+                children: [
+                  const SignupHeader(),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: EdgeInsets.only(
+                        top: screenHeight * 0.01,
+                        bottom: 20,
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 24),
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(blurRadius: 10, color: Colors.black12),
+                              ],
+                            ),
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                
+                                  ImagePickerWidget(
+                                    onImageSelected: (image) {
+                                      setState(() {
+                                        studentProfileImage = image;
+                                      });
+                                    },
+                                  ),
+                                  const SizedBox(height: 16),
+
+                                  _buildField(
+                                    label: 'First Name',
+                                    hint: 'Enter your first name',
+                                    icon: Icons.person,
+                                    controller: nameController,
+                                    validator: Validators.name,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  _buildField(
+                                    label: 'Last Name',
+                                    hint: 'Enter your last name',
+                                    icon: Icons.person,
+                                    controller: lastNameController,
+                                    validator: Validators.name,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  _buildField(
+                                    label: 'Email',
+                                    hint: 'Email',
+                                    icon: Icons.email,
+                                    controller: emailController,
+                                    validator: Validators.email,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  _buildField(
+                                    label: 'Student Code',
+                                    hint: '2023-123',
+                                    icon: Icons.code,
+                                    controller: studentCodeController,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  DepartmentDropdown(
+                                    value: selectedDepartmentId,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedDepartmentId = value;
+                                      });
+                                    },
+                                  ),
+                                  const SizedBox(height: 12),
+                                  _buildField(
+                                    label: 'National Id',
+                                    hint: 'Enter your national id',
+                                    icon: Icons.badge,
+                                    controller: idController,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  _buildPasswordField(),
+                                  const SizedBox(height: 12),
+                                  _buildConfirmPasswordField(),
+                                  const SizedBox(height: 20),
+                                  IgnorePointer(
+                                    ignoring: isLoading,
+                                    child: Opacity(
+                                      opacity: isLoading ? 0.75 : 1,
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: GradientElevatedButton(
+                                          buttonText: isLoading
+                                              ? 'Signing Up...'
+                                              : 'Sign Up',
+                                          onPressed: () => _onSignUpPressed(
+                                            context,
+                                            isLoading: isLoading,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 24),
-                      ],
+                          const SizedBox(height: 24),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -173,7 +235,24 @@ class _SignupScreenState extends State<SignupScreen> {
         description: message,
       );
 
-      context.push(AppRoutes.verifyCode);
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => VerifyCodeCubit(
+                  verifyCodeRepo: VerifyCodeRepo(apiConsumer: DioConsumer()),
+                ),
+                child: VerifyCodeScreen(
+                  email: emailController.text.trim(),
+                  role: widget.registerRole,
+                ),
+              ),
+            ),
+          );
+        }
+      });
     }
 
     if (state is RegisterStudentFailure || state is RegisterAdvisorFailure) {
@@ -189,49 +268,33 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
-  void _onSignUpPressed(BuildContext context, {required bool isLoading}) {
-    if (isLoading || !_formKey.currentState!.validate()) {
-      return;
-    }
+  void _onSignUpPressed(BuildContext context, {required bool isLoading}) async {
+    if (isLoading || !_formKey.currentState!.validate()) return;
 
-    final nameParts = _splitFullName(nameController.text.trim());
-
-    if (isStudent) {
-      context.read<AuthCubit>().registerStudent(
-        RegisterStudentRequestModel(
-          firstName: nameParts.firstName,
-          lastName: nameParts.lastName,
-          email: emailController.text.trim(),
-          studentCode: '',
-          departmentId: '',
-          nationalId: idController.text.trim(),
-          password: passwordController.text,
-          confirmPassword: confirmPasswordController.text,
-        ),
+    MultipartFile? profileImageFile;
+    // تم تعديل المتغير هنا من _selectedImage إلى studentProfileImage ليتطابق مع الـ State
+    if (studentProfileImage != null) {
+      profileImageFile = await MultipartFile.fromFile(
+        studentProfileImage!.path,
+        filename: studentProfileImage!.path.split('/').last,
       );
-      return;
     }
 
-    context.read<AuthCubit>().registerAdvisor(
-      RegisterAdvisorRequestModel(
-        firstName: nameParts.firstName,
-        lastName: nameParts.lastName,
-        email: emailController.text.trim(),
-        departmentId: '',
-        nationalId: idController.text.trim(),
-        phone: phoneController.text.trim(),
-        password: passwordController.text,
-        confirmPassword: confirmPasswordController.text,
-      ),
-    );
-  }
+    if (!context.mounted) return;
 
-  ({String firstName, String lastName}) _splitFullName(String fullName) {
-    final parts = fullName.split(RegExp(r'\s+'));
-    final firstName = parts.isEmpty ? '' : parts.first;
-    final lastName = parts.length > 1 ? parts.sublist(1).join(' ') : '';
-
-    return (firstName: firstName, lastName: lastName);
+    context.read<AuthCubit>().registerStudent(
+          RegisterStudentRequestModel(
+            firstName: nameController.text.trim(),
+            lastName: lastNameController.text.trim(),
+            email: emailController.text.trim(),
+            studentCode: studentCodeController.text.trim(),
+            departmentId: selectedDepartmentId ?? '',
+            nationalId: idController.text.trim(),
+            password: passwordController.text,
+            confirmPassword: confirmPasswordController.text,
+            profileImage: profileImageFile,
+          ),
+        );
   }
 
   Widget _buildField({

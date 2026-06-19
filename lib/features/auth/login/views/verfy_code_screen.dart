@@ -1,11 +1,32 @@
 import 'dart:async';
+import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/reset_password_cubit.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_state.dart';
+import 'package:edu_advisor/features/auth/data/register_role.dart';
+import 'package:edu_advisor/features/auth/data/repo/reset_password_repo.dart';
+import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
+import 'package:edu_advisor/features/auth/login/views/new_pass.dart';
+import 'package:edu_advisor/features/auth/login/views/student_profile.dart';
+// 💡 ضيفي هنا مسار شاشة الـ ResetPasswordScreen لو مكنش موجود تلقائي
+// import 'package:edu_advisor/features/auth/login/views/reset_password_screen.dart'; 
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
-  const VerifyCodeScreen({super.key});
+  final String email;
+  final RegisterRole role;
+  final bool isFromForgotPassword; // 👈 1. زودنا الـ Flag هنا
+
+  const VerifyCodeScreen({
+    super.key,
+    required this.email,
+    required this.role,
+    this.isFromForgotPassword = false, // 👈 2. خليناه اختياري وبقيمة افتراضية false عشان ما يضربش في الـ Register
+  });
 
   @override
   State<VerifyCodeScreen> createState() => _VerifyCodeScreenState();
@@ -13,28 +34,22 @@ class VerifyCodeScreen extends StatefulWidget {
 
 class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   final int otpLength = 6;
-  final _formKey = GlobalKey<FormState>();
 
   late List<TextEditingController> controllers;
   late List<FocusNode> focusNodes;
 
-  bool isVerified = false;
-  bool isVerifying = false;
-  bool isResending = false;
-
   int resendCountdown = 0;
   Timer? _timer;
-
-  String statusMessage = 'Enter the code sent to your email';
-  StatusType statusType = StatusType.info;
 
   @override
   void initState() {
     super.initState();
+
     controllers = List.generate(otpLength, (_) => TextEditingController());
     focusNodes = List.generate(otpLength, (_) => FocusNode());
+
     Future.delayed(const Duration(milliseconds: 200), () {
-      focusNodes[0].requestFocus();
+      if (mounted) focusNodes[0].requestFocus();
     });
   }
 
@@ -50,116 +65,148 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     super.dispose();
   }
 
-  String get otpCode => controllers.map((c) => c.text).join();
+  String get otpCode => controllers.map((c) => c.text.trim()).join();
 
   void onOtpChanged(int index, String value) {
     if (value.isNotEmpty && index < otpLength - 1) {
       focusNodes[index + 1].requestFocus();
-    } else if (value.isEmpty && index > 0) {
-      focusNodes[index - 1].requestFocus();
     }
+
+    if (value.length > 1) {
+      for (int i = 0; i < value.length && i < otpLength; i++) {
+        controllers[i].text = value[i];
+      }
+    }
+
     setState(() {});
   }
 
-  void startResendCountdown() {
+  void submitOtpVerification() {
+    if (otpCode.length != otpLength) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter full code")),
+      );
+      return;
+    }
+
+    context.read<VerifyCodeCubit>().verifyOtp(
+          email: widget.email,
+          code: otpCode,
+            isFromForgotPassword: widget.isFromForgotPassword,
+        );
+  }
+
+  void handleResendCode() {
+    if (resendCountdown > 0) return;
+
+    context.read<VerifyCodeCubit>().resendOtp(email: widget.email);
+  }
+
+  void startTimer() {
     setState(() {
-      isResending = true;
       resendCountdown = 30;
-      statusMessage = 'Code sent! Enter the code below.';
-      statusType = StatusType.success;
+
       for (var c in controllers) {
         c.clear();
       }
     });
-    _formKey.currentState?.reset();
 
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) return;
+
       setState(() {
         resendCountdown--;
+
         if (resendCountdown <= 0) {
-          isResending = false;
           timer.cancel();
         }
       });
     });
 
     Future.delayed(const Duration(milliseconds: 100), () {
-      focusNodes[0].requestFocus();
-    });
-  }
-
-  Future<void> verifyCode() async {
-    // Validate all TextFormFields via the Form key
-    if (!_formKey.currentState!.validate()) {
-      setState(() {
-        statusMessage = 'Please fill in all 6 digits.';
-        statusType = StatusType.error;
-      });
-      return;
-    }
-
-    setState(() {
-      isVerifying = true;
-      statusMessage = 'Verifying...';
-      statusType = StatusType.info;
-    });
-
-    // Simulate API call
-    await Future.delayed(const Duration(seconds: 1));
-
-    setState(() {
-      isVerifying = false;
-      isVerified = true;
-      statusMessage = 'Code verified successfully!';
-      statusType = StatusType.success;
+      if (mounted) focusNodes[0].requestFocus();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // final size = MediaQuery.of(context).size;
-    // final height = size.height;
-    // final width = size.width;
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      body: Column(
-        children: [
-          GradiantContainer(
-            mainText: "Verify Code",
-            optionalText: "Don't worry! we'll help you reset it.",
+    return BlocConsumer<VerifyCodeCubit, VerifyCodeState>(
+      listener: (context, state) {
+        if (state is VerifyOtpLoading) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Verifying...")),
+          );
+        }
+
+        if (state is VerifyOtpSuccess) { //
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Code verified successfully")),
+          );
+
+          Future.delayed(const Duration(seconds: 1), () {
+            if (mounted) {
+            if (widget.isFromForgotPassword) {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (_) => BlocProvider(
+        create: (_) => ResetPasswordCubit(
+          resetPasswordRepo: ResetPasswordRepo(
+            apiConsumer: DioConsumer(),
           ),
+        ),
+        child: NewPasswordScreen(
+          role: widget.role,
+          email: widget.email,
+          token: state.response.data ?? '',
+        ),
+      ),
+    ),
+  );
+}
+            }
+          });
+        }
 
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-              // ── Form wraps all TextFormFields ──────────────────────
-              child: Container(
-                padding: const EdgeInsets.all(24),
+        if (state is VerifyOtpFailure) {
+          debugPrint('VERIFY ERROR: "${state.failure.message}"');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.failure.message)),
+          );
+        }
 
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(30)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, -3),
-                    ),
-                  ],
-                ),
+        if (state is ResendOtpSuccess) {
+          startTimer();
 
-                child: Form(
-                  key: _formKey,
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Code sent successfully")),
+          );
+        }
+
+        if (state is ResendOtpFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.failure.message)),
+          );
+        }
+      },
+      builder: (context, state) {
+        final isLoading =
+            state is VerifyOtpLoading || state is ResendOtpLoading;
+
+        return Scaffold(
+          backgroundColor: AppColors.white,
+          body: Column(
+            children: [
+              const GradiantContainer(
+                mainText: "Verify Code",
+                optionalText: "Check your email for the code",
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(24),
                   child: Column(
                     children: [
-                      const Text(
-                        'Enter 6-Digit Code',
-                        style: TextStyle(fontSize: 14, color: Colors.black54),
-                      ),
-                      const SizedBox(height: 20),
-
-                      // ── OTP row of TextFormFields ──────────────────
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(otpLength, (index) {
@@ -167,189 +214,56 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                             margin: const EdgeInsets.symmetric(horizontal: 4),
                             width: 40,
                             height: 56,
-                            child: TextFormField(
+                            child: TextField(
                               controller: controllers[index],
                               focusNode: focusNodes[index],
-                              enabled: !isVerified,
+                              enabled: !isLoading,
                               textAlign: TextAlign.center,
-                              keyboardType: TextInputType.number,
                               maxLength: 1,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              decoration: InputDecoration(
-                                counterText: '',
-                                contentPadding: EdgeInsets.zero,
-                                filled: true,
-                                fillColor: Colors.grey.shade50,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.grey.shade300,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.grey.shade300,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF7B5EA7),
-                                    width: 2,
-                                  ),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFFE24B4A),
-                                    width: 1.5,
-                                  ),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFFE24B4A),
-                                    width: 2,
-                                  ),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.grey.shade200,
-                                  ),
-                                ),
-                                // suppress per-field error text (shown in statusMessage instead)
-                                errorStyle: const TextStyle(height: 0),
-                              ),
+                              keyboardType: TextInputType.number,
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
                               ],
-                              // validator called by _formKey.currentState!.validate()
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return ''; // triggers red border, no inline text
-                                }
-                                return null;
-                              },
-                              onChanged: (value) => onOtpChanged(index, value),
+                              decoration: const InputDecoration(
+                                counterText: '',
+                                border: OutlineInputBorder(),
+                              ),
+                              onChanged: (value) =>
+                                  onOtpChanged(index, value),
                             ),
                           );
                         }),
                       ),
 
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 20),
 
-                      // ── Status message ─────────────────────────────
-                      Text(
-                        statusMessage,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: statusType == StatusType.error
-                              ? const Color(0xFFE24B4A)
-                              : statusType == StatusType.success
-                              ? const Color(0xFF1D9E75)
-                              : const Color(0xFF7B5EA7),
-                        ),
-                      ),
-
-                      const SizedBox(height: 12),
-
-                      // ── Resend link ────────────────────────────────
-                      GestureDetector(
-                        onTap: (!isResending && !isVerified)
-                            ? startResendCountdown
+                      TextButton(
+                        onPressed: (resendCountdown == 0 && !isLoading)
+                            ? handleResendCode
                             : null,
                         child: Text(
-                          isResending
-                              ? 'Resend in ${resendCountdown}s'
-                              : 'Resend Verification Code',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: isResending
-                                ? Colors.grey
-                                : const Color(0xFF7B5EA7),
-                            decoration: (!isResending && !isVerified)
-                                ? TextDecoration.underline
-                                : TextDecoration.none,
-                          ),
+                          resendCountdown > 0
+                              ? "Resend in $resendCountdown"
+                              : "Resend Code",
                         ),
                       ),
 
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 30),
 
-                      Container(
-                        width: double.infinity,
-                        height: 56,
-                        margin: const EdgeInsets.symmetric(horizontal: 32),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              AppColors.bluePrimary,
-                              AppColors.purplePrimary,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(25),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.deepPurple.withValues(alpha: 0.3),
-                              blurRadius: 12,
-                              offset: const Offset(0, 6),
-                            ),
-                          ],
-                        ),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                          ),
-                          onPressed: (isVerifying || isVerified)
-                              ? null
-                              : verifyCode,
-                          child: isVerifying
-                              ? const SizedBox(
-                                  width: 22,
-                                  height: 22,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2.5,
-                                  ),
-                                )
-                              : Text(
-                                  isVerified ? 'Verified ✓' : 'Verify Code',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                        ),
+                      ElevatedButton(
+                        onPressed: isLoading ? null : submitOtpVerification,
+                        child: isLoading
+                            ? const CircularProgressIndicator()
+                            : const Text("Verify"),
                       ),
                     ],
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
-
-enum StatusType { error, success, info }
-
-////////Note:
-///in this screen need to handle tex field validation and error handling
-///also need to handle resend code and verify code logic with API integration
-///need to handle text bassed status messages for user feedback (e.g. "Code sent!", "Invalid code", "Code verified", etc.)

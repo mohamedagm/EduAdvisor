@@ -1,15 +1,22 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/departments_cubit.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
 import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
+import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
+import 'package:edu_advisor/features/auth/data/repo/departments_repo.dart';
+import 'package:edu_advisor/features/auth/data/repo/verify_code_repo.dart';
+import 'package:edu_advisor/features/auth/login/views/forgot_password.dart';
+import 'package:edu_advisor/features/auth/login/views/verfy_code_screen.dart';
 import 'package:edu_advisor/features/auth/signup/views/signup_view.dart';
 import 'package:edu_advisor/features/auth/widgets/auth_card.dart';
 import 'package:edu_advisor/features/auth/widgets/login_form.dart';
+import 'package:edu_advisor/features/main/main_view.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +24,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class StudentLoginScreen extends StatefulWidget {
-  const StudentLoginScreen({super.key});
+   final RegisterRole registerRole;
+
+  const StudentLoginScreen({super.key, required this.registerRole});
 
   @override
   State<StudentLoginScreen> createState() => _StudentLoginScreenState();
@@ -76,36 +85,31 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                              context.push(AppRoutes.forgotPassword);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPasswordScreen(
+                                        registerRole: RegisterRole.student,
+                                      ),
+                                ),
+                              );
                             },
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.deepPurple.shade400,
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            child: const Text(
-                              'Forgot Password?',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                            child: const Text('Forgot Password?'),
                           ),
                         ),
                         const SizedBox(height: 24),
                         IgnorePointer(
                           ignoring: isLoading,
-                          child: Opacity(
-                            opacity: isLoading ? 0.75 : 1,
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: GradientElevatedButton(
-                                buttonText: isLoading
-                                    ? 'Logging in...'
-                                    : 'Login as student',
-                                onPressed: () => _onLoginPressed(
-                                  context,
-                                  isLoading: isLoading,
-                                ),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: GradientElevatedButton(
+                              buttonText: isLoading
+                                  ? 'Logging in...'
+                                  : 'Login as student',
+                              onPressed: () => _onLoginPressed(
+                                context,
+                                isLoading: isLoading,
                               ),
                             ),
                           ),
@@ -114,22 +118,37 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "Don't have an account? ",
-                              style: AppTextStyles.interRegular16.copyWith(
-                                color: AppColors.gray600,
-                              ),
-                            ),
+                            const Text("Don't have an account? "),
                             GestureDetector(
-                              onTap: () => context.push(
-                                AppRoutes.signupFor(RegisterRole.student.name),
-                              ),
-                              child: Text(
-                                'Sign Up',
-                                style: AppTextStyles.bodyInterMedium18.copyWith(
-                                  color: AppColors.infoBlue,
-                                ),
-                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (loginContext) => MultiBlocProvider(
+                                      providers: [
+                                        BlocProvider<AuthCubit>(
+                                          create: (context) => AuthCubit(
+                                            authRepo: AuthRepo(
+                                              apiConsumer: DioConsumer(),
+                                            ),
+                                          ),
+                                        ),
+                                        BlocProvider<DepartmentsCubit>(
+                                          create: (context) => DepartmentsCubit(
+                                            departmentsRepo: DepartmentsRepo(
+                                              apiConsumer: DioConsumer(),
+                                            ),
+                                          )..fetchDepartments(),
+                                        ),
+                                      ],
+                                      child: const SignupScreen(
+                                        registerRole: RegisterRole.student,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: const Text('Sign Up'),
                             ),
                           ],
                         ),
@@ -145,6 +164,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
     );
   }
 
+  // ⭐ هنا التعديل الوحيد المهم
   void _authListener(BuildContext context, AuthState state) {
     if (state is LoginSuccess) {
       AppToast.success(
@@ -152,10 +172,40 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
         title: 'Login Successful',
         description: 'Welcome back, ${state.response.user.fullName}',
       );
-      context.go(AppRoutes.studentProfileSetup);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainView(fullName: state.response.user.fullName)),
+      );
     }
 
     if (state is LoginFailure) {
+      final msg = state.failure.message.toLowerCase();
+
+     
+ if (msg.contains("accountnotverified"))  {
+             // في signup_screen.dart
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => BlocProvider(
+      create: (context) => VerifyCodeCubit(
+         verifyCodeRepo: VerifyCodeRepo(
+           apiConsumer: DioConsumer(),
+            
+         ),
+        
+      ), 
+      child: VerifyCodeScreen(
+        email: _emailController.text.trim(),
+        role: widget.registerRole,
+      ),
+    ),
+  ),
+);
+        return;
+      }
+
       AppToast.error(
         context,
         title: 'Login Failed',
@@ -165,9 +215,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
   }
 
   void _onLoginPressed(BuildContext context, {required bool isLoading}) {
-    if (isLoading || !_formKey.currentState!.validate()) {
-      return;
-    }
+    if (isLoading || !_formKey.currentState!.validate()) return;
 
     context.read<AuthCubit>().login(
       LoginRequestModel(

@@ -1,117 +1,176 @@
-import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/forgot_password_cubit.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/forgot_password_state.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
+import 'package:edu_advisor/features/auth/data/register_role.dart';
+import 'package:edu_advisor/features/auth/data/repo/forgot_password_repo.dart';
+import 'package:edu_advisor/features/auth/data/repo/verify_code_repo.dart';
+import 'package:edu_advisor/features/auth/login/views/verfy_code_screen.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/custom_text_button.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
-
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+class ForgotPasswordScreen extends StatefulWidget {
+  final RegisterRole registerRole;
+  const ForgotPasswordScreen({super.key, required this.registerRole});
 
-class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
+  @override
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+     final size = MediaQuery.of(context).size;
     final height = size.height;
     final width = size.width;
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            GradiantContainer(
-              mainText: "Forgot Password?",
-              optionalText: "Don't worry! we'll help you reset it.",
-            ),
-
-            ///  Card Section
-            Container(
-              margin: EdgeInsets.only(
-                top: height * 0.41,
-                right: width * 0.03,
-                left: width * 0.03,
-              ),
-              constraints: BoxConstraints(
-                minHeight: height * 0.35, //
-              ),
-              padding: const EdgeInsets.all(24),
-
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(30)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
-                    blurRadius: 10,
-                    offset: const Offset(0, -3),
+    return BlocProvider(
+      create: (context) => ForgotPasswordCubit(
+        repo: ForgotPasswordRepo(apiConsumer: DioConsumer()),
+      ),
+      child: BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+        listener: (context, state) {
+          if (state is ForgotPasswordSuccess) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) => VerifyCodeCubit(
+                    verifyCodeRepo: VerifyCodeRepo(apiConsumer: DioConsumer()),
                   ),
-                ],
+                  child: VerifyCodeScreen(
+                    email: _emailController.text.trim(),
+                    role: widget.registerRole,
+                    isFromForgotPassword: true, // ✅
+                  ),
+                ),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  /// Email field
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "your.email@university.edu.eg",
-                      prefixIcon: const Icon(Icons.email),
-                      filled: true,
-                      fillColor: AppColors.gray400.withValues(alpha: 0.1),
+            );
+          }
 
-                      ///
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
+          if (state is ForgotPasswordFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          }
+        },
+        builder: (context, state) {
+          final isLoading = state is ForgotPasswordLoading;
+
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Stack(
+                  children: [
+                    const GradiantContainer(
+                      mainText: "Forgot Password?",
+                      optionalText: "Don't worry! we'll help you reset it.",
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+    top: height * 0.41,
+    right: width * 0.03,
+    left: width * 0.03,
+  ),
+  constraints: BoxConstraints(
+    minHeight: height * 0.35,
+  ),
+  padding: const EdgeInsets.all(24),
+  decoration: BoxDecoration(
+    color: AppColors.white,
+    borderRadius: const BorderRadius.all(Radius.circular(30)),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: 0.1),
+        blurRadius: 10,
+        offset: const Offset(0, -3),
+      ),
+    ],
+  ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              hintText: "your.email@university.edu.eg",
+                              prefixIcon: const Icon(Icons.email),
+                              filled: true,
+                              fillColor: AppColors.gray400.withValues(alpha: 0.1),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            "We'll send a 6-digit verification code to this email",
+                            style: AppTextStyles.bodyInterMedium14.copyWith(
+                              color: AppColors.gray400,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          IgnorePointer(
+                            ignoring: isLoading,
+                            child: GradientElevatedButton(
+                              buttonText: isLoading ? 'Sending...' : 'Send Verification code',
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<ForgotPasswordCubit>().sendOtp(
+                                    email: _emailController.text.trim(), // ✅ بتكلم الـ API
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Remember your password? ",
+                                style: AppTextStyles.bodyInterMedium14.copyWith(
+                                  color: AppColors.gray600,
+                                ),
+                              ),
+                              CustomTextButton(
+                                onTap: () => Navigator.pop(context),
+                                text: 'Back to Login',
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  Text(
-                    "We'll send a 6-digit verification code to this email",
-                    style: AppTextStyles.bodyInterMedium14.copyWith(
-                      color: AppColors.gray400,
-                    ),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  /// Button
-                  GradientElevatedButton(
-                    buttonText: 'Send Verfication code ',
-                    onPressed: () {
-                      context.push(AppRoutes.verifyCode);
-                    },
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  /// Back to login
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Remember your password? ",
-                        style: AppTextStyles.bodyInterMedium14.copyWith(
-                          color: AppColors.gray600,
-                        ),
-                      ),
-                      CustomTextButton(
-                        onTap: () {
-                          context.pop();
-                        },
-                        text: 'Back to Login',
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
