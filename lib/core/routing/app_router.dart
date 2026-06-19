@@ -40,37 +40,37 @@ final GoRouter appRouter = GoRouter(
       path: AppRoutes.chooseUserRole,
       builder: (context, state) => const ChooseUserRole(),
     ),
-    GoRoute(
-      path: AppRoutes.studentLogin,
-      builder: (context, state) => const StudentLoginScreen(),
-    ),
+    // GoRoute(
+    //   path: AppRoutes.studentLogin,
+    //   builder: (context, state) => const StudentLoginScreen(),
+    // ),
     GoRoute(
       path: AppRoutes.advisorLogin,
       builder: (context, state) => const AdvisorLoginScreen(),
     ),
-    GoRoute(
-      path: AppRoutes.signup,
-      builder: (context, state) {
-        final role = state.pathParameters['role'];
-        final registerRole = role == RegisterRole.advisor.name
-            ? RegisterRole.advisor
-            : RegisterRole.student;
+    // GoRoute(
+    //   path: AppRoutes.signup,
+    //   builder: (context, state) {
+    //     final role = state.pathParameters['role'];
+    //     final registerRole = role == RegisterRole.advisor.name
+    //         ? RegisterRole.advisor
+    //         : RegisterRole.student;
 
-        return SignupScreen(registerRole: registerRole);
-      },
-    ),
-    GoRoute(
-      path: AppRoutes.forgotPassword,
-      builder: (context, state) => const ForgotPasswordScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.verifyCode,
-      builder: (context, state) => const VerifyCodeScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.studentProfileSetup,
-      builder: (context, state) => const StudentProfile(),
-    ),
+    //     return SignupScreen(registerRole: registerRole);
+    //   },
+    // ),
+    // GoRoute(
+    //   path: AppRoutes.forgotPassword,
+    //   builder: (context, state) => const ForgotPasswordScreen(),
+    // ),
+    // GoRoute(
+    //   path: AppRoutes.verifyCode,
+    //   builder: (context, state) => const VerifyCodeScreen(),
+    // ),
+    // GoRoute(
+    //   path: AppRoutes.studentProfileSetup,
+    //   builder: (context, state) => const StudentProfile(),
+    // ),
     GoRoute(
       path: AppRoutes.advisorProfileSetup,
       builder: (context, state) => const AdvisorProfile(),

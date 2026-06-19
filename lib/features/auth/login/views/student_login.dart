@@ -24,7 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class StudentLoginScreen extends StatefulWidget {
-   final RegisterRole registerRole;
+  final RegisterRole registerRole;
 
   const StudentLoginScreen({super.key, required this.registerRole});
 
@@ -124,27 +124,31 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (loginContext) => MultiBlocProvider(
-                                      providers: [
-                                        BlocProvider<AuthCubit>(
-                                          create: (context) => AuthCubit(
-                                            authRepo: AuthRepo(
-                                              apiConsumer: DioConsumer(),
+                                    builder: (loginContext) =>
+                                        MultiBlocProvider(
+                                          providers: [
+                                            BlocProvider<AuthCubit>(
+                                              create: (context) => AuthCubit(
+                                                authRepo: AuthRepo(
+                                                  apiConsumer: DioConsumer(),
+                                                ),
+                                              ),
                                             ),
+                                            BlocProvider<DepartmentsCubit>(
+                                              create: (context) =>
+                                                  DepartmentsCubit(
+                                                    departmentsRepo:
+                                                        DepartmentsRepo(
+                                                          apiConsumer:
+                                                              DioConsumer(),
+                                                        ),
+                                                  )..fetchDepartments(),
+                                            ),
+                                          ],
+                                          child: const SignupScreen(
+                                            registerRole: RegisterRole.student,
                                           ),
                                         ),
-                                        BlocProvider<DepartmentsCubit>(
-                                          create: (context) => DepartmentsCubit(
-                                            departmentsRepo: DepartmentsRepo(
-                                              apiConsumer: DioConsumer(),
-                                            ),
-                                          )..fetchDepartments(),
-                                        ),
-                                      ],
-                                      child: const SignupScreen(
-                                        registerRole: RegisterRole.student,
-                                      ),
-                                    ),
                                   ),
                                 );
                               },
@@ -175,34 +179,29 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MainView(fullName: state.response.user.fullName)),
+        MaterialPageRoute(builder: (context) => MainView()),
       );
     }
 
     if (state is LoginFailure) {
       final msg = state.failure.message.toLowerCase();
 
-     
- if (msg.contains("accountnotverified"))  {
-             // في signup_screen.dart
-Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => BlocProvider(
-      create: (context) => VerifyCodeCubit(
-         verifyCodeRepo: VerifyCodeRepo(
-           apiConsumer: DioConsumer(),
-            
-         ),
-        
-      ), 
-      child: VerifyCodeScreen(
-        email: _emailController.text.trim(),
-        role: widget.registerRole,
-      ),
-    ),
-  ),
-);
+      if (msg.contains("accountnotverified")) {
+        // في signup_screen.dart
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) => VerifyCodeCubit(
+                verifyCodeRepo: VerifyCodeRepo(apiConsumer: DioConsumer()),
+              ),
+              child: VerifyCodeScreen(
+                email: _emailController.text.trim(),
+                role: widget.registerRole,
+              ),
+            ),
+          ),
+        );
         return;
       }
 
