@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/features/advisor_nav/advisor_home_screen.dart';
 import 'package:edu_advisor/features/auth/login/views/advisor_login.dart';
@@ -18,7 +19,10 @@ import 'package:edu_advisor/features/services/views/course_recommendations_view.
 import 'package:edu_advisor/features/services/views/course_registration_view.dart';
 import 'package:edu_advisor/features/services/views/registration_status_view.dart';
 import 'package:edu_advisor/features/settings/views/settings_view.dart';
+import 'package:edu_advisor/features/user/data/repo/user_repo.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -75,9 +79,34 @@ final GoRouter appRouter = GoRouter(
       path: AppRoutes.studentMain,
       builder: (context, state) => const MainView(),
     ),
-    GoRoute(
-      path: AppRoutes.advisorMain,
-      builder: (context, state) => const HomeScreen(),
+    ShellRoute(
+      builder: (context, state, child) {
+        return BlocProvider(
+          create: (context) =>
+              CurrentUserCubit(userRepo: UserRepo(apiConsumer: DioConsumer()))
+                ..getMe(),
+          child: child,
+        );
+      },
+      routes: [
+        GoRoute(
+          path: AppRoutes.advisorMain,
+          builder: (context, state) => const HomeScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.requestDetails,
+          builder: (context, state) {
+            final request = state.extra;
+            if (request is StudentRequest) {
+              return RequestDetailsScreen(request: request);
+            }
+
+            return const Scaffold(
+              body: Center(child: Text('Request data is missing')),
+            );
+          },
+        ),
+      ],
     ),
     GoRoute(
       path: AppRoutes.notifications,
@@ -98,19 +127,6 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.registrationStatus,
       builder: (context, state) => const RegistrationStatusView(),
-    ),
-    GoRoute(
-      path: AppRoutes.requestDetails,
-      builder: (context, state) {
-        final request = state.extra;
-        if (request is StudentRequest) {
-          return RequestDetailsScreen(request: request);
-        }
-
-        return const Scaffold(
-          body: Center(child: Text('Request data is missing')),
-        );
-      },
     ),
   ],
 );

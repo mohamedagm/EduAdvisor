@@ -13,6 +13,9 @@ class CurrentUserModel {
     this.gpa,
     this.completedCreditHours,
     this.level,
+    this.advisorIsPending,
+    this.studentsCount,
+    this.pendingRequestsCount,
   });
 
   final String id;
@@ -27,6 +30,9 @@ class CurrentUserModel {
   final num? gpa;
   final num? completedCreditHours;
   final int? level;
+  final bool? advisorIsPending;
+  final int? studentsCount;
+  final int? pendingRequestsCount;
   final Map<String, dynamic> rawData;
 
   factory CurrentUserModel.fromJson(Map<String, dynamic> json) {
@@ -51,11 +57,19 @@ class CurrentUserModel {
       gpa: profile['gpa'] as num?,
       completedCreditHours: profile['completedHours'] as num?,
       level: profile['academicYear'] as int?,
+      advisorIsPending: advisorProfile['isPending'] as bool?,
+      studentsCount: advisorProfile['studentsCount'] as int?,
+      pendingRequestsCount: advisorProfile['pendingRequestsCount'] as int?,
       rawData: json,
     );
   }
 
-  String get displayName => fullName.isNotEmpty ? fullName : 'Student';
+  String get displayName {
+    if (fullName.isNotEmpty) return fullName;
+
+    return role.trim().toLowerCase() == 'advisor' ? 'Advisor' : 'Student';
+  }
+
   String get displayId => studentCode?.isNotEmpty == true ? studentCode! : id;
   String get displayDepartment =>
       departmentName?.isNotEmpty == true ? departmentName! : 'Department';
@@ -63,4 +77,7 @@ class CurrentUserModel {
   String get displayGpa => gpa?.toString() ?? '--';
   String get displayCredits => completedCreditHours?.toString() ?? '--';
   String get displayLevel => level?.toString() ?? '--';
+  String get displayStudentsCount => studentsCount?.toString() ?? '--';
+  String get displayPendingRequestsCount =>
+      pendingRequestsCount?.toString() ?? '--';
 }

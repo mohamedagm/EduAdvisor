@@ -14,16 +14,16 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
 
     if (cachedUser != null) {
       emit(CurrentUserLoaded(cachedUser));
-    } else {
-      emit(const CurrentUserLoading());
+      return;
     }
+
+    emit(const CurrentUserLoading());
 
     final result = await _userRepo.getMe();
 
-    result.fold((failure) {
-      if (cachedUser == null) {
-        emit(CurrentUserFailure(failure));
-      }
-    }, (user) => emit(CurrentUserLoaded(user)));
+    result.fold(
+      (failure) => emit(CurrentUserFailure(failure)),
+      (user) => emit(CurrentUserLoaded(user)),
+    );
   }
 }
