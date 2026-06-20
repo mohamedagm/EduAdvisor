@@ -9,6 +9,7 @@ import 'package:edu_advisor/features/user/manager/current_user_cubit/current_use
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -121,7 +122,9 @@ class _ProfileHeaderContent extends StatelessWidget {
                   ),
                   SizedBox(height: 6),
                   Chip(
-                    backgroundColor: AppColors.infoBlue.withValues(alpha: 0.8),
+                    backgroundColor: context.themeColors.info.withValues(
+                      alpha: 0.8,
+                    ),
                     label: Text(
                       user?.displayDepartment ?? "Department",
                       style: AppTextStyles.bodyInterRegular12.copyWith(

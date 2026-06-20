@@ -5,6 +5,7 @@ import '../../../core/api/dio_consumer.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/theme/app_gradiants.dart';
+import '../../../core/widgets/app_toast.dart';
 import '../data/models/available_course_model.dart';
 import '../data/repo/course_registration_repo.dart';
 import '../manager/course_registration_cubit/course_registration_cubit.dart';
@@ -14,6 +15,7 @@ import 'widgets/empty_courses_card.dart';
 import 'widgets/selected_course_item.dart';
 import 'widgets/available_courses_sheet.dart';
 import 'widgets/service_app_bar.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class CourseRegistrationView extends StatefulWidget {
   const CourseRegistrationView({super.key});
@@ -86,14 +88,11 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
                             });
                             setModalState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'Cannot exceed maximum credit limit.',
-                                ),
-                                backgroundColor: AppColors.errorRed,
-                                behavior: SnackBarBehavior.floating,
-                              ),
+                            AppToast.warning(
+                              context,
+                              title: 'Credit limit reached',
+                              description:
+                                  'You cannot exceed the maximum credit limit.',
                             );
                           }
                         }
@@ -135,21 +134,19 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
       child: BlocConsumer<CourseRegistrationCubit, CourseRegistrationState>(
         listener: (context, state) {
           if (state is SubmitRegistrationSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.response.message),
-                backgroundColor: AppColors.successGreen,
-              ),
+            AppToast.success(
+              context,
+              title: 'Registration submitted',
+              description: state.response.message,
             );
             context.pop();
           }
 
           if (state is SubmitRegistrationFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.failure.message),
-                backgroundColor: AppColors.errorRed,
-              ),
+            AppToast.error(
+              context,
+              title: 'Submission failed',
+              description: state.failure.message,
             );
           }
         },
@@ -178,14 +175,14 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
                       Text(
                         'Selected Courses (${_selectedCourses.length})',
                         style: AppTextStyles.interRegular16.copyWith(
-                          color: AppColors.gray900,
+                          color: context.themeColors.textPrimary,
                         ),
                       ),
                       ElevatedButton.icon(
                         onPressed: isSubmitting ? null : _showAvailableCourses,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.infoBlue,
-                          foregroundColor: AppColors.white,
+                          backgroundColor: context.themeColors.info,
+                          foregroundColor: context.themeColors.onInfo,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -199,7 +196,7 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
                         label: Text(
                           'Add Course',
                           style: AppTextStyles.bodyInterRegular12.copyWith(
-                            color: AppColors.white,
+                            color: context.themeColors.onInfo,
                             fontWeight: FontWeight.w500,
                           ),
                         ),

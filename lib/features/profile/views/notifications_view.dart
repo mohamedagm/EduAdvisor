@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_gradiants.dart';
@@ -11,7 +12,7 @@ class NotificationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: context.colorScheme.surface,
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: const BoxDecoration(gradient: AppGradients.primary),
@@ -33,28 +34,40 @@ class NotificationsView extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '2 unread notifications',
-                  style: AppTextStyles.bodyInterMedium14.copyWith(
-                    color: AppColors.white.withValues(alpha: 0.9),
-                    fontWeight: FontWeight.w400,
+                Expanded(
+                  child: Text(
+                    '2 unread notifications',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.bodyInterMedium14.copyWith(
+                      color: AppColors.white.withValues(alpha: 0.9),
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.done_all,
-                      color: AppColors.white.withValues(alpha: 0.9),
-                      size: 18,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Mark all as read',
-                      style: AppTextStyles.bodyInterMedium14.copyWith(
+                const SizedBox(width: 12),
+                Flexible(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.done_all,
                         color: AppColors.white.withValues(alpha: 0.9),
+                        size: 18,
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 4),
+                      Flexible(
+                        child: Text(
+                          'Mark all as read',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.bodyInterMedium14.copyWith(
+                            color: AppColors.white.withValues(alpha: 0.9),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -66,6 +79,7 @@ class NotificationsView extends StatelessWidget {
         child: Column(
           children: [
             _buildStatusNotificationCard(
+              context: context,
               isSuccess: true,
               title: 'Course Registration Approved',
               subtitle: 'Your course registration request has been approved',
@@ -76,6 +90,7 @@ class NotificationsView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             _buildStatusNotificationCard(
+              context: context,
               isSuccess: false,
               title: 'Course Registration Rejected',
               subtitle: 'Your course registration request was rejected',
@@ -87,6 +102,7 @@ class NotificationsView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             _buildInfoNotificationCard(
+              context: context,
               isAlert: false,
               title: 'New Course Available',
               subtitle:
@@ -95,6 +111,7 @@ class NotificationsView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             _buildInfoNotificationCard(
+              context: context,
               isAlert: true,
               title: 'Registration Deadline',
               subtitle: 'Course registration for Spring 2024 ends in 3 days',
@@ -107,6 +124,7 @@ class NotificationsView extends StatelessWidget {
   }
 
   Widget _buildStatusNotificationCard({
+    required BuildContext context,
     required bool isSuccess,
     required String title,
     required String subtitle,
@@ -116,16 +134,18 @@ class NotificationsView extends StatelessWidget {
     required String innerCardName,
     bool hasRejectionReason = false,
   }) {
-    final bgColor = isSuccess ? AppColors.greenLight : AppColors.redLight;
+    final bgColor = isSuccess
+        ? context.themeColors.successContainer
+        : context.themeColors.dangerContainer;
     final borderColor = isSuccess
-        ? AppColors.successGreen.withValues(alpha: 0.3)
-        : AppColors.errorRed.withValues(alpha: 0.3);
+        ? context.themeColors.success.withValues(alpha: 0.3)
+        : context.colorScheme.error.withValues(alpha: 0.3);
     final iconData = isSuccess
         ? Icons.check_circle_outline
         : Icons.cancel_outlined;
     final iconColor = isSuccess
-        ? AppColors.successGreenDark
-        : AppColors.errorRed;
+        ? context.themeColors.success
+        : context.colorScheme.error;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -140,9 +160,9 @@ class NotificationsView extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: context.themeColors.card,
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.gray200),
+              border: Border.all(color: context.themeColors.border),
             ),
             child: Icon(iconData, color: iconColor, size: 20),
           ),
@@ -159,7 +179,7 @@ class NotificationsView extends StatelessWidget {
                         title,
                         style: AppTextStyles.interRegular16.copyWith(
                           fontWeight: FontWeight.w500,
-                          color: AppColors.gray900,
+                          color: context.themeColors.textPrimary,
                         ),
                       ),
                     ),
@@ -171,13 +191,13 @@ class NotificationsView extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.bluePrimary,
+                          color: context.colorScheme.primary,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           'New',
                           style: AppTextStyles.bodyInterRegular12.copyWith(
-                            color: AppColors.white,
+                            color: context.colorScheme.onPrimary,
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                           ),
@@ -190,7 +210,7 @@ class NotificationsView extends StatelessWidget {
                 Text(
                   subtitle,
                   style: AppTextStyles.bodyInterRegular12.copyWith(
-                    color: AppColors.gray500,
+                    color: context.themeColors.textMuted,
                     height: 1.4,
                   ),
                 ),
@@ -199,9 +219,9 @@ class NotificationsView extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.white,
+                    color: context.themeColors.card,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.gray200),
+                    border: Border.all(color: context.themeColors.border),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,14 +229,14 @@ class NotificationsView extends StatelessWidget {
                       Text(
                         innerCardCode,
                         style: AppTextStyles.bodyInterMedium14.copyWith(
-                          color: AppColors.gray900,
+                          color: context.themeColors.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         innerCardName,
                         style: AppTextStyles.bodyInterRegular12.copyWith(
-                          color: AppColors.gray500,
+                          color: context.themeColors.textMuted,
                         ),
                       ),
                     ],
@@ -226,16 +246,20 @@ class NotificationsView extends StatelessWidget {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      Text(
-                        'View rejection reason',
-                        style: AppTextStyles.bodyInterMedium14.copyWith(
-                          color: AppColors.errorRed,
+                      Flexible(
+                        child: Text(
+                          'View rejection reason',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.bodyInterMedium14.copyWith(
+                            color: context.colorScheme.error,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 4),
-                      const Icon(
+                      Icon(
                         Icons.keyboard_arrow_down,
-                        color: AppColors.errorRed,
+                        color: context.colorScheme.error,
                         size: 20,
                       ),
                     ],
@@ -245,7 +269,7 @@ class NotificationsView extends StatelessWidget {
                 Text(
                   time,
                   style: AppTextStyles.bodyInterRegular12.copyWith(
-                    color: AppColors.gray400,
+                    color: context.themeColors.textMuted,
                   ),
                 ),
               ],
@@ -257,6 +281,7 @@ class NotificationsView extends StatelessWidget {
   }
 
   Widget _buildInfoNotificationCard({
+    required BuildContext context,
     required bool isAlert,
     required String title,
     required String subtitle,
@@ -266,15 +291,15 @@ class NotificationsView extends StatelessWidget {
         ? Icons.calendar_today_outlined
         : Icons.menu_book_outlined;
     final iconColor = isAlert
-        ? AppColors.warningAmberDark
-        : AppColors.bluePrimary;
+        ? context.themeColors.warning
+        : context.colorScheme.primary;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: context.themeColors.border),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -282,9 +307,9 @@ class NotificationsView extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: context.themeColors.card,
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.gray200),
+              border: Border.all(color: context.themeColors.border),
             ),
             child: Icon(iconData, color: iconColor, size: 20),
           ),
@@ -297,14 +322,14 @@ class NotificationsView extends StatelessWidget {
                   title,
                   style: AppTextStyles.interRegular16.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.gray900,
+                    color: context.themeColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   subtitle,
                   style: AppTextStyles.bodyInterRegular12.copyWith(
-                    color: AppColors.gray500,
+                    color: context.themeColors.textMuted,
                     height: 1.4,
                   ),
                 ),
@@ -312,7 +337,7 @@ class NotificationsView extends StatelessWidget {
                 Text(
                   time,
                   style: AppTextStyles.bodyInterRegular12.copyWith(
-                    color: AppColors.gray400,
+                    color: context.themeColors.textMuted,
                   ),
                 ),
               ],

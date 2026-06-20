@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class CustomTextField extends StatelessWidget {
-
   final String hint;
   final IconData icon;
   final TextEditingController controller;
@@ -22,7 +22,6 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return TextFormField(
       controller: controller,
       validator: validator,
@@ -34,11 +33,10 @@ class CustomTextField extends StatelessWidget {
 
         prefixIcon: Icon(icon),
 
-   
         suffixIcon: suffixIcon,
 
         filled: true,
-        fillColor: Colors.grey.shade200,
+        fillColor: context.themeColors.mutedSurface,
 
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

@@ -3,6 +3,7 @@ import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/AIChat/models/message_model.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class MessageBubble extends StatelessWidget {
   final MessageModel message;
@@ -24,7 +25,7 @@ class MessageBubble extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             if (!isUser) ...[
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 14,
                 backgroundColor: AppColors.aiPurple,
                 child: Icon(Icons.smart_toy, size: 14, color: AppColors.white),
@@ -36,7 +37,7 @@ class MessageBubble extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 250),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               decoration: BoxDecoration(
-                color: isUser ? null : AppColors.white,
+                color: isUser ? null : context.themeColors.card,
                 gradient: isUser ? AppGradients.primary : null,
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(14),
@@ -51,7 +52,9 @@ class MessageBubble extends StatelessWidget {
                   Text(
                     message.text,
                     style: AppTextStyles.poppinsRegular14.copyWith(
-                      color: isUser ? AppColors.white : AppColors.gray900,
+                      color: isUser
+                          ? AppColors.white
+                          : context.themeColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -59,7 +62,9 @@ class MessageBubble extends StatelessWidget {
                   Text(
                     _formatTime(message.time),
                     style: AppTextStyles.bodyInterRegular12.copyWith(
-                      color: isUser ? AppColors.white : AppColors.gray600,
+                      color: isUser
+                          ? AppColors.white
+                          : context.themeColors.textSecondary,
                     ),
                   ),
                 ],
@@ -68,13 +73,13 @@ class MessageBubble extends StatelessWidget {
 
             if (isUser) ...[
               const SizedBox(width: 6),
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 14,
-                backgroundColor: AppColors.purplePrimary,
+                backgroundColor: context.colorScheme.secondary,
                 child: Icon(
                   Icons.person_rounded,
                   size: 14,
-                  color: AppColors.white,
+                  color: context.colorScheme.onSecondary,
                 ),
               ),
             ],

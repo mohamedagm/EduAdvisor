@@ -1,4 +1,3 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
@@ -7,6 +6,7 @@ import 'package:edu_advisor/features/user/manager/current_user_cubit/current_use
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SettingsProfileSection extends StatelessWidget {
   const SettingsProfileSection({super.key});
@@ -27,15 +27,15 @@ class SettingsProfileSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.person_outline,
-                    color: AppColors.bluePrimary,
+                    color: context.colorScheme.primary,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     'Profile Information',
                     style: AppTextStyles.bodyInterMedium18.copyWith(
-                      color: AppColors.gray800,
+                      color: context.themeColors.textPrimary,
                     ),
                   ),
                 ],
@@ -44,15 +44,15 @@ class SettingsProfileSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.gray50,
+                  color: context.colorScheme.surface,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.gray200),
+                  border: Border.all(color: context.themeColors.border),
                 ),
                 child: Row(
                   children: [
                     CircleAvatar(
                       radius: 20,
-                      backgroundColor: AppColors.gray200,
+                      backgroundColor: context.themeColors.border,
                       child: user?.profileImageUrl?.isNotEmpty == true
                           ? ClipOval(
                               child: SizedBox.expand(
@@ -61,7 +61,10 @@ class SettingsProfileSection extends StatelessWidget {
                                 ),
                               ),
                             )
-                          : const Icon(Icons.person, color: AppColors.gray500),
+                          : Icon(
+                              Icons.person,
+                              color: context.themeColors.textMuted,
+                            ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -71,20 +74,23 @@ class SettingsProfileSection extends StatelessWidget {
                           Text(
                             user?.displayName ?? '--',
                             style: AppTextStyles.bodyInterMedium14.copyWith(
-                              color: AppColors.gray900,
+                              color: context.themeColors.textPrimary,
                             ),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             user?.email ?? '--',
                             style: AppTextStyles.bodyInterRegular12.copyWith(
-                              color: AppColors.gray500,
+                              color: context.themeColors.textMuted,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const Icon(Icons.chevron_right, color: AppColors.gray400),
+                    Icon(
+                      Icons.chevron_right,
+                      color: context.themeColors.textMuted,
+                    ),
                   ],
                 ),
               ),
@@ -119,12 +125,12 @@ class _SettingsProfileShimmer extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.person_outline, color: AppColors.bluePrimary),
+              Icon(Icons.person_outline, color: context.colorScheme.primary),
               const SizedBox(width: 8),
               Text(
                 'Profile Information',
                 style: AppTextStyles.bodyInterMedium18.copyWith(
-                  color: AppColors.gray800,
+                  color: context.themeColors.textPrimary,
                 ),
               ),
             ],

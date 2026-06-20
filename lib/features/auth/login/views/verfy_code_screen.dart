@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:edu_advisor/core/api/dio_consumer.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/reset_password_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_state.dart';
@@ -10,7 +11,7 @@ import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/login/views/new_pass.dart';
 import 'package:edu_advisor/features/auth/login/views/student_profile.dart';
 // 💡 ضيفي هنا مسار شاشة الـ ResetPasswordScreen لو مكنش موجود تلقائي
-// import 'package:edu_advisor/features/auth/login/views/reset_password_screen.dart'; 
+// import 'package:edu_advisor/features/auth/login/views/reset_password_screen.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,7 +26,8 @@ class VerifyCodeScreen extends StatefulWidget {
     super.key,
     required this.email,
     required this.role,
-    this.isFromForgotPassword = false, // 👈 2. خليناه اختياري وبقيمة افتراضية false عشان ما يضربش في الـ Register
+    this.isFromForgotPassword =
+        false, // 👈 2. خليناه اختياري وبقيمة افتراضية false عشان ما يضربش في الـ Register
   });
 
   @override
@@ -83,17 +85,19 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
   void submitOtpVerification() {
     if (otpCode.length != otpLength) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please enter full code")),
+      AppToast.warning(
+        context,
+        title: 'Incomplete code',
+        description: 'Please enter the complete 6-digit verification code.',
       );
       return;
     }
 
     context.read<VerifyCodeCubit>().verifyOtp(
-          email: widget.email,
-          code: otpCode,
-            isFromForgotPassword: widget.isFromForgotPassword,
-        );
+      email: widget.email,
+      code: otpCode,
+      isFromForgotPassword: widget.isFromForgotPassword,
+    );
   }
 
   void handleResendCode() {
@@ -133,60 +137,62 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<VerifyCodeCubit, VerifyCodeState>(
       listener: (context, state) {
-        if (state is VerifyOtpLoading) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Verifying...")),
-          );
-        }
-
-        if (state is VerifyOtpSuccess) { //
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Code verified successfully")),
+        if (state is VerifyOtpSuccess) {
+          AppToast.success(
+            context,
+            title: 'Code verified',
+            description: 'Your verification code was accepted successfully.',
           );
 
           Future.delayed(const Duration(seconds: 1), () {
             if (mounted) {
-            if (widget.isFromForgotPassword) {
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (_) => BlocProvider(
-        create: (_) => ResetPasswordCubit(
-          resetPasswordRepo: ResetPasswordRepo(
-            apiConsumer: DioConsumer(),
-          ),
-        ),
-        child: NewPasswordScreen(
-          role: widget.role,
-          email: widget.email,
-          token: state.response.data ?? '',
-        ),
-      ),
-    ),
-  );
-}
+              if (widget.isFromForgotPassword) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider(
+                      create: (_) => ResetPasswordCubit(
+                        resetPasswordRepo: ResetPasswordRepo(
+                          apiConsumer: DioConsumer(),
+                        ),
+                      ),
+                      child: NewPasswordScreen(
+                        role: widget.role,
+                        email: widget.email,
+                        token: state.response.data ?? '',
+                      ),
+                    ),
+                  ),
+                );
+              }
             }
           });
         }
 
         if (state is VerifyOtpFailure) {
           debugPrint('VERIFY ERROR: "${state.failure.message}"');
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.failure.message)),
+          AppToast.error(
+            context,
+            title: 'Verification failed',
+            description: state.failure.message,
           );
         }
 
         if (state is ResendOtpSuccess) {
           startTimer();
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Code sent successfully")),
+          AppToast.success(
+            context,
+            title: 'Code sent',
+            description: 'A new verification code was sent to your email.',
           );
         }
 
         if (state is ResendOtpFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.failure.message)),
+          AppToast.error(
+            context,
+            title: 'Could not resend code',
+            description: state.failure.message,
           );
         }
       },
@@ -195,7 +201,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             state is VerifyOtpLoading || state is ResendOtpLoading;
 
         return Scaffold(
-          backgroundColor: AppColors.white,
+          backgroundColor: context.colorScheme.surface,
           body: Column(
             children: [
               const GradiantContainer(
@@ -228,8 +234,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                                 counterText: '',
                                 border: OutlineInputBorder(),
                               ),
-                              onChanged: (value) =>
-                                  onOtpChanged(index, value),
+                              onChanged: (value) => onOtpChanged(index, value),
                             ),
                           );
                         }),

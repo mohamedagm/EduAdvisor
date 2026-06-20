@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
@@ -108,13 +109,13 @@ class _CourseCatalogError extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.error_outline, color: AppColors.errorRed, size: 40),
+          Icon(Icons.error_outline, color: context.colorScheme.error, size: 40),
           const SizedBox(height: 8),
           Text(
             message,
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyInterMedium14.copyWith(
-              color: AppColors.gray600,
+              color: context.themeColors.textSecondary,
             ),
           ),
           const SizedBox(height: 12),

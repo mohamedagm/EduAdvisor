@@ -9,6 +9,7 @@ import 'package:edu_advisor/features/profile/manager/profile_courses_cubit/profi
 import 'package:edu_advisor/features/profile/views/widgets/profile_course_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class ProfileCoursesSection extends StatefulWidget {
   const ProfileCoursesSection({super.key});
@@ -50,9 +51,9 @@ class _ProfileCoursesSectionState extends State<ProfileCoursesSection>
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: context.themeColors.card,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.gray200, width: 2),
+            border: Border.all(color: context.themeColors.border, width: 2),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,10 +69,10 @@ class _ProfileCoursesSectionState extends State<ProfileCoursesSection>
                 ),
                 unselectedLabelStyle: const TextStyle(fontSize: 13),
                 labelColor: AppColors.aiPink,
-                unselectedLabelColor: AppColors.gray400,
+                unselectedLabelColor: context.themeColors.textMuted,
                 indicatorColor: AppColors.aiPurple,
                 indicatorSize: TabBarIndicatorSize.tab,
-                dividerColor: AppColors.gray200,
+                dividerColor: context.themeColors.border,
               ),
               const SizedBox(height: 16),
               BlocBuilder<ProfileCoursesCubit, ProfileCoursesState>(
@@ -135,9 +136,9 @@ class _ProfileCourseSkeletonCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.gray50,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200, width: 2),
+        border: Border.all(color: context.themeColors.border, width: 2),
       ),
       child: const Column(
         children: [
@@ -175,12 +176,12 @@ class _ProfileCoursesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (courses.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(vertical: 24),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24),
         child: Center(
           child: Text(
             'No courses here yet.',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: context.themeColors.textMuted),
           ),
         ),
       );
@@ -211,13 +212,13 @@ class _ProfileCoursesError extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            const Icon(Icons.error_outline, color: AppColors.errorRed),
+            Icon(Icons.error_outline, color: context.colorScheme.error),
             const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyInterMedium14.copyWith(
-                color: AppColors.gray600,
+                color: context.themeColors.textSecondary,
               ),
             ),
             const SizedBox(height: 8),

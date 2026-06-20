@@ -12,6 +12,7 @@ import 'package:edu_advisor/features/settings/views/widgets/settings_support_sec
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import '../../../auth/Manager/cubit/auth_cubit.dart';
 import 'settings_notifications_section.dart';
@@ -27,7 +28,6 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
   bool pushNotifications = true;
   bool emailNotifications = true;
   bool gradeAlerts = true;
-  bool darkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
         final isLoggingOut = state is LogoutLoading;
 
         return Scaffold(
-          backgroundColor: AppColors.gray50,
+          backgroundColor: context.colorScheme.surface,
           appBar: AppBar(
             flexibleSpace: Container(
               decoration: const BoxDecoration(gradient: AppGradients.primary),
@@ -80,12 +80,7 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
                   },
                 ),
                 const SizedBox(height: 16),
-                SettingsPreferencesSection(
-                  darkMode: darkMode,
-                  onDarkModeChanged: (value) {
-                    setState(() => darkMode = value);
-                  },
-                ),
+                const SettingsPreferencesSection(),
                 const SizedBox(height: 16),
                 const SettingsSecuritySection(),
                 const SizedBox(height: 16),

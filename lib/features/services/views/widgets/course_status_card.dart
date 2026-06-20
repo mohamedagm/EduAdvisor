@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class CourseStatusCard extends StatelessWidget {
   final int currentCredits;
@@ -22,9 +22,9 @@ class CourseStatusCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.yellowLight,
+        color: context.themeColors.warningContainer,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.warningAmber),
+        border: Border.all(color: context.themeColors.warning),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,14 +39,14 @@ class CourseStatusCard extends StatelessWidget {
                   Text(
                     'Total Credit Hours',
                     style: AppTextStyles.interRegular16.copyWith(
-                      color: AppColors.gray900,
+                      color: context.themeColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     '$minCredits - $maxCredits hours required',
                     style: AppTextStyles.bodyInterRegular12.copyWith(
-                      color: AppColors.gray500,
+                      color: context.themeColors.textMuted,
                     ),
                   ),
                 ],
@@ -58,13 +58,13 @@ class CourseStatusCard extends StatelessWidget {
                       text: '$currentCredits',
                       style: AppTextStyles.heading1_20b.copyWith(
                         fontSize: 28,
-                        color: AppColors.warningAmberDark,
+                        color: context.themeColors.warning,
                       ),
                     ),
                     TextSpan(
                       text: ' / $maxCredits',
                       style: AppTextStyles.interRegular16.copyWith(
-                        color: AppColors.gray500,
+                        color: context.themeColors.textMuted,
                       ),
                     ),
                   ],
@@ -76,16 +76,16 @@ class CourseStatusCard extends StatelessWidget {
           if (!hasEnoughCredits) ...[
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.error_outline,
-                  color: AppColors.warningAmberDark,
+                  color: context.themeColors.warning,
                   size: 16,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   'Add $creditsNeeded more credit hours',
                   style: AppTextStyles.bodyInterRegular12.copyWith(
-                    color: AppColors.warningAmberDark,
+                    color: context.themeColors.warning,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -94,16 +94,16 @@ class CourseStatusCard extends StatelessWidget {
           ] else ...[
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.check_circle_outline,
-                  color: AppColors.successGreenDark,
+                  color: context.themeColors.success,
                   size: 16,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   'Minimum credit requirement met',
                   style: AppTextStyles.bodyInterRegular12.copyWith(
-                    color: AppColors.successGreenDark,
+                    color: context.themeColors.success,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

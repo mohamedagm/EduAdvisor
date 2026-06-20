@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class RejectionDialog extends StatefulWidget {
   final Function(String reason) onConfirm;
@@ -31,9 +32,12 @@ class _RejectionDialogState extends State<RejectionDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Please provide a reason for rejecting this request. This will be shared with the student.",
-            style: TextStyle(color: Colors.grey, fontSize: 13),
+            style: TextStyle(
+              color: context.themeColors.textMuted,
+              fontSize: 13,
+            ),
           ),
           const SizedBox(height: 16),
           TextField(
@@ -42,9 +46,12 @@ class _RejectionDialogState extends State<RejectionDialog> {
             decoration: InputDecoration(
               hintText:
                   "Enter rejection reason (e.g., Prerequisites not met...)",
-              hintStyle: const TextStyle(fontSize: 13, color: Colors.grey),
+              hintStyle: TextStyle(
+                fontSize: 13,
+                color: context.themeColors.textMuted,
+              ),
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: context.themeColors.mutedSurface,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
@@ -63,11 +70,11 @@ class _RejectionDialogState extends State<RejectionDialog> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  side: const BorderSide(color: Color(0xFFEEEEEE)),
+                  side: BorderSide(color: context.themeColors.border),
                 ),
-                child: const Text(
+                child: Text(
                   "Cancel",
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: context.themeColors.textPrimary),
                 ),
               ),
             ),
@@ -89,9 +96,12 @@ class _RejectionDialogState extends State<RejectionDialog> {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
+                child: Text(
                   "Confirm Rejection",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(
+                    color: context.colorScheme.onError,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ),

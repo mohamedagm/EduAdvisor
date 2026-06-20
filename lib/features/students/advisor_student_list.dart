@@ -1,10 +1,8 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/features/students/models/student_model.dart';
 import 'package:edu_advisor/features/students/widgets/search_row.dart';
 import 'package:edu_advisor/features/widgets/advisor_header.dart';
 import 'package:flutter/material.dart';
-
-
 
 class StudentsScreen extends StatefulWidget {
   const StudentsScreen({super.key});
@@ -20,10 +18,13 @@ class _StudentsScreenState extends State<StudentsScreen> {
   List<Student> get _filteredStudents {
     if (_query.trim().isEmpty) return allStudents;
     final q = _query.toLowerCase();
-    return allStudents.where((s) =>
-      s.fullName.toLowerCase().contains(q) ||
-      s.email.toLowerCase().contains(q),
-    ).toList();
+    return allStudents
+        .where(
+          (s) =>
+              s.fullName.toLowerCase().contains(q) ||
+              s.email.toLowerCase().contains(q),
+        )
+        .toList();
   }
 
   @override
@@ -43,13 +44,12 @@ class _StudentsScreenState extends State<StudentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: context.colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
             AdvisorHeader(),
-        
-        
+
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -59,10 +59,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
                     const SizedBox(height: 18),
                     SearchRow(controller: _searchController),
                     // const SizedBox(height: 14),
-                    Expanded(
-                      child: 
-                          StudentList(students: _filteredStudents),
-                    ),
+                    Expanded(child: StudentList(students: _filteredStudents)),
                   ],
                 ),
               ),
@@ -70,17 +67,19 @@ class _StudentsScreenState extends State<StudentsScreen> {
           ],
         ),
       ),
-     
     );
   }
 }
-
 
 class StatsRow extends StatelessWidget {
   final int studentCount;
   final int requestCount;
 
-  const StatsRow({super.key, required this.studentCount, required this.requestCount});
+  const StatsRow({
+    super.key,
+    required this.studentCount,
+    required this.requestCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -128,14 +127,18 @@ class _StatChip extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(value,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700)),
-              Text(label,
-                  style:
-                      const TextStyle(color: Colors.white70, fontSize: 11)),
+              Text(
+                value,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                label,
+                style: const TextStyle(color: Colors.white70, fontSize: 11),
+              ),
             ],
           ),
         ],
@@ -143,6 +146,3 @@ class _StatChip extends StatelessWidget {
     );
   }
 }
-
-
-

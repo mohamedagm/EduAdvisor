@@ -1,4 +1,4 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -7,13 +7,13 @@ class AppShimmer extends StatelessWidget {
   const AppShimmer({
     super.key,
     required this.child,
-    this.baseColor = AppColors.gray200,
-    this.highlightColor = AppColors.gray100,
+    this.baseColor,
+    this.highlightColor,
   });
 
   final Widget child;
-  final Color baseColor;
-  final Color highlightColor;
+  final Color? baseColor;
+  final Color? highlightColor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,8 @@ class AppShimmer extends StatelessWidget {
     }
 
     return Shimmer.fromColors(
-      baseColor: baseColor,
-      highlightColor: highlightColor,
+      baseColor: baseColor ?? context.themeColors.shimmerBase,
+      highlightColor: highlightColor ?? context.themeColors.shimmerHighlight,
       period: const Duration(milliseconds: 1400),
       child: child,
     );
@@ -50,7 +50,7 @@ class AppShimmerBox extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: AppColors.gray200,
+        color: context.themeColors.shimmerBase,
         shape: shape,
         borderRadius: shape == BoxShape.rectangle
             ? BorderRadius.circular(borderRadius)
@@ -81,12 +81,14 @@ class AppShimmerNetworkImage extends StatelessWidget {
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
         if (wasSynchronouslyLoaded || frame != null) return child;
 
-        return const AppShimmer(child: ColoredBox(color: AppColors.gray200));
+        return AppShimmer(
+          child: ColoredBox(color: context.themeColors.shimmerBase),
+        );
       },
       errorBuilder: (context, error, stackTrace) {
         return errorWidget ??
-            const ColoredBox(
-              color: AppColors.gray100,
+            ColoredBox(
+              color: context.themeColors.mutedSurface,
               child: Center(child: Icon(Icons.image_not_supported_outlined)),
             );
       },

@@ -1,6 +1,5 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
@@ -22,6 +21,7 @@ import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class StudentLoginScreen extends StatefulWidget {
   final RegisterRole registerRole;
@@ -55,7 +55,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
           final isLoading = state is LoginLoading;
 
           return Scaffold(
-            backgroundColor: AppColors.gray100,
+            backgroundColor: context.themeColors.mutedSurface,
             body: SingleChildScrollView(
               child: Stack(
                 children: [
@@ -66,12 +66,12 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Text(
+                        Text(
                           'Login as Student',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF333333),
+                            color: context.themeColors.textPrimary,
                             letterSpacing: -0.5,
                           ),
                         ),

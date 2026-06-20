@@ -1,8 +1,8 @@
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class ServicesView extends StatelessWidget {
@@ -20,14 +20,14 @@ class ServicesView extends StatelessWidget {
               'Services',
               style: AppTextStyles.heading1_20b.copyWith(
                 fontSize: 28,
-                color: AppColors.gray900,
+                color: context.themeColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               'Access academic tools and resources',
               style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                color: AppColors.gray500,
+                color: context.themeColors.textMuted,
               ),
             ),
             const SizedBox(height: 32),
@@ -37,7 +37,7 @@ class ServicesView extends StatelessWidget {
                   width: 4,
                   height: 20,
                   decoration: BoxDecoration(
-                    color: AppColors.bluePrimary,
+                    color: context.colorScheme.primary,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -46,17 +46,19 @@ class ServicesView extends StatelessWidget {
                   'Academic Tools',
                   style: AppTextStyles.heading1_20b.copyWith(
                     fontSize: 18,
-                    color: AppColors.gray900,
+                    color: context.themeColors.textPrimary,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
             _buildServiceCard(
+              context: context,
               onTap: () {
                 context.push(AppRoutes.courseRecommendations);
               },
-              iconBgColor: AppColors.bluePrimary,
+              iconBgColor: context.colorScheme.primary,
+              iconForegroundColor: context.colorScheme.onPrimary,
               iconData: Icons.lightbulb_outline,
               title: 'Course Recommendation',
               subtitle:
@@ -64,18 +66,22 @@ class ServicesView extends StatelessWidget {
               badges: [
                 _Badge(
                   text: 'Smart Recommendations',
-                  textColor: AppColors.bluePrimary,
-                  bgColor: AppColors.blueLight,
-                  borderColor: AppColors.bluePrimary.withValues(alpha: 0.2),
+                  textColor: context.colorScheme.primary,
+                  bgColor: context.themeColors.infoContainer,
+                  borderColor: context.colorScheme.primary.withValues(
+                    alpha: 0.2,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
             _buildServiceCard(
+              context: context,
               onTap: () {
                 context.push(AppRoutes.courseRegistration);
               },
-              iconBgColor: const Color(0xFFF97316),
+              iconBgColor: context.themeColors.warning,
+              iconForegroundColor: context.themeColors.onWarning,
               iconData: Icons.assignment_outlined,
               title: 'Course Registration',
               subtitle:
@@ -83,34 +89,34 @@ class ServicesView extends StatelessWidget {
               badges: [
                 _Badge(
                   text: 'Register Now',
-                  textColor: const Color(0xFFC2410C),
-                  bgColor: const Color(0xFFFFEDD5),
-                  borderColor: const Color(0xFFFDBA74).withValues(alpha: 0.5),
+                  textColor: context.themeColors.warning,
+                  bgColor: context.themeColors.warningContainer,
+                  borderColor: context.themeColors.warning.withValues(
+                    alpha: 0.35,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
             _buildServiceCard(
+              context: context,
               onTap: () {
                 context.push(AppRoutes.registrationStatus);
               },
-              iconBgColor: AppColors.successGreen,
+              iconBgColor: context.themeColors.success,
+              iconForegroundColor: context.themeColors.onSuccess,
               iconData: Icons.check_circle_outline,
               title: 'Registration Status',
               subtitle:
                   'Track your registration requests and view advisor approval status in real-time.',
               badges: [
                 _Badge(
-                  text: '1 Pending',
-                  textColor: AppColors.warningAmberDark,
-                  bgColor: AppColors.yellowLight,
-                  borderColor: AppColors.warningAmber.withValues(alpha: 0.2),
-                ),
-                _Badge(
-                  text: '2 Approved',
-                  textColor: AppColors.successGreenDark,
-                  bgColor: AppColors.greenLight,
-                  borderColor: AppColors.successGreen.withValues(alpha: 0.2),
+                  text: 'Check Status',
+                  textColor: context.themeColors.warning,
+                  bgColor: context.themeColors.warningContainer,
+                  borderColor: context.themeColors.warning.withValues(
+                    alpha: 0.2,
+                  ),
                 ),
               ],
             ),
@@ -121,7 +127,9 @@ class ServicesView extends StatelessWidget {
   }
 
   Widget _buildServiceCard({
+    required BuildContext context,
     required Color iconBgColor,
+    required Color iconForegroundColor,
     required IconData iconData,
     required String title,
     required String subtitle,
@@ -133,7 +141,7 @@ class ServicesView extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: context.themeColors.card,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -146,7 +154,7 @@ class ServicesView extends StatelessWidget {
                 color: iconBgColor,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(iconData, color: AppColors.white, size: 24),
+              child: Icon(iconData, color: iconForegroundColor, size: 24),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -160,13 +168,13 @@ class ServicesView extends StatelessWidget {
                         child: Text(
                           title,
                           style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                            color: AppColors.gray900,
+                            color: context.themeColors.textPrimary,
                           ),
                         ),
                       ),
-                      const Icon(
+                      Icon(
                         Icons.arrow_forward,
-                        color: AppColors.gray400,
+                        color: context.themeColors.textMuted,
                         size: 20,
                       ),
                     ],
@@ -175,7 +183,7 @@ class ServicesView extends StatelessWidget {
                   Text(
                     subtitle,
                     style: AppTextStyles.poppinsRegular14.copyWith(
-                      color: AppColors.gray500,
+                      color: context.themeColors.textMuted,
                     ),
                   ),
                   const SizedBox(height: 12),

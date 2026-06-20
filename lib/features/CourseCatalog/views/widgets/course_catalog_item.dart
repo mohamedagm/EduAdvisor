@@ -1,8 +1,8 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/CourseCatalog/data/models/course_model.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/tag.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class CourseCatalogItem extends StatelessWidget {
   const CourseCatalogItem({super.key, required this.course});
@@ -14,9 +14,9 @@ class CourseCatalogItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: context.themeColors.border),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,60 +27,72 @@ class CourseCatalogItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      spacing: 4,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          spacing: 24,
-                          children: [
-                            Text(
-                              course.displayCode,
-                              style: AppTextStyles.heading3PoppinsReg16
-                                  .copyWith(color: AppColors.gray800),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
+                    Expanded(
+                      child: Column(
+                        spacing: 4,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                course.displayCode,
+                                style: AppTextStyles.heading3PoppinsReg16
+                                    .copyWith(
+                                      color: context.themeColors.textPrimary,
+                                    ),
                               ),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFFFF8E1),
-                                borderRadius: BorderRadius.circular(20),
+                              const SizedBox(width: 24),
+                              Flexible(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: context.themeColors.warningContainer,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Text(
+                                    course.displayType,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppTextStyles.bodyInterRegular12
+                                        .copyWith(
+                                          color: context.themeColors.warning,
+                                        ),
+                                  ),
+                                ),
                               ),
-                              child: Text(
-                                course.displayType,
-                                style: AppTextStyles.bodyInterRegular12
-                                    .copyWith(color: Color(0xFFD4A017)),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Text(
-                          course.displayName,
-                          style: AppTextStyles.interRegular16.copyWith(
-                            color: AppColors.gray600,
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
 
-                    const Icon(
+                          Text(
+                            course.displayName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.interRegular16.copyWith(
+                              color: context.themeColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Icon(
                       Icons.chevron_right_rounded,
-                      color: AppColors.gray400,
+                      color: context.themeColors.textMuted,
                     ),
                   ],
                 ),
 
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.menu_book_outlined,
                       size: 16,
-                      color: Color(0xFF9E9E9E),
+                      color: context.themeColors.textMuted,
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -88,10 +100,10 @@ class CourseCatalogItem extends StatelessWidget {
                       style: AppTextStyles.bodyInterMedium14,
                     ),
                     const SizedBox(width: 16),
-                    const Icon(
+                    Icon(
                       Icons.school_outlined,
                       size: 16,
-                      color: Color(0xFF9E9E9E),
+                      color: context.themeColors.textMuted,
                     ),
                     const SizedBox(width: 4),
                     Text(

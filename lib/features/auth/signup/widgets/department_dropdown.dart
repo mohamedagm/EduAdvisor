@@ -3,7 +3,7 @@ import 'package:edu_advisor/features/auth/Manager/cubit/departments_state.dart';
 import 'package:edu_advisor/features/auth/signup/widgets/signup_filed_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class DepartmentDropdown extends StatelessWidget {
   final String? value;
@@ -38,17 +38,27 @@ class DepartmentDropdown extends StatelessWidget {
                 value: value,
                 hint: const Text('Select your department'),
                 decoration: InputDecoration(
-                    filled: true,
-        fillColor: Colors.grey.shade200,
-                  prefixIcon: const Icon(Icons.business, color: Colors.grey),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  filled: true,
+                  fillColor: context.themeColors.mutedSurface,
+                  prefixIcon: Icon(
+                    Icons.business,
+                    color: context.themeColors.textMuted,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(
+                      color: context.themeColors.textMuted,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade200),
+                    borderSide: BorderSide(
+                      color: context.themeColors.mutedSurface,
+                    ),
                   ),
                 ),
                 items: state.departments.map((department) {
@@ -58,12 +68,15 @@ class DepartmentDropdown extends StatelessWidget {
                   );
                 }).toList(),
                 onChanged: onChanged,
-                validator: validator ?? (value) => value == null ? 'Please select your department' : null,
+                validator:
+                    validator ??
+                    (value) =>
+                        value == null ? 'Please select your department' : null,
               );
             } else if (state is DepartmentsFailure) {
               return Text(
                 'Failed to load departments: ${state.failure.message}',
-                style: const TextStyle(color: Colors.red),
+                style: TextStyle(color: context.colorScheme.error),
               );
             }
             return const SizedBox.shrink();

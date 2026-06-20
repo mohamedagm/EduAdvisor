@@ -1,7 +1,5 @@
-
-
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class BottomNav extends StatelessWidget {
   final int selected;
@@ -14,25 +12,30 @@ class BottomNav extends StatelessWidget {
     return NavigationBar(
       selectedIndex: selected,
       onDestinationSelected: onTap,
-      backgroundColor: Colors.white,
-      // indicatorColor: AppColors.primary.withOpacity(0.12),
-      destinations: const [
+      backgroundColor: context.themeColors.card,
+      destinations: [
         NavigationDestination(
           icon: Icon(Icons.inbox_outlined),
-          selectedIcon:
-              Icon(Icons.inbox_rounded, color: AppColors.infoBlue),
+          selectedIcon: Icon(
+            Icons.inbox_rounded,
+            color: context.themeColors.info,
+          ),
           label: 'Requests',
         ),
         NavigationDestination(
           icon: Icon(Icons.people_outline),
-          selectedIcon:
-              Icon(Icons.people_rounded, color: AppColors.infoBlue),
+          selectedIcon: Icon(
+            Icons.people_rounded,
+            color: context.themeColors.info,
+          ),
           label: 'Students',
         ),
         NavigationDestination(
           icon: Icon(Icons.bar_chart_outlined),
-          selectedIcon:
-              Icon(Icons.bar_chart_rounded, color: AppColors.infoBlue),
+          selectedIcon: Icon(
+            Icons.bar_chart_rounded,
+            color: context.themeColors.info,
+          ),
           label: 'Analytics',
         ),
       ],

@@ -1,5 +1,5 @@
-
 import 'dart:io';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -8,10 +8,7 @@ import 'package:image_picker/image_picker.dart';
 class ImagePickerWidget extends StatefulWidget {
   final Function(File? selectedImage) onImageSelected;
 
-  const ImagePickerWidget({
-    super.key,
-    required this.onImageSelected,
-  });
+  const ImagePickerWidget({super.key, required this.onImageSelected});
 
   @override
   State<ImagePickerWidget> createState() => _ImagePickerWidgetState();
@@ -36,7 +33,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
         setState(() {
           _selectedImage = File(picked.path);
         });
-       
+
         widget.onImageSelected(_selectedImage);
       }
     } catch (e) {
@@ -55,8 +52,8 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
         width: 100,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey.shade200,
-          border: Border.all(color: Colors.grey.shade400),
+          color: context.themeColors.mutedSurface,
+          border: Border.all(color: context.colorScheme.outline),
           image: _selectedImage != null
               ? DecorationImage(
                   image: FileImage(_selectedImage!),
@@ -65,10 +62,10 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
               : null,
         ),
         child: _selectedImage == null
-            ? const Icon(
+            ? Icon(
                 Icons.add_a_photo,
                 size: 32,
-                color: Colors.grey,
+                color: context.themeColors.textMuted,
               )
             : null,
       ),

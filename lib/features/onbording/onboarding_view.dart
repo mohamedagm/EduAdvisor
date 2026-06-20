@@ -1,9 +1,9 @@
 import 'package:edu_advisor/core/routing/app_routes.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/features/onbording/first_onbording_view.dart';
 import 'package:edu_advisor/features/onbording/second_onbording_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -40,7 +40,7 @@ class _OnboardingViewState extends State<OnboardingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: context.colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -71,8 +71,10 @@ class _OnboardingViewState extends State<OnboardingView> {
                     width: _currentPage == index ? 24 : 8,
                     decoration: BoxDecoration(
                       color: _currentPage == index
-                          ? AppColors.purplePrimary
-                          : AppColors.purplePrimary.withValues(alpha: 0.2),
+                          ? context.colorScheme.secondary
+                          : context.colorScheme.secondary.withValues(
+                              alpha: 0.2,
+                            ),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),

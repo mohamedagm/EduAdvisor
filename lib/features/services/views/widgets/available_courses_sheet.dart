@@ -1,4 +1,3 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/services/data/models/available_course_model.dart';
@@ -8,6 +7,7 @@ import 'package:edu_advisor/features/services/views/widgets/course_icon_widget.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AvailableCoursesSheet extends StatelessWidget {
   const AvailableCoursesSheet({
@@ -22,8 +22,8 @@ class AvailableCoursesSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.white,
+      decoration: BoxDecoration(
+        color: context.themeColors.card,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       padding: const EdgeInsets.all(24),
@@ -37,12 +37,12 @@ class AvailableCoursesSheet extends StatelessWidget {
               Text(
                 'Available Courses',
                 style: AppTextStyles.heading1_20b.copyWith(
-                  color: AppColors.gray900,
+                  color: context.themeColors.textPrimary,
                 ),
               ),
               IconButton(
                 onPressed: () => context.pop(),
-                icon: const Icon(Icons.close, color: AppColors.gray500),
+                icon: Icon(Icons.close, color: context.themeColors.textMuted),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
@@ -124,9 +124,9 @@ class _AvailableCourseSkeletonTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: context.themeColors.border),
       ),
       child: const Row(
         children: [
@@ -168,10 +168,12 @@ class _AvailableCourseTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: context.themeColors.card,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected ? AppColors.bluePrimary : AppColors.gray200,
+            color: isSelected
+                ? context.colorScheme.primary
+                : context.themeColors.border,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -186,21 +188,21 @@ class _AvailableCourseTile extends StatelessWidget {
                   Text(
                     course.displayCode,
                     style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                      color: AppColors.gray900,
+                      color: context.themeColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     course.displayName,
                     style: AppTextStyles.bodyInterRegular12.copyWith(
-                      color: AppColors.gray500,
+                      color: context.themeColors.textMuted,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     '${course.creditHours} Credits',
                     style: AppTextStyles.bodyInterMedium14.copyWith(
-                      color: AppColors.gray900,
+                      color: context.themeColors.textPrimary,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -208,7 +210,7 @@ class _AvailableCourseTile extends StatelessWidget {
               ),
             ),
             if (isSelected)
-              const Icon(Icons.check_circle, color: AppColors.bluePrimary),
+              Icon(Icons.check_circle, color: context.colorScheme.primary),
           ],
         ),
       ),
@@ -227,13 +229,13 @@ class _AvailableCoursesError extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.error_outline, color: AppColors.errorRed),
+          Icon(Icons.error_outline, color: context.colorScheme.error),
           const SizedBox(height: 8),
           Text(
             message,
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyInterMedium14.copyWith(
-              color: AppColors.gray600,
+              color: context.themeColors.textSecondary,
             ),
           ),
           const SizedBox(height: 8),

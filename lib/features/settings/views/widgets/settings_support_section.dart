@@ -1,8 +1,8 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_info_row.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SettingsSupportSection extends StatelessWidget {
   const SettingsSupportSection({super.key});
@@ -16,7 +16,7 @@ class SettingsSupportSection extends StatelessWidget {
           Text(
             'Support',
             style: AppTextStyles.bodyInterMedium18.copyWith(
-              color: AppColors.gray800,
+              color: context.themeColors.textPrimary,
             ),
           ),
           const SizedBox(height: 16),

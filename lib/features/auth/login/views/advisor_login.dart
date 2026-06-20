@@ -1,6 +1,5 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
@@ -20,6 +19,7 @@ import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AdvisorLoginScreen extends StatefulWidget {
   const AdvisorLoginScreen({super.key});
@@ -51,7 +51,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
           final isLoading = state is LoginLoading;
 
           return Scaffold(
-            backgroundColor: AppColors.gray100,
+            backgroundColor: context.themeColors.mutedSurface,
             body: SingleChildScrollView(
               child: Stack(
                 children: [
@@ -82,7 +82,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                             Navigator.push(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
@@ -93,7 +93,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                               );
                             },
                             style: TextButton.styleFrom(
-                              foregroundColor: Colors.deepPurple.shade400,
+                              foregroundColor: context.colorScheme.secondary,
                               visualDensity: VisualDensity.compact,
                             ),
                             child: const Text(
@@ -131,40 +131,40 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                             Text(
                               "Don't have an account? ",
                               style: AppTextStyles.interRegular16.copyWith(
-                                color: AppColors.gray600,
+                                color: context.themeColors.textSecondary,
                               ),
                             ),
                             GestureDetector(
                               onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (loginContext) => MultiBlocProvider(
-                                      providers: [
-                                        BlocProvider<AuthCubit>(
-                                          create: (context) => AuthCubit(
-                                            authRepo: AuthRepo(
-                                              apiConsumer: DioConsumer(),
-                                            ),
+                                context,
+                                MaterialPageRoute(
+                                  builder: (loginContext) => MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider<AuthCubit>(
+                                        create: (context) => AuthCubit(
+                                          authRepo: AuthRepo(
+                                            apiConsumer: DioConsumer(),
                                           ),
                                         ),
-                                        BlocProvider<DepartmentsCubit>(
-                                          create: (context) => DepartmentsCubit(
-                                            departmentsRepo: DepartmentsRepo(
-                                              apiConsumer: DioConsumer(),
-                                            ),
-                                          )..fetchDepartments(),
-                                        ),
-                                      ],
-                                      child: const AdvisorSignupScreen(
-                                        registerRole: RegisterRole.advisor,
                                       ),
+                                      BlocProvider<DepartmentsCubit>(
+                                        create: (context) => DepartmentsCubit(
+                                          departmentsRepo: DepartmentsRepo(
+                                            apiConsumer: DioConsumer(),
+                                          ),
+                                        )..fetchDepartments(),
+                                      ),
+                                    ],
+                                    child: const AdvisorSignupScreen(
+                                      registerRole: RegisterRole.advisor,
                                     ),
                                   ),
                                 ),
+                              ),
                               child: Text(
                                 'Sign Up',
                                 style: AppTextStyles.bodyInterMedium18.copyWith(
-                                  color: AppColors.infoBlue,
+                                  color: context.themeColors.info,
                                 ),
                               ),
                             ),

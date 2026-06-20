@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -21,15 +22,15 @@ class CourseRecommendationsView extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.blueLight,
+                color: context.themeColors.infoContainer,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
                 children: [
                   Container(
                     padding: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
-                      color: AppColors.white,
+                    decoration: BoxDecoration(
+                      color: context.themeColors.card,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -46,7 +47,7 @@ class CourseRecommendationsView extends StatelessWidget {
                         Text(
                           'Personalized for You',
                           style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                            color: AppColors.gray900,
+                            color: context.themeColors.textPrimary,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -54,7 +55,7 @@ class CourseRecommendationsView extends StatelessWidget {
                         Text(
                           'Based on your academic profile',
                           style: AppTextStyles.bodyInterRegular12.copyWith(
-                            color: AppColors.gray500,
+                            color: context.themeColors.textMuted,
                           ),
                         ),
                       ],
@@ -65,8 +66,10 @@ class CourseRecommendationsView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             _buildRecommendationCard(
+              context: context,
               iconData: Icons.smart_toy_outlined,
               iconBgColor: AppColors.aiPurple,
+              iconForegroundColor: AppColors.white,
               courseCode: 'CS 301',
               courseName: 'Machine Learning',
               matchScore: '95',
@@ -82,8 +85,10 @@ class CourseRecommendationsView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildRecommendationCard(
+              context: context,
               iconData: Icons.architecture,
-              iconBgColor: const Color(0xFFF97316),
+              iconBgColor: context.themeColors.warning,
+              iconForegroundColor: context.themeColors.onWarning,
               courseCode: 'MATH 301',
               courseName: 'Advanced Linear Algebra',
               matchScore: '78',
@@ -101,18 +106,18 @@ class CourseRecommendationsView extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.blueLight,
+                color: context.themeColors.infoContainer,
                 border: Border.all(
-                  color: AppColors.bluePrimary.withValues(alpha: 0.2),
+                  color: context.colorScheme.primary.withValues(alpha: 0.2),
                 ),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.workspace_premium_outlined,
-                    color: AppColors.bluePrimary,
+                    color: context.colorScheme.primary,
                     size: 24,
                   ),
                   const SizedBox(width: 12),
@@ -123,7 +128,7 @@ class CourseRecommendationsView extends StatelessWidget {
                         Text(
                           'Recommendations updated daily',
                           style: AppTextStyles.interRegular16.copyWith(
-                            color: AppColors.gray900,
+                            color: context.themeColors.textPrimary,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -131,7 +136,7 @@ class CourseRecommendationsView extends StatelessWidget {
                         Text(
                           'Our AI analyzes your performance, prerequisites, and career goals to suggest the best courses.',
                           style: AppTextStyles.bodyInterRegular12.copyWith(
-                            color: AppColors.gray600,
+                            color: context.themeColors.textSecondary,
                             height: 1.4,
                           ),
                         ),
@@ -149,8 +154,10 @@ class CourseRecommendationsView extends StatelessWidget {
   }
 
   Widget _buildRecommendationCard({
+    required BuildContext context,
     required IconData iconData,
     required Color iconBgColor,
+    required Color iconForegroundColor,
     required String courseCode,
     required String courseName,
     required String matchScore,
@@ -162,9 +169,9 @@ class CourseRecommendationsView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: context.themeColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +186,7 @@ class CourseRecommendationsView extends StatelessWidget {
                   color: iconBgColor,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(iconData, color: AppColors.white, size: 28),
+                child: Icon(iconData, color: iconForegroundColor, size: 28),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -193,7 +200,7 @@ class CourseRecommendationsView extends StatelessWidget {
                           courseCode,
                           style: AppTextStyles.heading1_20b.copyWith(
                             fontSize: 18,
-                            color: AppColors.gray900,
+                            color: context.themeColors.textPrimary,
                           ),
                         ),
                         Container(
@@ -202,7 +209,7 @@ class CourseRecommendationsView extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.purpleLight,
+                            color: context.themeColors.purpleContainer,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
@@ -229,7 +236,7 @@ class CourseRecommendationsView extends StatelessWidget {
                     Text(
                       courseName,
                       style: AppTextStyles.poppinsRegular14.copyWith(
-                        color: AppColors.gray500,
+                        color: context.themeColors.textMuted,
                       ),
                     ),
                   ],
@@ -242,15 +249,17 @@ class CourseRecommendationsView extends StatelessWidget {
           Row(
             children: [
               _buildSmallBadge(
+                context: context,
                 text: credits,
-                textColor: AppColors.gray900,
-                borderColor: AppColors.gray300,
+                textColor: context.themeColors.textPrimary,
+                borderColor: context.colorScheme.outline,
               ),
               const SizedBox(width: 8),
               _buildSmallBadge(
+                context: context,
                 text: difficulty,
-                textColor: AppColors.errorRed,
-                borderColor: AppColors.errorRed.withValues(alpha: 0.4),
+                textColor: context.colorScheme.error,
+                borderColor: context.colorScheme.error.withValues(alpha: 0.4),
               ),
             ],
           ),
@@ -260,13 +269,13 @@ class CourseRecommendationsView extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.gray50,
+              color: context.colorScheme.surface,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               reason,
               style: AppTextStyles.bodyInterMedium14.copyWith(
-                color: AppColors.gray700,
+                color: context.themeColors.textSecondary,
                 fontWeight: FontWeight.w400,
                 height: 1.4,
               ),
@@ -281,9 +290,9 @@ class CourseRecommendationsView extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.trending_up,
-                      color: AppColors.successGreenDark,
+                      color: context.themeColors.success,
                       size: 18,
                     ),
                     const SizedBox(width: 8),
@@ -291,7 +300,7 @@ class CourseRecommendationsView extends StatelessWidget {
                       child: Text(
                         benefit,
                         style: AppTextStyles.bodyInterRegular12.copyWith(
-                          color: AppColors.gray600,
+                          color: context.themeColors.textSecondary,
                           fontSize: 13,
                         ),
                       ),
@@ -307,6 +316,7 @@ class CourseRecommendationsView extends StatelessWidget {
   }
 
   Widget _buildSmallBadge({
+    required BuildContext context,
     required String text,
     required Color textColor,
     required Color borderColor,
@@ -314,7 +324,7 @@ class CourseRecommendationsView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: borderColor),
       ),

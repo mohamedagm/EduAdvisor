@@ -21,6 +21,7 @@ import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:edu_advisor/valdations/valditors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key, required this.registerRole});
@@ -83,9 +84,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         'Failed to load departments',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: context.colorScheme.error),
                       ),
                       const SizedBox(height: 12),
                       ElevatedButton(
@@ -115,10 +116,13 @@ class _SignupScreenState extends State<SignupScreen> {
                             margin: const EdgeInsets.symmetric(horizontal: 24),
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: context.themeColors.card,
                               borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(blurRadius: 10, color: Colors.black12),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 10,
+                                  color: context.themeColors.shadow,
+                                ),
                               ],
                             ),
                             child: Form(
@@ -126,7 +130,6 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                
                                   ImagePickerWidget(
                                     onImageSelected: (image) {
                                       setState(() {
@@ -283,18 +286,18 @@ class _SignupScreenState extends State<SignupScreen> {
     if (!context.mounted) return;
 
     context.read<AuthCubit>().registerStudent(
-          RegisterStudentRequestModel(
-            firstName: nameController.text.trim(),
-            lastName: lastNameController.text.trim(),
-            email: emailController.text.trim(),
-            studentCode: studentCodeController.text.trim(),
-            departmentId: selectedDepartmentId ?? '',
-            nationalId: idController.text.trim(),
-            password: passwordController.text,
-            confirmPassword: confirmPasswordController.text,
-            profileImage: profileImageFile,
-          ),
-        );
+      RegisterStudentRequestModel(
+        firstName: nameController.text.trim(),
+        lastName: lastNameController.text.trim(),
+        email: emailController.text.trim(),
+        studentCode: studentCodeController.text.trim(),
+        departmentId: selectedDepartmentId ?? '',
+        nationalId: idController.text.trim(),
+        password: passwordController.text,
+        confirmPassword: confirmPasswordController.text,
+        profileImage: profileImageFile,
+      ),
+    );
   }
 
   Widget _buildField({

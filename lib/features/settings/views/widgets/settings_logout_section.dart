@@ -1,8 +1,8 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SettingsLogoutSection extends StatelessWidget {
   const SettingsLogoutSection({super.key, required this.isLoggingOut});
@@ -14,9 +14,11 @@ class SettingsLogoutSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.errorRed.withValues(alpha: 0.2)),
+        border: Border.all(
+          color: context.colorScheme.error.withValues(alpha: 0.2),
+        ),
       ),
       child: IgnorePointer(
         ignoring: isLoggingOut,
@@ -27,7 +29,7 @@ class SettingsLogoutSection extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: AppColors.errorRed.withValues(alpha: 0.4),
+                color: context.colorScheme.error.withValues(alpha: 0.4),
               ),
             ),
             alignment: Alignment.center,
@@ -35,22 +37,22 @@ class SettingsLogoutSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (isLoggingOut) ...[
-                  const SizedBox(
+                  SizedBox(
                     width: 18,
                     height: 18,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: AppColors.errorRed,
+                      color: context.colorScheme.error,
                     ),
                   ),
                 ] else ...[
-                  const Icon(Icons.logout, color: AppColors.errorRed),
+                  Icon(Icons.logout, color: context.colorScheme.error),
                 ],
                 const SizedBox(width: 8),
                 Text(
                   isLoggingOut ? 'Logging out...' : 'Log Out',
                   style: AppTextStyles.bodyInterMedium14.copyWith(
-                    color: AppColors.errorRed,
+                    color: context.colorScheme.error,
                   ),
                 ),
               ],

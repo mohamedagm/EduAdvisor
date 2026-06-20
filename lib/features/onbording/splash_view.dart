@@ -1,7 +1,7 @@
 import 'package:edu_advisor/core/routing/app_startup_service.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -100,7 +100,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: context.colorScheme.surface,
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -108,8 +108,8 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.white,
-              AppColors.purplePrimary.withValues(alpha: 0.03),
+              context.colorScheme.surface,
+              context.colorScheme.secondary.withValues(alpha: 0.03),
             ],
           ),
         ),
@@ -123,7 +123,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
               const SizedBox(height: 60),
               _buildChips(),
               const Spacer(flex: 2),
-              const _LoadingDots(color: AppColors.purplePrimary),
+              _LoadingDots(color: context.colorScheme.secondary),
               const SizedBox(height: 40),
             ],
           ),
@@ -149,7 +149,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                   shape: BoxShape.circle,
                   gradient: RadialGradient(
                     colors: [
-                      AppColors.purplePrimary.withValues(alpha: 0.1),
+                      context.colorScheme.secondary.withValues(alpha: 0.1),
                       Colors.transparent,
                     ],
                   ),
@@ -159,9 +159,9 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
             Container(
               width: 170,
               height: 170,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.white,
+                color: context.themeColors.card,
                 boxShadow: [
                   BoxShadow(
                     color: Color(0x0D000000),
@@ -176,10 +176,10 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                   child: Image.asset(
                     'assets/images/EduAdvisor_Logo.png',
                     fit: BoxFit.contain,
-                    errorBuilder: (_, __, ___) => const Icon(
+                    errorBuilder: (_, __, ___) => Icon(
                       Icons.school,
                       size: 70,
-                      color: AppColors.purplePrimary,
+                      color: context.colorScheme.secondary,
                     ),
                   ),
                 ),
@@ -194,12 +194,12 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
   Widget _buildTextHeader() {
     return Column(
       children: [
-        const Text(
+        Text(
           "EduAdvisor",
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: AppColors.gray800,
+            color: context.themeColors.textPrimary,
             letterSpacing: 1.2,
           ),
         ),
@@ -209,7 +209,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,
-            color: AppColors.gray500,
+            color: context.themeColors.textMuted,
           ),
         ),
       ],
@@ -237,9 +237,9 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.gray100),
+        border: Border.all(color: context.themeColors.mutedSurface),
         boxShadow: const [
           BoxShadow(
             color: Color(0x05000000),
@@ -251,12 +251,12 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 18, color: AppColors.purplePrimary),
+          Icon(icon, size: 18, color: context.colorScheme.secondary),
           const SizedBox(width: 8),
           Text(
             text,
-            style: const TextStyle(
-              color: AppColors.gray800,
+            style: TextStyle(
+              color: context.themeColors.textPrimary,
               fontWeight: FontWeight.w600,
               fontSize: 13,
             ),

@@ -2,6 +2,7 @@ import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class HeaderAiChat extends StatelessWidget {
   const HeaderAiChat({super.key});
@@ -34,7 +35,7 @@ class HeaderAiChat extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 4,
-                    backgroundColor: AppColors.successGreen,
+                    backgroundColor: context.themeColors.success,
                   ),
                   SizedBox(width: 4),
                   Text(

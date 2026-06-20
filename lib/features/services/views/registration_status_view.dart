@@ -1,5 +1,4 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/services/data/repo/course_registration_repo.dart';
@@ -10,6 +9,7 @@ import 'package:edu_advisor/features/services/views/widgets/registration_summary
 import 'package:edu_advisor/features/services/views/widgets/service_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class RegistrationStatusView extends StatelessWidget {
   const RegistrationStatusView({super.key});
@@ -31,7 +31,7 @@ class _RegistrationStatusBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.gray50,
+      backgroundColor: context.colorScheme.surface,
       appBar: const ServiceAppBar(
         title: 'Registration Status',
         subtitle: 'Track your course requests',
@@ -57,24 +57,24 @@ class _RegistrationStatusBody extends StatelessWidget {
                     children: [
                       RegistrationSummaryBox(
                         icon: Icons.access_time,
-                        color: AppColors.warningAmberDark,
-                        bgColor: AppColors.yellowLight,
+                        color: context.themeColors.warning,
+                        bgColor: context.themeColors.warningContainer,
                         count: state.pendingCount.toString(),
                         label: 'Pending',
                       ),
                       const SizedBox(width: 12),
                       RegistrationSummaryBox(
                         icon: Icons.check_circle_outline,
-                        color: AppColors.successGreenDark,
-                        bgColor: AppColors.greenLight,
+                        color: context.themeColors.success,
+                        bgColor: context.themeColors.successContainer,
                         count: state.approvedCount.toString(),
                         label: 'Approved',
                       ),
                       const SizedBox(width: 12),
                       RegistrationSummaryBox(
                         icon: Icons.cancel_outlined,
-                        color: AppColors.errorRed,
-                        bgColor: AppColors.redLight,
+                        color: context.colorScheme.error,
+                        bgColor: context.themeColors.dangerContainer,
                         count: state.rejectedCount.toString(),
                         label: 'Rejected',
                       ),
@@ -85,7 +85,7 @@ class _RegistrationStatusBody extends StatelessWidget {
                     'All Registrations',
                     style: AppTextStyles.heading1_20b.copyWith(
                       fontSize: 16,
-                      color: AppColors.gray900,
+                      color: context.themeColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -155,11 +155,11 @@ class _RegistrationStatusSkeletonCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: context.themeColors.border),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -176,7 +176,7 @@ class _RegistrationStatusSkeletonCard extends StatelessWidget {
           SizedBox(height: 12),
           AppShimmerBox(width: 180, height: 14),
           SizedBox(height: 20),
-          Divider(height: 1, color: AppColors.gray200),
+          Divider(height: 1, color: context.themeColors.border),
           SizedBox(height: 16),
           Row(
             children: [
@@ -209,15 +209,15 @@ class _EmptyRegistrationRequests extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: context.themeColors.border),
       ),
       child: Text(
         'No registration requests yet.',
         textAlign: TextAlign.center,
         style: AppTextStyles.bodyInterMedium14.copyWith(
-          color: AppColors.gray500,
+          color: context.themeColors.textMuted,
         ),
       ),
     );
@@ -237,13 +237,13 @@ class _RegistrationStatusError extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, color: AppColors.errorRed),
+            Icon(Icons.error_outline, color: context.colorScheme.error),
             const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyInterMedium14.copyWith(
-                color: AppColors.gray600,
+                color: context.themeColors.textSecondary,
               ),
             ),
             const SizedBox(height: 8),

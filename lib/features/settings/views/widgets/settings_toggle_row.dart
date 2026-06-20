@@ -1,6 +1,6 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SettingsToggleRow extends StatelessWidget {
   const SettingsToggleRow({
@@ -24,7 +24,7 @@ class SettingsToggleRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         if (icon != null) ...[
-          Icon(icon, color: AppColors.gray500, size: 24),
+          Icon(icon, color: context.themeColors.textMuted, size: 24),
           const SizedBox(width: 12),
         ],
         Expanded(
@@ -34,14 +34,14 @@ class SettingsToggleRow extends StatelessWidget {
               Text(
                 title,
                 style: AppTextStyles.bodyInterMedium14.copyWith(
-                  color: AppColors.gray900,
+                  color: context.themeColors.textPrimary,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 subtitle,
                 style: AppTextStyles.bodyInterRegular12.copyWith(
-                  color: AppColors.gray500,
+                  color: context.themeColors.textMuted,
                 ),
               ),
             ],
@@ -52,13 +52,17 @@ class SettingsToggleRow extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: isOn ? AppColors.greenLight : AppColors.gray200,
+              color: isOn
+                  ? context.themeColors.successContainer
+                  : context.themeColors.border,
               borderRadius: BorderRadius.circular(16),
             ),
             child: Text(
               isOn ? 'On' : 'Off',
               style: AppTextStyles.bodyInterMedium14.copyWith(
-                color: isOn ? AppColors.successGreenDark : AppColors.gray500,
+                color: isOn
+                    ? context.themeColors.success
+                    : context.themeColors.textMuted,
                 fontSize: 12,
               ),
             ),

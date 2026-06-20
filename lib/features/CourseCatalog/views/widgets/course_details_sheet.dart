@@ -1,9 +1,9 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/CourseCatalog/data/models/course_model.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/tag.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class CourseDetailsSheet extends StatelessWidget {
   const CourseDetailsSheet({super.key, required this.course});
@@ -33,7 +33,7 @@ class CourseDetailsSheet extends StatelessWidget {
                       Text(
                         course.displayCode,
                         style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                          color: AppColors.gray800,
+                          color: context.themeColors.textPrimary,
                         ),
                       ),
                       Container(
@@ -42,13 +42,13 @@ class CourseDetailsSheet extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFFF8E1),
+                          color: context.themeColors.warningContainer,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
                           course.displayType,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
-                            color: Color(0xFFD4A017),
+                            color: context.themeColors.warning,
                           ),
                         ),
                       ),
@@ -60,7 +60,7 @@ class CourseDetailsSheet extends StatelessWidget {
                     width: 32,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColors.gray100,
+                      color: context.themeColors.mutedSurface,
                     ),
                     child: IconButton(
                       onPressed: () => context.pop(),
@@ -74,7 +74,7 @@ class CourseDetailsSheet extends StatelessWidget {
               Text(
                 course.displayName,
                 style: AppTextStyles.poppinsRegular14.copyWith(
-                  color: AppColors.gray600,
+                  color: context.themeColors.textSecondary,
                 ),
               ),
 
@@ -92,7 +92,7 @@ class CourseDetailsSheet extends StatelessWidget {
               Text(
                 course.displayDescription,
                 style: AppTextStyles.interRegular16.copyWith(
-                  color: AppColors.gray600,
+                  color: context.themeColors.textSecondary,
                 ),
               ),
 
@@ -101,7 +101,7 @@ class CourseDetailsSheet extends StatelessWidget {
               _SectionTitle(
                 icon: Icons.school_outlined,
                 label: 'Academic Placement',
-                iconColor: Color(0xFFD4A017),
+                iconColor: context.themeColors.warning,
               ),
 
               const SizedBox(height: 6),
@@ -109,7 +109,7 @@ class CourseDetailsSheet extends StatelessWidget {
               Text(
                 'Level ${course.standardLevel}, semester ${course.standardSemester}.',
                 style: AppTextStyles.interRegular16.copyWith(
-                  color: AppColors.gray600,
+                  color: context.themeColors.textSecondary,
                 ),
               ),
 
@@ -118,7 +118,7 @@ class CourseDetailsSheet extends StatelessWidget {
               _SectionTitle(
                 icon: Icons.account_tree_outlined,
                 label: 'Department',
-                iconColor: Color(0xFF43A047),
+                iconColor: context.themeColors.success,
               ),
 
               const SizedBox(height: 6),
@@ -126,7 +126,7 @@ class CourseDetailsSheet extends StatelessWidget {
               Text(
                 course.displayDepartment,
                 style: AppTextStyles.interRegular16.copyWith(
-                  color: AppColors.gray600,
+                  color: context.themeColors.textSecondary,
                 ),
               ),
 
@@ -135,7 +135,7 @@ class CourseDetailsSheet extends StatelessWidget {
               Text(
                 'Specializations',
                 style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                  color: AppColors.gray800,
+                  color: context.themeColors.textPrimary,
                 ),
               ),
               const SizedBox(height: 8),
@@ -179,24 +179,24 @@ class CourseDetailsSheet extends StatelessWidget {
 class _SectionTitle extends StatelessWidget {
   final IconData icon;
   final String label;
-  final Color iconColor;
+  final Color? iconColor;
 
   const _SectionTitle({
     required this.icon,
     required this.label,
-    this.iconColor = const Color(0xFF9E9E9E),
+    this.iconColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 24, color: iconColor),
+        Icon(icon, size: 24, color: iconColor ?? context.themeColors.textMuted),
         const SizedBox(width: 6),
         Text(
           label,
           style: AppTextStyles.heading3PoppinsReg16.copyWith(
-            color: AppColors.gray800,
+            color: context.themeColors.textPrimary,
           ),
         ),
       ],
@@ -217,14 +217,14 @@ class _InfoTile extends StatelessWidget {
         Text(
           title,
           style: AppTextStyles.bodyInterMedium18.copyWith(
-            color: AppColors.gray800,
+            color: context.themeColors.textPrimary,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           value,
           style: AppTextStyles.interRegular16.copyWith(
-            color: AppColors.gray600,
+            color: context.themeColors.textSecondary,
           ),
         ),
       ],

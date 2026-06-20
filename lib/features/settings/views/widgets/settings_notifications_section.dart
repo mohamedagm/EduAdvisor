@@ -1,8 +1,8 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_toggle_row.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SettingsNotificationsSection extends StatelessWidget {
   const SettingsNotificationsSection({
@@ -30,15 +30,15 @@ class SettingsNotificationsSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.notifications_none_outlined,
-                color: AppColors.purplePrimary,
+                color: context.colorScheme.secondary,
               ),
               const SizedBox(width: 8),
               Text(
                 'Notifications',
                 style: AppTextStyles.bodyInterMedium18.copyWith(
-                  color: AppColors.gray800,
+                  color: context.themeColors.textPrimary,
                 ),
               ),
             ],

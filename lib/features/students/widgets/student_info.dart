@@ -1,9 +1,6 @@
-
-
-
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class StudentInfo extends StatelessWidget {
   final String fullName;
@@ -16,18 +13,23 @@ class StudentInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(fullName,
-            style:  AppTextStyles.interRegular16.copyWith(color: AppColors.gray600)),
+        Text(
+          fullName,
+          style: AppTextStyles.interRegular16.copyWith(
+            color: context.themeColors.textSecondary,
+          ),
+        ),
         const SizedBox(height: 3),
-        Text(email,
-            style: AppTextStyles.bodyInterMedium14.copyWith(color: AppColors.gray400)),
+        Text(
+          email,
+          style: AppTextStyles.bodyInterMedium14.copyWith(
+            color: context.themeColors.textMuted,
+          ),
+        ),
       ],
     );
   }
 }
-
-
-
 
 //Student Meta (GPA and Semester)
 class StudentMeta extends StatelessWidget {
@@ -43,12 +45,16 @@ class StudentMeta extends StatelessWidget {
       children: [
         Text(
           'GPA: ${gpa.toStringAsFixed(1)}',
-          style:AppTextStyles.interRegular16.copyWith(color: AppColors.gray600),
+          style: AppTextStyles.interRegular16.copyWith(
+            color: context.themeColors.textSecondary,
+          ),
         ),
         const SizedBox(height: 4),
         Text(
           'Semester $semester',
-          style: AppTextStyles.bodyInterMedium14.copyWith(color: AppColors.gray400),
+          style: AppTextStyles.bodyInterMedium14.copyWith(
+            color: context.themeColors.textMuted,
+          ),
         ),
       ],
     );

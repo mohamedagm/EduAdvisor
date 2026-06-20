@@ -1,6 +1,6 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class DegreeProgressIndicator extends StatelessWidget {
   const DegreeProgressIndicator({super.key});
@@ -10,11 +10,11 @@ class DegreeProgressIndicator extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.gray200.withValues(alpha: 0.5),
+            color: context.themeColors.border.withValues(alpha: 0.5),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -33,14 +33,14 @@ class DegreeProgressIndicator extends StatelessWidget {
                   Text(
                     'Degree Progress',
                     style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                      color: AppColors.gray800,
+                      color: context.themeColors.textPrimary,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
                     'Bachelor of Computer Science',
                     style: AppTextStyles.poppinsRegular14.copyWith(
-                      color: AppColors.gray600,
+                      color: context.themeColors.textSecondary,
                     ),
                   ),
                 ],
@@ -51,14 +51,14 @@ class DegreeProgressIndicator extends StatelessWidget {
                   Text(
                     '65 / 140',
                     style: AppTextStyles.interRegular16.copyWith(
-                      color: AppColors.infoBlue,
+                      color: context.themeColors.info,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
                     'Credits',
                     style: AppTextStyles.interRegular16.copyWith(
-                      color: AppColors.infoBlue,
+                      color: context.themeColors.info,
                     ),
                   ),
                 ],
@@ -72,8 +72,10 @@ class DegreeProgressIndicator extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             value: 65 / 140,
             minHeight: 10,
-            backgroundColor: AppColors.gray200,
-            valueColor: const AlwaysStoppedAnimation<Color>(AppColors.gray900),
+            backgroundColor: context.themeColors.border,
+            valueColor: AlwaysStoppedAnimation<Color>(
+              context.themeColors.textPrimary,
+            ),
           ),
 
           const SizedBox(height: 16),
@@ -81,7 +83,7 @@ class DegreeProgressIndicator extends StatelessWidget {
           Text(
             'You are on track to graduate in Spring 2026.',
             style: AppTextStyles.poppinsRegular14.copyWith(
-              color: AppColors.gray600,
+              color: context.themeColors.textSecondary,
             ),
           ),
         ],

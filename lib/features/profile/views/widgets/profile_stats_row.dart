@@ -5,6 +5,7 @@ import 'package:edu_advisor/features/user/manager/current_user_cubit/current_use
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class ProfileStatsRow extends StatelessWidget {
   const ProfileStatsRow({super.key});
@@ -35,13 +36,13 @@ class ProfileStatsRow extends StatelessWidget {
               title: "GPA",
               value: user?.displayGpa ?? "--",
               icon: Icons.emoji_events,
-              iconColor: AppColors.bluePrimary,
+              iconColor: context.colorScheme.primary,
             ),
             ProfileStatCard(
               title: "Credits",
               value: user?.displayCredits ?? "--",
               icon: Icons.menu_book,
-              iconColor: AppColors.purplePrimary,
+              iconColor: context.colorScheme.secondary,
             ),
             ProfileStatCard(
               title: "Semester",

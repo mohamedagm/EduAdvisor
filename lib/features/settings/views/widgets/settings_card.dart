@@ -1,5 +1,5 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SettingsCard extends StatelessWidget {
   const SettingsCard({super.key, required this.child});
@@ -11,9 +11,9 @@ class SettingsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200),
+        border: Border.all(color: context.themeColors.border),
       ),
       child: child,
     );

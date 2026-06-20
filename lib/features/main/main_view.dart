@@ -1,5 +1,4 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/AIChat/views/ai_chat_view.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/course_catalog_view.dart';
@@ -10,6 +9,7 @@ import 'package:edu_advisor/features/user/data/repo/user_repo.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -39,10 +39,10 @@ class _MainViewState extends State<MainView> {
         body: IndexedStack(index: currentIndex, children: pages),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: context.themeColors.card,
             boxShadow: [
               BoxShadow(
-                color: AppColors.gray200.withValues(alpha: 0.5),
+                color: context.themeColors.border.withValues(alpha: 0.5),
                 blurRadius: 16,
                 offset: const Offset(0, -4),
               ),
@@ -51,13 +51,13 @@ class _MainViewState extends State<MainView> {
           child: BottomNavigationBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            selectedItemColor: AppColors.infoBlue,
-            unselectedItemColor: AppColors.gray600,
+            selectedItemColor: context.themeColors.info,
+            unselectedItemColor: context.themeColors.textSecondary,
             unselectedLabelStyle: AppTextStyles.bodyInterRegular12.copyWith(
-              color: AppColors.gray600,
+              color: context.themeColors.textSecondary,
             ),
             selectedLabelStyle: AppTextStyles.bodyInterRegular12.copyWith(
-              color: AppColors.infoBlue,
+              color: context.themeColors.info,
               fontWeight: FontWeight.w600,
             ),
             type: BottomNavigationBarType.fixed,

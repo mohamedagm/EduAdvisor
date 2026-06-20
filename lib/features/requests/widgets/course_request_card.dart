@@ -1,5 +1,5 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class CourseRequestCard extends StatelessWidget {
   final String code, name, date;
@@ -22,10 +22,14 @@ class CourseRequestCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: hasWarning ? const Color(0xFFFFFBEB) : Colors.white,
+        color: hasWarning
+            ? context.themeColors.warningContainer
+            : context.themeColors.card,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: hasWarning ? Colors.orange.shade200 : Colors.grey.shade100,
+          color: hasWarning
+              ? context.themeColors.warning.withValues(alpha: 0.35)
+              : context.themeColors.mutedSurface,
         ),
       ),
       child: Column(
@@ -36,25 +40,28 @@ class CourseRequestCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.menu_book_rounded,
-                    color: Colors.blue,
+                    color: context.colorScheme.primary,
                     size: 18,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     code,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
-                      color: Colors.blue,
+                      color: context.colorScheme.primary,
                     ),
                   ),
                 ],
               ),
               Text(
                 date,
-                style: TextStyle(color: Colors.grey[500], fontSize: 12),
+                style: TextStyle(
+                  color: context.themeColors.textMuted,
+                  fontSize: 12,
+                ),
               ),
             ],
           ),
@@ -66,24 +73,31 @@ class CourseRequestCard extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              Icon(Icons.stars_rounded, size: 16, color: Colors.grey[500]),
+              Icon(
+                Icons.stars_rounded,
+                size: 16,
+                color: context.themeColors.textMuted,
+              ),
               const SizedBox(width: 4),
               Text(
                 "$credits Credits",
-                style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                style: TextStyle(
+                  color: context.themeColors.textSecondary,
+                  fontSize: 13,
+                ),
               ),
               if (hasWarning) ...[
                 const SizedBox(width: 16),
-                const Icon(
+                Icon(
                   Icons.warning_amber_rounded,
-                  color: Colors.orange,
+                  color: context.themeColors.warning,
                   size: 16,
                 ),
                 const SizedBox(width: 4),
-                const Text(
+                Text(
                   "Prereqs Missing",
                   style: TextStyle(
-                    color: Colors.orange,
+                    color: context.themeColors.warning,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
@@ -97,22 +111,22 @@ class CourseRequestCard extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               decoration: BoxDecoration(
-                color: Colors.orange.shade50,
+                color: context.themeColors.warningContainer,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.info_outline,
                     size: 16,
-                    color: AppColors.warningAmberDark,
+                    color: context.themeColors.warning,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       "Missing: $missingPrereq",
-                      style: const TextStyle(
-                        color: AppColors.warningAmberDark,
+                      style: TextStyle(
+                        color: context.themeColors.warning,
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),

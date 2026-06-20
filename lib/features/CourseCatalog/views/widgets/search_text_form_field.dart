@@ -1,6 +1,6 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SearchTextFormField extends StatelessWidget {
   const SearchTextFormField({super.key, this.onChanged});
@@ -14,15 +14,15 @@ class SearchTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: 'Search courses...',
         hintStyle: AppTextStyles.bodyInterMedium14.copyWith(
-          color: AppColors.gray400,
+          color: context.themeColors.textMuted,
         ),
-        prefixIcon: const Icon(
+        prefixIcon: Icon(
           Icons.search,
-          color: AppColors.gray400,
+          color: context.themeColors.textMuted,
           size: 20,
         ),
         filled: true,
-        fillColor: AppColors.white,
+        fillColor: context.themeColors.card,
         contentPadding: const EdgeInsets.symmetric(vertical: 12),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
