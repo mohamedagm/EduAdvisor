@@ -1,8 +1,9 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 /// The single shimmer treatment used by student-facing loading states.
-class AppShimmer extends StatefulWidget {
+class AppShimmer extends StatelessWidget {
   const AppShimmer({
     super.key,
     required this.child,
@@ -15,52 +16,16 @@ class AppShimmer extends StatefulWidget {
   final Color highlightColor;
 
   @override
-  State<AppShimmer> createState() => _AppShimmerState();
-}
-
-class _AppShimmerState extends State<AppShimmer>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 1400),
-  )..repeat();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     if (MediaQuery.maybeOf(context)?.disableAnimations ?? false) {
-      return widget.child;
+      return child;
     }
 
-    return AnimatedBuilder(
-      animation: _controller,
-      child: widget.child,
-      builder: (context, child) {
-        return ShaderMask(
-          blendMode: BlendMode.srcATop,
-          shaderCallback: (bounds) {
-            return LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                widget.baseColor,
-                widget.highlightColor,
-                widget.baseColor,
-              ],
-              stops: const [0.2, 0.5, 0.8],
-              transform: _SlidingGradientTransform(
-                slidePercent: (_controller.value * 2) - 1,
-              ),
-            ).createShader(bounds);
-          },
-          child: child,
-        );
-      },
+    return Shimmer.fromColors(
+      baseColor: baseColor,
+      highlightColor: highlightColor,
+      period: const Duration(milliseconds: 1400),
+      child: child,
     );
   }
 }
@@ -126,16 +91,5 @@ class AppShimmerNetworkImage extends StatelessWidget {
             );
       },
     );
-  }
-}
-
-class _SlidingGradientTransform extends GradientTransform {
-  const _SlidingGradientTransform({required this.slidePercent});
-
-  final double slidePercent;
-
-  @override
-  Matrix4 transform(Rect bounds, {TextDirection? textDirection}) {
-    return Matrix4.translationValues(bounds.width * slidePercent, 0, 0);
   }
 }
