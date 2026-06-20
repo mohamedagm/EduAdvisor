@@ -1,5 +1,6 @@
 import 'package:edu_advisor/features/CourseCatalog/data/models/course_model.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_catalog_item.dart';
+import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_catalog_shimmer.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_details_sheet.dart';
 import 'package:flutter/material.dart';
 
@@ -24,10 +25,7 @@ class CourseCatalogBuilder extends StatelessWidget {
       },
       itemBuilder: (context, index) {
         if (index == courses.length) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: Center(child: CircularProgressIndicator()),
-          );
+          return const CourseCatalogLoadMoreShimmer();
         }
 
         if (index == courses.length - 1) {

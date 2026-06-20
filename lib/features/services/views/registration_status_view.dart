@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/services/data/repo/course_registration_repo.dart';
 import 'package:edu_advisor/features/services/manager/registration_status_cubit/registration_status_cubit.dart';
 import 'package:edu_advisor/features/services/manager/registration_status_cubit/registration_status_state.dart';
@@ -39,7 +40,7 @@ class _RegistrationStatusBody extends StatelessWidget {
         builder: (context, state) {
           if (state is RegistrationStatusLoading ||
               state is RegistrationStatusInitial) {
-            return const Center(child: CircularProgressIndicator());
+            return const _RegistrationStatusShimmer();
           }
 
           if (state is RegistrationStatusFailure) {
@@ -105,6 +106,95 @@ class _RegistrationStatusBody extends StatelessWidget {
 
           return const SizedBox.shrink();
         },
+      ),
+    );
+  }
+}
+
+class _RegistrationStatusShimmer extends StatelessWidget {
+  const _RegistrationStatusShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      physics: const NeverScrollableScrollPhysics(),
+      child: AppShimmer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    child: AppShimmerBox(height: 96, borderRadius: 16),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            const AppShimmerBox(width: 132, height: 18),
+            const SizedBox(height: 16),
+            const _RegistrationStatusSkeletonCard(),
+            const SizedBox(height: 16),
+            const _RegistrationStatusSkeletonCard(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RegistrationStatusSkeletonCard extends StatelessWidget {
+  const _RegistrationStatusSkeletonCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.gray200),
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              AppShimmerBox(width: 20, height: 20, shape: BoxShape.circle),
+              SizedBox(width: 8),
+              AppShimmerBox(width: 76, height: 24, borderRadius: 12),
+            ],
+          ),
+          SizedBox(height: 20),
+          AppShimmerBox(height: 14),
+          SizedBox(height: 12),
+          AppShimmerBox(width: 220, height: 14),
+          SizedBox(height: 12),
+          AppShimmerBox(width: 180, height: 14),
+          SizedBox(height: 20),
+          Divider(height: 1, color: AppColors.gray200),
+          SizedBox(height: 16),
+          Row(
+            children: [
+              AppShimmerBox(width: 32, height: 32, shape: BoxShape.circle),
+              SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppShimmerBox(width: 126, height: 14),
+                    SizedBox(height: 6),
+                    AppShimmerBox(width: 98, height: 12),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

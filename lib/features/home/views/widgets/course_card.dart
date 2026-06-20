@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:flutter/material.dart';
 
 class CourseCard extends StatelessWidget {
@@ -37,9 +38,12 @@ class CourseCard extends StatelessWidget {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(16),
                   ),
-                  child: Image.network(
-                    imageUrl,
-                    fit: BoxFit.cover,
+                  child: AppShimmerNetworkImage(
+                    imageUrl: imageUrl,
+                    errorWidget: const ColoredBox(
+                      color: AppColors.gray100,
+                      child: Center(child: Icon(Icons.school_outlined)),
+                    ),
                   ),
                 ),
               ),

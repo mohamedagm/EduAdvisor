@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/user/data/models/current_user_model.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
@@ -14,6 +15,10 @@ class WelcomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CurrentUserCubit, CurrentUserState>(
       builder: (context, state) {
+        if (state is CurrentUserInitial || state is CurrentUserLoading) {
+          return const _WelcomeCardShimmer();
+        }
+
         final user = state is CurrentUserLoaded ? state.user : null;
 
         return _WelcomeCardContent(user: user);
@@ -49,11 +54,15 @@ class _WelcomeCardContent extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 28,
-                backgroundImage: user?.profileImageUrl?.isNotEmpty == true
-                    ? NetworkImage(user!.profileImageUrl!)
-                    : null,
+                backgroundColor: AppColors.white,
                 child: user?.profileImageUrl?.isNotEmpty == true
-                    ? null
+                    ? ClipOval(
+                        child: SizedBox.expand(
+                          child: AppShimmerNetworkImage(
+                            imageUrl: user!.profileImageUrl!,
+                          ),
+                        ),
+                      )
                     : const Icon(Icons.person, size: 30),
               ),
               const SizedBox(width: 12),
@@ -107,6 +116,65 @@ class _WelcomeCardContent extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _WelcomeCardShimmer extends StatelessWidget {
+  const _WelcomeCardShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: AppGradients.primary,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.bluePrimary.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: AppShimmer(
+        baseColor: Colors.white.withValues(alpha: 0.24),
+        highlightColor: Colors.white.withValues(alpha: 0.52),
+        child: Column(
+          children: [
+            const Row(
+              children: [
+                AppShimmerBox(width: 56, height: 56, shape: BoxShape.circle),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppShimmerBox(width: 132, height: 18),
+                      SizedBox(height: 8),
+                      AppShimmerBox(width: 104, height: 16),
+                    ],
+                  ),
+                ),
+                AppShimmerBox(width: 36, height: 36, shape: BoxShape.circle),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    child: AppShimmerBox(height: 58, borderRadius: 12),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

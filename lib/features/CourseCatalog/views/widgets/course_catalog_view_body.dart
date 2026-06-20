@@ -7,6 +7,7 @@ import 'package:edu_advisor/features/CourseCatalog/Manager/cubit/course_catalog_
 import 'package:edu_advisor/features/CourseCatalog/Manager/cubit/course_catalog_state.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_catalog_builder.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_catalog_empty.dart';
+import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_catalog_shimmer.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/search_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,7 +71,7 @@ class _CourseCatalogViewBodyState extends State<CourseCatalogViewBody> {
               child: BlocBuilder<CourseCatalogCubit, CourseCatalogState>(
                 builder: (context, state) {
                   if (state.isLoading && state.courses.isEmpty) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const CourseCatalogShimmer();
                   }
 
                   if (state.hasError && state.courses.isEmpty) {

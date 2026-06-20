@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/profile/data/models/student_course_model.dart';
 import 'package:edu_advisor/features/profile/data/repo/profile_courses_repo.dart';
 import 'package:edu_advisor/features/profile/manager/profile_courses_cubit/profile_courses_cubit.dart';
@@ -77,10 +78,7 @@ class _ProfileCoursesSectionState extends State<ProfileCoursesSection>
                 builder: (context, state) {
                   if (state is ProfileCoursesLoading ||
                       state is ProfileCoursesInitial) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24),
-                      child: Center(child: CircularProgressIndicator()),
-                    );
+                    return const _ProfileCoursesShimmer();
                   }
 
                   if (state is ProfileCoursesFailure) {
@@ -105,6 +103,65 @@ class _ProfileCoursesSectionState extends State<ProfileCoursesSection>
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ProfileCoursesShimmer extends StatelessWidget {
+  const _ProfileCoursesShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppShimmer(
+      child: Column(
+        children: List.generate(
+          3,
+          (index) => const Padding(
+            padding: EdgeInsets.only(bottom: 12),
+            child: _ProfileCourseSkeletonCard(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ProfileCourseSkeletonCard extends StatelessWidget {
+  const _ProfileCourseSkeletonCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.gray50,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.gray200, width: 2),
+      ),
+      child: const Column(
+        children: [
+          Row(
+            children: [
+              AppShimmerBox(width: 40, height: 40, shape: BoxShape.circle),
+              SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppShimmerBox(width: 72, height: 16),
+                    SizedBox(height: 6),
+                    AppShimmerBox(height: 13),
+                  ],
+                ),
+              ),
+              SizedBox(width: 16),
+              AppShimmerBox(width: 42, height: 16),
+            ],
+          ),
+          SizedBox(height: 12),
+          AppShimmerBox(height: 8, borderRadius: 10),
+        ],
       ),
     );
   }
