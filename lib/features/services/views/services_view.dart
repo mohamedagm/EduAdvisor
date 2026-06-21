@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
@@ -17,7 +18,7 @@ class ServicesView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Services',
+              context.l10n.servicesTab,
               style: AppTextStyles.heading1_20b.copyWith(
                 fontSize: 28,
                 color: context.themeColors.textPrimary,
@@ -25,7 +26,7 @@ class ServicesView extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Access academic tools and resources',
+              context.l10n.servicesDescription,
               style: AppTextStyles.heading3PoppinsReg16.copyWith(
                 color: context.themeColors.textMuted,
               ),
@@ -43,7 +44,7 @@ class ServicesView extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Academic Tools',
+                  context.l10n.academicTools,
                   style: AppTextStyles.heading1_20b.copyWith(
                     fontSize: 18,
                     color: context.themeColors.textPrimary,
@@ -60,12 +61,11 @@ class ServicesView extends StatelessWidget {
               iconBgColor: context.colorScheme.primary,
               iconForegroundColor: context.colorScheme.onPrimary,
               iconData: Icons.lightbulb_outline,
-              title: 'Course Recommendation',
-              subtitle:
-                  'Get AI-powered course suggestions based on your GPA, level, and academic history.',
+              title: context.l10n.courseRecommendationService,
+              subtitle: context.l10n.courseRecommendationServiceDescription,
               badges: [
                 _Badge(
-                  text: 'Smart Recommendations',
+                  text: context.l10n.smartRecommendations,
                   textColor: context.colorScheme.primary,
                   bgColor: context.themeColors.infoContainer,
                   borderColor: context.colorScheme.primary.withValues(
@@ -83,12 +83,11 @@ class ServicesView extends StatelessWidget {
               iconBgColor: context.themeColors.warning,
               iconForegroundColor: context.themeColors.onWarning,
               iconData: Icons.assignment_outlined,
-              title: 'Course Registration',
-              subtitle:
-                  'Select and register for courses with details on code, name, credits, and prerequisites.',
+              title: context.l10n.courseRegistrationTitle,
+              subtitle: context.l10n.courseRegistrationServiceDescription,
               badges: [
                 _Badge(
-                  text: 'Register Now',
+                  text: context.l10n.registerNow,
                   textColor: context.themeColors.warning,
                   bgColor: context.themeColors.warningContainer,
                   borderColor: context.themeColors.warning.withValues(
@@ -106,12 +105,11 @@ class ServicesView extends StatelessWidget {
               iconBgColor: context.themeColors.success,
               iconForegroundColor: context.themeColors.onSuccess,
               iconData: Icons.check_circle_outline,
-              title: 'Registration Status',
-              subtitle:
-                  'Track your registration requests and view advisor approval status in real-time.',
+              title: context.l10n.registrationStatusTitle,
+              subtitle: context.l10n.registrationStatusServiceDescription,
               badges: [
                 _Badge(
-                  text: 'Check Status',
+                  text: context.l10n.checkStatus,
                   textColor: context.themeColors.warning,
                   bgColor: context.themeColors.warningContainer,
                   borderColor: context.themeColors.warning.withValues(

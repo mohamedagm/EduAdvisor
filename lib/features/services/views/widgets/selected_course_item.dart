@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../data/models/available_course_model.dart';
 import 'course_icon_widget.dart';
@@ -45,7 +46,9 @@ class SelectedCourseItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      course.displayName,
+                      course.courseName.isNotEmpty
+                          ? course.courseName
+                          : context.l10n.courseFallbackName,
                       style: AppTextStyles.poppinsRegular14.copyWith(
                         color: context.themeColors.textMuted,
                       ),
@@ -66,7 +69,9 @@ class SelectedCourseItem extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            '${course.creditHours} Credits',
+                            context.l10n.courseCredits(
+                              course.creditHours.toString(),
+                            ),
                             style: AppTextStyles.bodyInterRegular12.copyWith(
                               color: context.themeColors.textPrimary,
                               fontWeight: FontWeight.w500,
@@ -90,7 +95,7 @@ class SelectedCourseItem extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'Retake',
+                              context.l10n.retake,
                               style: AppTextStyles.bodyInterRegular12.copyWith(
                                 color: context.colorScheme.primary,
                                 fontWeight: FontWeight.w500,
@@ -118,7 +123,7 @@ class SelectedCourseItem extends StatelessWidget {
           if (course.isRetake) ...[
             const SizedBox(height: 12),
             Text(
-              'This course is marked as a retake.',
+              context.l10n.retakeCourseDescription,
               style: AppTextStyles.bodyInterRegular12.copyWith(
                 color: context.themeColors.textMuted,
               ),

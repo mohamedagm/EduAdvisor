@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/core/theme/theme_cubit.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
@@ -11,32 +12,36 @@ class SettingsPreferencesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+
     return SettingsCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Preferences',
+            context.l10n.preferences,
             style: AppTextStyles.bodyInterMedium18.copyWith(
               color: context.themeColors.textPrimary,
             ),
           ),
           const SizedBox(height: 16),
-          const SettingsInfoRow(
+          SettingsInfoRow(
             icon: Icons.language_outlined,
-            title: 'Language',
-            subtitle: 'English',
+            title: context.l10n.language,
+            subtitle: isArabic
+                ? context.l10n.arabicLanguage
+                : context.l10n.englishLanguage,
           ),
           const SizedBox(height: 20),
           Text(
-            'Appearance',
+            context.l10n.appearance,
             style: AppTextStyles.bodyInterMedium14.copyWith(
               color: context.themeColors.textPrimary,
             ),
           ),
           const SizedBox(height: 4),
           Text(
-            'Choose how EduAdvisor looks on this device',
+            context.l10n.appearanceDescription,
             style: AppTextStyles.bodyInterRegular12.copyWith(
               color: context.themeColors.textMuted,
             ),
@@ -77,19 +82,19 @@ class _ThemeModeSelector extends StatelessWidget {
       child: Row(
         children: [
           _ThemeModeOption(
-            label: 'System',
+            label: context.l10n.systemTheme,
             icon: Icons.brightness_auto_outlined,
             isSelected: selectedMode == ThemeMode.system,
             onTap: () => onSelected(ThemeMode.system),
           ),
           _ThemeModeOption(
-            label: 'Light',
+            label: context.l10n.lightTheme,
             icon: Icons.light_mode_outlined,
             isSelected: selectedMode == ThemeMode.light,
             onTap: () => onSelected(ThemeMode.light),
           ),
           _ThemeModeOption(
-            label: 'Dark',
+            label: context.l10n.darkTheme,
             icon: Icons.dark_mode_outlined,
             isSelected: selectedMode == ThemeMode.dark,
             onTap: () => onSelected(ThemeMode.dark),
@@ -123,7 +128,7 @@ class _ThemeModeOption extends StatelessWidget {
       child: Semantics(
         button: true,
         selected: isSelected,
-        label: '$label theme',
+        label: context.l10n.themeOptionSemantics(label),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(9),

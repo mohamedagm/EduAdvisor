@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -58,7 +59,7 @@ class SettingsToggleRow extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Text(
-              isOn ? 'On' : 'Off',
+              isOn ? context.l10n.settingOn : context.l10n.settingOff,
               style: AppTextStyles.bodyInterMedium14.copyWith(
                 color: isOn
                     ? context.themeColors.success

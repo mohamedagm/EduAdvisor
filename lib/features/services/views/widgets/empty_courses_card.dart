@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -32,14 +33,14 @@ class EmptyCoursesCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No courses selected',
+            context.l10n.noCoursesSelected,
             style: AppTextStyles.heading3PoppinsReg16.copyWith(
               color: context.themeColors.textSecondary,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Click "Add Course" to start',
+            context.l10n.addCourseToStart,
             style: AppTextStyles.poppinsRegular14.copyWith(
               color: context.themeColors.textMuted,
             ),

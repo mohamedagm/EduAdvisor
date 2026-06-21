@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import '../../../core/api/dio_consumer.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -90,9 +91,9 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
                           } else {
                             AppToast.warning(
                               context,
-                              title: 'Credit limit reached',
+                              title: context.l10n.creditLimitReached,
                               description:
-                                  'You cannot exceed the maximum credit limit.',
+                                  context.l10n.creditLimitReachedDescription,
                             );
                           }
                         }
@@ -136,7 +137,7 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
           if (state is SubmitRegistrationSuccess) {
             AppToast.success(
               context,
-              title: 'Registration submitted',
+              title: context.l10n.registrationSubmitted,
               description: state.response.message,
             );
             context.pop();
@@ -145,7 +146,7 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
           if (state is SubmitRegistrationFailure) {
             AppToast.error(
               context,
-              title: 'Submission failed',
+              title: context.l10n.submissionFailed,
               description: state.failure.message,
             );
           }
@@ -154,9 +155,9 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
           final isSubmitting = state is SubmitRegistrationLoading;
 
           return Scaffold(
-            appBar: const ServiceAppBar(
-              title: 'Course Registration',
-              subtitle: 'Spring 2024 Semester',
+            appBar: ServiceAppBar(
+              title: context.l10n.courseRegistrationTitle,
+              subtitle: context.l10n.spring2024Semester,
             ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.all(24.0),
@@ -173,7 +174,9 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Selected Courses (${_selectedCourses.length})',
+                        context.l10n.selectedCoursesCount(
+                          _selectedCourses.length,
+                        ),
                         style: AppTextStyles.interRegular16.copyWith(
                           color: context.themeColors.textPrimary,
                         ),
@@ -194,7 +197,7 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
                         ),
                         icon: const Icon(Icons.add, size: 16),
                         label: Text(
-                          'Add Course',
+                          context.l10n.addCourse,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
                             color: context.themeColors.onInfo,
                             fontWeight: FontWeight.w500,
@@ -253,8 +256,8 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
                               const SizedBox(width: 8),
                               Text(
                                 isSubmitting
-                                    ? 'Submitting...'
-                                    : 'Submit for Approval',
+                                    ? context.l10n.submitting
+                                    : context.l10n.submitForApproval,
                                 style: AppTextStyles.buttonsText.copyWith(
                                   color: AppColors.white,
                                   fontSize: 16,

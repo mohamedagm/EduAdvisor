@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -37,14 +38,14 @@ class CourseStatusCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Total Credit Hours',
+                    context.l10n.totalCreditHours,
                     style: AppTextStyles.interRegular16.copyWith(
                       color: context.themeColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '$minCredits - $maxCredits hours required',
+                    context.l10n.creditHoursRequired(minCredits, maxCredits),
                     style: AppTextStyles.bodyInterRegular12.copyWith(
                       color: context.themeColors.textMuted,
                     ),
@@ -83,7 +84,7 @@ class CourseStatusCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Add $creditsNeeded more credit hours',
+                  context.l10n.addMoreCreditHours(creditsNeeded),
                   style: AppTextStyles.bodyInterRegular12.copyWith(
                     color: context.themeColors.warning,
                     fontWeight: FontWeight.w500,
@@ -101,7 +102,7 @@ class CourseStatusCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Minimum credit requirement met',
+                  context.l10n.minimumCreditRequirementMet,
                   style: AppTextStyles.bodyInterRegular12.copyWith(
                     color: context.themeColors.success,
                     fontWeight: FontWeight.w500,

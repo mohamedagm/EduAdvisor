@@ -1099,6 +1099,552 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =0{Today} =1{1 day ago} other{{count} days ago}}'**
   String daysAgo(int count);
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @profileInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Information'**
+  String get profileInformation;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// No description provided for @preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get preferences;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @englishLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get englishLanguage;
+
+  /// No description provided for @arabicLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get arabicLanguage;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @appearanceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how EduAdvisor looks on this device'**
+  String get appearanceDescription;
+
+  /// No description provided for @systemTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get systemTheme;
+
+  /// No description provided for @lightTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get lightTheme;
+
+  /// No description provided for @darkTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get darkTheme;
+
+  /// No description provided for @themeOptionSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'{theme} theme'**
+  String themeOptionSemantics(String theme);
+
+  /// No description provided for @pushNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Push Notifications'**
+  String get pushNotifications;
+
+  /// No description provided for @receivePushNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive push notifications'**
+  String get receivePushNotifications;
+
+  /// No description provided for @emailNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Notifications'**
+  String get emailNotifications;
+
+  /// No description provided for @receiveEmailUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive email updates'**
+  String get receiveEmailUpdates;
+
+  /// No description provided for @gradeAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade Alerts'**
+  String get gradeAlerts;
+
+  /// No description provided for @notifyWhenGradesPosted.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify when grades are posted'**
+  String get notifyWhenGradesPosted;
+
+  /// No description provided for @security.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get security;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
+  /// No description provided for @support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get support;
+
+  /// No description provided for @helpCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Center'**
+  String get helpCenter;
+
+  /// No description provided for @aboutEduAdvisor.
+  ///
+  /// In en, this message translates to:
+  /// **'About EduAdvisor'**
+  String get aboutEduAdvisor;
+
+  /// No description provided for @settingOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get settingOn;
+
+  /// No description provided for @settingOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get settingOff;
+
+  /// No description provided for @loggingOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Logging out...'**
+  String get loggingOut;
+
+  /// No description provided for @logOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get logOut;
+
+  /// No description provided for @loggedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged out'**
+  String get loggedOut;
+
+  /// No description provided for @loggedOutDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'You have been logged out successfully.'**
+  String get loggedOutDescription;
+
+  /// No description provided for @loggedOutLocally.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged out locally'**
+  String get loggedOutLocally;
+
+  /// No description provided for @loggedOutLocallyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your local session has been cleared.'**
+  String get loggedOutLocallyDescription;
+
+  /// No description provided for @servicesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Access academic tools and resources'**
+  String get servicesDescription;
+
+  /// No description provided for @academicTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Academic Tools'**
+  String get academicTools;
+
+  /// No description provided for @courseRecommendationService.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Recommendation'**
+  String get courseRecommendationService;
+
+  /// No description provided for @courseRecommendationServiceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Get AI-powered course suggestions based on your GPA, level, and academic history.'**
+  String get courseRecommendationServiceDescription;
+
+  /// No description provided for @smartRecommendations.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Recommendations'**
+  String get smartRecommendations;
+
+  /// No description provided for @courseRegistrationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Registration'**
+  String get courseRegistrationTitle;
+
+  /// No description provided for @courseRegistrationServiceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Select and register for courses with details on code, name, credits, and prerequisites.'**
+  String get courseRegistrationServiceDescription;
+
+  /// No description provided for @registerNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Register Now'**
+  String get registerNow;
+
+  /// No description provided for @registrationStatusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Status'**
+  String get registrationStatusTitle;
+
+  /// No description provided for @registrationStatusServiceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your registration requests and view advisor approval status in real-time.'**
+  String get registrationStatusServiceDescription;
+
+  /// No description provided for @checkStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Status'**
+  String get checkStatus;
+
+  /// No description provided for @courseRecommendationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Recommendations'**
+  String get courseRecommendationsTitle;
+
+  /// No description provided for @aiPoweredSuggestionsForYou.
+  ///
+  /// In en, this message translates to:
+  /// **'AI-powered suggestions for you'**
+  String get aiPoweredSuggestionsForYou;
+
+  /// No description provided for @personalizedForYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalized for You'**
+  String get personalizedForYou;
+
+  /// No description provided for @basedOnAcademicProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on your academic profile'**
+  String get basedOnAcademicProfile;
+
+  /// No description provided for @machineLearning.
+  ///
+  /// In en, this message translates to:
+  /// **'Machine Learning'**
+  String get machineLearning;
+
+  /// No description provided for @advancedLinearAlgebra.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Linear Algebra'**
+  String get advancedLinearAlgebra;
+
+  /// No description provided for @hardDifficulty.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard'**
+  String get hardDifficulty;
+
+  /// No description provided for @machineLearningRecommendationReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong performance in Data Structures. High demand field.'**
+  String get machineLearningRecommendationReason;
+
+  /// No description provided for @programmingStrengthBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Aligns with your strengths in programming'**
+  String get programmingStrengthBenefit;
+
+  /// No description provided for @jobMarketDemandBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'High job market demand'**
+  String get jobMarketDemandBenefit;
+
+  /// No description provided for @gpaImprovementBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Can improve GPA by +0.4'**
+  String get gpaImprovementBenefit;
+
+  /// No description provided for @linearAlgebraRecommendationReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong foundation for AI/ML specialization.'**
+  String get linearAlgebraRecommendationReason;
+
+  /// No description provided for @mlTrackBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Essential for ML/AI track'**
+  String get mlTrackBenefit;
+
+  /// No description provided for @mathBackgroundBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong math background advantage'**
+  String get mathBackgroundBenefit;
+
+  /// No description provided for @researchOpportunitiesBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Research opportunities'**
+  String get researchOpportunitiesBenefit;
+
+  /// No description provided for @recommendationsUpdatedDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendations updated daily'**
+  String get recommendationsUpdatedDaily;
+
+  /// No description provided for @recommendationsAiDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Our AI analyzes your performance, prerequisites, and career goals to suggest the best courses.'**
+  String get recommendationsAiDescription;
+
+  /// No description provided for @creditLimitReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit limit reached'**
+  String get creditLimitReached;
+
+  /// No description provided for @creditLimitReachedDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'You cannot exceed the maximum credit limit.'**
+  String get creditLimitReachedDescription;
+
+  /// No description provided for @registrationSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration submitted'**
+  String get registrationSubmitted;
+
+  /// No description provided for @submissionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Submission failed'**
+  String get submissionFailed;
+
+  /// No description provided for @spring2024Semester.
+  ///
+  /// In en, this message translates to:
+  /// **'Spring 2024 Semester'**
+  String get spring2024Semester;
+
+  /// No description provided for @selectedCoursesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Courses ({count})'**
+  String selectedCoursesCount(int count);
+
+  /// No description provided for @addCourse.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Course'**
+  String get addCourse;
+
+  /// No description provided for @submitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting...'**
+  String get submitting;
+
+  /// No description provided for @submitForApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit for Approval'**
+  String get submitForApproval;
+
+  /// No description provided for @availableCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Courses'**
+  String get availableCourses;
+
+  /// No description provided for @noAvailableCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'No available courses.'**
+  String get noAvailableCourses;
+
+  /// No description provided for @retake.
+  ///
+  /// In en, this message translates to:
+  /// **'Retake'**
+  String get retake;
+
+  /// No description provided for @retakeCourseDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This course is marked as a retake.'**
+  String get retakeCourseDescription;
+
+  /// No description provided for @totalCreditHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Credit Hours'**
+  String get totalCreditHours;
+
+  /// No description provided for @creditHoursRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'{min} - {max} hours required'**
+  String creditHoursRequired(int min, int max);
+
+  /// No description provided for @addMoreCreditHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Add 1 more credit hour} other{Add {count} more credit hours}}'**
+  String addMoreCreditHours(int count);
+
+  /// No description provided for @minimumCreditRequirementMet.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum credit requirement met'**
+  String get minimumCreditRequirementMet;
+
+  /// No description provided for @noCoursesSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No courses selected'**
+  String get noCoursesSelected;
+
+  /// No description provided for @addCourseToStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Click \"Add Course\" to start'**
+  String get addCourseToStart;
+
+  /// No description provided for @trackCourseRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your course requests'**
+  String get trackCourseRequests;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @approved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get approved;
+
+  /// No description provided for @rejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get rejected;
+
+  /// No description provided for @allRegistrations.
+  ///
+  /// In en, this message translates to:
+  /// **'All Registrations'**
+  String get allRegistrations;
+
+  /// No description provided for @noRegistrationRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No registration requests yet.'**
+  String get noRegistrationRequests;
+
+  /// No description provided for @coursesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No courses} =1{1 course} other{{count} courses}}'**
+  String coursesCount(int count);
+
+  /// No description provided for @submitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get submitted;
+
+  /// No description provided for @totalCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Courses'**
+  String get totalCourses;
+
+  /// No description provided for @academicAdvisor.
+  ///
+  /// In en, this message translates to:
+  /// **'Academic Advisor'**
+  String get academicAdvisor;
+
+  /// No description provided for @rejectionReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejection Reason:'**
+  String get rejectionReason;
+
+  /// No description provided for @advisorNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Advisor Note:'**
+  String get advisorNote;
 }
 
 class _AppLocalizationsDelegate

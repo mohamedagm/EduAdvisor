@@ -591,4 +591,310 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get profileInformation => 'Profile Information';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get preferences => 'Preferences';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get englishLanguage => 'English';
+
+  @override
+  String get arabicLanguage => 'Arabic';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get appearanceDescription =>
+      'Choose how EduAdvisor looks on this device';
+
+  @override
+  String get systemTheme => 'System';
+
+  @override
+  String get lightTheme => 'Light';
+
+  @override
+  String get darkTheme => 'Dark';
+
+  @override
+  String themeOptionSemantics(String theme) {
+    return '$theme theme';
+  }
+
+  @override
+  String get pushNotifications => 'Push Notifications';
+
+  @override
+  String get receivePushNotifications => 'Receive push notifications';
+
+  @override
+  String get emailNotifications => 'Email Notifications';
+
+  @override
+  String get receiveEmailUpdates => 'Receive email updates';
+
+  @override
+  String get gradeAlerts => 'Grade Alerts';
+
+  @override
+  String get notifyWhenGradesPosted => 'Notify when grades are posted';
+
+  @override
+  String get security => 'Security';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get support => 'Support';
+
+  @override
+  String get helpCenter => 'Help Center';
+
+  @override
+  String get aboutEduAdvisor => 'About EduAdvisor';
+
+  @override
+  String get settingOn => 'On';
+
+  @override
+  String get settingOff => 'Off';
+
+  @override
+  String get loggingOut => 'Logging out...';
+
+  @override
+  String get logOut => 'Log Out';
+
+  @override
+  String get loggedOut => 'Logged out';
+
+  @override
+  String get loggedOutDescription => 'You have been logged out successfully.';
+
+  @override
+  String get loggedOutLocally => 'Logged out locally';
+
+  @override
+  String get loggedOutLocallyDescription =>
+      'Your local session has been cleared.';
+
+  @override
+  String get servicesDescription => 'Access academic tools and resources';
+
+  @override
+  String get academicTools => 'Academic Tools';
+
+  @override
+  String get courseRecommendationService => 'Course Recommendation';
+
+  @override
+  String get courseRecommendationServiceDescription =>
+      'Get AI-powered course suggestions based on your GPA, level, and academic history.';
+
+  @override
+  String get smartRecommendations => 'Smart Recommendations';
+
+  @override
+  String get courseRegistrationTitle => 'Course Registration';
+
+  @override
+  String get courseRegistrationServiceDescription =>
+      'Select and register for courses with details on code, name, credits, and prerequisites.';
+
+  @override
+  String get registerNow => 'Register Now';
+
+  @override
+  String get registrationStatusTitle => 'Registration Status';
+
+  @override
+  String get registrationStatusServiceDescription =>
+      'Track your registration requests and view advisor approval status in real-time.';
+
+  @override
+  String get checkStatus => 'Check Status';
+
+  @override
+  String get courseRecommendationsTitle => 'Course Recommendations';
+
+  @override
+  String get aiPoweredSuggestionsForYou => 'AI-powered suggestions for you';
+
+  @override
+  String get personalizedForYou => 'Personalized for You';
+
+  @override
+  String get basedOnAcademicProfile => 'Based on your academic profile';
+
+  @override
+  String get machineLearning => 'Machine Learning';
+
+  @override
+  String get advancedLinearAlgebra => 'Advanced Linear Algebra';
+
+  @override
+  String get hardDifficulty => 'Hard';
+
+  @override
+  String get machineLearningRecommendationReason =>
+      'Strong performance in Data Structures. High demand field.';
+
+  @override
+  String get programmingStrengthBenefit =>
+      'Aligns with your strengths in programming';
+
+  @override
+  String get jobMarketDemandBenefit => 'High job market demand';
+
+  @override
+  String get gpaImprovementBenefit => 'Can improve GPA by +0.4';
+
+  @override
+  String get linearAlgebraRecommendationReason =>
+      'Strong foundation for AI/ML specialization.';
+
+  @override
+  String get mlTrackBenefit => 'Essential for ML/AI track';
+
+  @override
+  String get mathBackgroundBenefit => 'Strong math background advantage';
+
+  @override
+  String get researchOpportunitiesBenefit => 'Research opportunities';
+
+  @override
+  String get recommendationsUpdatedDaily => 'Recommendations updated daily';
+
+  @override
+  String get recommendationsAiDescription =>
+      'Our AI analyzes your performance, prerequisites, and career goals to suggest the best courses.';
+
+  @override
+  String get creditLimitReached => 'Credit limit reached';
+
+  @override
+  String get creditLimitReachedDescription =>
+      'You cannot exceed the maximum credit limit.';
+
+  @override
+  String get registrationSubmitted => 'Registration submitted';
+
+  @override
+  String get submissionFailed => 'Submission failed';
+
+  @override
+  String get spring2024Semester => 'Spring 2024 Semester';
+
+  @override
+  String selectedCoursesCount(int count) {
+    return 'Selected Courses ($count)';
+  }
+
+  @override
+  String get addCourse => 'Add Course';
+
+  @override
+  String get submitting => 'Submitting...';
+
+  @override
+  String get submitForApproval => 'Submit for Approval';
+
+  @override
+  String get availableCourses => 'Available Courses';
+
+  @override
+  String get noAvailableCourses => 'No available courses.';
+
+  @override
+  String get retake => 'Retake';
+
+  @override
+  String get retakeCourseDescription => 'This course is marked as a retake.';
+
+  @override
+  String get totalCreditHours => 'Total Credit Hours';
+
+  @override
+  String creditHoursRequired(int min, int max) {
+    return '$min - $max hours required';
+  }
+
+  @override
+  String addMoreCreditHours(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Add $count more credit hours',
+      one: 'Add 1 more credit hour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get minimumCreditRequirementMet => 'Minimum credit requirement met';
+
+  @override
+  String get noCoursesSelected => 'No courses selected';
+
+  @override
+  String get addCourseToStart => 'Click \"Add Course\" to start';
+
+  @override
+  String get trackCourseRequests => 'Track your course requests';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get approved => 'Approved';
+
+  @override
+  String get rejected => 'Rejected';
+
+  @override
+  String get allRegistrations => 'All Registrations';
+
+  @override
+  String get noRegistrationRequests => 'No registration requests yet.';
+
+  @override
+  String coursesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count courses',
+      one: '1 course',
+      zero: 'No courses',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get submitted => 'Submitted';
+
+  @override
+  String get totalCourses => 'Total Courses';
+
+  @override
+  String get academicAdvisor => 'Academic Advisor';
+
+  @override
+  String get rejectionReason => 'Rejection Reason:';
+
+  @override
+  String get advisorNote => 'Advisor Note:';
 }

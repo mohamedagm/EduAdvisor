@@ -14,8 +14,8 @@ class ServiceAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: context.themeColors.card,
       elevation: 0,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: context.themeColors.textPrimary),
+      leading: BackButton(
+        color: context.themeColors.textPrimary,
         onPressed: () => context.pop(),
       ),
       title: Column(

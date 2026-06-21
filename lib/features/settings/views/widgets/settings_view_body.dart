@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
@@ -42,15 +43,12 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
             flexibleSpace: Container(
               decoration: const BoxDecoration(gradient: AppGradients.primary),
             ),
-            leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: AppColors.white,
-              ),
+            leading: BackButton(
+              color: AppColors.white,
               onPressed: isLoggingOut ? null : () => context.pop(),
             ),
             title: Text(
-              'Settings',
+              context.l10n.settingsTitle,
               style: AppTextStyles.heading1_20b.copyWith(
                 color: AppColors.white,
               ),
@@ -100,8 +98,8 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
     if (state is LogoutSuccess) {
       AppToast.success(
         context,
-        title: 'Logged out',
-        description: state.response.message,
+        title: context.l10n.loggedOut,
+        description: context.l10n.loggedOutDescription,
       );
       context.go(AppRoutes.chooseUserRole);
     }
@@ -109,8 +107,8 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
     if (state is LogoutFailure) {
       AppToast.error(
         context,
-        title: 'Logged out locally',
-        description: state.failure.message,
+        title: context.l10n.loggedOutLocally,
+        description: context.l10n.loggedOutLocallyDescription,
       );
       context.go(AppRoutes.chooseUserRole);
     }

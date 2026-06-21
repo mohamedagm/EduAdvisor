@@ -275,5 +275,122 @@
     "placeholders": {
       "count": {"type": "int"}
     }
-  }
+  },
+  "settingsTitle": "الإعدادات",
+  "profileInformation": "معلومات الملف الشخصي",
+  "phoneNumber": "رقم الهاتف",
+  "preferences": "التفضيلات",
+  "language": "اللغة",
+  "englishLanguage": "الإنجليزية",
+  "arabicLanguage": "العربية",
+  "appearance": "المظهر",
+  "appearanceDescription": "اختر مظهر EduAdvisor على هذا الجهاز",
+  "systemTheme": "النظام",
+  "lightTheme": "فاتح",
+  "darkTheme": "داكن",
+  "themeOptionSemantics": "المظهر {theme}",
+  "@themeOptionSemantics": {
+    "placeholders": {
+      "theme": {"type": "String"}
+    }
+  },
+  "pushNotifications": "الإشعارات الفورية",
+  "receivePushNotifications": "استلام الإشعارات الفورية",
+  "emailNotifications": "إشعارات البريد الإلكتروني",
+  "receiveEmailUpdates": "استلام التحديثات عبر البريد الإلكتروني",
+  "gradeAlerts": "تنبيهات الدرجات",
+  "notifyWhenGradesPosted": "التنبيه عند نشر الدرجات",
+  "security": "الأمان",
+  "changePassword": "تغيير كلمة المرور",
+  "support": "الدعم",
+  "helpCenter": "مركز المساعدة",
+  "aboutEduAdvisor": "حول EduAdvisor",
+  "settingOn": "مفعّل",
+  "settingOff": "متوقف",
+  "loggingOut": "جارٍ تسجيل الخروج...",
+  "logOut": "تسجيل الخروج",
+  "loggedOut": "تم تسجيل الخروج",
+  "loggedOutDescription": "تم تسجيل خروجك بنجاح.",
+  "loggedOutLocally": "تم تسجيل الخروج محليًا",
+  "loggedOutLocallyDescription": "تم مسح جلستك المحلية.",
+  "servicesDescription": "الوصول إلى الأدوات والموارد الأكاديمية",
+  "academicTools": "الأدوات الأكاديمية",
+  "courseRecommendationService": "اقتراح المقررات",
+  "courseRecommendationServiceDescription": "احصل على اقتراحات مقررات مدعومة بالذكاء الاصطناعي بناءً على معدلك ومستواك وسجلك الأكاديمي.",
+  "smartRecommendations": "اقتراحات ذكية",
+  "courseRegistrationTitle": "تسجيل المقررات",
+  "courseRegistrationServiceDescription": "اختر مقرراتك وسجّلها مع عرض الرمز والاسم والساعات والمتطلبات السابقة.",
+  "registerNow": "سجّل الآن",
+  "registrationStatusTitle": "حالة التسجيل",
+  "registrationStatusServiceDescription": "تابع طلبات التسجيل وحالة موافقة المرشد الأكاديمي لحظة بلحظة.",
+  "checkStatus": "تحقق من الحالة",
+  "courseRecommendationsTitle": "اقتراحات المقررات",
+  "aiPoweredSuggestionsForYou": "اقتراحات مخصصة بالذكاء الاصطناعي",
+  "personalizedForYou": "مخصص لك",
+  "basedOnAcademicProfile": "بناءً على ملفك الأكاديمي",
+  "machineLearning": "تعلم الآلة",
+  "advancedLinearAlgebra": "الجبر الخطي المتقدم",
+  "hardDifficulty": "صعب",
+  "machineLearningRecommendationReason": "أداء قوي في هياكل البيانات ومجال مطلوب بشدة.",
+  "programmingStrengthBenefit": "يتوافق مع نقاط قوتك في البرمجة",
+  "jobMarketDemandBenefit": "طلب مرتفع في سوق العمل",
+  "gpaImprovementBenefit": "قد يحسّن معدلك بمقدار +0.4",
+  "linearAlgebraRecommendationReason": "أساس قوي لتخصص الذكاء الاصطناعي وتعلم الآلة.",
+  "mlTrackBenefit": "أساسي لمسار تعلم الآلة والذكاء الاصطناعي",
+  "mathBackgroundBenefit": "الاستفادة من خلفيتك الرياضية القوية",
+  "researchOpportunitiesBenefit": "فرص بحثية",
+  "recommendationsUpdatedDaily": "تُحدّث الاقتراحات يوميًا",
+  "recommendationsAiDescription": "يحلل الذكاء الاصطناعي أداءك والمتطلبات السابقة وأهدافك المهنية لاقتراح أفضل المقررات.",
+  "creditLimitReached": "تم بلوغ حد الساعات",
+  "creditLimitReachedDescription": "لا يمكنك تجاوز الحد الأقصى للساعات المعتمدة.",
+  "registrationSubmitted": "تم إرسال طلب التسجيل",
+  "submissionFailed": "فشل إرسال الطلب",
+  "spring2024Semester": "فصل ربيع 2024",
+  "selectedCoursesCount": "المقررات المختارة ({count})",
+  "@selectedCoursesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "addCourse": "إضافة مقرر",
+  "submitting": "جارٍ الإرسال...",
+  "submitForApproval": "إرسال للموافقة",
+  "availableCourses": "المقررات المتاحة",
+  "noAvailableCourses": "لا توجد مقررات متاحة.",
+  "retake": "إعادة دراسة",
+  "retakeCourseDescription": "هذا المقرر محدد لإعادة دراسته.",
+  "totalCreditHours": "إجمالي الساعات المعتمدة",
+  "creditHoursRequired": "المطلوب من {min} إلى {max} ساعة",
+  "@creditHoursRequired": {
+    "placeholders": {
+      "min": {"type": "int"},
+      "max": {"type": "int"}
+    }
+  },
+  "addMoreCreditHours": "{count, plural, =1{أضف ساعة معتمدة واحدة} =2{أضف ساعتين معتمدتين} few{أضف {count} ساعات معتمدة} many{أضف {count} ساعة معتمدة} other{أضف {count} ساعة معتمدة}}",
+  "@addMoreCreditHours": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "minimumCreditRequirementMet": "تم استيفاء الحد الأدنى للساعات",
+  "noCoursesSelected": "لم يتم اختيار مقررات",
+  "addCourseToStart": "اضغط على \"إضافة مقرر\" للبدء",
+  "trackCourseRequests": "تابع طلبات تسجيل مقرراتك",
+  "pending": "قيد المراجعة",
+  "approved": "تمت الموافقة",
+  "rejected": "مرفوض",
+  "allRegistrations": "جميع طلبات التسجيل",
+  "noRegistrationRequests": "لا توجد طلبات تسجيل بعد.",
+  "coursesCount": "{count, plural, =0{لا توجد مقررات} =1{مقرر واحد} =2{مقرران} few{{count} مقررات} many{{count} مقررًا} other{{count} مقرر}}",
+  "@coursesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "submitted": "تاريخ الإرسال",
+  "totalCourses": "إجمالي المقررات",
+  "academicAdvisor": "المرشد الأكاديمي",
+  "rejectionReason": "سبب الرفض:",
+  "advisorNote": "ملاحظة المرشد:"
 }

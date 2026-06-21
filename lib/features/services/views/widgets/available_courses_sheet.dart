@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/services/data/models/available_course_model.dart';
 import 'package:edu_advisor/features/services/manager/course_registration_cubit/course_registration_cubit.dart';
@@ -35,7 +36,7 @@ class AvailableCoursesSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Available Courses',
+                context.l10n.availableCourses,
                 style: AppTextStyles.heading1_20b.copyWith(
                   color: context.themeColors.textPrimary,
                 ),
@@ -66,8 +67,8 @@ class AvailableCoursesSheet extends StatelessWidget {
 
                     if (state is AvailableCoursesLoaded) {
                       if (state.courses.isEmpty) {
-                        return const Center(
-                          child: Text('No available courses.'),
+                        return Center(
+                          child: Text(context.l10n.noAvailableCourses),
                         );
                       }
 
@@ -193,14 +194,16 @@ class _AvailableCourseTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    course.displayName,
+                    course.courseName.isNotEmpty
+                        ? course.courseName
+                        : context.l10n.courseFallbackName,
                     style: AppTextStyles.bodyInterRegular12.copyWith(
                       color: context.themeColors.textMuted,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '${course.creditHours} Credits',
+                    context.l10n.courseCredits(course.creditHours.toString()),
                     style: AppTextStyles.bodyInterMedium14.copyWith(
                       color: context.themeColors.textPrimary,
                       fontWeight: FontWeight.w700,
@@ -243,7 +246,7 @@ class _AvailableCoursesError extends StatelessWidget {
             onPressed: context
                 .read<CourseRegistrationCubit>()
                 .getAvailableCourses,
-            child: const Text('Try again'),
+            child: Text(context.l10n.retry),
           ),
         ],
       ),

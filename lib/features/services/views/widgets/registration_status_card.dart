@@ -1,4 +1,5 @@
 import 'package:edu_advisor/features/services/data/models/registration_request_model.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
@@ -24,21 +25,21 @@ class RegistrationStatusCard extends StatelessWidget {
         borderColor = context.themeColors.success.withValues(alpha: 0.3);
         color = context.themeColors.success;
         badgeBgColor = context.themeColors.successContainer;
-        badgeText = 'Approved';
+        badgeText = context.l10n.approved;
         icon = Icons.check_circle_outline;
         break;
       case RegistrationStatusType.pending:
         borderColor = context.themeColors.warning.withValues(alpha: 0.3);
         color = context.themeColors.warning;
         badgeBgColor = context.themeColors.warningContainer;
-        badgeText = 'Pending';
+        badgeText = context.l10n.pending;
         icon = Icons.access_time;
         break;
       case RegistrationStatusType.rejected:
         borderColor = context.colorScheme.error.withValues(alpha: 0.3);
         color = context.colorScheme.error;
         badgeBgColor = context.themeColors.dangerContainer;
-        badgeText = 'Rejected';
+        badgeText = context.l10n.rejected;
         icon = Icons.cancel_outlined;
         break;
     }
@@ -88,19 +89,21 @@ class RegistrationStatusCard extends StatelessWidget {
               children: [
                 _InfoLine(
                   icon: Icons.calendar_month_outlined,
-                  title: 'Semester',
-                  value: request.displaySemester,
+                  title: context.l10n.semester,
+                  value: request.semesterName.isNotEmpty
+                      ? request.semesterName
+                      : context.l10n.semester,
                 ),
                 const SizedBox(height: 10),
                 _InfoLine(
                   icon: Icons.menu_book_outlined,
-                  title: 'Courses',
-                  value: '${request.coursesCount} courses',
+                  title: context.l10n.coursesTab,
+                  value: context.l10n.coursesCount(request.coursesCount),
                 ),
                 const SizedBox(height: 10),
                 _InfoLine(
                   icon: Icons.schedule_outlined,
-                  title: 'Submitted',
+                  title: context.l10n.submitted,
                   value: request.displaySubmittedAt,
                 ),
               ],
@@ -117,7 +120,7 @@ class RegistrationStatusCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Total Courses',
+                  context.l10n.totalCourses,
                   style: AppTextStyles.bodyInterMedium14.copyWith(
                     color: context.themeColors.textSecondary,
                   ),
@@ -162,7 +165,7 @@ class RegistrationStatusCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Academic Advisor',
+                          context.l10n.academicAdvisor,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
                             color: context.themeColors.textMuted,
                           ),
@@ -187,8 +190,8 @@ class RegistrationStatusCard extends StatelessWidget {
                       children: [
                         Text(
                           status == RegistrationStatusType.rejected
-                              ? 'Rejection Reason:'
-                              : 'Advisor Note:',
+                              ? context.l10n.rejectionReason
+                              : context.l10n.advisorNote,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
                             color: context.themeColors.textSecondary,
                           ),

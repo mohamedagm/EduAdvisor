@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_info_row.dart';
@@ -33,7 +34,7 @@ class SettingsProfileSection extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Profile Information',
+                    context.l10n.profileInformation,
                     style: AppTextStyles.bodyInterMedium18.copyWith(
                       color: context.themeColors.textPrimary,
                     ),
@@ -88,7 +89,9 @@ class SettingsProfileSection extends StatelessWidget {
                       ),
                     ),
                     Icon(
-                      Icons.chevron_right,
+                      Directionality.of(context) == TextDirection.rtl
+                          ? Icons.chevron_left
+                          : Icons.chevron_right,
                       color: context.themeColors.textMuted,
                     ),
                   ],
@@ -97,13 +100,13 @@ class SettingsProfileSection extends StatelessWidget {
               const SizedBox(height: 16),
               SettingsInfoRow(
                 icon: Icons.mail_outline,
-                title: 'Email',
+                title: context.l10n.email,
                 subtitle: user?.email ?? '--',
               ),
               const SizedBox(height: 16),
               SettingsInfoRow(
                 icon: Icons.smartphone_outlined,
-                title: 'Phone Number',
+                title: context.l10n.phoneNumber,
                 subtitle: user?.displayPhone ?? '--',
               ),
             ],
@@ -128,7 +131,7 @@ class _SettingsProfileShimmer extends StatelessWidget {
               Icon(Icons.person_outline, color: context.colorScheme.primary),
               const SizedBox(width: 8),
               Text(
-                'Profile Information',
+                context.l10n.profileInformation,
                 style: AppTextStyles.bodyInterMedium18.copyWith(
                   color: context.themeColors.textPrimary,
                 ),

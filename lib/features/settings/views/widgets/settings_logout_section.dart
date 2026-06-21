@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +51,7 @@ class SettingsLogoutSection extends StatelessWidget {
                 ],
                 const SizedBox(width: 8),
                 Text(
-                  isLoggingOut ? 'Logging out...' : 'Log Out',
+                  isLoggingOut ? context.l10n.loggingOut : context.l10n.logOut,
                   style: AppTextStyles.bodyInterMedium14.copyWith(
                     color: context.colorScheme.error,
                   ),

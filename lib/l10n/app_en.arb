@@ -307,5 +307,122 @@
     "placeholders": {
       "count": {"type": "int"}
     }
-  }
+  },
+  "settingsTitle": "Settings",
+  "profileInformation": "Profile Information",
+  "phoneNumber": "Phone Number",
+  "preferences": "Preferences",
+  "language": "Language",
+  "englishLanguage": "English",
+  "arabicLanguage": "Arabic",
+  "appearance": "Appearance",
+  "appearanceDescription": "Choose how EduAdvisor looks on this device",
+  "systemTheme": "System",
+  "lightTheme": "Light",
+  "darkTheme": "Dark",
+  "themeOptionSemantics": "{theme} theme",
+  "@themeOptionSemantics": {
+    "placeholders": {
+      "theme": {"type": "String"}
+    }
+  },
+  "pushNotifications": "Push Notifications",
+  "receivePushNotifications": "Receive push notifications",
+  "emailNotifications": "Email Notifications",
+  "receiveEmailUpdates": "Receive email updates",
+  "gradeAlerts": "Grade Alerts",
+  "notifyWhenGradesPosted": "Notify when grades are posted",
+  "security": "Security",
+  "changePassword": "Change Password",
+  "support": "Support",
+  "helpCenter": "Help Center",
+  "aboutEduAdvisor": "About EduAdvisor",
+  "settingOn": "On",
+  "settingOff": "Off",
+  "loggingOut": "Logging out...",
+  "logOut": "Log Out",
+  "loggedOut": "Logged out",
+  "loggedOutDescription": "You have been logged out successfully.",
+  "loggedOutLocally": "Logged out locally",
+  "loggedOutLocallyDescription": "Your local session has been cleared.",
+  "servicesDescription": "Access academic tools and resources",
+  "academicTools": "Academic Tools",
+  "courseRecommendationService": "Course Recommendation",
+  "courseRecommendationServiceDescription": "Get AI-powered course suggestions based on your GPA, level, and academic history.",
+  "smartRecommendations": "Smart Recommendations",
+  "courseRegistrationTitle": "Course Registration",
+  "courseRegistrationServiceDescription": "Select and register for courses with details on code, name, credits, and prerequisites.",
+  "registerNow": "Register Now",
+  "registrationStatusTitle": "Registration Status",
+  "registrationStatusServiceDescription": "Track your registration requests and view advisor approval status in real-time.",
+  "checkStatus": "Check Status",
+  "courseRecommendationsTitle": "Course Recommendations",
+  "aiPoweredSuggestionsForYou": "AI-powered suggestions for you",
+  "personalizedForYou": "Personalized for You",
+  "basedOnAcademicProfile": "Based on your academic profile",
+  "machineLearning": "Machine Learning",
+  "advancedLinearAlgebra": "Advanced Linear Algebra",
+  "hardDifficulty": "Hard",
+  "machineLearningRecommendationReason": "Strong performance in Data Structures. High demand field.",
+  "programmingStrengthBenefit": "Aligns with your strengths in programming",
+  "jobMarketDemandBenefit": "High job market demand",
+  "gpaImprovementBenefit": "Can improve GPA by +0.4",
+  "linearAlgebraRecommendationReason": "Strong foundation for AI/ML specialization.",
+  "mlTrackBenefit": "Essential for ML/AI track",
+  "mathBackgroundBenefit": "Strong math background advantage",
+  "researchOpportunitiesBenefit": "Research opportunities",
+  "recommendationsUpdatedDaily": "Recommendations updated daily",
+  "recommendationsAiDescription": "Our AI analyzes your performance, prerequisites, and career goals to suggest the best courses.",
+  "creditLimitReached": "Credit limit reached",
+  "creditLimitReachedDescription": "You cannot exceed the maximum credit limit.",
+  "registrationSubmitted": "Registration submitted",
+  "submissionFailed": "Submission failed",
+  "spring2024Semester": "Spring 2024 Semester",
+  "selectedCoursesCount": "Selected Courses ({count})",
+  "@selectedCoursesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "addCourse": "Add Course",
+  "submitting": "Submitting...",
+  "submitForApproval": "Submit for Approval",
+  "availableCourses": "Available Courses",
+  "noAvailableCourses": "No available courses.",
+  "retake": "Retake",
+  "retakeCourseDescription": "This course is marked as a retake.",
+  "totalCreditHours": "Total Credit Hours",
+  "creditHoursRequired": "{min} - {max} hours required",
+  "@creditHoursRequired": {
+    "placeholders": {
+      "min": {"type": "int"},
+      "max": {"type": "int"}
+    }
+  },
+  "addMoreCreditHours": "{count, plural, =1{Add 1 more credit hour} other{Add {count} more credit hours}}",
+  "@addMoreCreditHours": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "minimumCreditRequirementMet": "Minimum credit requirement met",
+  "noCoursesSelected": "No courses selected",
+  "addCourseToStart": "Click \"Add Course\" to start",
+  "trackCourseRequests": "Track your course requests",
+  "pending": "Pending",
+  "approved": "Approved",
+  "rejected": "Rejected",
+  "allRegistrations": "All Registrations",
+  "noRegistrationRequests": "No registration requests yet.",
+  "coursesCount": "{count, plural, =0{No courses} =1{1 course} other{{count} courses}}",
+  "@coursesCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "submitted": "Submitted",
+  "totalCourses": "Total Courses",
+  "academicAdvisor": "Academic Advisor",
+  "rejectionReason": "Rejection Reason:",
+  "advisorNote": "Advisor Note:"
 }

@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_toggle_row.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class SettingsNotificationsSection extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                'Notifications',
+                context.l10n.notifications,
                 style: AppTextStyles.bodyInterMedium18.copyWith(
                   color: context.themeColors.textPrimary,
                 ),
@@ -45,22 +46,22 @@ class SettingsNotificationsSection extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           SettingsToggleRow(
-            title: 'Push Notifications',
-            subtitle: 'Receive push notifications',
+            title: context.l10n.pushNotifications,
+            subtitle: context.l10n.receivePushNotifications,
             isOn: pushNotifications,
             onChanged: onPushNotificationsChanged,
           ),
           const SizedBox(height: 20),
           SettingsToggleRow(
-            title: 'Email Notifications',
-            subtitle: 'Receive email updates',
+            title: context.l10n.emailNotifications,
+            subtitle: context.l10n.receiveEmailUpdates,
             isOn: emailNotifications,
             onChanged: onEmailNotificationsChanged,
           ),
           const SizedBox(height: 20),
           SettingsToggleRow(
-            title: 'Grade Alerts',
-            subtitle: 'Notify when grades are posted',
+            title: context.l10n.gradeAlerts,
+            subtitle: context.l10n.notifyWhenGradesPosted,
             isOn: gradeAlerts,
             onChanged: onGradeAlertsChanged,
           ),

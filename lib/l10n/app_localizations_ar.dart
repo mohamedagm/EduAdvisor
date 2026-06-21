@@ -604,4 +604,313 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get settingsTitle => 'الإعدادات';
+
+  @override
+  String get profileInformation => 'معلومات الملف الشخصي';
+
+  @override
+  String get phoneNumber => 'رقم الهاتف';
+
+  @override
+  String get preferences => 'التفضيلات';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get englishLanguage => 'الإنجليزية';
+
+  @override
+  String get arabicLanguage => 'العربية';
+
+  @override
+  String get appearance => 'المظهر';
+
+  @override
+  String get appearanceDescription => 'اختر مظهر EduAdvisor على هذا الجهاز';
+
+  @override
+  String get systemTheme => 'النظام';
+
+  @override
+  String get lightTheme => 'فاتح';
+
+  @override
+  String get darkTheme => 'داكن';
+
+  @override
+  String themeOptionSemantics(String theme) {
+    return 'المظهر $theme';
+  }
+
+  @override
+  String get pushNotifications => 'الإشعارات الفورية';
+
+  @override
+  String get receivePushNotifications => 'استلام الإشعارات الفورية';
+
+  @override
+  String get emailNotifications => 'إشعارات البريد الإلكتروني';
+
+  @override
+  String get receiveEmailUpdates => 'استلام التحديثات عبر البريد الإلكتروني';
+
+  @override
+  String get gradeAlerts => 'تنبيهات الدرجات';
+
+  @override
+  String get notifyWhenGradesPosted => 'التنبيه عند نشر الدرجات';
+
+  @override
+  String get security => 'الأمان';
+
+  @override
+  String get changePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get support => 'الدعم';
+
+  @override
+  String get helpCenter => 'مركز المساعدة';
+
+  @override
+  String get aboutEduAdvisor => 'حول EduAdvisor';
+
+  @override
+  String get settingOn => 'مفعّل';
+
+  @override
+  String get settingOff => 'متوقف';
+
+  @override
+  String get loggingOut => 'جارٍ تسجيل الخروج...';
+
+  @override
+  String get logOut => 'تسجيل الخروج';
+
+  @override
+  String get loggedOut => 'تم تسجيل الخروج';
+
+  @override
+  String get loggedOutDescription => 'تم تسجيل خروجك بنجاح.';
+
+  @override
+  String get loggedOutLocally => 'تم تسجيل الخروج محليًا';
+
+  @override
+  String get loggedOutLocallyDescription => 'تم مسح جلستك المحلية.';
+
+  @override
+  String get servicesDescription => 'الوصول إلى الأدوات والموارد الأكاديمية';
+
+  @override
+  String get academicTools => 'الأدوات الأكاديمية';
+
+  @override
+  String get courseRecommendationService => 'اقتراح المقررات';
+
+  @override
+  String get courseRecommendationServiceDescription =>
+      'احصل على اقتراحات مقررات مدعومة بالذكاء الاصطناعي بناءً على معدلك ومستواك وسجلك الأكاديمي.';
+
+  @override
+  String get smartRecommendations => 'اقتراحات ذكية';
+
+  @override
+  String get courseRegistrationTitle => 'تسجيل المقررات';
+
+  @override
+  String get courseRegistrationServiceDescription =>
+      'اختر مقرراتك وسجّلها مع عرض الرمز والاسم والساعات والمتطلبات السابقة.';
+
+  @override
+  String get registerNow => 'سجّل الآن';
+
+  @override
+  String get registrationStatusTitle => 'حالة التسجيل';
+
+  @override
+  String get registrationStatusServiceDescription =>
+      'تابع طلبات التسجيل وحالة موافقة المرشد الأكاديمي لحظة بلحظة.';
+
+  @override
+  String get checkStatus => 'تحقق من الحالة';
+
+  @override
+  String get courseRecommendationsTitle => 'اقتراحات المقررات';
+
+  @override
+  String get aiPoweredSuggestionsForYou => 'اقتراحات مخصصة بالذكاء الاصطناعي';
+
+  @override
+  String get personalizedForYou => 'مخصص لك';
+
+  @override
+  String get basedOnAcademicProfile => 'بناءً على ملفك الأكاديمي';
+
+  @override
+  String get machineLearning => 'تعلم الآلة';
+
+  @override
+  String get advancedLinearAlgebra => 'الجبر الخطي المتقدم';
+
+  @override
+  String get hardDifficulty => 'صعب';
+
+  @override
+  String get machineLearningRecommendationReason =>
+      'أداء قوي في هياكل البيانات ومجال مطلوب بشدة.';
+
+  @override
+  String get programmingStrengthBenefit => 'يتوافق مع نقاط قوتك في البرمجة';
+
+  @override
+  String get jobMarketDemandBenefit => 'طلب مرتفع في سوق العمل';
+
+  @override
+  String get gpaImprovementBenefit => 'قد يحسّن معدلك بمقدار +0.4';
+
+  @override
+  String get linearAlgebraRecommendationReason =>
+      'أساس قوي لتخصص الذكاء الاصطناعي وتعلم الآلة.';
+
+  @override
+  String get mlTrackBenefit => 'أساسي لمسار تعلم الآلة والذكاء الاصطناعي';
+
+  @override
+  String get mathBackgroundBenefit => 'الاستفادة من خلفيتك الرياضية القوية';
+
+  @override
+  String get researchOpportunitiesBenefit => 'فرص بحثية';
+
+  @override
+  String get recommendationsUpdatedDaily => 'تُحدّث الاقتراحات يوميًا';
+
+  @override
+  String get recommendationsAiDescription =>
+      'يحلل الذكاء الاصطناعي أداءك والمتطلبات السابقة وأهدافك المهنية لاقتراح أفضل المقررات.';
+
+  @override
+  String get creditLimitReached => 'تم بلوغ حد الساعات';
+
+  @override
+  String get creditLimitReachedDescription =>
+      'لا يمكنك تجاوز الحد الأقصى للساعات المعتمدة.';
+
+  @override
+  String get registrationSubmitted => 'تم إرسال طلب التسجيل';
+
+  @override
+  String get submissionFailed => 'فشل إرسال الطلب';
+
+  @override
+  String get spring2024Semester => 'فصل ربيع 2024';
+
+  @override
+  String selectedCoursesCount(int count) {
+    return 'المقررات المختارة ($count)';
+  }
+
+  @override
+  String get addCourse => 'إضافة مقرر';
+
+  @override
+  String get submitting => 'جارٍ الإرسال...';
+
+  @override
+  String get submitForApproval => 'إرسال للموافقة';
+
+  @override
+  String get availableCourses => 'المقررات المتاحة';
+
+  @override
+  String get noAvailableCourses => 'لا توجد مقررات متاحة.';
+
+  @override
+  String get retake => 'إعادة دراسة';
+
+  @override
+  String get retakeCourseDescription => 'هذا المقرر محدد لإعادة دراسته.';
+
+  @override
+  String get totalCreditHours => 'إجمالي الساعات المعتمدة';
+
+  @override
+  String creditHoursRequired(int min, int max) {
+    return 'المطلوب من $min إلى $max ساعة';
+  }
+
+  @override
+  String addMoreCreditHours(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أضف $count ساعة معتمدة',
+      many: 'أضف $count ساعة معتمدة',
+      few: 'أضف $count ساعات معتمدة',
+      two: 'أضف ساعتين معتمدتين',
+      one: 'أضف ساعة معتمدة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get minimumCreditRequirementMet => 'تم استيفاء الحد الأدنى للساعات';
+
+  @override
+  String get noCoursesSelected => 'لم يتم اختيار مقررات';
+
+  @override
+  String get addCourseToStart => 'اضغط على \"إضافة مقرر\" للبدء';
+
+  @override
+  String get trackCourseRequests => 'تابع طلبات تسجيل مقرراتك';
+
+  @override
+  String get pending => 'قيد المراجعة';
+
+  @override
+  String get approved => 'تمت الموافقة';
+
+  @override
+  String get rejected => 'مرفوض';
+
+  @override
+  String get allRegistrations => 'جميع طلبات التسجيل';
+
+  @override
+  String get noRegistrationRequests => 'لا توجد طلبات تسجيل بعد.';
+
+  @override
+  String coursesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مقرر',
+      many: '$count مقررًا',
+      few: '$count مقررات',
+      two: 'مقرران',
+      one: 'مقرر واحد',
+      zero: 'لا توجد مقررات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get submitted => 'تاريخ الإرسال';
+
+  @override
+  String get totalCourses => 'إجمالي المقررات';
+
+  @override
+  String get academicAdvisor => 'المرشد الأكاديمي';
+
+  @override
+  String get rejectionReason => 'سبب الرفض:';
+
+  @override
+  String get advisorNote => 'ملاحظة المرشد:';
 }

@@ -44,7 +44,12 @@ class SettingsInfoRow extends StatelessWidget {
             ],
           ),
         ),
-        Icon(Icons.chevron_right, color: context.themeColors.textMuted),
+        Icon(
+          Directionality.of(context) == TextDirection.rtl
+              ? Icons.chevron_left
+              : Icons.chevron_right,
+          color: context.themeColors.textMuted,
+        ),
       ],
     );
   }

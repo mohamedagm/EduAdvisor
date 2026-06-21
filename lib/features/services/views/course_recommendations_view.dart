@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -11,9 +12,9 @@ class CourseRecommendationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ServiceAppBar(
-        title: 'Course Recommendations',
-        subtitle: 'AI-powered suggestions for you',
+      appBar: ServiceAppBar(
+        title: context.l10n.courseRecommendationsTitle,
+        subtitle: context.l10n.aiPoweredSuggestionsForYou,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -45,7 +46,7 @@ class CourseRecommendationsView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Personalized for You',
+                          context.l10n.personalizedForYou,
                           style: AppTextStyles.heading3PoppinsReg16.copyWith(
                             color: context.themeColors.textPrimary,
                             fontWeight: FontWeight.w600,
@@ -53,7 +54,7 @@ class CourseRecommendationsView extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          'Based on your academic profile',
+                          context.l10n.basedOnAcademicProfile,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
                             color: context.themeColors.textMuted,
                           ),
@@ -71,16 +72,15 @@ class CourseRecommendationsView extends StatelessWidget {
               iconBgColor: AppColors.aiPurple,
               iconForegroundColor: AppColors.white,
               courseCode: 'CS 301',
-              courseName: 'Machine Learning',
+              courseName: context.l10n.machineLearning,
               matchScore: '95',
-              credits: '3 Credits',
-              difficulty: 'Hard',
-              reason:
-                  'Strong performance in Data Structures. High demand field.',
+              credits: context.l10n.courseCredits('3'),
+              difficulty: context.l10n.hardDifficulty,
+              reason: context.l10n.machineLearningRecommendationReason,
               benefits: [
-                'Aligns with your strengths in programming',
-                'High job market demand',
-                'Can improve GPA by +0.4',
+                context.l10n.programmingStrengthBenefit,
+                context.l10n.jobMarketDemandBenefit,
+                context.l10n.gpaImprovementBenefit,
               ],
             ),
             const SizedBox(height: 16),
@@ -90,15 +90,15 @@ class CourseRecommendationsView extends StatelessWidget {
               iconBgColor: context.themeColors.warning,
               iconForegroundColor: context.themeColors.onWarning,
               courseCode: 'MATH 301',
-              courseName: 'Advanced Linear Algebra',
+              courseName: context.l10n.advancedLinearAlgebra,
               matchScore: '78',
-              credits: '4 Credits',
-              difficulty: 'Hard',
-              reason: 'Strong foundation for AI/ML specialization.',
+              credits: context.l10n.courseCredits('4'),
+              difficulty: context.l10n.hardDifficulty,
+              reason: context.l10n.linearAlgebraRecommendationReason,
               benefits: [
-                'Essential for ML/AI track',
-                'Strong math background advantage',
-                'Research opportunities',
+                context.l10n.mlTrackBenefit,
+                context.l10n.mathBackgroundBenefit,
+                context.l10n.researchOpportunitiesBenefit,
               ],
             ),
             const SizedBox(height: 24),
@@ -126,7 +126,7 @@ class CourseRecommendationsView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Recommendations updated daily',
+                          context.l10n.recommendationsUpdatedDaily,
                           style: AppTextStyles.interRegular16.copyWith(
                             color: context.themeColors.textPrimary,
                             fontWeight: FontWeight.w600,
@@ -134,7 +134,7 @@ class CourseRecommendationsView extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Our AI analyzes your performance, prerequisites, and career goals to suggest the best courses.',
+                          context.l10n.recommendationsAiDescription,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
                             color: context.themeColors.textSecondary,
                             height: 1.4,
