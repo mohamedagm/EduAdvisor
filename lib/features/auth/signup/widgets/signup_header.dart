@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SignupHeader extends StatelessWidget {
   const SignupHeader({super.key});
@@ -7,16 +7,11 @@ class SignupHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top:50),
+      padding: EdgeInsets.only(top: 50),
       height: 120,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-           
-            AppColors.bluePrimary,
-            AppColors.purplePrimary,
-        
-          ],
+          colors: [context.colorScheme.primary, context.colorScheme.secondary],
         ),
         // borderRadius: BorderRadius.only(
         //   bottomLeft: Radius.circular(30),

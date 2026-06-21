@@ -1,12 +1,37 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_shimmer.dart';
+import 'package:edu_advisor/features/user/data/models/current_user_model.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class WelcomeCard extends StatelessWidget {
-  final String fullName;
+  const WelcomeCard({super.key});
 
-  const WelcomeCard({super.key, required this.fullName});
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CurrentUserCubit, CurrentUserState>(
+      builder: (context, state) {
+        if (state is CurrentUserInitial || state is CurrentUserLoading) {
+          return const _WelcomeCardShimmer();
+        }
+
+        final user = state is CurrentUserLoaded ? state.user : null;
+
+        return _WelcomeCardContent(user: user);
+      },
+    );
+  }
+}
+
+class _WelcomeCardContent extends StatelessWidget {
+  const _WelcomeCardContent({required this.user});
+
+  final CurrentUserModel? user;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +41,7 @@ class WelcomeCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.bluePrimary.withValues(alpha: 0.3),
+            color: context.colorScheme.primary.withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -28,9 +53,18 @@ class WelcomeCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 28,
-                child: Icon(Icons.person, size: 30),
+                backgroundColor: AppColors.white,
+                child: user?.profileImageUrl?.isNotEmpty == true
+                    ? ClipOval(
+                        child: SizedBox.expand(
+                          child: AppShimmerNetworkImage(
+                            imageUrl: user!.profileImageUrl!,
+                          ),
+                        ),
+                      )
+                    : const Icon(Icons.person, size: 30),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -44,7 +78,7 @@ class WelcomeCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      fullName,
+                      user?.displayName ?? 'Student',
                       style: AppTextStyles.bodyInterMedium18.copyWith(
                         color: AppColors.white,
                       ),
@@ -68,17 +102,80 @@ class WelcomeCard extends StatelessWidget {
               _StatItem(
                 icon: Icons.school_outlined,
                 label: 'GPA',
-                value: '3.3',
+                value: user?.displayGpa ?? '--',
               ),
               _StatItem(
                 icon: Icons.menu_book_outlined,
                 label: 'Credits',
-                value: '45',
+                value: user?.displayCredits ?? '--',
               ),
-              _StatItem(icon: Icons.trending_up, label: 'Level', value: '4'),
+              _StatItem(
+                icon: Icons.trending_up,
+                label: 'Level',
+                value: user?.displayLevel ?? '--',
+              ),
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _WelcomeCardShimmer extends StatelessWidget {
+  const _WelcomeCardShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: AppGradients.primary,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: context.colorScheme.primary.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: AppShimmer(
+        baseColor: Colors.white.withValues(alpha: 0.24),
+        highlightColor: Colors.white.withValues(alpha: 0.52),
+        child: Column(
+          children: [
+            const Row(
+              children: [
+                AppShimmerBox(width: 56, height: 56, shape: BoxShape.circle),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppShimmerBox(width: 132, height: 18),
+                      SizedBox(height: 8),
+                      AppShimmerBox(width: 104, height: 16),
+                    ],
+                  ),
+                ),
+                AppShimmerBox(width: 36, height: 36, shape: BoxShape.circle),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    child: AppShimmerBox(height: 58, borderRadius: 12),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

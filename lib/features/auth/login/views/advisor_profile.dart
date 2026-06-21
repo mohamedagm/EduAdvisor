@@ -1,12 +1,14 @@
 import 'dart:io';
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
-import 'package:edu_advisor/features/advisor_nav/advisor_home_screen.dart';
 import 'package:edu_advisor/features/auth/widgets/skip_botton.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AdvisorProfile extends StatefulWidget {
   const AdvisorProfile({super.key});
@@ -35,10 +37,10 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
               padding: const EdgeInsets.all(20),
               margin: const EdgeInsets.symmetric(horizontal: 24),
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: context.themeColors.card,
                 borderRadius: BorderRadius.circular(20),
-                boxShadow: const [
-                  BoxShadow(blurRadius: 10, color: Colors.black12),
+                boxShadow: [
+                  BoxShadow(blurRadius: 10, color: context.themeColors.shadow),
                 ],
               ),
               child: Column(
@@ -48,15 +50,15 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                     children: [
                       CircleAvatar(
                         radius: 60,
-                        backgroundColor: AppColors.gray200,
+                        backgroundColor: context.themeColors.border,
                         backgroundImage: _image != null
                             ? FileImage(_image!)
                             : null,
                         child: _image == null
-                            ? const Icon(
+                            ? Icon(
                                 Icons.person,
                                 size: 60,
-                                color: Colors.grey,
+                                color: context.themeColors.textMuted,
                               )
                             : null,
                       ),
@@ -68,7 +70,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                           child: Container(
                             padding: const EdgeInsets.all(6),
                             decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color: context.colorScheme.primary,
                               shape: BoxShape.circle,
                               border: Border.all(color: Colors.white, width: 2),
                             ),
@@ -86,7 +88,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF0F3FF),
+                      color: context.themeColors.infoContainer,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -96,14 +98,14 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                           children: [
                             Icon(
                               Icons.help_outline,
-                              color: AppColors.infoBlue,
+                              color: context.themeColors.info,
                               size: 20,
                             ),
                             const SizedBox(width: 16),
                             Text(
                               'Why add a photo?',
                               style: AppTextStyles.interRegular16.copyWith(
-                                color: AppColors.gray700,
+                                color: context.themeColors.textSecondary,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -114,7 +116,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                           'A profile photo helps you establish and present yourself. '
                           'You can always change or remove it later in your profile settings.',
                           style: AppTextStyles.bodyInterMedium14.copyWith(
-                            color: AppColors.gray700,
+                            color: context.themeColors.textSecondary,
                           ),
                         ),
                       ],
@@ -123,13 +125,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                   const SizedBox(height: 32),
                   GradientElevatedButton(
                     onPressed: () {
-                      // For now, just navigate to the next screen without validation
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomeScreen(), /////
-                        ),
-                      );
+                      context.go(AppRoutes.advisorMain);
                     },
                     buttonText: 'Continue',
                   ),
@@ -137,14 +133,8 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                   // Skip Button
                   SkipButton(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                            HomeScreen(), //navigate to advisor
-                        ),
-                      );
-                    }, // You can implement skip functionality if needed
+                      context.go(AppRoutes.advisorMain);
+                    },
                   ),
                 ],
               ),

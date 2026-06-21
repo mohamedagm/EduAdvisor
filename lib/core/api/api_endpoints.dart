@@ -16,6 +16,14 @@ class ApiEndpoints {
   static const String me = '/api/Auth/me';
   static const String validateToken = '/api/Auth/validate-token';
   static const String getDepartments = '/api/Departments/select-menu';
+
+  static const String courses = '/api/v1/Courses';
+  static const String myCourses = '/api/v1/Students/my-courses';
+  static const String availableCourses = '/api/v1/Students/available-courses';
+  static const String registrationRequests =
+      '/api/v1/Students/registration-requests';
+
+  static const String aiAdvisorChat = 'https://advisor.flowlogichub.space/chat';
   static const String  getMyStudents = '/api/v1/Advisors/my-students';
 
   static const String getPendingRequests = '/api/v1/Advisors/pending';

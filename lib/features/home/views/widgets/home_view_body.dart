@@ -6,9 +6,7 @@ import 'package:edu_advisor/features/home/views/widgets/welcome_card.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewBody extends StatelessWidget {
-  final String fullName;
-
-  const HomeViewBody({super.key, required this.fullName});
+  const HomeViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class HomeViewBody extends StatelessWidget {
           child: Column(
             spacing: 12,
             children: [
-              WelcomeCard(fullName: fullName),
+              WelcomeCard(),
 
               SectionHeader(),
 

@@ -5,6 +5,7 @@ import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
 import 'package:edu_advisor/core/services/token_storage_service.dart';
+import 'package:edu_advisor/core/services/user_cache_service.dart';
 import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
 import 'package:edu_advisor/features/auth/data/models/login_response_model.dart';
 import 'package:edu_advisor/features/auth/data/models/register_advisor_request_model.dart';
@@ -14,11 +15,14 @@ class AuthRepo {
   AuthRepo({
     required ApiConsumer apiConsumer,
     TokenStorageService? tokenStorageService,
+    UserCacheService? userCacheService,
   }) : _apiConsumer = apiConsumer,
-       _tokenStorageService = tokenStorageService ?? TokenStorageService();
+       _tokenStorageService = tokenStorageService ?? TokenStorageService(),
+       _userCacheService = userCacheService ?? UserCacheService();
 
   final ApiConsumer _apiConsumer;
   final TokenStorageService _tokenStorageService;
+  final UserCacheService _userCacheService;
 
   Future<Either<Failure, LoginResponseModel>> login(
     LoginRequestModel request, {
@@ -26,6 +30,7 @@ class AuthRepo {
   }) async {
     try {
       await _tokenStorageService.clearTokens();
+      await _userCacheService.clearCurrentUser();
 
       final response = await _apiConsumer.post(
         ApiEndpoints.login,
@@ -99,6 +104,50 @@ class AuthRepo {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.apiResponse));
     } catch (e) {
+      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
+    }
+  }
+
+  Future<Either<Failure, ApiResponseModel>> logout() async {
+    try {
+      final refreshToken = await _tokenStorageService.getRefreshToken();
+
+      if (refreshToken == null || refreshToken.isEmpty) {
+        await _tokenStorageService.clearTokens();
+        await _userCacheService.clearCurrentUser();
+        return const Right(
+          ApiResponseModel(
+            isSuccess: true,
+            message: 'Logged out successfully',
+            statusCode: 200,
+          ),
+        );
+      }
+
+      final response = await _apiConsumer.post(
+        ApiEndpoints.logout,
+        data: {'refreshToken': refreshToken},
+      );
+
+      await _tokenStorageService.clearTokens();
+      await _userCacheService.clearCurrentUser();
+
+      final apiResponse = response is Map
+          ? ApiResponseModel.fromJson(Map<String, dynamic>.from(response))
+          : const ApiResponseModel(
+              isSuccess: true,
+              message: 'Logged out successfully',
+              statusCode: 200,
+            );
+
+      return Right(apiResponse);
+    } on ServerException catch (e) {
+      await _tokenStorageService.clearTokens();
+      await _userCacheService.clearCurrentUser();
+      return Left(ServerFailure(e.apiResponse));
+    } catch (e) {
+      await _tokenStorageService.clearTokens();
+      await _userCacheService.clearCurrentUser();
       return Left(ServerFailure(ApiResponseModel.message(e.toString())));
     }
   }

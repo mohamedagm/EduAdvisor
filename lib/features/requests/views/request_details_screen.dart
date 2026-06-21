@@ -1,4 +1,5 @@
 import 'package:edu_advisor/features/requests/manager/cubit/request_cubit.dart';
+import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
 import 'package:edu_advisor/features/requests/widgets/advisor_decision.dart';
 import 'package:edu_advisor/features/requests/widgets/course_request_card.dart';
@@ -6,8 +7,7 @@ import 'package:edu_advisor/features/requests/widgets/rejection_dialog.dart';
 import 'package:edu_advisor/features/requests/widgets/student_info_card.dart';
 import 'package:edu_advisor/features/widgets/advisor_header.dart';
 import 'package:flutter/material.dart';
-import 'package:cherry_toast/cherry_toast.dart';
-import 'package:cherry_toast/resources/arrays.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RequestDetailsScreen extends StatefulWidget {
@@ -80,20 +80,11 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
   }
 
   void _showSuccessToast(String title, String desc) {
-    CherryToast.success(
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      description: Text(desc),
-      animationType: AnimationType.fromTop,
-      action: const Text("OK", style: TextStyle(color: Colors.green)),
-    ).show(context);
+    AppToast.success(context, title: title, description: desc);
   }
 
   void _showErrorToast(String title, String desc) {
-    CherryToast.error(
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      description: Text(desc),
-      animationType: AnimationType.fromTop,
-    ).show(context);
+    AppToast.error(context, title: title, description: desc);
   }
 
   @override
@@ -102,7 +93,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
     final bool isPending = currentStatus == 'pending';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: context.colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -135,10 +126,10 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                           "STATUS: ${widget.request.status.toUpperCase()}",
                           style: TextStyle(
                             color: isPending
-                                ? Colors.orange
-                                : (currentStatus == 'approved'
-                                    ? Colors.green
-                                    : Colors.red),
+                                ? context.themeColors.warning
+                                : (widget.request.status == 'approved'
+                                      ? context.themeColors.success
+                                      : context.colorScheme.error),
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),

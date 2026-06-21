@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class RequestActionButtons extends StatelessWidget {
   final VoidCallback onAccept;
@@ -15,9 +15,9 @@ class RequestActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Color(0xFFEEEEEE))),
+      decoration: BoxDecoration(
+        color: context.themeColors.card,
+        border: Border(top: BorderSide(color: context.themeColors.border)),
       ),
       child: Row(
         children: [
@@ -27,10 +27,12 @@ class RequestActionButtons extends StatelessWidget {
               icon: const Icon(Icons.check_circle_outline),
               label: const Text("Accept"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.successGreenDark,
-                foregroundColor: AppColors.white,
+                backgroundColor: context.themeColors.success,
+                foregroundColor: context.themeColors.onSuccess,
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
           ),
@@ -41,10 +43,12 @@ class RequestActionButtons extends StatelessWidget {
               icon: const Icon(Icons.cancel_outlined),
               label: const Text("Reject"),
               style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.errorRed,
-                side: const BorderSide(color: AppColors.errorRed),
+                foregroundColor: context.colorScheme.error,
+                side: BorderSide(color: context.colorScheme.error),
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
           ),

@@ -1,10 +1,14 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/CourseCatalog/data/models/course_model.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/tag.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class CourseDetailsSheet extends StatelessWidget {
-  const CourseDetailsSheet({super.key});
+  const CourseDetailsSheet({super.key, required this.course});
+
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +31,9 @@ class CourseDetailsSheet extends StatelessWidget {
                     spacing: 24,
                     children: [
                       Text(
-                        'IS312',
+                        course.displayCode,
                         style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                          color: AppColors.gray800,
+                          color: context.themeColors.textPrimary,
                         ),
                       ),
                       Container(
@@ -38,13 +42,13 @@ class CourseDetailsSheet extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFFF8E1),
+                          color: context.themeColors.warningContainer,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          'Medium',
+                          course.displayType,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
-                            color: Color(0xFFD4A017),
+                            color: context.themeColors.warning,
                           ),
                         ),
                       ),
@@ -56,10 +60,10 @@ class CourseDetailsSheet extends StatelessWidget {
                     width: 32,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColors.gray100,
+                      color: context.themeColors.mutedSurface,
                     ),
                     child: IconButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => context.pop(),
                       padding: EdgeInsets.zero,
                       icon: const Icon(Icons.close, size: 20),
                     ),
@@ -68,9 +72,9 @@ class CourseDetailsSheet extends StatelessWidget {
               ),
 
               Text(
-                'Database Management System',
+                course.displayName,
                 style: AppTextStyles.poppinsRegular14.copyWith(
-                  color: AppColors.gray600,
+                  color: context.themeColors.textSecondary,
                 ),
               ),
 
@@ -86,43 +90,43 @@ class CourseDetailsSheet extends StatelessWidget {
               const SizedBox(height: 6),
 
               Text(
-                'Database desing, SQL, and data management system.',
+                course.displayDescription,
                 style: AppTextStyles.interRegular16.copyWith(
-                  color: AppColors.gray600,
+                  color: context.themeColors.textSecondary,
                 ),
               ),
 
               const SizedBox(height: 16),
 
               _SectionTitle(
-                icon: Icons.star_border_rounded,
-                label: 'Why It Matters',
-                iconColor: Color(0xFFD4A017),
+                icon: Icons.school_outlined,
+                label: 'Academic Placement',
+                iconColor: context.themeColors.warning,
               ),
 
               const SizedBox(height: 6),
 
               Text(
-                'Essential for backend development and data management.',
+                'Level ${course.standardLevel}, semester ${course.standardSemester}.',
                 style: AppTextStyles.interRegular16.copyWith(
-                  color: AppColors.gray600,
+                  color: context.themeColors.textSecondary,
                 ),
               ),
 
               const SizedBox(height: 16),
 
               _SectionTitle(
-                icon: Icons.trending_up,
-                label: 'Career Opportunities',
-                iconColor: Color(0xFF43A047),
+                icon: Icons.account_tree_outlined,
+                label: 'Department',
+                iconColor: context.themeColors.success,
               ),
 
               const SizedBox(height: 6),
 
               Text(
-                'Database Administrator, Backend Developer And Data Engineer',
+                course.displayDepartment,
                 style: AppTextStyles.interRegular16.copyWith(
-                  color: AppColors.gray600,
+                  color: context.themeColors.textSecondary,
                 ),
               ),
 
@@ -131,15 +135,16 @@ class CourseDetailsSheet extends StatelessWidget {
               Text(
                 'Specializations',
                 style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                  color: AppColors.gray800,
+                  color: context.themeColors.textPrimary,
                 ),
               ),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
-                children: const [
-                  Tag(label: 'Data Science'),
-                  Tag(label: 'Software Development'),
+                runSpacing: 8,
+                children: [
+                  Tag(label: course.displayType),
+                  Tag(label: course.displayDepartment),
                 ],
               ),
 
@@ -148,12 +153,18 @@ class CourseDetailsSheet extends StatelessWidget {
               const SizedBox(height: 12),
 
               Row(
-                children: const [
+                children: [
                   Expanded(
-                    child: _InfoTile(title: 'Credits', value: '3'),
+                    child: _InfoTile(
+                      title: 'Credits',
+                      value: course.displayCreditHours,
+                    ),
                   ),
                   Expanded(
-                    child: _InfoTile(title: 'Difficulty', value: 'Medium'),
+                    child: _InfoTile(
+                      title: 'Semester',
+                      value: course.standardSemester.toString(),
+                    ),
                   ),
                 ],
               ),
@@ -168,24 +179,24 @@ class CourseDetailsSheet extends StatelessWidget {
 class _SectionTitle extends StatelessWidget {
   final IconData icon;
   final String label;
-  final Color iconColor;
+  final Color? iconColor;
 
   const _SectionTitle({
     required this.icon,
     required this.label,
-    this.iconColor = const Color(0xFF9E9E9E),
+    this.iconColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 24, color: iconColor),
+        Icon(icon, size: 24, color: iconColor ?? context.themeColors.textMuted),
         const SizedBox(width: 6),
         Text(
           label,
           style: AppTextStyles.heading3PoppinsReg16.copyWith(
-            color: AppColors.gray800,
+            color: context.themeColors.textPrimary,
           ),
         ),
       ],
@@ -206,14 +217,14 @@ class _InfoTile extends StatelessWidget {
         Text(
           title,
           style: AppTextStyles.bodyInterMedium18.copyWith(
-            color: AppColors.gray800,
+            color: context.themeColors.textPrimary,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           value,
           style: AppTextStyles.interRegular16.copyWith(
-            color: AppColors.gray600,
+            color: context.themeColors.textSecondary,
           ),
         ),
       ],

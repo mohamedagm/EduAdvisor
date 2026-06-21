@@ -1,6 +1,6 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class QuickActions extends StatelessWidget {
   const QuickActions({super.key, required this.onActionTap});
@@ -19,7 +19,7 @@ class QuickActions extends StatelessWidget {
       margin: const EdgeInsets.all(12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
       ),
       child: GridView.builder(
@@ -38,13 +38,13 @@ class QuickActions extends StatelessWidget {
             child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: AppColors.purpleLight,
+                color: context.themeColors.purpleContainer,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 actions[index],
                 style: AppTextStyles.poppinsRegular14.copyWith(
-                  color: AppColors.gray700,
+                  color: context.themeColors.textSecondary,
                 ),
               ),
             ),

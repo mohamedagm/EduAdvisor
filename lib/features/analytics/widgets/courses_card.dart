@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class CoursesCard extends StatelessWidget {
   const CoursesCard({super.key});
@@ -6,15 +7,13 @@ class CoursesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _cardWrapper(
+      context: context,
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Popular Courses',
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
-            ),
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
           ),
           SizedBox(height: 14),
           _CourseRow(code: 'CS201', name: 'Data Structures', enrolled: 32),
@@ -23,11 +22,11 @@ class CoursesCard extends StatelessWidget {
     );
   }
 
-  Widget _cardWrapper({required Widget child}) {
+  Widget _cardWrapper({required BuildContext context, required Widget child}) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
       ),
       child: child,
@@ -50,10 +49,7 @@ class _CourseRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text('$code - $name'),
-        Text('$enrolled'),
-      ],
+      children: [Text('$code - $name'), Text('$enrolled')],
     );
   }
 }

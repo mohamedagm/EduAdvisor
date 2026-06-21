@@ -1,16 +1,13 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SecondOnBordaingView extends StatelessWidget {
   final VoidCallback onGetStarted;
 
-  const SecondOnBordaingView({
-    super.key,
-    required this.onGetStarted,
-  });
+  const SecondOnBordaingView({super.key, required this.onGetStarted});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +32,10 @@ class SecondOnBordaingView extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: SweepGradient(
-                  colors: [AppColors.bluePrimary, AppColors.purplePrimary],
+                  colors: [
+                    context.colorScheme.primary,
+                    context.colorScheme.secondary,
+                  ],
                 ),
               ),
               child: Padding(
@@ -60,7 +60,7 @@ class SecondOnBordaingView extends StatelessWidget {
         Text(
           'Track Your Progress',
           style: AppTextStyles.heading1_20b.copyWith(
-            color: AppColors.gray800,
+            color: context.themeColors.textPrimary,
           ),
         ),
         const SizedBox(height: 16),
@@ -70,7 +70,7 @@ class SecondOnBordaingView extends StatelessWidget {
             'Monitor your GPA, simulate grades, and plan your path to academic success',
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyInterMedium18.copyWith(
-              color: AppColors.gray600,
+              color: context.themeColors.textSecondary,
             ),
           ),
         ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:edu_advisor/core/api/dio_consumer.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/reset_password_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_state.dart';
@@ -79,13 +80,19 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
   void submitOtpVerification() {
     if (otpCode.length != otpLength) {
-      ScaffoldMessenger.of(
+      AppToast.warning(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Please enter full code")));
+        title: 'Incomplete code',
+        description: 'Please enter the complete 6-digit verification code.',
+      );
       return;
     }
 
     context.read<VerifyCodeCubit>().verifyOtp(
+      email: widget.email,
+      code: otpCode,
+      isFromForgotPassword: widget.isFromForgotPassword,
+    );
       email: widget.email,
       code: otpCode,
       isFromForgotPassword: widget.isFromForgotPassword,
@@ -162,6 +169,25 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   ),
                 );
               }
+              if (widget.isFromForgotPassword) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider(
+                      create: (_) => ResetPasswordCubit(
+                        resetPasswordRepo: ResetPasswordRepo(
+                          apiConsumer: DioConsumer(),
+                        ),
+                      ),
+                      child: NewPasswordScreen(
+                        role: widget.role,
+                        email: widget.email,
+                        token: state.response.data ?? '',
+                      ),
+                    ),
+                  ),
+                );
+              }
             }
           });
         }
@@ -176,8 +202,10 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         if (state is ResendOtpSuccess) {
           startTimer();
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Code sent successfully")),
+          AppToast.success(
+            context,
+            title: 'Code sent',
+            description: 'A new verification code was sent to your email.',
           );
         }
 
@@ -185,6 +213,11 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.failure.message)));
+          AppToast.error(
+            context,
+            title: 'Could not resend code',
+            description: state.failure.message,
+          );
         }
       },
       builder: (context, state) {
@@ -192,7 +225,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             state is VerifyOtpLoading || state is ResendOtpLoading;
 
         return Scaffold(
-          backgroundColor: AppColors.white,
+          backgroundColor: context.colorScheme.surface,
           body: Column(
             children: [
               const GradiantContainer(
@@ -225,6 +258,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                                 counterText: '',
                                 border: OutlineInputBorder(),
                               ),
+                              onChanged: (value) => onOtpChanged(index, value),
                               onChanged: (value) => onOtpChanged(index, value),
                             ),
                           );
@@ -263,3 +297,4 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     );
   }
 }
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class PerformanceCard extends StatelessWidget {
   const PerformanceCard({super.key});
@@ -6,45 +7,49 @@ class PerformanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _cardWrapper(
+      context: context,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Student Performance Overview',
             style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 14,
-              color: Color(0xFF1A1A2E),
+              color: context.themeColors.textPrimary,
             ),
           ),
           const SizedBox(height: 16),
 
           _gpaRow(
+            context: context,
             label: 'GPA ≥ 3.5',
             count: 15,
             total: 45,
-            color: const Color(0xFF4CAF50),
-            bg: const Color(0xFFE9F8EE),
+            color: context.themeColors.success,
+            bg: context.themeColors.successContainer,
           ),
 
           const SizedBox(height: 10),
 
           _gpaRow(
+            context: context,
             label: 'GPA 2.0 - 3.5',
             count: 25,
             total: 45,
-            color: const Color(0xFFFFA726),
-            bg: const Color(0xFFFFF4E5),
+            color: context.themeColors.warning,
+            bg: context.themeColors.warningContainer,
           ),
 
           const SizedBox(height: 10),
 
           _gpaRow(
+            context: context,
             label: 'GPA < 2.0',
             count: 5,
             total: 45,
-            color: const Color(0xFFEF5350),
-            bg: const Color(0xFFFFEEEE),
+            color: context.colorScheme.error,
+            bg: context.themeColors.dangerContainer,
           ),
         ],
       ),
@@ -52,6 +57,7 @@ class PerformanceCard extends StatelessWidget {
   }
 
   Widget _gpaRow({
+    required BuildContext context,
     required String label,
     required int count,
     required int total,
@@ -72,10 +78,10 @@ class PerformanceCard extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF2D2D3A),
+                color: context.themeColors.textPrimary,
               ),
             ),
           ),
@@ -83,7 +89,7 @@ class PerformanceCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.themeColors.card,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: color.withValues(alpha: 0.3)),
             ),
@@ -101,16 +107,16 @@ class PerformanceCard extends StatelessWidget {
     );
   }
 
-  Widget _cardWrapper({required Widget child}) {
+  Widget _cardWrapper({required BuildContext context, required Widget child}) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
+            color: context.themeColors.textPrimary.withValues(alpha: 0.06),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
