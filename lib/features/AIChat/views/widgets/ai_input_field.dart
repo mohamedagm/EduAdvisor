@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
@@ -36,7 +37,7 @@ class AiInputField extends StatelessWidget {
                   hintStyle: AppTextStyles.interRegular16.copyWith(
                     color: context.themeColors.textMuted,
                   ),
-                  hintText: "Ask me anything...",
+                  hintText: context.l10n.aiChatAskAnythingHint,
                   border: InputBorder.none,
                 ),
               ),

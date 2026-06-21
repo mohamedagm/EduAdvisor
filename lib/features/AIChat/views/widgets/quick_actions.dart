@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
@@ -9,10 +10,10 @@ class QuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final actions = [
-      "Recommend Courses",
-      "GPA Simulator",
-      "Boost My GPA",
-      "Study Plan",
+      context.l10n.aiChatQuickActionRecommendCourses,
+      context.l10n.aiChatQuickActionGpaSimulator,
+      context.l10n.aiChatQuickActionBoostMyGpa,
+      context.l10n.aiChatQuickActionStudyPlan,
     ];
 
     return Container(

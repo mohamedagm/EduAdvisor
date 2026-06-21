@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
@@ -12,7 +13,7 @@ class SearchTextFormField extends StatelessWidget {
     return TextFormField(
       onChanged: onChanged,
       decoration: InputDecoration(
-        hintText: 'Search courses...',
+        hintText: context.l10n.searchCoursesHint,
         hintStyle: AppTextStyles.bodyInterMedium14.copyWith(
           color: context.themeColors.textMuted,
         ),

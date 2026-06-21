@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
@@ -26,7 +27,7 @@ class HeaderAiChat extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "AI Assistant",
+                context.l10n.aiChatAssistantTitle,
                 style: AppTextStyles.heading3PoppinsReg16.copyWith(
                   color: AppColors.white,
                 ),
@@ -39,7 +40,7 @@ class HeaderAiChat extends StatelessWidget {
                   ),
                   SizedBox(width: 4),
                   Text(
-                    "Online",
+                    context.l10n.aiChatStatusOnline,
                     style: AppTextStyles.poppinsRegular14.copyWith(
                       color: AppColors.white,
                     ),

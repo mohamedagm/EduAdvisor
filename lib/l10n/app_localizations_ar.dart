@@ -299,6 +299,92 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get homeTab => 'الرئيسية';
+
+  @override
+  String get coursesTab => 'المقررات';
+
+  @override
+  String get aiChatTab => 'الدردشة الذكية';
+
+  @override
+  String get servicesTab => 'الخدمات';
+
+  @override
+  String get profileTab => 'الملف الشخصي';
+
+  @override
+  String get courseCatalogTitle => 'كتالوج المقررات';
+
+  @override
+  String get searchCoursesHint => 'ابحث عن المقررات...';
+
+  @override
+  String courseLevel(String level) {
+    return 'المستوى $level';
+  }
+
+  @override
+  String courseSemester(String semester) {
+    return 'الفصل الدراسي $semester';
+  }
+
+  @override
+  String get courseDescription => 'الوصف';
+
+  @override
+  String get academicPlacement => 'التصنيف الأكاديمي';
+
+  @override
+  String get specializations => 'التخصصات';
+
+  @override
+  String get semester => 'الفصل الدراسي';
+
+  @override
+  String courseAcademicPlacement(String level, String semester) {
+    return 'المستوى $level، الفصل الدراسي $semester.';
+  }
+
+  @override
+  String get courseCatalogEmptyMessage => 'لم يتم العثور على مقررات';
+
+  @override
+  String get aiChatUserDataUnavailableTitle => 'بيانات المستخدم غير متوفرة';
+
+  @override
+  String get aiChatUserDataLoadingDescription =>
+      'يرجى الانتظار حتى يتم تحميل بيانات ملفك الشخصي.';
+
+  @override
+  String get aiChatStudentIdUnavailableTitle => 'معرّف الطالب غير متوفر';
+
+  @override
+  String get aiChatStudentIdMissingDescription =>
+      'رمز الطالب مفقود من ملفك الشخصي.';
+
+  @override
+  String get aiChatAssistantTitle => 'المساعد الذكي';
+
+  @override
+  String get aiChatStatusOnline => 'متصل';
+
+  @override
+  String get aiChatAskAnythingHint => 'اطرح علي أي سؤال...';
+
+  @override
+  String get aiChatQuickActionRecommendCourses => 'اقتراح مقررات';
+
+  @override
+  String get aiChatQuickActionGpaSimulator => 'محاكاة المعدل';
+
+  @override
+  String get aiChatQuickActionBoostMyGpa => 'رفع معدلي';
+
+  @override
+  String get aiChatQuickActionStudyPlan => 'خطة دراسية';
+
+  @override
   String get nationalId => 'الرقم القومي';
 
   @override

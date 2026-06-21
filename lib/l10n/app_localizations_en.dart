@@ -300,6 +300,92 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get homeTab => 'Home';
+
+  @override
+  String get coursesTab => 'Courses';
+
+  @override
+  String get aiChatTab => 'AI Chat';
+
+  @override
+  String get servicesTab => 'Services';
+
+  @override
+  String get profileTab => 'Profile';
+
+  @override
+  String get courseCatalogTitle => 'Course Catalog';
+
+  @override
+  String get searchCoursesHint => 'Search courses...';
+
+  @override
+  String courseLevel(String level) {
+    return 'Level $level';
+  }
+
+  @override
+  String courseSemester(String semester) {
+    return 'Semester $semester';
+  }
+
+  @override
+  String get courseDescription => 'Description';
+
+  @override
+  String get academicPlacement => 'Academic Placement';
+
+  @override
+  String get specializations => 'Specializations';
+
+  @override
+  String get semester => 'Semester';
+
+  @override
+  String courseAcademicPlacement(String level, String semester) {
+    return 'Level $level, semester $semester.';
+  }
+
+  @override
+  String get courseCatalogEmptyMessage => 'No courses found';
+
+  @override
+  String get aiChatUserDataUnavailableTitle => 'User data unavailable';
+
+  @override
+  String get aiChatUserDataLoadingDescription =>
+      'Please wait for your profile data to load.';
+
+  @override
+  String get aiChatStudentIdUnavailableTitle => 'Student ID unavailable';
+
+  @override
+  String get aiChatStudentIdMissingDescription =>
+      'Your student code is missing from your profile.';
+
+  @override
+  String get aiChatAssistantTitle => 'AI Assistant';
+
+  @override
+  String get aiChatStatusOnline => 'Online';
+
+  @override
+  String get aiChatAskAnythingHint => 'Ask me anything...';
+
+  @override
+  String get aiChatQuickActionRecommendCourses => 'Recommend Courses';
+
+  @override
+  String get aiChatQuickActionGpaSimulator => 'GPA Simulator';
+
+  @override
+  String get aiChatQuickActionBoostMyGpa => 'Boost My GPA';
+
+  @override
+  String get aiChatQuickActionStudyPlan => 'Study Plan';
+
+  @override
   String get nationalId => 'National ID';
 
   @override

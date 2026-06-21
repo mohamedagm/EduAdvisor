@@ -171,6 +171,51 @@
       "credits": {"type": "String"}
     }
   },
+  "homeTab": "Home",
+  "coursesTab": "Courses",
+  "aiChatTab": "AI Chat",
+  "servicesTab": "Services",
+  "profileTab": "Profile",
+  "courseCatalogTitle": "Course Catalog",
+  "searchCoursesHint": "Search courses...",
+  "courseLevel": "Level {level}",
+  "@courseLevel": {
+    "description": "Course level label",
+    "placeholders": {
+      "level": {"type": "String"}
+    }
+  },
+  "courseSemester": "Semester {semester}",
+  "@courseSemester": {
+    "description": "Course semester label",
+    "placeholders": {
+      "semester": {"type": "String"}
+    }
+  },
+  "courseDescription": "Description",
+  "academicPlacement": "Academic Placement",
+  "specializations": "Specializations",
+  "semester": "Semester",
+  "courseAcademicPlacement": "Level {level}, semester {semester}.",
+  "@courseAcademicPlacement": {
+    "description": "Academic placement summary for course details",
+    "placeholders": {
+      "level": {"type": "String"},
+      "semester": {"type": "String"}
+    }
+  },
+  "courseCatalogEmptyMessage": "No courses found",
+  "aiChatUserDataUnavailableTitle": "User data unavailable",
+  "aiChatUserDataLoadingDescription": "Please wait for your profile data to load.",
+  "aiChatStudentIdUnavailableTitle": "Student ID unavailable",
+  "aiChatStudentIdMissingDescription": "Your student code is missing from your profile.",
+  "aiChatAssistantTitle": "AI Assistant",
+  "aiChatStatusOnline": "Online",
+  "aiChatAskAnythingHint": "Ask me anything...",
+  "aiChatQuickActionRecommendCourses": "Recommend Courses",
+  "aiChatQuickActionGpaSimulator": "GPA Simulator",
+  "aiChatQuickActionBoostMyGpa": "Boost My GPA",
+  "aiChatQuickActionStudyPlan": "Study Plan",
   "nationalId": "National ID",
   "enterNationalId": "Enter your national ID",
   "signingUp": "Signing up...",

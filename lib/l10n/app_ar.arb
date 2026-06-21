@@ -139,6 +139,51 @@
       "credits": {"type": "String"}
     }
   },
+  "homeTab": "الرئيسية",
+  "coursesTab": "المقررات",
+  "aiChatTab": "الدردشة الذكية",
+  "servicesTab": "الخدمات",
+  "profileTab": "الملف الشخصي",
+  "courseCatalogTitle": "كتالوج المقررات",
+  "searchCoursesHint": "ابحث عن المقررات...",
+  "courseLevel": "المستوى {level}",
+  "@courseLevel": {
+    "description": "Course level label",
+    "placeholders": {
+      "level": {"type": "String"}
+    }
+  },
+  "courseSemester": "الفصل الدراسي {semester}",
+  "@courseSemester": {
+    "description": "Course semester label",
+    "placeholders": {
+      "semester": {"type": "String"}
+    }
+  },
+  "courseDescription": "الوصف",
+  "academicPlacement": "التصنيف الأكاديمي",
+  "specializations": "التخصصات",
+  "semester": "الفصل الدراسي",
+  "courseAcademicPlacement": "المستوى {level}، الفصل الدراسي {semester}.",
+  "@courseAcademicPlacement": {
+    "description": "Academic placement summary for course details",
+    "placeholders": {
+      "level": {"type": "String"},
+      "semester": {"type": "String"}
+    }
+  },
+  "courseCatalogEmptyMessage": "لم يتم العثور على مقررات",
+  "aiChatUserDataUnavailableTitle": "بيانات المستخدم غير متوفرة",
+  "aiChatUserDataLoadingDescription": "يرجى الانتظار حتى يتم تحميل بيانات ملفك الشخصي.",
+  "aiChatStudentIdUnavailableTitle": "معرّف الطالب غير متوفر",
+  "aiChatStudentIdMissingDescription": "رمز الطالب مفقود من ملفك الشخصي.",
+  "aiChatAssistantTitle": "المساعد الذكي",
+  "aiChatStatusOnline": "متصل",
+  "aiChatAskAnythingHint": "اطرح علي أي سؤال...",
+  "aiChatQuickActionRecommendCourses": "اقتراح مقررات",
+  "aiChatQuickActionGpaSimulator": "محاكاة المعدل",
+  "aiChatQuickActionBoostMyGpa": "رفع معدلي",
+  "aiChatQuickActionStudyPlan": "خطة دراسية",
   "nationalId": "الرقم القومي",
   "enterNationalId": "أدخل الرقم القومي",
   "signingUp": "جارٍ إنشاء الحساب...",

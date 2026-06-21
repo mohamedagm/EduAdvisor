@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/CourseCatalog/data/models/course_model.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/tag.dart';
@@ -84,7 +85,7 @@ class CourseDetailsSheet extends StatelessWidget {
 
               _SectionTitle(
                 icon: Icons.menu_book_outlined,
-                label: 'Description',
+                label: context.l10n.courseDescription,
               ),
 
               const SizedBox(height: 6),
@@ -100,14 +101,17 @@ class CourseDetailsSheet extends StatelessWidget {
 
               _SectionTitle(
                 icon: Icons.school_outlined,
-                label: 'Academic Placement',
+                label: context.l10n.academicPlacement,
                 iconColor: context.themeColors.warning,
               ),
 
               const SizedBox(height: 6),
 
               Text(
-                'Level ${course.standardLevel}, semester ${course.standardSemester}.',
+                context.l10n.courseAcademicPlacement(
+                  course.standardLevel.toString(),
+                  course.standardSemester.toString(),
+                ),
                 style: AppTextStyles.interRegular16.copyWith(
                   color: context.themeColors.textSecondary,
                 ),
@@ -117,7 +121,7 @@ class CourseDetailsSheet extends StatelessWidget {
 
               _SectionTitle(
                 icon: Icons.account_tree_outlined,
-                label: 'Department',
+                label: context.l10n.department,
                 iconColor: context.themeColors.success,
               ),
 
@@ -133,7 +137,7 @@ class CourseDetailsSheet extends StatelessWidget {
               const SizedBox(height: 16),
 
               Text(
-                'Specializations',
+                context.l10n.specializations,
                 style: AppTextStyles.heading3PoppinsReg16.copyWith(
                   color: context.themeColors.textPrimary,
                 ),
@@ -156,13 +160,13 @@ class CourseDetailsSheet extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _InfoTile(
-                      title: 'Credits',
+                      title: context.l10n.creditsLabel,
                       value: course.displayCreditHours,
                     ),
                   ),
                   Expanded(
                     child: _InfoTile(
-                      title: 'Semester',
+                      title: context.l10n.semester,
                       value: course.standardSemester.toString(),
                     ),
                   ),

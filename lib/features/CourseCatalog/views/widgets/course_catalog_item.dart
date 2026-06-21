@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/features/CourseCatalog/data/models/course_model.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/tag.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class CourseCatalogItem extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      '${course.displayCreditHours} Credits',
+                      context.l10n.courseCredits(course.displayCreditHours),
                       style: AppTextStyles.bodyInterMedium14,
                     ),
                     const SizedBox(width: 16),
@@ -107,7 +108,7 @@ class CourseCatalogItem extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'Level ${course.standardLevel}',
+                      context.l10n.courseLevel(course.standardLevel.toString()),
                       style: AppTextStyles.bodyInterMedium14,
                     ),
                   ],
@@ -118,7 +119,11 @@ class CourseCatalogItem extends StatelessWidget {
                   runSpacing: 8,
                   children: [
                     Tag(label: course.displayDepartment),
-                    Tag(label: 'Semester ${course.standardSemester}'),
+                    Tag(
+                      label: context.l10n.courseSemester(
+                        course.standardSemester.toString(),
+                      ),
+                    ),
                   ],
                 ),
               ],

@@ -638,6 +638,162 @@ abstract class AppLocalizations {
   /// **'{credits} Credits'**
   String courseCredits(String credits);
 
+  /// No description provided for @homeTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get homeTab;
+
+  /// No description provided for @coursesTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get coursesTab;
+
+  /// No description provided for @aiChatTab.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Chat'**
+  String get aiChatTab;
+
+  /// No description provided for @servicesTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get servicesTab;
+
+  /// No description provided for @profileTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileTab;
+
+  /// No description provided for @courseCatalogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Catalog'**
+  String get courseCatalogTitle;
+
+  /// No description provided for @searchCoursesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search courses...'**
+  String get searchCoursesHint;
+
+  /// Course level label
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}'**
+  String courseLevel(String level);
+
+  /// Course semester label
+  ///
+  /// In en, this message translates to:
+  /// **'Semester {semester}'**
+  String courseSemester(String semester);
+
+  /// No description provided for @courseDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get courseDescription;
+
+  /// No description provided for @academicPlacement.
+  ///
+  /// In en, this message translates to:
+  /// **'Academic Placement'**
+  String get academicPlacement;
+
+  /// No description provided for @specializations.
+  ///
+  /// In en, this message translates to:
+  /// **'Specializations'**
+  String get specializations;
+
+  /// No description provided for @semester.
+  ///
+  /// In en, this message translates to:
+  /// **'Semester'**
+  String get semester;
+
+  /// Academic placement summary for course details
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}, semester {semester}.'**
+  String courseAcademicPlacement(String level, String semester);
+
+  /// No description provided for @courseCatalogEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No courses found'**
+  String get courseCatalogEmptyMessage;
+
+  /// No description provided for @aiChatUserDataUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'User data unavailable'**
+  String get aiChatUserDataUnavailableTitle;
+
+  /// No description provided for @aiChatUserDataLoadingDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait for your profile data to load.'**
+  String get aiChatUserDataLoadingDescription;
+
+  /// No description provided for @aiChatStudentIdUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Student ID unavailable'**
+  String get aiChatStudentIdUnavailableTitle;
+
+  /// No description provided for @aiChatStudentIdMissingDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your student code is missing from your profile.'**
+  String get aiChatStudentIdMissingDescription;
+
+  /// No description provided for @aiChatAssistantTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Assistant'**
+  String get aiChatAssistantTitle;
+
+  /// No description provided for @aiChatStatusOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get aiChatStatusOnline;
+
+  /// No description provided for @aiChatAskAnythingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask me anything...'**
+  String get aiChatAskAnythingHint;
+
+  /// No description provided for @aiChatQuickActionRecommendCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommend Courses'**
+  String get aiChatQuickActionRecommendCourses;
+
+  /// No description provided for @aiChatQuickActionGpaSimulator.
+  ///
+  /// In en, this message translates to:
+  /// **'GPA Simulator'**
+  String get aiChatQuickActionGpaSimulator;
+
+  /// No description provided for @aiChatQuickActionBoostMyGpa.
+  ///
+  /// In en, this message translates to:
+  /// **'Boost My GPA'**
+  String get aiChatQuickActionBoostMyGpa;
+
+  /// No description provided for @aiChatQuickActionStudyPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Study Plan'**
+  String get aiChatQuickActionStudyPlan;
+
   /// No description provided for @nationalId.
   ///
   /// In en, this message translates to:

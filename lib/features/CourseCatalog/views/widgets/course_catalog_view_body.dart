@@ -12,6 +12,7 @@ import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_catalog_
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/search_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 class CourseCatalogViewBody extends StatefulWidget {
   const CourseCatalogViewBody({super.key});
@@ -55,7 +56,7 @@ class _CourseCatalogViewBodyState extends State<CourseCatalogViewBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Course Catalog',
+                  context.l10n.courseCatalogTitle,
                   style: AppTextStyles.heading1_20b.copyWith(
                     color: AppColors.white,
                   ),
@@ -121,7 +122,7 @@ class _CourseCatalogError extends StatelessWidget {
           const SizedBox(height: 12),
           TextButton(
             onPressed: context.read<CourseCatalogCubit>().loadCourses,
-            child: const Text('Try again'),
+            child: Text(context.l10n.retry),
           ),
         ],
       ),

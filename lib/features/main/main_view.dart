@@ -9,6 +9,7 @@ import 'package:edu_advisor/features/user/data/repo/user_repo.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class MainView extends StatefulWidget {
@@ -72,13 +73,13 @@ class _MainViewState extends State<MainView> {
                 icon: Icon(
                   currentIndex == 0 ? Icons.home : Icons.home_outlined,
                 ),
-                label: "Home",
+                label: context.l10n.homeTab,
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   currentIndex == 1 ? Icons.book : Icons.book_outlined,
                 ),
-                label: "Courses",
+                label: context.l10n.coursesTab,
               ),
               BottomNavigationBarItem(
                 icon: Icon(
@@ -86,7 +87,7 @@ class _MainViewState extends State<MainView> {
                       ? Icons.chat_bubble
                       : Icons.chat_bubble_outline,
                 ),
-                label: "AI Chat",
+                label: context.l10n.aiChatTab,
               ),
               BottomNavigationBarItem(
                 icon: Icon(
@@ -94,13 +95,13 @@ class _MainViewState extends State<MainView> {
                       ? Icons.miscellaneous_services
                       : Icons.miscellaneous_services_outlined,
                 ),
-                label: "Services",
+                label: context.l10n.servicesTab,
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   currentIndex == 4 ? Icons.person : Icons.person_outline,
                 ),
-                label: "Profile",
+                label: context.l10n.profileTab,
               ),
             ],
           ),

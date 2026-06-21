@@ -10,6 +10,7 @@ import 'package:edu_advisor/features/AIChat/views/widgets/header_ai_chat.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/message_bubble.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/quick_actions.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,8 +55,8 @@ class _AIChatViewBodyState extends State<_AIChatViewBody> {
     if (userState is! CurrentUserLoaded) {
       AppToast.error(
         context,
-        title: 'User data unavailable',
-        description: 'Please wait for your profile data to load.',
+        title: context.l10n.aiChatUserDataUnavailableTitle,
+        description: context.l10n.aiChatUserDataLoadingDescription,
       );
       return;
     }
@@ -65,8 +66,8 @@ class _AIChatViewBodyState extends State<_AIChatViewBody> {
     if (studentId.isEmpty) {
       AppToast.error(
         context,
-        title: 'Student ID unavailable',
-        description: 'Your student code is missing from your profile.',
+        title: context.l10n.aiChatStudentIdUnavailableTitle,
+        description: context.l10n.aiChatStudentIdMissingDescription,
       );
       return;
     }
