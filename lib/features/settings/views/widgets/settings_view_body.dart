@@ -1,5 +1,5 @@
-import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/core/routing/session_navigation.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
@@ -103,7 +103,7 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
         title: context.l10n.loggedOut,
         description: context.l10n.loggedOutDescription,
       );
-      context.go(AppRoutes.chooseUserRole);
+      SessionNavigation.signedOut(context);
     }
 
     if (state is LogoutFailure) {
@@ -112,7 +112,7 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
         title: context.l10n.loggedOutLocally,
         description: context.l10n.loggedOutLocallyDescription,
       );
-      context.go(AppRoutes.chooseUserRole);
+      SessionNavigation.signedOut(context);
     }
   }
 }

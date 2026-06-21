@@ -1,5 +1,5 @@
 import 'package:edu_advisor/core/di/service_locator.dart';
-import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/core/routing/session_navigation.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
@@ -12,7 +12,6 @@ import 'package:edu_advisor/features/user/manager/current_user_cubit/current_use
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class AdvisorHeader extends StatelessWidget {
   final int? studentCount;
@@ -52,7 +51,7 @@ class AdvisorHeader extends StatelessWidget {
         title: 'Logged out',
         description: state.response.message,
       );
-      context.go(AppRoutes.chooseUserRole);
+      SessionNavigation.signedOut(context);
     }
 
     if (state is LogoutFailure) {
@@ -61,7 +60,7 @@ class AdvisorHeader extends StatelessWidget {
         title: 'Logged out locally',
         description: state.failure.message,
       );
-      context.go(AppRoutes.chooseUserRole);
+      SessionNavigation.signedOut(context);
     }
   }
 }

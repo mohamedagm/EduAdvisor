@@ -1,9 +1,8 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
-import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/core/routing/session_navigation.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
-import 'package:edu_advisor/features/advisor_nav/advisor_home_screen.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/departments_cubit.dart';
@@ -13,7 +12,6 @@ import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/departments_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/verify_code_repo.dart';
-import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/login/views/forgot_password.dart';
 import 'package:edu_advisor/features/auth/login/views/verfy_code_screen.dart';
 import 'package:edu_advisor/features/auth/signup/views/advisors_signup.dart';
@@ -23,7 +21,6 @@ import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AdvisorLoginScreen extends StatefulWidget {
@@ -195,10 +192,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
         title: context.l10n.loginSuccessful,
         description: context.l10n.welcomeBackName(state.response.user.fullName),
       );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const AdvisorProfile()),
-      );
+      SessionNavigation.advisorSignedIn(context);
     }
 
     if (state is LoginFailure) {

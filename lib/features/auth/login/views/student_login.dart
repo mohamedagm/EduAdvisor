@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/core/routing/session_navigation.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
@@ -15,7 +16,6 @@ import 'package:edu_advisor/features/auth/login/views/verfy_code_screen.dart';
 import 'package:edu_advisor/features/auth/signup/views/signup_view.dart';
 import 'package:edu_advisor/features/auth/widgets/auth_card.dart';
 import 'package:edu_advisor/features/auth/widgets/login_form.dart';
-import 'package:edu_advisor/features/main/main_view.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -176,10 +176,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
         description: context.l10n.welcomeBackName(state.response.user.fullName),
       );
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => MainView()),
-      );
+      SessionNavigation.studentSignedIn(context);
     }
 
     if (state is LoginFailure) {

@@ -1,14 +1,11 @@
 import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/features/advisor_nav/advisor_home_screen.dart';
+import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/login/views/advisor_login.dart';
 import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/login/views/choose_user_role.dart';
-import 'package:edu_advisor/features/auth/login/views/forgot_password.dart';
 import 'package:edu_advisor/features/auth/login/views/student_login.dart';
-import 'package:edu_advisor/features/auth/login/views/student_profile.dart';
-import 'package:edu_advisor/features/auth/login/views/verfy_code_screen.dart';
-import 'package:edu_advisor/features/auth/signup/views/signup_view.dart';
 import 'package:edu_advisor/features/main/main_view.dart';
 import 'package:edu_advisor/features/onbording/onboarding_view.dart';
 import 'package:edu_advisor/features/onbording/splash_view.dart';
@@ -19,7 +16,6 @@ import 'package:edu_advisor/features/services/views/course_recommendations_view.
 import 'package:edu_advisor/features/services/views/course_registration_view.dart';
 import 'package:edu_advisor/features/services/views/registration_status_view.dart';
 import 'package:edu_advisor/features/settings/views/settings_view.dart';
-import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/features/user/data/repo/user_repo.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:flutter/material.dart';
@@ -41,17 +37,16 @@ final GoRouter appRouter = GoRouter(
       path: AppRoutes.chooseUserRole,
       builder: (context, state) => const ChooseUserRole(),
     ),
-    // GoRoute(
-    //   path: AppRoutes.studentLogin,
-    //   builder: (context, state) => const StudentLoginScreen(),
-    // ),
-    //##########################################################
-    //Add role
-    // GoRoute(
-    //   path: AppRoutes.advisorLogin,
-    //   builder: (context, state) => const AdvisorLoginScreen(),
-    // ),
-    //##########################################################
+    GoRoute(
+      path: AppRoutes.studentLogin,
+      builder: (context, state) =>
+          const StudentLoginScreen(registerRole: RegisterRole.student),
+    ),
+    GoRoute(
+      path: AppRoutes.advisorLogin,
+      builder: (context, state) =>
+          const AdvisorLoginScreen(registerRole: RegisterRole.advisor),
+    ),
     // GoRoute(
     //   path: AppRoutes.signup,
     //   builder: (context, state) {
