@@ -1,6 +1,8 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class CourseCard extends StatelessWidget {
   final String imageUrl;
@@ -23,7 +25,7 @@ class CourseCard extends StatelessWidget {
     return Container(
       width: 220,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -37,9 +39,12 @@ class CourseCard extends StatelessWidget {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(16),
                   ),
-                  child: Image.network(
-                    imageUrl,
-                    fit: BoxFit.cover,
+                  child: AppShimmerNetworkImage(
+                    imageUrl: imageUrl,
+                    errorWidget: ColoredBox(
+                      color: context.themeColors.mutedSurface,
+                      child: Center(child: Icon(Icons.school_outlined)),
+                    ),
                   ),
                 ),
               ),
@@ -58,16 +63,16 @@ class CourseCard extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.star_border_rounded,
                         size: 13,
-                        color: AppColors.purplePrimary,
+                        color: context.colorScheme.secondary,
                       ),
                       const SizedBox(width: 3),
                       Text(
                         progressPercentage,
                         style: AppTextStyles.bodyInterMedium14.copyWith(
-                          color: AppColors.purplePrimary,
+                          color: context.colorScheme.secondary,
                         ),
                       ),
                     ],
@@ -86,8 +91,10 @@ class CourseCard extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.interRegular16.copyWith(
-                    color: AppColors.gray600,
+                    color: context.themeColors.textSecondary,
                   ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,14 +105,14 @@ class CourseCard extends StatelessWidget {
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.themeColors.card,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.gray200),
+                        border: Border.all(color: context.themeColors.border),
                       ),
                       child: Text(
                         credits,
                         style: AppTextStyles.interRegular16.copyWith(
-                          color: AppColors.gray900,
+                          color: context.themeColors.textPrimary,
                         ),
                       ),
                     ),
@@ -113,7 +120,7 @@ class CourseCard extends StatelessWidget {
                     Icon(
                       Icons.chevron_right_rounded,
                       size: 22,
-                      color: AppColors.gray600,
+                      color: context.themeColors.textSecondary,
                     ),
                   ],
                 ),

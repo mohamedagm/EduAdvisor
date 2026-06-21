@@ -2,15 +2,18 @@ import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AiInputField extends StatelessWidget {
   const AiInputField({
     super.key,
     required this.controller,
     required this.onSend,
+    this.isLoading = false,
   });
   final TextEditingController controller;
   final VoidCallback onSend;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +25,16 @@ class AiInputField extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
-                color: AppColors.gray100,
+                color: context.themeColors.mutedSurface,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: TextField(
                 controller: controller,
+                enabled: !isLoading,
+                onSubmitted: (_) => onSend(),
                 decoration: InputDecoration(
                   hintStyle: AppTextStyles.interRegular16.copyWith(
-                    color: AppColors.gray400,
+                    color: context.themeColors.textMuted,
                   ),
                   hintText: "Ask me anything...",
                   border: InputBorder.none,
@@ -39,14 +44,24 @@ class AiInputField extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           GestureDetector(
-            onTap: onSend,
+            onTap: isLoading ? null : onSend,
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                gradient: AppGradients.ai,
+                color: isLoading ? context.colorScheme.outline : null,
+                gradient: isLoading ? null : AppGradients.ai,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(Icons.send, color: Colors.white),
+              child: isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppColors.white,
+                      ),
+                    )
+                  : const Icon(Icons.send, color: Colors.white),
             ),
           ),
         ],

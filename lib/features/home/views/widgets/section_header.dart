@@ -1,6 +1,6 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SectionHeader extends StatelessWidget {
   const SectionHeader({super.key});
@@ -13,13 +13,13 @@ class SectionHeader extends StatelessWidget {
         Text(
           'Recommended Courses',
           style: AppTextStyles.heading3PoppinsReg16.copyWith(
-            color: AppColors.gray800,
+            color: context.themeColors.textPrimary,
           ),
         ),
         Text(
           'View All',
           style: AppTextStyles.poppinsRegular14.copyWith(
-            color: AppColors.infoBlue,
+            color: context.themeColors.info,
           ),
         ),
       ],

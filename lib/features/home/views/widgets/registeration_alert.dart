@@ -1,6 +1,6 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class RegisterationAlert extends StatelessWidget {
   const RegisterationAlert({super.key});
@@ -10,12 +10,14 @@ class RegisterationAlert extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.blueLight,
+        color: context.themeColors.infoContainer,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.infoBlue.withValues(alpha: 0.3)),
+        border: Border.all(
+          color: context.themeColors.info.withValues(alpha: 0.3),
+        ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.infoBlue.withValues(alpha: 0.1),
+            color: context.themeColors.info.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -30,10 +32,10 @@ class RegisterationAlert extends StatelessWidget {
             width: 48,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.blueLight,
+              color: context.themeColors.infoContainer,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.calendar_month, color: AppColors.infoBlue),
+            child: Icon(Icons.calendar_month, color: context.themeColors.info),
           ),
 
           Expanded(
@@ -43,14 +45,14 @@ class RegisterationAlert extends StatelessWidget {
                 Text(
                   'Registration Alert',
                   style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                    color: AppColors.gray800,
+                    color: context.themeColors.textPrimary,
                   ),
                 ),
                 SizedBox(height: 4),
                 Text(
                   'Spring 2025 course registration opens in 3 days. Check your saved schedule.',
                   style: AppTextStyles.poppinsRegular14.copyWith(
-                    color: AppColors.gray600,
+                    color: context.themeColors.textSecondary,
                   ),
                 ),
               ],

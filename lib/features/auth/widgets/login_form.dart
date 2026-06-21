@@ -1,6 +1,6 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -33,7 +33,7 @@ class _LoginFormState extends State<LoginForm> {
               Text(
                 'Email',
                 style: AppTextStyles.bodyInterMedium18.copyWith(
-                  color: AppColors.gray900,
+                  color: context.themeColors.textPrimary,
                 ),
               ),
               TextFormField(
@@ -41,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.email),
                   filled: true,
-                  fillColor: AppColors.gray100,
+                  fillColor: context.themeColors.mutedSurface,
                   contentPadding: const EdgeInsets.symmetric(
                     vertical: 16,
                     horizontal: 16,
@@ -57,8 +57,8 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                      color: AppColors.gray300,
+                    borderSide: BorderSide(
+                      color: context.colorScheme.outline,
                       width: 1.5,
                     ),
                   ),
@@ -82,7 +82,7 @@ class _LoginFormState extends State<LoginForm> {
               Text(
                 'Password',
                 style: AppTextStyles.bodyInterMedium18.copyWith(
-                  color: AppColors.gray900,
+                  color: context.themeColors.textPrimary,
                 ),
               ),
               TextFormField(
@@ -101,7 +101,7 @@ class _LoginFormState extends State<LoginForm> {
                     },
                   ),
                   filled: true,
-                  fillColor: AppColors.gray100,
+                  fillColor: context.themeColors.mutedSurface,
                   hintText: 'Password',
                   contentPadding: const EdgeInsets.symmetric(
                     vertical: 16,
@@ -117,8 +117,8 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                      color: AppColors.gray300,
+                    borderSide: BorderSide(
+                      color: context.colorScheme.outline,
                       width: 1.5,
                     ),
                   ),

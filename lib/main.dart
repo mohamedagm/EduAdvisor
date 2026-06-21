@@ -1,27 +1,48 @@
-import 'package:device_preview/device_preview.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/features/onbording/splash_view.dart';
+import 'package:edu_advisor/core/routing/app_router.dart';
+import 'package:edu_advisor/core/theme/app_theme.dart';
+import 'package:edu_advisor/core/theme/theme_cubit.dart';
+import 'package:edu_advisor/core/theme/theme_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: AppColors.white,      statusBarIconBrightness: Brightness.dark,
-    ),
-  );
-
-  runApp(DevicePreview(enabled: false, builder: (context) => const MainApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  final preferences = await SharedPreferences.getInstance();
+  runApp(MainApp(themePreferences: ThemePreferences(preferences)));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  const MainApp({required this.themePreferences, super.key});
+
+  final ThemePreferences themePreferences;
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashView(),
+    return BlocProvider(
+      create: (_) => ThemeCubit(preferences: themePreferences),
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeMode) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: appRouter,
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: themeMode,
+            themeAnimationDuration: const Duration(milliseconds: 250),
+            themeAnimationCurve: Curves.easeOut,
+            builder: (context, child) {
+              final brightness = Theme.of(context).brightness;
+              return AnnotatedRegion<SystemUiOverlayStyle>(
+                value: AppTheme.systemUiOverlayStyle(brightness),
+                child: child ?? const SizedBox.shrink(),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

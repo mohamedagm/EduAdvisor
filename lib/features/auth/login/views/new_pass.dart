@@ -1,5 +1,5 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/reset_password_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/reset_password_state.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
@@ -10,6 +10,7 @@ import 'package:edu_advisor/features/widgets/custom_text_button.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class NewPasswordScreen extends StatefulWidget {
   final RegisterRole role;
@@ -29,7 +30,8 @@ class NewPasswordScreen extends StatefulWidget {
 
 class _NewPasswordScreenState extends State<NewPasswordScreen> {
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -48,8 +50,10 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     return BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
       listener: (context, state) {
         if (state is ResetPasswordSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
+          AppToast.success(
+            context,
+            title: 'Password updated',
+            description: state.message,
           );
 
           Future.delayed(const Duration(seconds: 1), () {
@@ -76,8 +80,10 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
         }
 
         if (state is ResetPasswordFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage)),
+          AppToast.error(
+            context,
+            title: 'Password reset failed',
+            description: state.errorMessage,
           );
         }
       },
@@ -101,16 +107,16 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                       right: width * 0.03,
                       left: width * 0.03,
                     ),
-                    constraints: BoxConstraints(
-                      minHeight: height * 0.35,
-                    ),
+                    constraints: BoxConstraints(minHeight: height * 0.35),
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
-                      color: AppColors.white,
+                      color: context.themeColors.card,
                       borderRadius: const BorderRadius.all(Radius.circular(30)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.1),
+                          color: context.themeColors.textPrimary.withValues(
+                            alpha: 0.1,
+                          ),
                           blurRadius: 10,
                           offset: const Offset(0, -3),
                         ),
@@ -137,7 +143,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                             hintText: "Enter your new password",
                             prefixIcon: const Icon(Icons.lock),
                             filled: true,
-                            fillColor: AppColors.gray400.withValues(alpha: 0.1),
+                            fillColor: context.themeColors.textMuted.withValues(
+                              alpha: 0.1,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide.none,
@@ -165,7 +173,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                             hintText: "Confirm new password",
                             prefixIcon: const Icon(Icons.lock_reset),
                             filled: true,
-                            fillColor: AppColors.gray400.withValues(alpha: 0.1),
+                            fillColor: context.themeColors.textMuted.withValues(
+                              alpha: 0.1,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide.none,
@@ -176,7 +186,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                         const SizedBox(height: 24),
 
                         GradientElevatedButton(
-                          buttonText: isLoading ? 'Loading...' : 'Reset Password',
+                          buttonText: isLoading
+                              ? 'Loading...'
+                              : 'Reset Password',
                           onPressed: isLoading
                               ? () {}
                               : () {
@@ -202,7 +214,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                             Text(
                               "Remember your password? ",
                               style: AppTextStyles.bodyInterMedium14.copyWith(
-                                color: AppColors.gray600,
+                                color: context.themeColors.textSecondary,
                               ),
                             ),
                             CustomTextButton(

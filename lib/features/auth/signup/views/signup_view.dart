@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
@@ -20,6 +21,7 @@ import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:edu_advisor/valdations/valditors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key, required this.registerRole});
@@ -82,9 +84,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         'Failed to load departments',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: context.colorScheme.error),
                       ),
                       const SizedBox(height: 12),
                       ElevatedButton(
@@ -114,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             margin: const EdgeInsets.symmetric(horizontal: 24),
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: context.themeColors.card,
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: const [
                                 BoxShadow(
@@ -296,6 +298,18 @@ class _SignupScreenState extends State<SignupScreen> {
         profileImage: profileImageFile,
       ),
     );
+      RegisterStudentRequestModel(
+        firstName: nameController.text.trim(),
+        lastName: lastNameController.text.trim(),
+        email: emailController.text.trim(),
+        studentCode: studentCodeController.text.trim(),
+        departmentId: selectedDepartmentId ?? '',
+        nationalId: idController.text.trim(),
+        password: passwordController.text,
+        confirmPassword: confirmPasswordController.text,
+        profileImage: profileImageFile,
+      ),
+    );
   }
 
   Widget _buildField({
@@ -360,3 +374,4 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
+

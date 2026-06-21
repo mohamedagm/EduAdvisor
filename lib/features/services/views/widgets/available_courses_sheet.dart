@@ -1,24 +1,29 @@
+import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_shimmer.dart';
+import 'package:edu_advisor/features/services/data/models/available_course_model.dart';
+import 'package:edu_advisor/features/services/manager/course_registration_cubit/course_registration_cubit.dart';
+import 'package:edu_advisor/features/services/manager/course_registration_cubit/course_registration_state.dart';
+import 'package:edu_advisor/features/services/views/widgets/course_icon_widget.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../models/course.dart';
-import 'course_icon_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AvailableCoursesSheet extends StatelessWidget {
-  final Set<String> selectedCourseIds;
-  final Function(Course) onCourseToggled;
-
   const AvailableCoursesSheet({
     super.key,
     required this.selectedCourseIds,
     required this.onCourseToggled,
   });
 
+  final Set<String> selectedCourseIds;
+  final ValueChanged<AvailableCourseModel> onCourseToggled;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.white,
+      decoration: BoxDecoration(
+        color: context.themeColors.card,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       padding: const EdgeInsets.all(24),
@@ -32,12 +37,12 @@ class AvailableCoursesSheet extends StatelessWidget {
               Text(
                 'Available Courses',
                 style: AppTextStyles.heading1_20b.copyWith(
-                  color: AppColors.gray900,
+                  color: context.themeColors.textPrimary,
                 ),
               ),
               IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.close, color: AppColors.gray500),
+                onPressed: () => context.pop(),
+                icon: Icon(Icons.close, color: context.themeColors.textMuted),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
@@ -45,70 +50,200 @@ class AvailableCoursesSheet extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Expanded(
-            child: ListView.separated(
-              itemCount: mockAvailableCourses.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                final course = mockAvailableCourses[index];
-                final isSelected = selectedCourseIds.contains(course.id);
+            child:
+                BlocBuilder<CourseRegistrationCubit, CourseRegistrationState>(
+                  builder: (context, state) {
+                    if (state is AvailableCoursesLoading ||
+                        state is CourseRegistrationInitial) {
+                      return const _AvailableCoursesShimmer();
+                    }
 
-                return GestureDetector(
-                  onTap: () {
-                    onCourseToggled(course);
+                    if (state is AvailableCoursesFailure) {
+                      return _AvailableCoursesError(
+                        message: state.failure.message,
+                      );
+                    }
+
+                    if (state is AvailableCoursesLoaded) {
+                      if (state.courses.isEmpty) {
+                        return const Center(
+                          child: Text('No available courses.'),
+                        );
+                      }
+
+                      return ListView.separated(
+                        itemCount: state.courses.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 12),
+                        itemBuilder: (context, index) {
+                          final course = state.courses[index];
+                          final isSelected = selectedCourseIds.contains(
+                            course.semesterCourseId,
+                          );
+
+                          return _AvailableCourseTile(
+                            course: course,
+                            isSelected: isSelected,
+                            onTap: () => onCourseToggled(course),
+                          );
+                        },
+                      );
+                    }
+
+                    return const SizedBox.shrink();
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: isSelected
-                            ? AppColors.bluePrimary
-                            : AppColors.gray200,
-                        width: isSelected ? 2 : 1,
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        CourseIconWidget(course: course),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                course.id,
-                                style: AppTextStyles.heading3PoppinsReg16
-                                    .copyWith(color: AppColors.gray900),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                course.name,
-                                style: AppTextStyles.bodyInterRegular12
-                                    .copyWith(color: AppColors.gray500),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                '${course.credits} Credits',
-                                style: AppTextStyles.bodyInterMedium14.copyWith(
-                                  color: AppColors.gray900,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (isSelected)
-                          const Icon(
-                            Icons.check_circle,
-                            color: AppColors.bluePrimary,
-                          ),
-                      ],
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AvailableCoursesShimmer extends StatelessWidget {
+  const _AvailableCoursesShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppShimmer(
+      child: ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: 5,
+        separatorBuilder: (context, index) => const SizedBox(height: 12),
+        itemBuilder: (context, index) => const _AvailableCourseSkeletonTile(),
+      ),
+    );
+  }
+}
+
+class _AvailableCourseSkeletonTile extends StatelessWidget {
+  const _AvailableCourseSkeletonTile();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: context.themeColors.card,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: context.themeColors.border),
+      ),
+      child: const Row(
+        children: [
+          AppShimmerBox(width: 48, height: 48, borderRadius: 12),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppShimmerBox(width: 74, height: 16),
+                SizedBox(height: 7),
+                AppShimmerBox(height: 13),
+                SizedBox(height: 9),
+                AppShimmerBox(width: 68, height: 13),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AvailableCourseTile extends StatelessWidget {
+  const _AvailableCourseTile({
+    required this.course,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final AvailableCourseModel course;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: context.themeColors.card,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isSelected
+                ? context.colorScheme.primary
+                : context.themeColors.border,
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            CourseIconWidget(course: course),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    course.displayCode,
+                    style: AppTextStyles.heading3PoppinsReg16.copyWith(
+                      color: context.themeColors.textPrimary,
                     ),
                   ),
-                );
-              },
+                  const SizedBox(height: 4),
+                  Text(
+                    course.displayName,
+                    style: AppTextStyles.bodyInterRegular12.copyWith(
+                      color: context.themeColors.textMuted,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '${course.creditHours} Credits',
+                    style: AppTextStyles.bodyInterMedium14.copyWith(
+                      color: context.themeColors.textPrimary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
             ),
+            if (isSelected)
+              Icon(Icons.check_circle, color: context.colorScheme.primary),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AvailableCoursesError extends StatelessWidget {
+  const _AvailableCoursesError({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.error_outline, color: context.colorScheme.error),
+          const SizedBox(height: 8),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.bodyInterMedium14.copyWith(
+              color: context.themeColors.textSecondary,
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: context
+                .read<CourseRegistrationCubit>()
+                .getAvailableCourses,
+            child: const Text('Try again'),
           ),
         ],
       ),

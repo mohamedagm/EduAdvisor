@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
@@ -91,7 +92,7 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                       children: [
                         Text(
                           'Failed to load departments',
-                          style: TextStyle(color: Colors.red),
+                          style: TextStyle(color: context.colorScheme.error),
                         ),
                         const SizedBox(height: 12),
                         ElevatedButton(
@@ -124,12 +125,12 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                               ),
                               padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: context.themeColors.card,
                                 borderRadius: BorderRadius.circular(20),
-                                boxShadow: const [
+                                boxShadow: [
                                   BoxShadow(
                                     blurRadius: 10,
-                                    color: Colors.black12,
+                                    color: context.themeColors.shadow,
                                   ),
                                 ],
                               ),

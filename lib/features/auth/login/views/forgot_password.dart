@@ -1,6 +1,6 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/forgot_password_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/forgot_password_state.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
@@ -13,6 +13,7 @@ import 'package:edu_advisor/features/widgets/custom_text_button.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   final RegisterRole registerRole;
@@ -35,6 +36,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     final height = size.height;
     final width = size.width;
 
@@ -45,6 +47,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       child: BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
         listener: (context, state) {
           if (state is ForgotPasswordSuccess) {
+            AppToast.success(
+              context,
+              title: 'Verification code sent',
+              description: state.response.message,
+            );
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -90,13 +97,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       constraints: BoxConstraints(minHeight: height * 0.35),
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.themeColors.card,
                         borderRadius: const BorderRadius.all(
                           Radius.circular(30),
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
+                            color: context.themeColors.textPrimary.withValues(
+                              alpha: 0.1,
+                            ),
                             blurRadius: 10,
                             offset: const Offset(0, -3),
                           ),
@@ -118,9 +127,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               hintText: "your.email@university.edu.eg",
                               prefixIcon: const Icon(Icons.email),
                               filled: true,
-                              fillColor: AppColors.gray400.withValues(
-                                alpha: 0.1,
-                              ),
+                              fillColor: context.themeColors.textMuted
+                                  .withValues(alpha: 0.1),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
                                 borderSide: BorderSide.none,
@@ -131,7 +139,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           Text(
                             "We'll send a 6-digit verification code to this email",
                             style: AppTextStyles.bodyInterMedium14.copyWith(
-                              color: AppColors.gray400,
+                              color: context.themeColors.textMuted,
                             ),
                           ),
                           const SizedBox(height: 24),
@@ -139,12 +147,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ignoring: isLoading,
                             child: GradientElevatedButton(
                               buttonText: isLoading
+                                 
                                   ? 'Sending...'
+                                 
                                   : 'Send Verification code',
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<ForgotPasswordCubit>().sendOtp(
-                                    email: _emailController.text.trim(),
+                                    email: _emailController.text
+                                        .trim(),
                                   );
                                 }
                               },
@@ -157,7 +168,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               Text(
                                 "Remember your password? ",
                                 style: AppTextStyles.bodyInterMedium14.copyWith(
-                                  color: AppColors.gray600,
+                                  color: context.themeColors.textSecondary,
                                 ),
                               ),
                               CustomTextButton(
@@ -179,3 +190,4 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 }
+

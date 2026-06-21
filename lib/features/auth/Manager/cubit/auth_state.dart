@@ -58,4 +58,18 @@ class RegisterAdvisorFailure extends AuthState {
   final Failure failure;
 }
 
+class LogoutLoading extends AuthState {
+  const LogoutLoading();
+}
 
+class LogoutSuccess extends AuthState {
+  const LogoutSuccess(this.response);
+
+  final ApiResponseModel response;
+}
+
+class LogoutFailure extends AuthState {
+  const LogoutFailure(this.failure);
+
+  final Failure failure;
+}

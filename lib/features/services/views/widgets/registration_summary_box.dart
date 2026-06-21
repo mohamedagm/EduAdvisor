@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class RegistrationSummaryBox extends StatelessWidget {
   final IconData icon;
@@ -43,7 +43,7 @@ class RegistrationSummaryBox extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.bodyInterRegular12.copyWith(
-                color: AppColors.gray600,
+                color: context.themeColors.textSecondary,
               ),
             ),
           ],

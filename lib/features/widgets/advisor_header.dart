@@ -1,7 +1,18 @@
+import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/widgets/app_toast.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
+import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
+import 'package:edu_advisor/features/user/data/models/current_user_model.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class AdvisorHeader extends StatelessWidget {
   final int? studentCount;
@@ -20,53 +31,72 @@ class AdvisorHeader extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  //handle profile immage and name
-                  // const CircleAvatar(
-                  //   radius: 22,
-                  //   backgroundImage:
-                  //       AssetImage('assets/images/avatar.png'),
-                  // ),
+                  CircleAvatar(
+                    radius: 22,
+                    backgroundColor: Colors.white24,
+                    backgroundImage: user?.profileImageUrl?.isNotEmpty == true
+                        ? NetworkImage(user!.profileImageUrl!)
+                        : null,
+                    child: user?.profileImageUrl?.isNotEmpty == true
+                        ? null
+                        : const Icon(Icons.person, color: Colors.white),
+                  ),
                   const SizedBox(width: 12),
-
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Dr. Hebatulla Nabil',
-                          style: TextStyle(
+                          user?.displayName ?? 'Advisor',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(height: 2),
+                        const SizedBox(height: 2),
                         Text(
-                          'Academic Advisor',
-                          style: TextStyle(color: Colors.white70, fontSize: 12),
+                          user?.displayDepartment ?? 'Academic Advisor',
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
                   ),
-
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white24,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Icon(
-                      Icons.logout_rounded,
-                      color: Colors.white,
-                      size: 18,
+                  IgnorePointer(
+                    ignoring: isLoggingOut,
+                    child: GestureDetector(
+                      onTap: () => context.read<AuthCubit>().logout(),
+                      child: Container(
+                        width: 34,
+                        height: 34,
+                        decoration: BoxDecoration(
+                          color: Colors.white24,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        alignment: Alignment.center,
+                        child: isLoggingOut
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Icon(
+                                Icons.logout_rounded,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                      ),
                     ),
                   ),
                 ],
               ),
-
               const SizedBox(height: 16),
-
-              // ───── Stats ─────
               Row(
                 children: [
                   statCard(
@@ -78,8 +108,8 @@ class AdvisorHeader extends StatelessWidget {
                   const SizedBox(width: 12),
                   statCard(
                     icon: Icons.assignment_outlined,
-                    value: '22',
-                    label: 'Requests',
+                    value: user?.displayPendingRequestsCount ?? '--',
+                    label: 'Pending',
                   ),
                 ],
               ),
@@ -90,7 +120,6 @@ class AdvisorHeader extends StatelessWidget {
     );
   }
 
-  ////////////
   Widget statCard({
     required IconData icon,
     required String value,

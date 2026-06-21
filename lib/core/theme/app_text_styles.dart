@@ -45,7 +45,7 @@ class AppTextStyles {
 
   /// Heading1 20 b
   static const TextStyle heading1_20b = TextStyle(
-    fontFamily: 'PublicSans',
+    fontFamily: 'Poppins',
     fontSize: 20,
     fontWeight: FontWeight.bold,
     height: 24 / 20,

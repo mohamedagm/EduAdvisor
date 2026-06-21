@@ -1,5 +1,5 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AuthCard extends StatelessWidget {
   final Widget child;
@@ -20,17 +20,19 @@ class AuthCard extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-           color: Colors.black.withValues(alpha: 0.05),//instead of opacity
+            color: context.themeColors.textPrimary.withValues(
+              alpha: 0.05,
+            ), //instead of opacity
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
         ],
       ),
-      child: child, 
+      child: child,
     );
   }
 }

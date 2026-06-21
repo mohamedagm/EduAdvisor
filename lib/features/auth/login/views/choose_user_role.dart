@@ -4,6 +4,8 @@ import 'package:edu_advisor/features/auth/login/views/advisor_login.dart';
 import 'package:edu_advisor/features/auth/login/views/student_login.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class ChooseUserRole extends StatelessWidget {
   const ChooseUserRole({super.key});
@@ -14,13 +16,14 @@ class ChooseUserRole extends StatelessWidget {
     final screenHeight = size.height;
 
     return Scaffold(
-      backgroundColor: AppColors.gray100,
+      backgroundColor: context.themeColors.mutedSurface,
       body: SingleChildScrollView(
         child: Stack(
           children: [
             GradiantContainer(mainText: "Your Academic Success Partner"),
+            GradiantContainer(mainText: "Your Academic Success Partner"),
             Container(
-              width: double.infinity,
+                width: double.infinity,
               margin: EdgeInsets.only(
                 top: screenHeight * 0.30,
                 left: 20,
@@ -29,11 +32,13 @@ class ChooseUserRole extends StatelessWidget {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: context.themeColors.card,
                 borderRadius: BorderRadius.circular(28),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
+                    color: context.themeColors.textPrimary.withValues(
+                      alpha: 0.05,
+                    ),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
@@ -42,12 +47,12 @@ class ChooseUserRole extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
+                  Text(
                     "Choose Your Role",
                     style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+                      color: context.themeColors.textPrimary,
                     ),
                   ),
 
@@ -55,17 +60,20 @@ class ChooseUserRole extends StatelessWidget {
 
                   Text(
                     "to continue to EduAdvisor",
-                    style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: context.themeColors.textSecondary,
+                    ),
                   ),
 
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 32),
 
                   _buildRoleOption(
                     context: context,
                     icon: Icons.school_rounded,
                     title: "Student",
                     subtitle: "Access courses, grades & schedule",
-                    color: AppColors.purplePrimary,
+                    color: context.colorScheme.secondary,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -85,7 +93,7 @@ class ChooseUserRole extends StatelessWidget {
                     icon: Icons.person_3_rounded,
                     title: "Advisor",
                     subtitle: "Manage students & academic advising",
-                    color: AppColors.purplePrimary,
+                    color: context.colorScheme.secondary,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -120,11 +128,11 @@ class ChooseUserRole extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
           border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
           borderRadius: BorderRadius.circular(20),
-          color: AppColors.white,
+          color: context.themeColors.card,
           boxShadow: [
             BoxShadow(
               color: color.withValues(alpha: 0.1),
@@ -150,16 +158,19 @@ class ChooseUserRole extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: Colors.black87,
+                      color: context.themeColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: context.themeColors.textSecondary,
+                    ),
                   ),
                 ],
               ),
@@ -167,7 +178,7 @@ class ChooseUserRole extends StatelessWidget {
             Icon(
               Icons.arrow_forward_ios_rounded,
               size: 20,
-              color: Colors.grey.shade400,
+              color: context.colorScheme.outline,
             ),
           ],
         ),

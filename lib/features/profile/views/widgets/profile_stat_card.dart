@@ -1,5 +1,5 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class ProfileStatCard extends StatelessWidget {
   final String title;
@@ -21,15 +21,19 @@ class ProfileStatCard extends StatelessWidget {
       width: 100,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.themeColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gray200, width: 2),
+        border: Border.all(color: context.themeColors.border, width: 2),
       ),
       child: Column(
         children: [
-          Icon(icon, size: 28, color: iconColor ?? AppColors.infoBlue),
+          Icon(icon, size: 28, color: iconColor ?? context.themeColors.info),
           const SizedBox(height: 8),
-          Text(title),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          ),
           const SizedBox(height: 4),
           Text(value, style: const TextStyle(fontSize: 16)),
         ],
