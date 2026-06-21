@@ -2,8 +2,10 @@ import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AiInputField extends StatelessWidget {
   const AiInputField({
@@ -19,22 +21,22 @@ class AiInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(10.w),
       child: Row(
         children: [
           Expanded(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
               decoration: BoxDecoration(
                 color: context.themeColors.mutedSurface,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
               child: TextField(
                 controller: controller,
                 enabled: !isLoading,
                 onSubmitted: (_) => onSend(),
                 decoration: InputDecoration(
-                  hintStyle: AppTextStyles.interRegular16.copyWith(
+                  hintStyle: AppTextStyles.interRegular16.responsive.copyWith(
                     color: context.themeColors.textMuted,
                   ),
                   hintText: context.l10n.aiChatAskAnythingHint,
@@ -43,26 +45,26 @@ class AiInputField extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8.w),
           GestureDetector(
             onTap: isLoading ? null : onSend,
             child: Container(
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.all(10.w),
               decoration: BoxDecoration(
                 color: isLoading ? context.colorScheme.outline : null,
                 gradient: isLoading ? null : AppGradients.ai,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
               ),
               child: isLoading
-                  ? const SizedBox(
-                      width: 24,
-                      height: 24,
+                  ? SizedBox(
+                      width: 24.r,
+                      height: 24.r,
                       child: CircularProgressIndicator(
-                        strokeWidth: 2,
+                        strokeWidth: 2.w,
                         color: AppColors.white,
                       ),
                     )
-                  : const Icon(Icons.send, color: Colors.white),
+                  : Icon(Icons.send, size: 24.r, color: Colors.white),
             ),
           ),
         ],

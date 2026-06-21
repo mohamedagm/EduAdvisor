@@ -1,9 +1,11 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/features/AIChat/models/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageBubble extends StatelessWidget {
   final MessageModel message;
@@ -17,7 +19,7 @@ class MessageBubble extends StatelessWidget {
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
+        padding: EdgeInsets.symmetric(vertical: 4.w),
         child: Row(
           mainAxisAlignment: isUser
               ? MainAxisAlignment.end
@@ -26,24 +28,28 @@ class MessageBubble extends StatelessWidget {
           children: [
             if (!isUser) ...[
               CircleAvatar(
-                radius: 14,
+                radius: 14.r,
                 backgroundColor: AppColors.aiPurple,
-                child: Icon(Icons.smart_toy, size: 14, color: AppColors.white),
+                child: Icon(
+                  Icons.smart_toy,
+                  size: 14.r,
+                  color: AppColors.white,
+                ),
               ),
-              const SizedBox(width: 6),
+              SizedBox(width: 6.w),
             ],
 
             Container(
-              constraints: const BoxConstraints(maxWidth: 250),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              constraints: BoxConstraints(maxWidth: 0.7.sw),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.w),
               decoration: BoxDecoration(
                 color: isUser ? null : context.themeColors.card,
                 gradient: isUser ? AppGradients.primary : null,
                 borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(14),
-                  topRight: const Radius.circular(14),
-                  bottomLeft: isUser ? const Radius.circular(14) : Radius.zero,
-                  bottomRight: isUser ? Radius.zero : const Radius.circular(14),
+                  topLeft: Radius.circular(14.r),
+                  topRight: Radius.circular(14.r),
+                  bottomLeft: isUser ? Radius.circular(14.r) : Radius.zero,
+                  bottomRight: isUser ? Radius.zero : Radius.circular(14.r),
                 ),
               ),
               child: Column(
@@ -51,17 +57,17 @@ class MessageBubble extends StatelessWidget {
                 children: [
                   Text(
                     message.text,
-                    style: AppTextStyles.poppinsRegular14.copyWith(
+                    style: AppTextStyles.poppinsRegular14.responsive.copyWith(
                       color: isUser
                           ? AppColors.white
                           : context.themeColors.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.w),
 
                   Text(
                     _formatTime(message.time),
-                    style: AppTextStyles.bodyInterRegular12.copyWith(
+                    style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                       color: isUser
                           ? AppColors.white
                           : context.themeColors.textSecondary,
@@ -72,13 +78,13 @@ class MessageBubble extends StatelessWidget {
             ),
 
             if (isUser) ...[
-              const SizedBox(width: 6),
+              SizedBox(width: 6.w),
               CircleAvatar(
-                radius: 14,
+                radius: 14.r,
                 backgroundColor: context.colorScheme.secondary,
                 child: Icon(
                   Icons.person_rounded,
-                  size: 14,
+                  size: 14.r,
                   color: context.colorScheme.onSecondary,
                 ),
               ),

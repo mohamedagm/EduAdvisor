@@ -1,7 +1,9 @@
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class QuickActions extends StatelessWidget {
   const QuickActions({super.key, required this.onActionTap});
@@ -17,21 +19,21 @@ class QuickActions extends StatelessWidget {
     ];
 
     return Container(
-      margin: const EdgeInsets.all(12),
-      padding: const EdgeInsets.all(12),
+      margin: EdgeInsets.all(12.w),
+      padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
       ),
       child: GridView.builder(
         shrinkWrap: true,
         itemCount: actions.length,
         physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisExtent: 45,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          mainAxisExtent: 45.w,
+          crossAxisSpacing: 10.w,
+          mainAxisSpacing: 10.w,
         ),
         itemBuilder: (context, index) {
           return GestureDetector(
@@ -40,11 +42,14 @@ class QuickActions extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: context.themeColors.purpleContainer,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
               child: Text(
                 actions[index],
-                style: AppTextStyles.poppinsRegular14.copyWith(
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.poppinsRegular14.responsive.copyWith(
                   color: context.themeColors.textSecondary,
                 ),
               ),

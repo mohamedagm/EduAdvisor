@@ -14,6 +14,7 @@ import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AIChatView extends StatelessWidget {
   const AIChatView({super.key});
@@ -119,7 +120,7 @@ class _AIChatViewBodyState extends State<_AIChatViewBody> {
                       child: ListView.builder(
                         reverse: true,
                         controller: scrollController,
-                        padding: const EdgeInsets.all(12),
+                        padding: EdgeInsets.all(12.w),
                         itemCount: state.messages.length,
                         itemBuilder: (context, index) {
                           return MessageBubble(
@@ -138,11 +139,11 @@ class _AIChatViewBodyState extends State<_AIChatViewBody> {
                 ),
                 if (state.messages.length == 1 && !state.isSending)
                   Positioned(
-                    top: 60,
-                    right: 20,
-                    left: 20,
+                    top: 60.w,
+                    right: 20.w,
+                    left: 20.w,
                     child: SizedBox(
-                      height: 150,
+                      height: 150.w,
                       child: QuickActions(
                         onActionTap: (action) {
                           controller.text = action;
