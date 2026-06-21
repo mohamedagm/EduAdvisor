@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/features/AIChat/views/ai_chat_view.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/course_catalog_view.dart';
 import 'package:edu_advisor/features/home/views/home_view.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -44,8 +46,8 @@ class _MainViewState extends State<MainView> {
             boxShadow: [
               BoxShadow(
                 color: context.themeColors.border.withValues(alpha: 0.5),
-                blurRadius: 16,
-                offset: const Offset(0, -4),
+                blurRadius: 16.r,
+                offset: Offset(0, -4.w),
               ),
             ],
           ),
@@ -54,13 +56,13 @@ class _MainViewState extends State<MainView> {
             elevation: 0,
             selectedItemColor: context.themeColors.info,
             unselectedItemColor: context.themeColors.textSecondary,
-            unselectedLabelStyle: AppTextStyles.bodyInterRegular12.copyWith(
-              color: context.themeColors.textSecondary,
-            ),
-            selectedLabelStyle: AppTextStyles.bodyInterRegular12.copyWith(
-              color: context.themeColors.info,
-              fontWeight: FontWeight.w600,
-            ),
+            unselectedLabelStyle: AppTextStyles.bodyInterRegular12.responsive
+                .copyWith(color: context.themeColors.textSecondary),
+            selectedLabelStyle: AppTextStyles.bodyInterRegular12.responsive
+                .copyWith(
+                  color: context.themeColors.info,
+                  fontWeight: FontWeight.w600,
+                ),
             type: BottomNavigationBarType.fixed,
             onTap: (index) {
               setState(() {
@@ -72,12 +74,14 @@ class _MainViewState extends State<MainView> {
               BottomNavigationBarItem(
                 icon: Icon(
                   currentIndex == 0 ? Icons.home : Icons.home_outlined,
+                  size: 24.r,
                 ),
                 label: context.l10n.homeTab,
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   currentIndex == 1 ? Icons.book : Icons.book_outlined,
+                  size: 24.r,
                 ),
                 label: context.l10n.coursesTab,
               ),
@@ -86,6 +90,7 @@ class _MainViewState extends State<MainView> {
                   currentIndex == 2
                       ? Icons.chat_bubble
                       : Icons.chat_bubble_outline,
+                  size: 24.r,
                 ),
                 label: context.l10n.aiChatTab,
               ),
@@ -94,12 +99,14 @@ class _MainViewState extends State<MainView> {
                   currentIndex == 3
                       ? Icons.miscellaneous_services
                       : Icons.miscellaneous_services_outlined,
+                  size: 24.r,
                 ),
                 label: context.l10n.servicesTab,
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   currentIndex == 4 ? Icons.person : Icons.person_outline,
+                  size: 24.r,
                 ),
                 label: context.l10n.profileTab,
               ),

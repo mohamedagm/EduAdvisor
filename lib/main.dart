@@ -4,6 +4,8 @@ import 'package:edu_advisor/core/theme/theme_cubit.dart';
 import 'package:edu_advisor/core/theme/theme_preferences.dart';
 import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/l10n/app_localizations.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +16,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   final preferences = await SharedPreferences.getInstance();
-  runApp(MainApp(themePreferences: ThemePreferences(preferences)));
+  runApp(
+    DevicePreview(
+      enabled: false,
+      availableLocales: AppLocalizations.supportedLocales,
+      builder: (_) => MainApp(themePreferences: ThemePreferences(preferences)),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -34,11 +42,16 @@ class MainApp extends StatelessWidget {
           builder: (context, themeMode) {
             return MaterialApp.router(
               debugShowCheckedModeBanner: false,
+              // Required by device_preview 1.3.1's compatibility assertion.
+              // ignore: deprecated_member_use
+              useInheritedMediaQuery: true,
               onGenerateTitle: (context) =>
                   AppLocalizations.of(context).appTitle,
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
-              locale: AppLocalizations.supportedLocales.first,
+              locale:
+                  DevicePreview.locale(context) ??
+                  AppLocalizations.supportedLocales.first,
               routerConfig: appRouter,
               theme: AppTheme.light,
               darkTheme: AppTheme.dark,
@@ -49,7 +62,10 @@ class MainApp extends StatelessWidget {
                 final brightness = Theme.of(context).brightness;
                 return AnnotatedRegion<SystemUiOverlayStyle>(
                   value: AppTheme.systemUiOverlayStyle(brightness),
-                  child: child ?? const SizedBox.shrink(),
+                  child: DevicePreview.appBuilder(
+                    context,
+                    child ?? const SizedBox.shrink(),
+                  ),
                 );
               },
             );
