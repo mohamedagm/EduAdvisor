@@ -77,6 +77,68 @@
   "lastName": "اسم العائلة",
   "enterLastName": "أدخل اسم العائلة",
   "studentCode": "كود الطالب",
+  "gpa": "المعدل",
+  "@gpa": {
+    "description": "Grade point average label"
+  },
+  "creditsLabel": "الساعات المعتمدة",
+  "@creditsLabel": {
+    "description": "Academic credits label"
+  },
+  "level": "المستوى",
+  "@level": {
+    "description": "Student academic level label"
+  },
+  "recommendedCourses": "المقررات الموصى بها",
+  "@recommendedCourses": {
+    "description": "Section header label for recommended courses"
+  },
+  "viewAll": "عرض الكل",
+  "@viewAll": {
+    "description": "Button label to view all items"
+  },
+  "registrationAlert": "تنبيه التسجيل",
+  "@registrationAlert": {
+    "description": "Title for registration alert card"
+  },
+  "registrationAlertMessage": "فتح تسجيل المقررات لفصل ربيع 2025 بعد 3 أيام. تحقق من جدولك المحفوظ.",
+  "@registrationAlertMessage": {
+    "description": "Description message for registration alert card"
+  },
+  "degreeProgress": "تقدم البرنامج الدراسي",
+  "@degreeProgress": {
+    "description": "Title for degree progress card"
+  },
+  "degreeProgramName": "بكالوريوس علوم الحاسب",
+  "@degreeProgramName": {
+    "description": "Degree program name shown on degree progress card"
+  },
+  "creditsRatio": "{completed} / {required}",
+  "@creditsRatio": {
+    "description": "Progress ratio for completed vs required credits",
+    "placeholders": {
+      "completed": {"type": "String"},
+      "required": {"type": "String"}
+    }
+  },
+  "onTrackToGraduate": "أنت على المسار الصحيح للتخرج في {semester}.",
+  "@onTrackToGraduate": {
+    "description": "Text describing expected graduation semester",
+    "placeholders": {
+      "semester": {"type": "String"}
+    }
+  },
+  "spring2026": "ربيع 2026",
+  "@spring2026": {
+    "description": "Graduation semester label"
+  },
+  "courseCredits": "{credits} ساعات معتمدة",
+  "@courseCredits": {
+    "description": "Course credits label",
+    "placeholders": {
+      "credits": {"type": "String"}
+    }
+  },
   "nationalId": "الرقم القومي",
   "enterNationalId": "أدخل الرقم القومي",
   "signingUp": "جارٍ إنشاء الحساب...",

@@ -253,6 +253,52 @@ class AppLocalizationsAr extends AppLocalizations {
   String get studentCode => 'كود الطالب';
 
   @override
+  String get gpa => 'المعدل';
+
+  @override
+  String get creditsLabel => 'الساعات المعتمدة';
+
+  @override
+  String get level => 'المستوى';
+
+  @override
+  String get recommendedCourses => 'المقررات الموصى بها';
+
+  @override
+  String get viewAll => 'عرض الكل';
+
+  @override
+  String get registrationAlert => 'تنبيه التسجيل';
+
+  @override
+  String get registrationAlertMessage =>
+      'فتح تسجيل المقررات لفصل ربيع 2025 بعد 3 أيام. تحقق من جدولك المحفوظ.';
+
+  @override
+  String get degreeProgress => 'تقدم البرنامج الدراسي';
+
+  @override
+  String get degreeProgramName => 'بكالوريوس علوم الحاسب';
+
+  @override
+  String creditsRatio(String completed, String required) {
+    return '$completed / $required';
+  }
+
+  @override
+  String onTrackToGraduate(String semester) {
+    return 'أنت على المسار الصحيح للتخرج في $semester.';
+  }
+
+  @override
+  String get spring2026 => 'ربيع 2026';
+
+  @override
+  String courseCredits(String credits) {
+    return '$credits ساعات معتمدة';
+  }
+
+  @override
   String get nationalId => 'الرقم القومي';
 
   @override

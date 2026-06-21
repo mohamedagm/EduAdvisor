@@ -254,6 +254,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get studentCode => 'Student code';
 
   @override
+  String get gpa => 'GPA';
+
+  @override
+  String get creditsLabel => 'Credits';
+
+  @override
+  String get level => 'Level';
+
+  @override
+  String get recommendedCourses => 'Recommended Courses';
+
+  @override
+  String get viewAll => 'View All';
+
+  @override
+  String get registrationAlert => 'Registration Alert';
+
+  @override
+  String get registrationAlertMessage =>
+      'Spring 2025 course registration opens in 3 days. Check your saved schedule.';
+
+  @override
+  String get degreeProgress => 'Degree Progress';
+
+  @override
+  String get degreeProgramName => 'Bachelor of Computer Science';
+
+  @override
+  String creditsRatio(String completed, String required) {
+    return '$completed / $required';
+  }
+
+  @override
+  String onTrackToGraduate(String semester) {
+    return 'You are on track to graduate in $semester.';
+  }
+
+  @override
+  String get spring2026 => 'Spring 2026';
+
+  @override
+  String courseCredits(String credits) {
+    return '$credits Credits';
+  }
+
+  @override
   String get nationalId => 'National ID';
 
   @override

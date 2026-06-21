@@ -11,7 +11,7 @@ class RecommendedCoursesBuilder extends StatelessWidget {
       'code': 'IS 311',
       'title': 'DATABASE SYSTEMS',
       'progressPercentage': '75%',
-      'credits': '3 Credits',
+      'credits': '3',
     },
     {
       'imageUrl':
@@ -19,7 +19,7 @@ class RecommendedCoursesBuilder extends StatelessWidget {
       'code': 'CS 201',
       'title': 'DATA STRUCTURES',
       'progressPercentage': '90%',
-      'credits': '4 Credits',
+      'credits': '4',
     },
     {
       'imageUrl':
@@ -27,7 +27,7 @@ class RecommendedCoursesBuilder extends StatelessWidget {
       'code': 'SE 305',
       'title': 'SOFTWARE ENGINEERING',
       'progressPercentage': '60%',
-      'credits': '3 Credits',
+      'credits': '3',
     },
     {
       'imageUrl':
@@ -35,7 +35,7 @@ class RecommendedCoursesBuilder extends StatelessWidget {
       'code': 'AI 402',
       'title': 'MACHINE LEARNING',
       'progressPercentage': '85%',
-      'credits': '3 Credits',
+      'credits': '3',
     },
     {
       'imageUrl':
@@ -43,7 +43,7 @@ class RecommendedCoursesBuilder extends StatelessWidget {
       'code': 'MATH 101',
       'title': 'CALCULUS I',
       'progressPercentage': '40%',
-      'credits': '3 Credits',
+      'credits': '3',
     },
   ];
 
@@ -62,7 +62,7 @@ class RecommendedCoursesBuilder extends StatelessWidget {
             code: course['code']!,
             title: course['title']!,
             progressPercentage: course['progressPercentage']!,
-            credits: course['credits']!,
+            credits: int.parse(course['credits']!),
           );
         },
       ),

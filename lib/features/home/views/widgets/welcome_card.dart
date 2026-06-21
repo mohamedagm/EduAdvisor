@@ -7,6 +7,7 @@ import 'package:edu_advisor/features/user/manager/current_user_cubit/current_use
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class WelcomeCard extends StatelessWidget {
@@ -72,14 +73,10 @@ class _WelcomeCardContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Welcome back,',
-                      style: AppTextStyles.heading1_20b.copyWith(
-                        color: AppColors.white,
+                      context.l10n.welcomeBackName(
+                        user?.displayName ?? context.l10n.student,
                       ),
-                    ),
-                    Text(
-                      user?.displayName ?? 'Student',
-                      style: AppTextStyles.bodyInterMedium18.copyWith(
+                      style: AppTextStyles.heading1_20b.copyWith(
                         color: AppColors.white,
                       ),
                     ),
@@ -101,17 +98,17 @@ class _WelcomeCardContent extends StatelessWidget {
             children: [
               _StatItem(
                 icon: Icons.school_outlined,
-                label: 'GPA',
+                label: context.l10n.gpa,
                 value: user?.displayGpa ?? '--',
               ),
               _StatItem(
                 icon: Icons.menu_book_outlined,
-                label: 'Credits',
+                label: context.l10n.creditsLabel,
                 value: user?.displayCredits ?? '--',
               ),
               _StatItem(
                 icon: Icons.trending_up,
-                label: 'Level',
+                label: context.l10n.level,
                 value: user?.displayLevel ?? '--',
               ),
             ],

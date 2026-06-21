@@ -560,6 +560,84 @@ abstract class AppLocalizations {
   /// **'Student code'**
   String get studentCode;
 
+  /// Grade point average label
+  ///
+  /// In en, this message translates to:
+  /// **'GPA'**
+  String get gpa;
+
+  /// Academic credits label
+  ///
+  /// In en, this message translates to:
+  /// **'Credits'**
+  String get creditsLabel;
+
+  /// Student academic level label
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get level;
+
+  /// Section header label for recommended courses
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended Courses'**
+  String get recommendedCourses;
+
+  /// Button label to view all items
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get viewAll;
+
+  /// Title for registration alert card
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Alert'**
+  String get registrationAlert;
+
+  /// Description message for registration alert card
+  ///
+  /// In en, this message translates to:
+  /// **'Spring 2025 course registration opens in 3 days. Check your saved schedule.'**
+  String get registrationAlertMessage;
+
+  /// Title for degree progress card
+  ///
+  /// In en, this message translates to:
+  /// **'Degree Progress'**
+  String get degreeProgress;
+
+  /// Degree program name shown on degree progress card
+  ///
+  /// In en, this message translates to:
+  /// **'Bachelor of Computer Science'**
+  String get degreeProgramName;
+
+  /// Progress ratio for completed vs required credits
+  ///
+  /// In en, this message translates to:
+  /// **'{completed} / {required}'**
+  String creditsRatio(String completed, String required);
+
+  /// Text describing expected graduation semester
+  ///
+  /// In en, this message translates to:
+  /// **'You are on track to graduate in {semester}.'**
+  String onTrackToGraduate(String semester);
+
+  /// Graduation semester label
+  ///
+  /// In en, this message translates to:
+  /// **'Spring 2026'**
+  String get spring2026;
+
+  /// Course credits label
+  ///
+  /// In en, this message translates to:
+  /// **'{credits} Credits'**
+  String courseCredits(String credits);
+
   /// No description provided for @nationalId.
   ///
   /// In en, this message translates to:

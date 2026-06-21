@@ -109,6 +109,68 @@
   "lastName": "Last name",
   "enterLastName": "Enter your last name",
   "studentCode": "Student code",
+  "gpa": "GPA",
+  "@gpa": {
+    "description": "Grade point average label"
+  },
+  "creditsLabel": "Credits",
+  "@creditsLabel": {
+    "description": "Academic credits label"
+  },
+  "level": "Level",
+  "@level": {
+    "description": "Student academic level label"
+  },
+  "recommendedCourses": "Recommended Courses",
+  "@recommendedCourses": {
+    "description": "Section header label for recommended courses"
+  },
+  "viewAll": "View All",
+  "@viewAll": {
+    "description": "Button label to view all items"
+  },
+  "registrationAlert": "Registration Alert",
+  "@registrationAlert": {
+    "description": "Title for registration alert card"
+  },
+  "registrationAlertMessage": "Spring 2025 course registration opens in 3 days. Check your saved schedule.",
+  "@registrationAlertMessage": {
+    "description": "Description message for registration alert card"
+  },
+  "degreeProgress": "Degree Progress",
+  "@degreeProgress": {
+    "description": "Title for degree progress card"
+  },
+  "degreeProgramName": "Bachelor of Computer Science",
+  "@degreeProgramName": {
+    "description": "Degree program name shown on degree progress card"
+  },
+  "creditsRatio": "{completed} / {required}",
+  "@creditsRatio": {
+    "description": "Progress ratio for completed vs required credits",
+    "placeholders": {
+      "completed": {"type": "String"},
+      "required": {"type": "String"}
+    }
+  },
+  "onTrackToGraduate": "You are on track to graduate in {semester}.",
+  "@onTrackToGraduate": {
+    "description": "Text describing expected graduation semester",
+    "placeholders": {
+      "semester": {"type": "String"}
+    }
+  },
+  "spring2026": "Spring 2026",
+  "@spring2026": {
+    "description": "Graduation semester label"
+  },
+  "courseCredits": "{credits} Credits",
+  "@courseCredits": {
+    "description": "Course credits label",
+    "placeholders": {
+      "credits": {"type": "String"}
+    }
+  },
   "nationalId": "National ID",
   "enterNationalId": "Enter your national ID",
   "signingUp": "Signing up...",

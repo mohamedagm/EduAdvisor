@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -43,14 +44,14 @@ class RegisterationAlert extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Registration Alert',
+                  context.l10n.registrationAlert,
                   style: AppTextStyles.heading3PoppinsReg16.copyWith(
                     color: context.themeColors.textPrimary,
                   ),
                 ),
                 SizedBox(height: 4),
                 Text(
-                  'Spring 2025 course registration opens in 3 days. Check your saved schedule.',
+                  context.l10n.registrationAlertMessage,
                   style: AppTextStyles.poppinsRegular14.copyWith(
                     color: context.themeColors.textSecondary,
                   ),

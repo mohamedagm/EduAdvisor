@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -31,14 +32,14 @@ class DegreeProgressIndicator extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Degree Progress',
+                    context.l10n.degreeProgress,
                     style: AppTextStyles.heading3PoppinsReg16.copyWith(
                       color: context.themeColors.textPrimary,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'Bachelor of Computer Science',
+                    context.l10n.degreeProgramName,
                     style: AppTextStyles.poppinsRegular14.copyWith(
                       color: context.themeColors.textSecondary,
                     ),
@@ -49,14 +50,14 @@ class DegreeProgressIndicator extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '65 / 140',
+                    context.l10n.creditsRatio('65', '140'),
                     style: AppTextStyles.interRegular16.copyWith(
                       color: context.themeColors.info,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'Credits',
+                    context.l10n.creditsLabel,
                     style: AppTextStyles.interRegular16.copyWith(
                       color: context.themeColors.info,
                     ),
@@ -81,7 +82,7 @@ class DegreeProgressIndicator extends StatelessWidget {
           const SizedBox(height: 16),
 
           Text(
-            'You are on track to graduate in Spring 2026.',
+            context.l10n.onTrackToGraduate(context.l10n.spring2026),
             style: AppTextStyles.poppinsRegular14.copyWith(
               color: context.themeColors.textSecondary,
             ),
