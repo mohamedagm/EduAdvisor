@@ -3,19 +3,20 @@ import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/theme/theme_cubit.dart';
+import 'package:edu_advisor/core/localization/language_cubit.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_info_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'settings_language_option.dart';
+
 class SettingsPreferencesSection extends StatelessWidget {
   const SettingsPreferencesSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
-
     return SettingsCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,14 +28,54 @@ class SettingsPreferencesSection extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16.w),
-          SettingsInfoRow(
-            icon: Icons.language_outlined,
-            title: context.l10n.language,
-            subtitle: isArabic
-                ? context.l10n.arabicLanguage
-                : context.l10n.englishLanguage,
+          BlocBuilder<LanguageCubit, Locale>(
+            builder: (context, locale) {
+              final isArabicLocale = locale.languageCode == 'ar';
+              return SettingsInfoRow(
+                icon: Icons.language_outlined,
+                title: context.l10n.language,
+                subtitle: isArabicLocale
+                    ? context.l10n.arabicLanguage
+                    : context.l10n.englishLanguage,
+              );
+            },
+          ),
+          SizedBox(height: 10.w),
+          BlocBuilder<LanguageCubit, Locale>(
+            builder: (context, locale) {
+              final isArabicLocale = locale.languageCode == 'ar';
+              return Container(
+                padding: EdgeInsets.all(4.w),
+                decoration: BoxDecoration(
+                  color: context.themeColors.mutedSurface,
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(color: context.themeColors.border),
+                ),
+                child: Row(
+                  children: [
+                    SettingsLanguageOption(
+                      label: context.l10n.englishLanguage,
+                      icon: Icons.translate_outlined,
+                      isSelected: !isArabicLocale,
+                      onTap: () => context.read<LanguageCubit>().setLocale(
+                        const Locale('en'),
+                      ),
+                    ),
+                    SettingsLanguageOption(
+                      label: context.l10n.arabicLanguage,
+                      icon: Icons.language_outlined,
+                      isSelected: isArabicLocale,
+                      onTap: () => context.read<LanguageCubit>().setLocale(
+                        const Locale('ar'),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
           SizedBox(height: 20.w),
+
           Text(
             context.l10n.appearance,
             style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
