@@ -3,6 +3,7 @@ import 'package:edu_advisor/features/profile/views/widgets/profile_graduation_pr
 import 'package:edu_advisor/features/profile/views/widgets/profile_header.dart';
 import 'package:edu_advisor/features/profile/views/widgets/profile_stats_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileViewBody extends StatelessWidget {
   const ProfileViewBody({super.key});
@@ -12,23 +13,26 @@ class ProfileViewBody extends StatelessWidget {
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
-          children: const [
+          children: [
             Stack(
               clipBehavior: Clip.none,
               children: [
-                ProfileHeader(),
+                const ProfileHeader(),
                 Positioned(
-                  bottom: -100,
-                  left: 16,
-                  right: 16,
-                  child: SizedBox(height: 120, child: ProfileStatsRow()),
+                  bottom: -100.w,
+                  left: 16.w,
+                  right: 16.w,
+                  child: SizedBox(
+                    height: 120.w,
+                    child: const ProfileStatsRow(),
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 120),
-            ProfileGraduationProgressCard(),
-            SizedBox(height: 24),
-            ProfileCoursesSection(),
+            SizedBox(height: 120.w),
+            const ProfileGraduationProgressCard(),
+            SizedBox(height: 24.w),
+            const ProfileCoursesSection(),
           ],
         ),
       ),

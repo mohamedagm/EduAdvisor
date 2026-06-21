@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_gradiants.dart';
@@ -24,14 +26,16 @@ class NotificationsView extends StatelessWidget {
         ),
         title: Text(
           context.l10n.notifications,
-          style: AppTextStyles.heading1_20b.copyWith(color: AppColors.white),
+          style: AppTextStyles.heading1_20b.responsive.copyWith(
+            color: AppColors.white,
+          ),
         ),
         centerTitle: false,
         elevation: 0,
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(40),
+          preferredSize: Size.fromHeight(40.w),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -40,13 +44,13 @@ class NotificationsView extends StatelessWidget {
                     context.l10n.unreadNotifications(2),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.bodyInterMedium14.copyWith(
+                    style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
                       color: AppColors.white.withValues(alpha: 0.9),
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 Flexible(
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -54,17 +58,18 @@ class NotificationsView extends StatelessWidget {
                       Icon(
                         Icons.done_all,
                         color: AppColors.white.withValues(alpha: 0.9),
-                        size: 18,
+                        size: 18.r,
                       ),
-                      const SizedBox(width: 4),
+                      SizedBox(width: 4.w),
                       Flexible(
                         child: Text(
                           context.l10n.markAllAsRead,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.bodyInterMedium14.copyWith(
-                            color: AppColors.white.withValues(alpha: 0.9),
-                          ),
+                          style: AppTextStyles.bodyInterMedium14.responsive
+                              .copyWith(
+                                color: AppColors.white.withValues(alpha: 0.9),
+                              ),
                         ),
                       ),
                     ],
@@ -76,7 +81,7 @@ class NotificationsView extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.w),
         child: Column(
           children: [
             _buildStatusNotificationCard(
@@ -89,7 +94,7 @@ class NotificationsView extends StatelessWidget {
               innerCardCode: 'IS 312',
               innerCardName: context.l10n.databaseSystems,
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.w),
             _buildStatusNotificationCard(
               context: context,
               isSuccess: false,
@@ -101,7 +106,7 @@ class NotificationsView extends StatelessWidget {
               innerCardName: context.l10n.artificialIntelligence,
               hasRejectionReason: true,
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.w),
             _buildInfoNotificationCard(
               context: context,
               isAlert: false,
@@ -111,7 +116,7 @@ class NotificationsView extends StatelessWidget {
               ),
               time: context.l10n.hoursAgo(5),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.w),
             _buildInfoNotificationCard(
               context: context,
               isAlert: true,
@@ -153,25 +158,25 @@ class NotificationsView extends StatelessWidget {
         : context.colorScheme.error;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: borderColor),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
               color: context.themeColors.card,
               shape: BoxShape.circle,
               border: Border.all(color: context.themeColors.border),
             ),
-            child: Icon(iconData, color: iconColor, size: 20),
+            child: Icon(iconData, color: iconColor, size: 20.r),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,28 +187,28 @@ class NotificationsView extends StatelessWidget {
                     Expanded(
                       child: Text(
                         title,
-                        style: AppTextStyles.interRegular16.copyWith(
+                        style: AppTextStyles.interRegular16.responsive.copyWith(
                           fontWeight: FontWeight.w500,
                           color: context.themeColors.textPrimary,
                         ),
                       ),
                     ),
                     if (isNew) ...[
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 4.w,
                         ),
                         decoration: BoxDecoration(
                           color: context.colorScheme.primary,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                         ),
                         child: Text(
                           context.l10n.newNotification,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
                             color: context.colorScheme.onPrimary,
-                            fontSize: 10,
+                            fontSize: 10.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -211,21 +216,21 @@ class NotificationsView extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.w),
                 Text(
                   subtitle,
-                  style: AppTextStyles.bodyInterRegular12.copyWith(
+                  style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                     color: context.themeColors.textMuted,
                     height: 1.4,
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.w),
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(12),
+                  padding: EdgeInsets.all(12.w),
                   decoration: BoxDecoration(
                     color: context.themeColors.card,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(color: context.themeColors.border),
                   ),
                   child: Column(
@@ -233,22 +238,20 @@ class NotificationsView extends StatelessWidget {
                     children: [
                       Text(
                         innerCardCode,
-                        style: AppTextStyles.bodyInterMedium14.copyWith(
-                          color: context.themeColors.textPrimary,
-                        ),
+                        style: AppTextStyles.bodyInterMedium14.responsive
+                            .copyWith(color: context.themeColors.textPrimary),
                       ),
-                      const SizedBox(height: 2),
+                      SizedBox(height: 2.w),
                       Text(
                         innerCardName,
-                        style: AppTextStyles.bodyInterRegular12.copyWith(
-                          color: context.themeColors.textMuted,
-                        ),
+                        style: AppTextStyles.bodyInterRegular12.responsive
+                            .copyWith(color: context.themeColors.textMuted),
                       ),
                     ],
                   ),
                 ),
                 if (hasRejectionReason) ...[
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.w),
                   Row(
                     children: [
                       Flexible(
@@ -256,24 +259,23 @@ class NotificationsView extends StatelessWidget {
                           context.l10n.viewRejectionReason,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.bodyInterMedium14.copyWith(
-                            color: context.colorScheme.error,
-                          ),
+                          style: AppTextStyles.bodyInterMedium14.responsive
+                              .copyWith(color: context.colorScheme.error),
                         ),
                       ),
-                      const SizedBox(width: 4),
+                      SizedBox(width: 4.w),
                       Icon(
                         Icons.keyboard_arrow_down,
                         color: context.colorScheme.error,
-                        size: 20,
+                        size: 20.r,
                       ),
                     ],
                   ),
                 ],
-                const SizedBox(height: 12),
+                SizedBox(height: 12.w),
                 Text(
                   time,
-                  style: AppTextStyles.bodyInterRegular12.copyWith(
+                  style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                     color: context.themeColors.textMuted,
                   ),
                 ),
@@ -300,48 +302,48 @@ class NotificationsView extends StatelessWidget {
         : context.colorScheme.primary;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: context.themeColors.border),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
               color: context.themeColors.card,
               shape: BoxShape.circle,
               border: Border.all(color: context.themeColors.border),
             ),
-            child: Icon(iconData, color: iconColor, size: 20),
+            child: Icon(iconData, color: iconColor, size: 20.r),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: AppTextStyles.interRegular16.copyWith(
+                  style: AppTextStyles.interRegular16.responsive.copyWith(
                     fontWeight: FontWeight.w700,
                     color: context.themeColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.w),
                 Text(
                   subtitle,
-                  style: AppTextStyles.bodyInterRegular12.copyWith(
+                  style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                     color: context.themeColors.textMuted,
                     height: 1.4,
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.w),
                 Text(
                   time,
-                  style: AppTextStyles.bodyInterRegular12.copyWith(
+                  style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                     color: context.themeColors.textMuted,
                   ),
                 ),

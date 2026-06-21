@@ -7,6 +7,7 @@ import 'package:edu_advisor/features/user/manager/current_user_cubit/current_use
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileStatsRow extends StatelessWidget {
   const ProfileStatsRow({super.key});
@@ -16,13 +17,20 @@ class ProfileStatsRow extends StatelessWidget {
     return BlocBuilder<CurrentUserCubit, CurrentUserState>(
       builder: (context, state) {
         if (state is CurrentUserInitial || state is CurrentUserLoading) {
-          return const AppShimmer(
+          return AppShimmer(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppShimmerBox(width: 100, height: 120, borderRadius: 16),
-                AppShimmerBox(width: 100, height: 120, borderRadius: 16),
-                AppShimmerBox(width: 100, height: 120, borderRadius: 16),
+                Expanded(
+                  child: AppShimmerBox(height: 120.w, borderRadius: 16.r),
+                ),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: AppShimmerBox(height: 120.w, borderRadius: 16.r),
+                ),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: AppShimmerBox(height: 120.w, borderRadius: 16.r),
+                ),
               ],
             ),
           );
@@ -31,25 +39,32 @@ class ProfileStatsRow extends StatelessWidget {
         final user = state is CurrentUserLoaded ? state.user : null;
 
         return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ProfileStatCard(
-              title: context.l10n.gpa,
-              value: user?.displayGpa ?? "--",
-              icon: Icons.emoji_events,
-              iconColor: context.colorScheme.primary,
+            Expanded(
+              child: ProfileStatCard(
+                title: context.l10n.gpa,
+                value: user?.displayGpa ?? "--",
+                icon: Icons.emoji_events,
+                iconColor: context.colorScheme.primary,
+              ),
             ),
-            ProfileStatCard(
-              title: context.l10n.creditsLabel,
-              value: user?.displayCredits ?? "--",
-              icon: Icons.menu_book,
-              iconColor: context.colorScheme.secondary,
+            SizedBox(width: 8.w),
+            Expanded(
+              child: ProfileStatCard(
+                title: context.l10n.creditsLabel,
+                value: user?.displayCredits ?? "--",
+                icon: Icons.menu_book,
+                iconColor: context.colorScheme.secondary,
+              ),
             ),
-            ProfileStatCard(
-              title: context.l10n.semester,
-              value: user?.displayLevel ?? "--",
-              icon: Icons.calendar_month,
-              iconColor: AppColors.aiPink,
+            SizedBox(width: 8.w),
+            Expanded(
+              child: ProfileStatCard(
+                title: context.l10n.semester,
+                value: user?.displayLevel ?? "--",
+                icon: Icons.calendar_month,
+                iconColor: AppColors.aiPink,
+              ),
             ),
           ],
         );
