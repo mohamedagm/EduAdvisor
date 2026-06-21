@@ -23,6 +23,7 @@ dependencies:
   intl: any
   shared_preferences: ^2.5.4
   shimmer: ^3.0.0
+  get_it: ^9.2.1
 
 dev_dependencies:
   flutter_test:

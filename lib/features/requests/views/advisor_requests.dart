@@ -1,4 +1,4 @@
-import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_cubit.dart';
 import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_state.dart';
 import 'package:edu_advisor/features/requests/data/repo/advisor_request_repo.dart';
@@ -19,13 +19,11 @@ class AdvisorRequests extends StatelessWidget {
   Widget build(BuildContext context) {
     // print("TOKEN: $token");
     return BlocProvider(
-      create: (context) => RequestsCubit(
-        advisorRepo: AdvisorRepo(apiConsumer: DioConsumer()),
-      )..fetchPendingRequests(),
+      create: (context) =>
+          RequestsCubit(advisorRepo: getIt<AdvisorRepo>())
+            ..fetchPendingRequests(),
       // 💡 استخدام الـ Builder لضمان تمرير الـ Context المشبع بالـ Cubit للشاشات الفرعية والتفاصيل بشكل سليم
-      child: Builder(
-        builder: (context) => _AdvisorRequestsView(),
-      ),
+      child: Builder(builder: (context) => _AdvisorRequestsView()),
     );
   }
 }
@@ -99,9 +97,7 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
 
                 return requestsToShow.isEmpty
                     ? const EmptyRequestsWidget()
-                    : RequestsList(
-                        requests: requestsToShow.cast(),
-                      );
+                    : RequestsList(requests: requestsToShow.cast());
               },
             ),
           ),

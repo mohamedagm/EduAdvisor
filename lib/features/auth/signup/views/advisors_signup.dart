@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
-import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
@@ -68,8 +68,7 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return BlocProvider(
-      create: (context) =>
-          AuthCubit(authRepo: AuthRepo(apiConsumer: DioConsumer())),
+      create: (context) => AuthCubit(authRepo: getIt<AuthRepo>()),
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: _authListener,
         builder: (context, state) {
@@ -253,9 +252,8 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) => VerifyCodeCubit(
-              verifyCodeRepo: VerifyCodeRepo(apiConsumer: DioConsumer()),
-            ),
+            create: (context) =>
+                VerifyCodeCubit(verifyCodeRepo: getIt<VerifyCodeRepo>()),
             child: VerifyCodeScreen(
               email: emailController.text.trim(),
               role: widget.registerRole,

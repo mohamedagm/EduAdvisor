@@ -1,4 +1,4 @@
-import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
@@ -21,8 +21,7 @@ class AdvisorHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          AuthCubit(authRepo: AuthRepo(apiConsumer: DioConsumer())),
+      create: (context) => AuthCubit(authRepo: getIt<AuthRepo>()),
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: _handleAuthState,
         builder: (context, state) {

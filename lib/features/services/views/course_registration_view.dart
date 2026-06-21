@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
-import '../../../core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/app_screen_util.dart';
@@ -40,7 +40,7 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
   void initState() {
     super.initState();
     _courseRegistrationCubit = CourseRegistrationCubit(
-      repo: CourseRegistrationRepo(apiConsumer: DioConsumer()),
+      repo: getIt<CourseRegistrationRepo>(),
     );
   }
 

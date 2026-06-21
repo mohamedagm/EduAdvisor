@@ -1,4 +1,4 @@
-import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/features/advisor_nav/advisor_home_screen.dart';
 import 'package:edu_advisor/features/auth/login/views/advisor_login.dart';
@@ -19,6 +19,7 @@ import 'package:edu_advisor/features/services/views/course_recommendations_view.
 import 'package:edu_advisor/features/services/views/course_registration_view.dart';
 import 'package:edu_advisor/features/services/views/registration_status_view.dart';
 import 'package:edu_advisor/features/settings/views/settings_view.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/features/user/data/repo/user_repo.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:flutter/material.dart';
@@ -86,8 +87,7 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state, child) {
         return BlocProvider(
           create: (context) =>
-              CurrentUserCubit(userRepo: UserRepo(apiConsumer: DioConsumer()))
-                ..getMe(),
+              CurrentUserCubit(userRepo: getIt<UserRepo>())..getMe(),
           child: child,
         );
       },

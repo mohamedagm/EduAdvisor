@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/routing/app_startup_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +22,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
   late final Animation<Offset> _chipsSlide;
   late final Animation<double> _glowScale;
 
-  final AppStartupService _startupService = AppStartupService();
+  final AppStartupService _startupService = getIt<AppStartupService>();
 
   @override
   void initState() {

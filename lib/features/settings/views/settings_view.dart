@@ -1,4 +1,4 @@
-import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_view_body.dart';
@@ -15,13 +15,11 @@ class SettingsView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              AuthCubit(authRepo: AuthRepo(apiConsumer: DioConsumer())),
+          create: (context) => AuthCubit(authRepo: getIt<AuthRepo>()),
         ),
         BlocProvider(
           create: (context) =>
-              CurrentUserCubit(userRepo: UserRepo(apiConsumer: DioConsumer()))
-                ..getMe(),
+              CurrentUserCubit(userRepo: getIt<UserRepo>())..getMe(),
         ),
       ],
       child: const SettingsViewBody(),

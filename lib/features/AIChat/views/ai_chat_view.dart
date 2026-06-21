@@ -1,4 +1,4 @@
-import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/AIChat/Manager/cubit/ai_chat_cubit.dart';
 import 'package:edu_advisor/features/AIChat/Manager/cubit/ai_chat_state.dart';
@@ -22,13 +22,7 @@ class AIChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AiChatCubit(
-        aiChatRepo: AiChatRepo(
-          remoteDataSource: AiChatRemoteDataSourceImpl(
-            apiConsumer: DioConsumer(),
-          ),
-        ),
-      ),
+      create: (context) => AiChatCubit(aiChatRepo: getIt<AiChatRepo>()),
       child: const _AIChatViewBody(),
     );
   }

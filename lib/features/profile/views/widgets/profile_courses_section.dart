@@ -1,4 +1,4 @@
-import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
@@ -46,9 +46,9 @@ class _ProfileCoursesSectionState extends State<ProfileCoursesSection>
     ];
 
     return BlocProvider(
-      create: (context) => ProfileCoursesCubit(
-        profileCoursesRepo: ProfileCoursesRepo(apiConsumer: DioConsumer()),
-      )..getMyCourses(),
+      create: (context) =>
+          ProfileCoursesCubit(profileCoursesRepo: getIt<ProfileCoursesRepo>())
+            ..getMyCourses(),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Container(

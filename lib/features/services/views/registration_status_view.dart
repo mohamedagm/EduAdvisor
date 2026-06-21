@@ -1,4 +1,4 @@
-import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/utils/app_screen_util.dart';
@@ -20,9 +20,9 @@ class RegistrationStatusView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegistrationStatusCubit(
-        repo: CourseRegistrationRepo(apiConsumer: DioConsumer()),
-      )..getRegistrationRequests(),
+      create: (context) =>
+          RegistrationStatusCubit(repo: getIt<CourseRegistrationRepo>())
+            ..getRegistrationRequests(),
       child: const _RegistrationStatusBody(),
     );
   }

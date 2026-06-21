@@ -1,4 +1,4 @@
-import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
@@ -41,9 +41,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     final width = size.width;
 
     return BlocProvider(
-      create: (context) => ForgotPasswordCubit(
-        repo: ForgotPasswordRepo(apiConsumer: DioConsumer()),
-      ),
+      create: (context) =>
+          ForgotPasswordCubit(repo: getIt<ForgotPasswordRepo>()),
       child: BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
         listener: (context, state) {
           if (state is ForgotPasswordSuccess) {
@@ -56,9 +55,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => BlocProvider(
-                  create: (context) => VerifyCodeCubit(
-                    verifyCodeRepo: VerifyCodeRepo(apiConsumer: DioConsumer()),
-                  ),
+                  create: (context) =>
+                      VerifyCodeCubit(verifyCodeRepo: getIt<VerifyCodeRepo>()),
                   child: VerifyCodeScreen(
                     email: _emailController.text.trim(),
                     role: widget.registerRole,
@@ -191,4 +189,3 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 }
-

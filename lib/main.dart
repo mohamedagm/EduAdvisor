@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/routing/app_router.dart';
 import 'package:edu_advisor/core/theme/app_theme.dart';
 import 'package:edu_advisor/core/theme/theme_cubit.dart';
@@ -15,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  setupDependencyInjection();
   final preferences = await SharedPreferences.getInstance();
   runApp(
     DevicePreview(
