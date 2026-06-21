@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "appTitle": "EduAdvisor",
+  "@appTitle": {
+    "description": "Application name shown on the splash screen"
+  },
+  "splashTagline": "Your AI-Powered Academic Companion",
+  "@splashTagline": {
+    "description": "Subtitle shown below the application name"
+  },
+  "smartPlanning": "Smart Planning",
+  "@smartPlanning": {
+    "description": "Splash screen feature chip"
+  },
+  "aiPowered": "AI Powered",
+  "@aiPowered": {
+    "description": "Splash screen feature chip"
+  }
+}

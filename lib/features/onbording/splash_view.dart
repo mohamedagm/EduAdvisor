@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/routing/app_startup_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -195,7 +196,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     return Column(
       children: [
         Text(
-          "EduAdvisor",
+          context.l10n.appTitle,
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
@@ -205,7 +206,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
         ),
         const SizedBox(height: 8),
         Text(
-          "Your AI-Powered Academic Companion",
+          context.l10n.splashTagline,
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,
@@ -224,9 +225,9 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _chip("Smart Planning", Icons.auto_graph_rounded),
+            _chip(context.l10n.smartPlanning, Icons.auto_graph_rounded),
             const SizedBox(width: 16),
-            _chip("AI Powered", Icons.bolt_rounded),
+            _chip(context.l10n.aiPowered, Icons.bolt_rounded),
           ],
         ),
       ),

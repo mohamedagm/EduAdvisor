@@ -2,6 +2,7 @@ import 'package:edu_advisor/core/routing/app_router.dart';
 import 'package:edu_advisor/core/theme/app_theme.dart';
 import 'package:edu_advisor/core/theme/theme_cubit.dart';
 import 'package:edu_advisor/core/theme/theme_preferences.dart';
+import 'package:edu_advisor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +28,10 @@ class MainApp extends StatelessWidget {
         builder: (context, themeMode) {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
+            onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: AppLocalizations.supportedLocales.first,
             routerConfig: appRouter,
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
