@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'request_state.dart';
 
 class RequestsCubit extends Cubit<RequestsState> {
-  RequestsCubit({required AdvisorRepo advisorRepo})
-      : _advisorRepo = advisorRepo,
-        super(const RequestsInitial());
+  RequestsCubit({required AdvisorRequestRepo advisorRepo})
+    : _advisorRepo = advisorRepo,
+      super(const RequestsInitial());
 
-  final AdvisorRepo _advisorRepo;
+  final AdvisorRequestRepo _advisorRepo;
 
   Future<void> fetchAllRequests() async {
     if (state is RequestsLoading) return;
@@ -21,27 +21,26 @@ class RequestsCubit extends Cubit<RequestsState> {
       pageSize: 50,
     );
 
-    result.fold(
-      (failure) => emit(RequestsFailure(failure)),
-      (data) {
-        final pending = data.requests
-            .where((r) => r.status.toLowerCase() == 'pending')
-            .toList();
-        final approved = data.requests
-            .where((r) => r.status.toLowerCase() == 'approved')
-            .toList();
-        final rejected = data.requests
-            .where((r) => r.status.toLowerCase() == 'rejected')
-            .toList();
+    result.fold((failure) => emit(RequestsFailure(failure)), (data) {
+      final pending = data.requests
+          .where((r) => r.status.toLowerCase() == 'pending')
+          .toList();
+      final approved = data.requests
+          .where((r) => r.status.toLowerCase() == 'approved')
+          .toList();
+      final rejected = data.requests
+          .where((r) => r.status.toLowerCase() == 'rejected')
+          .toList();
 
-        emit(RequestsSuccess(
+      emit(
+        RequestsSuccess(
           pendingRequests: pending,
           approvedRequests: approved,
           rejectedRequests: rejected,
           totalCount: data.totalCount,
-        ));
-      },
-    );
+        ),
+      );
+    });
   }
 
   Future<void> fetchPendingRequests() => fetchAllRequests();
@@ -59,22 +58,25 @@ class RequestsCubit extends Cubit<RequestsState> {
 
     if (state is RequestsSuccess) {
       final currentState = state as RequestsSuccess;
-      final requestIndex =
-          currentState.pendingRequests.indexWhere((r) => r.id == id);
+      final requestIndex = currentState.pendingRequests.indexWhere(
+        (r) => r.id == id,
+      );
       if (requestIndex != -1) {
         final approvedRequest = currentState.pendingRequests[requestIndex]
             .copyWith(status: 'Approved');
-        final pendingRequests =
-            List<StudentRequest>.of(currentState.pendingRequests)
-              ..removeAt(requestIndex);
-        final approvedRequests =
-            List<StudentRequest>.of(currentState.approvedRequests)
-              ..add(approvedRequest);
+        final pendingRequests = List<StudentRequest>.of(
+          currentState.pendingRequests,
+        )..removeAt(requestIndex);
+        final approvedRequests = List<StudentRequest>.of(
+          currentState.approvedRequests,
+        )..add(approvedRequest);
 
-        emit(currentState.copyWith(
-          pendingRequests: pendingRequests,
-          approvedRequests: approvedRequests,
-        ));
+        emit(
+          currentState.copyWith(
+            pendingRequests: pendingRequests,
+            approvedRequests: approvedRequests,
+          ),
+        );
         return null;
       }
     }
@@ -83,8 +85,10 @@ class RequestsCubit extends Cubit<RequestsState> {
     return null;
   }
 
-  Future<Failure?> rejectRequest(String id,
-      {String reason = "Rejected by Advisor"}) async {
+  Future<Failure?> rejectRequest(
+    String id, {
+    String reason = "Rejected by Advisor",
+  }) async {
     final result = await _advisorRepo.rejectRequest(id, reason: reason);
     final failure = result.fold((f) => f, (_) => null);
 
@@ -95,22 +99,25 @@ class RequestsCubit extends Cubit<RequestsState> {
 
     if (state is RequestsSuccess) {
       final currentState = state as RequestsSuccess;
-      final requestIndex =
-          currentState.pendingRequests.indexWhere((r) => r.id == id);
+      final requestIndex = currentState.pendingRequests.indexWhere(
+        (r) => r.id == id,
+      );
       if (requestIndex != -1) {
         final rejectedRequest = currentState.pendingRequests[requestIndex]
             .copyWith(status: 'Rejected');
-        final pendingRequests =
-            List<StudentRequest>.of(currentState.pendingRequests)
-              ..removeAt(requestIndex);
-        final rejectedRequests =
-            List<StudentRequest>.of(currentState.rejectedRequests)
-              ..add(rejectedRequest);
+        final pendingRequests = List<StudentRequest>.of(
+          currentState.pendingRequests,
+        )..removeAt(requestIndex);
+        final rejectedRequests = List<StudentRequest>.of(
+          currentState.rejectedRequests,
+        )..add(rejectedRequest);
 
-        emit(currentState.copyWith(
-          pendingRequests: pendingRequests,
-          rejectedRequests: rejectedRequests,
-        ));
+        emit(
+          currentState.copyWith(
+            pendingRequests: pendingRequests,
+            rejectedRequests: rejectedRequests,
+          ),
+        );
         return null;
       }
     }

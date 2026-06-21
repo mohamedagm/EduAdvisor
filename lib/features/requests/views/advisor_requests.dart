@@ -20,7 +20,7 @@ class AdvisorRequests extends StatelessWidget {
     // print("TOKEN: $token");
     return BlocProvider(
       create: (context) =>
-          RequestsCubit(advisorRepo: getIt<AdvisorRepo>())
+          RequestsCubit(advisorRepo: getIt<AdvisorRequestRepo>())
             ..fetchPendingRequests(),
       // 💡 استخدام الـ Builder لضمان تمرير الـ Context المشبع بالـ Cubit للشاشات الفرعية والتفاصيل بشكل سليم
       child: Builder(builder: (context) => _AdvisorRequestsView()),
