@@ -146,12 +146,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ignoring: isLoading,
                             child: GradientElevatedButton(
                               buttonText: isLoading
+                                 
                                   ? 'Sending...'
+                                 
                                   : 'Send Verification code',
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<ForgotPasswordCubit>().sendOtp(
-                                    email: _emailController.text.trim(),
+                                    email: _emailController.text
+                                        .trim(),
                                   );
                                 }
                               },
@@ -186,3 +189,4 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 }
+
