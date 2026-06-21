@@ -1,6 +1,8 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsInfoRow extends StatelessWidget {
   const SettingsInfoRow({
@@ -19,8 +21,8 @@ class SettingsInfoRow extends StatelessWidget {
     return Row(
       children: [
         if (icon != null) ...[
-          Icon(icon, color: context.themeColors.textMuted, size: 24),
-          const SizedBox(width: 12),
+          Icon(icon, color: context.themeColors.textMuted, size: 24.r),
+          SizedBox(width: 12.w),
         ],
         Expanded(
           child: Column(
@@ -28,15 +30,15 @@ class SettingsInfoRow extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: AppTextStyles.bodyInterMedium14.copyWith(
+                style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
                   color: context.themeColors.textPrimary,
                 ),
               ),
               if (subtitle != null) ...[
-                const SizedBox(height: 2),
+                SizedBox(height: 2.w),
                 Text(
                   subtitle!,
-                  style: AppTextStyles.bodyInterRegular12.copyWith(
+                  style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                     color: context.themeColors.textMuted,
                   ),
                 ),
@@ -49,6 +51,7 @@ class SettingsInfoRow extends StatelessWidget {
               ? Icons.chevron_left
               : Icons.chevron_right,
           color: context.themeColors.textMuted,
+          size: 24.r,
         ),
       ],
     );

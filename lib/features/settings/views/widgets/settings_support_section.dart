@@ -1,9 +1,11 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_info_row.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsSupportSection extends StatelessWidget {
   const SettingsSupportSection({super.key});
@@ -16,16 +18,16 @@ class SettingsSupportSection extends StatelessWidget {
         children: [
           Text(
             context.l10n.support,
-            style: AppTextStyles.bodyInterMedium18.copyWith(
+            style: AppTextStyles.bodyInterMedium18.responsive.copyWith(
               color: context.themeColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.w),
           SettingsInfoRow(
             icon: Icons.help_outline,
             title: context.l10n.helpCenter,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.w),
           SettingsInfoRow(
             icon: Icons.info_outline,
             title: context.l10n.aboutEduAdvisor,

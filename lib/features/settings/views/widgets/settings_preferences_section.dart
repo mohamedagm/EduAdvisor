@@ -1,11 +1,13 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/theme/theme_cubit.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_info_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsPreferencesSection extends StatelessWidget {
   const SettingsPreferencesSection({super.key});
@@ -20,11 +22,11 @@ class SettingsPreferencesSection extends StatelessWidget {
         children: [
           Text(
             context.l10n.preferences,
-            style: AppTextStyles.bodyInterMedium18.copyWith(
+            style: AppTextStyles.bodyInterMedium18.responsive.copyWith(
               color: context.themeColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.w),
           SettingsInfoRow(
             icon: Icons.language_outlined,
             title: context.l10n.language,
@@ -32,21 +34,21 @@ class SettingsPreferencesSection extends StatelessWidget {
                 ? context.l10n.arabicLanguage
                 : context.l10n.englishLanguage,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.w),
           Text(
             context.l10n.appearance,
-            style: AppTextStyles.bodyInterMedium14.copyWith(
+            style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
               color: context.themeColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.w),
           Text(
             context.l10n.appearanceDescription,
-            style: AppTextStyles.bodyInterRegular12.copyWith(
+            style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
               color: context.themeColors.textMuted,
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.w),
           BlocBuilder<ThemeCubit, ThemeMode>(
             builder: (context, themeMode) {
               return _ThemeModeSelector(
@@ -73,10 +75,10 @@ class _ThemeModeSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(4),
+      padding: EdgeInsets.all(4.w),
       decoration: BoxDecoration(
         color: context.themeColors.mutedSurface,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: context.themeColors.border),
       ),
       child: Row(
@@ -131,23 +133,26 @@ class _ThemeModeOption extends StatelessWidget {
         label: context.l10n.themeOptionSemantics(label),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(9),
+          borderRadius: BorderRadius.circular(9.r),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 180),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+            padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 4.w),
             decoration: BoxDecoration(
               color: isSelected
                   ? context.colorScheme.primary
                   : Colors.transparent,
-              borderRadius: BorderRadius.circular(9),
+              borderRadius: BorderRadius.circular(9.r),
             ),
             child: Column(
               children: [
-                Icon(icon, size: 18, color: foreground),
-                const SizedBox(height: 4),
+                Icon(icon, size: 18.r, color: foreground),
+                SizedBox(height: 4.w),
                 Text(
                   label,
-                  style: AppTextStyles.bodyInterRegular12.copyWith(
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                     color: foreground,
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                   ),

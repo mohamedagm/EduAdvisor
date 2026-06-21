@@ -3,6 +3,7 @@ import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_logout_section.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../auth/Manager/cubit/auth_cubit.dart';
 import 'settings_notifications_section.dart';
@@ -49,7 +51,7 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
             ),
             title: Text(
               context.l10n.settingsTitle,
-              style: AppTextStyles.heading1_20b.copyWith(
+              style: AppTextStyles.heading1_20b.responsive.copyWith(
                 color: AppColors.white,
               ),
             ),
@@ -57,12 +59,12 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
             elevation: 0,
           ),
           body: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SettingsProfileSection(),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.w),
                 SettingsNotificationsSection(
                   pushNotifications: pushNotifications,
                   emailNotifications: emailNotifications,
@@ -77,15 +79,15 @@ class _SettingsViewBodyState extends State<SettingsViewBody> {
                     setState(() => gradeAlerts = value);
                   },
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.w),
                 const SettingsPreferencesSection(),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.w),
                 const SettingsSecuritySection(),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.w),
                 const SettingsSupportSection(),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.w),
                 SettingsLogoutSection(isLoggingOut: isLoggingOut),
-                const SizedBox(height: 32),
+                SizedBox(height: 32.w),
               ],
             ),
           ),

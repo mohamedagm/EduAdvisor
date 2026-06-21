@@ -1,7 +1,9 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsToggleRow extends StatelessWidget {
   const SettingsToggleRow({
@@ -25,8 +27,8 @@ class SettingsToggleRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         if (icon != null) ...[
-          Icon(icon, color: context.themeColors.textMuted, size: 24),
-          const SizedBox(width: 12),
+          Icon(icon, color: context.themeColors.textMuted, size: 24.r),
+          SizedBox(width: 12.w),
         ],
         Expanded(
           child: Column(
@@ -34,29 +36,30 @@ class SettingsToggleRow extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: AppTextStyles.bodyInterMedium14.copyWith(
+                style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
                   color: context.themeColors.textPrimary,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2.w),
               Text(
                 subtitle,
-                style: AppTextStyles.bodyInterRegular12.copyWith(
+                style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                   color: context.themeColors.textMuted,
                 ),
               ),
             ],
           ),
         ),
+        SizedBox(width: 12.w),
         GestureDetector(
           onTap: () => onChanged(!isOn),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.w),
             decoration: BoxDecoration(
               color: isOn
                   ? context.themeColors.successContainer
                   : context.themeColors.border,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
             ),
             child: Text(
               isOn ? context.l10n.settingOn : context.l10n.settingOff,
@@ -64,7 +67,7 @@ class SettingsToggleRow extends StatelessWidget {
                 color: isOn
                     ? context.themeColors.success
                     : context.themeColors.textMuted,
-                fontSize: 12,
+                fontSize: 12.sp,
               ),
             ),
           ),
