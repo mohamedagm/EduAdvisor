@@ -3,6 +3,7 @@ import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_catalog_
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_catalog_shimmer.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_details_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CourseCatalogBuilder extends StatelessWidget {
   const CourseCatalogBuilder({
@@ -21,7 +22,7 @@ class CourseCatalogBuilder extends StatelessWidget {
     return ListView.separated(
       itemCount: courses.length + (isLoadingMore ? 1 : 0),
       separatorBuilder: (context, index) {
-        return const SizedBox(height: 12);
+        return SizedBox(height: 12.w);
       },
       itemBuilder: (context, index) {
         if (index == courses.length) {
@@ -49,8 +50,8 @@ void _showCourseDetails(BuildContext context, CourseModel course) {
     context: context,
     isScrollControlled: true,
     backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
     ),
     builder: (_) => CourseDetailsSheet(course: course),
   );

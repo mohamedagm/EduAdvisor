@@ -1,9 +1,11 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/features/CourseCatalog/data/models/course_model.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/tag.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CourseCatalogItem extends StatelessWidget {
   const CourseCatalogItem({super.key, required this.course});
@@ -13,10 +15,10 @@ class CourseCatalogItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: context.themeColors.border),
       ),
       child: Row(
@@ -24,7 +26,7 @@ class CourseCatalogItem extends StatelessWidget {
         children: [
           Expanded(
             child: Column(
-              spacing: 8,
+              spacing: 8.w,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
@@ -32,34 +34,38 @@ class CourseCatalogItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Column(
-                        spacing: 4,
+                        spacing: 4.w,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
                               Text(
                                 course.displayCode,
-                                style: AppTextStyles.heading3PoppinsReg16
+                                style: AppTextStyles
+                                    .heading3PoppinsReg16
+                                    .responsive
                                     .copyWith(
                                       color: context.themeColors.textPrimary,
                                     ),
                               ),
-                              const SizedBox(width: 24),
+                              SizedBox(width: 12.w),
                               Flexible(
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 2,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w,
+                                    vertical: 2.w,
                                   ),
                                   decoration: BoxDecoration(
                                     color: context.themeColors.warningContainer,
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(20.r),
                                   ),
                                   child: Text(
                                     course.displayType,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: AppTextStyles.bodyInterRegular12
+                                    style: AppTextStyles
+                                        .bodyInterRegular12
+                                        .responsive
                                         .copyWith(
                                           color: context.themeColors.warning,
                                         ),
@@ -73,50 +79,45 @@ class CourseCatalogItem extends StatelessWidget {
                             course.displayName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.interRegular16.copyWith(
-                              color: context.themeColors.textSecondary,
-                            ),
+                            style: AppTextStyles.interRegular16.responsive
+                                .copyWith(
+                                  color: context.themeColors.textSecondary,
+                                ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w),
                     Icon(
                       Icons.chevron_right_rounded,
+                      size: 24.r,
                       color: context.themeColors.textMuted,
-                    ),
-                  ],
-                ),
-
-                Row(
-                  children: [
-                    Icon(
-                      Icons.menu_book_outlined,
-                      size: 16,
-                      color: context.themeColors.textMuted,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      context.l10n.courseCredits(course.displayCreditHours),
-                      style: AppTextStyles.bodyInterMedium14,
-                    ),
-                    const SizedBox(width: 16),
-                    Icon(
-                      Icons.school_outlined,
-                      size: 16,
-                      color: context.themeColors.textMuted,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      context.l10n.courseLevel(course.standardLevel.toString()),
-                      style: AppTextStyles.bodyInterMedium14,
                     ),
                   ],
                 ),
 
                 Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
+                  spacing: 16.w,
+                  runSpacing: 8.w,
+                  children: [
+                    _CourseMetadata(
+                      icon: Icons.menu_book_outlined,
+                      label: context.l10n.courseCredits(
+                        course.displayCreditHours,
+                      ),
+                    ),
+                    _CourseMetadata(
+                      icon: Icons.school_outlined,
+                      label: context.l10n.courseLevel(
+                        course.standardLevel.toString(),
+                      ),
+                    ),
+                  ],
+                ),
+
+                Wrap(
+                  spacing: 8.w,
+                  runSpacing: 8.w,
                   children: [
                     Tag(label: course.displayDepartment),
                     Tag(
@@ -131,6 +132,25 @@ class CourseCatalogItem extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _CourseMetadata extends StatelessWidget {
+  const _CourseMetadata({required this.icon, required this.label});
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 16.r, color: context.themeColors.textMuted),
+        SizedBox(width: 4.w),
+        Text(label, style: AppTextStyles.bodyInterMedium14.responsive),
+      ],
     );
   }
 }

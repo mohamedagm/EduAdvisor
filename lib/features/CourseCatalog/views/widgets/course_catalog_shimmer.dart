@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CourseCatalogShimmer extends StatelessWidget {
   const CourseCatalogShimmer({super.key});
@@ -11,7 +12,7 @@ class CourseCatalogShimmer extends StatelessWidget {
       child: ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         itemCount: 5,
-        separatorBuilder: (context, index) => const SizedBox(height: 12),
+        separatorBuilder: (context, index) => SizedBox(height: 12.w),
         itemBuilder: (context, index) => const _CourseCatalogSkeletonCard(),
       ),
     );
@@ -23,9 +24,9 @@ class CourseCatalogLoadMoreShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 8),
-      child: AppShimmer(child: _CourseCatalogSkeletonCard()),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.w),
+      child: const AppShimmer(child: _CourseCatalogSkeletonCard()),
     );
   }
 }
@@ -36,38 +37,38 @@ class _CourseCatalogSkeletonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: context.themeColors.border),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              AppShimmerBox(width: 72, height: 18),
-              SizedBox(width: 24),
-              AppShimmerBox(width: 58, height: 22, borderRadius: 12),
+              AppShimmerBox(width: 72.w, height: 18.w),
+              SizedBox(width: 24.w),
+              AppShimmerBox(width: 58.w, height: 22.w, borderRadius: 12.r),
             ],
           ),
-          SizedBox(height: 10),
-          AppShimmerBox(width: 190, height: 14),
-          SizedBox(height: 16),
+          SizedBox(height: 10.w),
+          AppShimmerBox(width: 190.w, height: 14.w),
+          SizedBox(height: 16.w),
           Row(
             children: [
-              AppShimmerBox(width: 92, height: 14),
-              SizedBox(width: 20),
-              AppShimmerBox(width: 72, height: 14),
+              AppShimmerBox(width: 92.w, height: 14.w),
+              SizedBox(width: 20.w),
+              AppShimmerBox(width: 72.w, height: 14.w),
             ],
           ),
-          SizedBox(height: 14),
+          SizedBox(height: 14.w),
           Row(
             children: [
-              AppShimmerBox(width: 88, height: 24, borderRadius: 12),
-              SizedBox(width: 8),
-              AppShimmerBox(width: 96, height: 24, borderRadius: 12),
+              AppShimmerBox(width: 88.w, height: 24.w, borderRadius: 12.r),
+              SizedBox(width: 8.w),
+              AppShimmerBox(width: 96.w, height: 24.w, borderRadius: 12.r),
             ],
           ),
         ],
