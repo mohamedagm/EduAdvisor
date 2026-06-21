@@ -15,7 +15,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AdvisorHeader extends StatelessWidget {
-  const AdvisorHeader({super.key});
+  final int? studentCount;
+  const AdvisorHeader({super.key, required this.studentCount});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,7 @@ class AdvisorHeader extends StatelessWidget {
               return _AdvisorHeaderContent(
                 user: user,
                 isLoggingOut: isLoggingOut,
+                studentCount: studentCount?.toString() ?? '0',
               );
             },
           );
@@ -66,10 +68,15 @@ class AdvisorHeader extends StatelessWidget {
 }
 
 class _AdvisorHeaderContent extends StatelessWidget {
-  const _AdvisorHeaderContent({required this.user, required this.isLoggingOut});
+  const _AdvisorHeaderContent({
+    required this.user,
+    required this.isLoggingOut,
+    required this.studentCount,
+  });
 
   final CurrentUserModel? user;
   final bool isLoggingOut;
+  final String studentCount;
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +161,8 @@ class _AdvisorHeaderContent extends StatelessWidget {
                 children: [
                   statCard(
                     icon: Icons.people_outline,
-                    value: user?.displayStudentsCount ?? '--',
+                    value: studentCount,
+                    // value: studentCount.toString(),
                     label: 'Students',
                   ),
                   const SizedBox(width: 12),

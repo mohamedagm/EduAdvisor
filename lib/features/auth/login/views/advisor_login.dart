@@ -3,14 +3,19 @@ import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
+import 'package:edu_advisor/features/advisor_nav/advisor_home_screen.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/departments_cubit.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
 import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/departments_repo.dart';
+import 'package:edu_advisor/features/auth/data/repo/verify_code_repo.dart';
+import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/login/views/forgot_password.dart';
+import 'package:edu_advisor/features/auth/login/views/verfy_code_screen.dart';
 import 'package:edu_advisor/features/auth/signup/views/advisors_signup.dart';
 import 'package:edu_advisor/features/auth/widgets/auth_card.dart';
 import 'package:edu_advisor/features/auth/widgets/login_form.dart';
@@ -22,7 +27,8 @@ import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AdvisorLoginScreen extends StatefulWidget {
-  const AdvisorLoginScreen({super.key});
+  final RegisterRole registerRole;
+  const AdvisorLoginScreen({super.key, required this.registerRole});
 
   @override
   State<AdvisorLoginScreen> createState() => _AdvisorLoginScreenState();
@@ -189,11 +195,34 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
         title: context.l10n.loginSuccessful,
         description: context.l10n.welcomeBackName(state.response.user.fullName),
       );
-      context.go(AppRoutes.advisorProfileSetup);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const AdvisorProfile()),
+      );
     }
 
     if (state is LoginFailure) {
-      final message = state.failure.message;
+      final msg = state.failure.message.toLowerCase();
+
+      if (msg.contains("accountnotverified")) {
+        // في signup_screen.dart
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) => VerifyCodeCubit(
+                verifyCodeRepo: VerifyCodeRepo(apiConsumer: DioConsumer()),
+              ),
+              child: VerifyCodeScreen(
+                email: _emailController.text.trim(),
+                role: widget.registerRole,
+              ),
+            ),
+          ),
+        );
+        return;
+      }
+
       AppToast.error(
         context,
         title: context.l10n.loginFailed,
@@ -205,9 +234,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
   }
 
   void _onLoginPressed(BuildContext context, {required bool isLoading}) {
-    if (isLoading || !_formKey.currentState!.validate()) {
-      return;
-    }
+    if (isLoading || !_formKey.currentState!.validate()) return;
 
     context.read<AuthCubit>().login(
       LoginRequestModel(

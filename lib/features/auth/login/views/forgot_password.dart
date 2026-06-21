@@ -62,7 +62,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   child: VerifyCodeScreen(
                     email: _emailController.text.trim(),
                     role: widget.registerRole,
-                    isFromForgotPassword: true, // ✅
+                    isFromForgotPassword: true,
                   ),
                 ),
               ),
@@ -70,7 +70,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           }
 
           if (state is ForgotPasswordFailure) {
-            AppToast.error(
+            ScaffoldMessenger.of(
               context,
               title: context.l10n.couldNotSendCode,
               description: state.message,
@@ -155,7 +155,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<ForgotPasswordCubit>().sendOtp(
                                     email: _emailController.text
-                                        .trim(), // ✅ بتكلم الـ API
+                                        .trim(),
                                   );
                                 }
                               },
@@ -190,3 +190,4 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 }
+

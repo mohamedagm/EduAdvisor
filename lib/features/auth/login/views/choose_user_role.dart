@@ -1,5 +1,5 @@
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
-import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/login/views/student_login.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
@@ -22,12 +22,12 @@ class ChooseUserRole extends StatelessWidget {
           children: [
             GradiantContainer(mainText: context.l10n.academicSuccessPartner),
             Container(
-              width: double.infinity,
+                width: double.infinity,
               margin: EdgeInsets.only(
-                top: screenHeight * 0.30, // يبدأ من مسافة متناسبة مع طول الشاشة
+                top: screenHeight * 0.30,
                 left: 20,
                 right: 20,
-                bottom: 40, // مسافة تحت عشان الـ Scroll
+                bottom: 40,
               ),
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
               decoration: BoxDecoration(
@@ -94,7 +94,14 @@ class ChooseUserRole extends StatelessWidget {
                     subtitle: context.l10n.advisorRoleDescription,
                     color: context.colorScheme.secondary,
                     onTap: () {
-                      context.push(AppRoutes.advisorLogin);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AdvisorLoginScreen(
+                             registerRole: RegisterRole.advisor,
+                          ),
+                        ),
+                      );
                     },
                   ),
 

@@ -61,6 +61,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
             if (!context.mounted) return;
             if (widget.role == RegisterRole.student) {
               Navigator.pushAndRemoveUntil(
+                // ignore: use_build_context_synchronously
                 context,
                 MaterialPageRoute(
                   builder: (_) => const StudentLoginScreen(
@@ -72,7 +73,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
             } else {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (_) => const AdvisorLoginScreen()),
+                MaterialPageRoute(builder: (_) => const AdvisorLoginScreen(registerRole: RegisterRole.advisor)),
                 (route) => false,
               );
             }
