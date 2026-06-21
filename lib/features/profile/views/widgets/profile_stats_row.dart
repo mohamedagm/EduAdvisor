@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/profile/views/widgets/profile_Stat_card.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
@@ -33,19 +34,19 @@ class ProfileStatsRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ProfileStatCard(
-              title: "GPA",
+              title: context.l10n.gpa,
               value: user?.displayGpa ?? "--",
               icon: Icons.emoji_events,
               iconColor: context.colorScheme.primary,
             ),
             ProfileStatCard(
-              title: "Credits",
+              title: context.l10n.creditsLabel,
               value: user?.displayCredits ?? "--",
               icon: Icons.menu_book,
               iconColor: context.colorScheme.secondary,
             ),
             ProfileStatCard(
-              title: "Semester",
+              title: context.l10n.semester,
               value: user?.displayLevel ?? "--",
               icon: Icons.calendar_month,
               iconColor: AppColors.aiPink,

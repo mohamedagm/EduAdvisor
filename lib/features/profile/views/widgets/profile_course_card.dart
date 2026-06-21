@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/features/profile/data/models/student_course_model.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
@@ -51,7 +52,9 @@ class ProfileCourseCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      course.displayName,
+                      course.name.isNotEmpty
+                          ? course.name
+                          : context.l10n.courseFallbackName,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.poppinsRegular14.copyWith(
@@ -72,7 +75,7 @@ class ProfileCourseCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${course.displayCreditHours} cr',
+                    context.l10n.creditHoursShort(course.displayCreditHours),
                     style: AppTextStyles.poppinsRegular14.copyWith(
                       color: context.themeColors.textSecondary,
                     ),

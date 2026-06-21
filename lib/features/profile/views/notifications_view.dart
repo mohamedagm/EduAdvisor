@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -17,12 +18,12 @@ class NotificationsView extends StatelessWidget {
         flexibleSpace: Container(
           decoration: const BoxDecoration(gradient: AppGradients.primary),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.white),
+        leading: BackButton(
+          color: AppColors.white,
           onPressed: () => context.pop(),
         ),
         title: Text(
-          'Notifications',
+          context.l10n.notifications,
           style: AppTextStyles.heading1_20b.copyWith(color: AppColors.white),
         ),
         centerTitle: false,
@@ -36,7 +37,7 @@ class NotificationsView extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '2 unread notifications',
+                    context.l10n.unreadNotifications(2),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.bodyInterMedium14.copyWith(
@@ -58,7 +59,7 @@ class NotificationsView extends StatelessWidget {
                       const SizedBox(width: 4),
                       Flexible(
                         child: Text(
-                          'Mark all as read',
+                          context.l10n.markAllAsRead,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodyInterMedium14.copyWith(
@@ -81,41 +82,45 @@ class NotificationsView extends StatelessWidget {
             _buildStatusNotificationCard(
               context: context,
               isSuccess: true,
-              title: 'Course Registration Approved',
-              subtitle: 'Your course registration request has been approved',
-              time: '1 hour ago',
+              title: context.l10n.courseRegistrationApproved,
+              subtitle: context.l10n.courseRegistrationApprovedMessage,
+              time: context.l10n.hoursAgo(1),
               isNew: true,
               innerCardCode: 'IS 312',
-              innerCardName: 'Database systems',
+              innerCardName: context.l10n.databaseSystems,
             ),
             const SizedBox(height: 12),
             _buildStatusNotificationCard(
               context: context,
               isSuccess: false,
-              title: 'Course Registration Rejected',
-              subtitle: 'Your course registration request was rejected',
-              time: '2 hours ago',
+              title: context.l10n.courseRegistrationRejected,
+              subtitle: context.l10n.courseRegistrationRejectedMessage,
+              time: context.l10n.hoursAgo(2),
               isNew: true,
               innerCardCode: 'CS450',
-              innerCardName: 'Artificial Intelligence',
+              innerCardName: context.l10n.artificialIntelligence,
               hasRejectionReason: true,
             ),
             const SizedBox(height: 12),
             _buildInfoNotificationCard(
               context: context,
               isAlert: false,
-              title: 'New Course Available',
-              subtitle:
-                  'CS401 - Advanced Algorithms is now available for enrollment',
-              time: '5 hours ago',
+              title: context.l10n.newCourseAvailable,
+              subtitle: context.l10n.courseAvailableForEnrollment(
+                'CS401 - ${context.l10n.advancedAlgorithms}',
+              ),
+              time: context.l10n.hoursAgo(5),
             ),
             const SizedBox(height: 12),
             _buildInfoNotificationCard(
               context: context,
               isAlert: true,
-              title: 'Registration Deadline',
-              subtitle: 'Course registration for Spring 2024 ends in 3 days',
-              time: '2 days ago',
+              title: context.l10n.registrationDeadline,
+              subtitle: context.l10n.registrationDeadlineMessage(
+                context.l10n.spring2024,
+                3,
+              ),
+              time: context.l10n.daysAgo(2),
             ),
           ],
         ),
@@ -195,7 +200,7 @@ class NotificationsView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          'New',
+                          context.l10n.newNotification,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
                             color: context.colorScheme.onPrimary,
                             fontSize: 10,
@@ -248,7 +253,7 @@ class NotificationsView extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          'View rejection reason',
+                          context.l10n.viewRejectionReason,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodyInterMedium14.copyWith(

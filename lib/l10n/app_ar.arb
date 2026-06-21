@@ -203,5 +203,77 @@
   "nameMinLength": "يجب ألا يقل الاسم عن 3 أحرف",
   "codeRequired": "الرمز مطلوب",
   "codeSixDigits": "يجب أن يتكون الرمز من 6 أرقام",
-  "codeDigitsOnly": "يجب أن يحتوي الرمز على أرقام فقط"
+  "codeDigitsOnly": "يجب أن يحتوي الرمز على أرقام فقط",
+  "myProfile": "ملفي الشخصي",
+  "profileStudentId": "المعرّف: {id}",
+  "@profileStudentId": {
+    "placeholders": {
+      "id": {"type": "String"}
+    }
+  },
+  "progressToGraduation": "التقدم نحو التخرج",
+  "creditsCompleted": "الساعات المعتمدة المكتملة",
+  "creditsRemaining": "{count, plural, =0{لا توجد ساعات معتمدة متبقية} =1{ساعة معتمدة واحدة متبقية} =2{ساعتان معتمدتان متبقيتان} few{{count} ساعات معتمدة متبقية} many{{count} ساعة معتمدة متبقية} other{{count} ساعة معتمدة متبقية}}",
+  "@creditsRemaining": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "myCourses": "مقرراتي",
+  "completed": "مكتملة",
+  "inProgress": "قيد الدراسة",
+  "remaining": "متبقية",
+  "noProfileCourses": "لا توجد مقررات هنا بعد.",
+  "courseFallbackName": "مقرر",
+  "creditHoursShort": "{credits} س.م.",
+  "@creditHoursShort": {
+    "placeholders": {
+      "credits": {"type": "String"}
+    }
+  },
+  "notifications": "الإشعارات",
+  "unreadNotifications": "{count, plural, =0{لا توجد إشعارات غير مقروءة} =1{إشعار واحد غير مقروء} =2{إشعاران غير مقروءين} few{{count} إشعارات غير مقروءة} many{{count} إشعارًا غير مقروء} other{{count} إشعار غير مقروء}}",
+  "@unreadNotifications": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "markAllAsRead": "تحديد الكل كمقروء",
+  "courseRegistrationApproved": "تمت الموافقة على تسجيل المقرر",
+  "courseRegistrationApprovedMessage": "تمت الموافقة على طلب تسجيل المقرر الخاص بك",
+  "courseRegistrationRejected": "تم رفض تسجيل المقرر",
+  "courseRegistrationRejectedMessage": "تم رفض طلب تسجيل المقرر الخاص بك",
+  "newNotification": "جديد",
+  "viewRejectionReason": "عرض سبب الرفض",
+  "newCourseAvailable": "مقرر جديد متاح",
+  "courseAvailableForEnrollment": "أصبح {course} متاحًا للتسجيل",
+  "@courseAvailableForEnrollment": {
+    "placeholders": {
+      "course": {"type": "String"}
+    }
+  },
+  "registrationDeadline": "الموعد النهائي للتسجيل",
+  "registrationDeadlineMessage": "ينتهي تسجيل المقررات لفصل {semester} خلال {days, plural, =1{يوم واحد} =2{يومين} few{{days} أيام} many{{days} يومًا} other{{days} يوم}}",
+  "@registrationDeadlineMessage": {
+    "placeholders": {
+      "semester": {"type": "String"},
+      "days": {"type": "int"}
+    }
+  },
+  "spring2024": "ربيع 2024",
+  "databaseSystems": "نظم قواعد البيانات",
+  "artificialIntelligence": "الذكاء الاصطناعي",
+  "advancedAlgorithms": "الخوارزميات المتقدمة",
+  "hoursAgo": "{count, plural, =0{الآن} =1{منذ ساعة واحدة} =2{منذ ساعتين} few{منذ {count} ساعات} many{منذ {count} ساعة} other{منذ {count} ساعة}}",
+  "@hoursAgo": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "daysAgo": "{count, plural, =0{اليوم} =1{منذ يوم واحد} =2{منذ يومين} few{منذ {count} أيام} many{منذ {count} يومًا} other{منذ {count} يوم}}",
+  "@daysAgo": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
 }

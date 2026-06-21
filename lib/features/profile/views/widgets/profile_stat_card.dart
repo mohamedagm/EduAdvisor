@@ -27,7 +27,7 @@ class ProfileStatCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(icon, size: 28, color: iconColor ?? context.themeColors.info),
+          Icon(icon, size: 24, color: iconColor ?? context.themeColors.info),
           const SizedBox(height: 8),
           Text(
             title,

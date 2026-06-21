@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
@@ -50,7 +51,7 @@ class _ProfileHeaderContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "My Profile",
+                context.l10n.myProfile,
                 style: AppTextStyles.heading1_20b.copyWith(
                   color: AppColors.white,
                 ),
@@ -108,14 +109,14 @@ class _ProfileHeaderContent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    user?.displayName ?? "Student",
+                    user?.displayName ?? context.l10n.student,
                     style: AppTextStyles.heading3PoppinsReg16.copyWith(
                       color: AppColors.white,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
-                    "ID: ${user?.displayId ?? '--'}",
+                    context.l10n.profileStudentId(user?.displayId ?? '--'),
                     style: AppTextStyles.bodyInterMedium14.copyWith(
                       color: AppColors.white,
                     ),
@@ -126,7 +127,7 @@ class _ProfileHeaderContent extends StatelessWidget {
                       alpha: 0.8,
                     ),
                     label: Text(
-                      user?.displayDepartment ?? "Department",
+                      user?.displayDepartment ?? context.l10n.department,
                       style: AppTextStyles.bodyInterRegular12.copyWith(
                         color: AppColors.white,
                       ),
@@ -160,7 +161,7 @@ class _ProfileHeaderShimmer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'My Profile',
+                context.l10n.myProfile,
                 style: AppTextStyles.heading1_20b.copyWith(
                   color: AppColors.white,
                 ),

@@ -446,4 +446,149 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get codeDigitsOnly => 'Code must contain only digits';
+
+  @override
+  String get myProfile => 'My Profile';
+
+  @override
+  String profileStudentId(String id) {
+    return 'ID: $id';
+  }
+
+  @override
+  String get progressToGraduation => 'Progress to Graduation';
+
+  @override
+  String get creditsCompleted => 'Credits Completed';
+
+  @override
+  String creditsRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count credits remaining',
+      one: '1 credit remaining',
+      zero: 'No credits remaining',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get myCourses => 'My Courses';
+
+  @override
+  String get completed => 'Completed';
+
+  @override
+  String get inProgress => 'In Progress';
+
+  @override
+  String get remaining => 'Remaining';
+
+  @override
+  String get noProfileCourses => 'No courses here yet.';
+
+  @override
+  String get courseFallbackName => 'Course';
+
+  @override
+  String creditHoursShort(String credits) {
+    return '$credits cr';
+  }
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String unreadNotifications(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unread notifications',
+      one: '1 unread notification',
+      zero: 'No unread notifications',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get markAllAsRead => 'Mark all as read';
+
+  @override
+  String get courseRegistrationApproved => 'Course Registration Approved';
+
+  @override
+  String get courseRegistrationApprovedMessage =>
+      'Your course registration request has been approved';
+
+  @override
+  String get courseRegistrationRejected => 'Course Registration Rejected';
+
+  @override
+  String get courseRegistrationRejectedMessage =>
+      'Your course registration request was rejected';
+
+  @override
+  String get newNotification => 'New';
+
+  @override
+  String get viewRejectionReason => 'View rejection reason';
+
+  @override
+  String get newCourseAvailable => 'New Course Available';
+
+  @override
+  String courseAvailableForEnrollment(String course) {
+    return '$course is now available for enrollment';
+  }
+
+  @override
+  String get registrationDeadline => 'Registration Deadline';
+
+  @override
+  String registrationDeadlineMessage(String semester, int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days',
+      one: '1 day',
+    );
+    return 'Course registration for $semester ends in $_temp0';
+  }
+
+  @override
+  String get spring2024 => 'Spring 2024';
+
+  @override
+  String get databaseSystems => 'Database Systems';
+
+  @override
+  String get artificialIntelligence => 'Artificial Intelligence';
+
+  @override
+  String get advancedAlgorithms => 'Advanced Algorithms';
+
+  @override
+  String hoursAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hours ago',
+      one: '1 hour ago',
+      zero: 'Just now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String daysAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days ago',
+      one: '1 day ago',
+      zero: 'Today',
+    );
+    return '$_temp0';
+  }
 }

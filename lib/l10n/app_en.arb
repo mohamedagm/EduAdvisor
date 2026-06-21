@@ -235,5 +235,77 @@
   "nameMinLength": "Name must be at least 3 characters",
   "codeRequired": "Code is required",
   "codeSixDigits": "Code must be 6 digits",
-  "codeDigitsOnly": "Code must contain only digits"
+  "codeDigitsOnly": "Code must contain only digits",
+  "myProfile": "My Profile",
+  "profileStudentId": "ID: {id}",
+  "@profileStudentId": {
+    "placeholders": {
+      "id": {"type": "String"}
+    }
+  },
+  "progressToGraduation": "Progress to Graduation",
+  "creditsCompleted": "Credits Completed",
+  "creditsRemaining": "{count, plural, =0{No credits remaining} =1{1 credit remaining} other{{count} credits remaining}}",
+  "@creditsRemaining": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "myCourses": "My Courses",
+  "completed": "Completed",
+  "inProgress": "In Progress",
+  "remaining": "Remaining",
+  "noProfileCourses": "No courses here yet.",
+  "courseFallbackName": "Course",
+  "creditHoursShort": "{credits} cr",
+  "@creditHoursShort": {
+    "placeholders": {
+      "credits": {"type": "String"}
+    }
+  },
+  "notifications": "Notifications",
+  "unreadNotifications": "{count, plural, =0{No unread notifications} =1{1 unread notification} other{{count} unread notifications}}",
+  "@unreadNotifications": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "markAllAsRead": "Mark all as read",
+  "courseRegistrationApproved": "Course Registration Approved",
+  "courseRegistrationApprovedMessage": "Your course registration request has been approved",
+  "courseRegistrationRejected": "Course Registration Rejected",
+  "courseRegistrationRejectedMessage": "Your course registration request was rejected",
+  "newNotification": "New",
+  "viewRejectionReason": "View rejection reason",
+  "newCourseAvailable": "New Course Available",
+  "courseAvailableForEnrollment": "{course} is now available for enrollment",
+  "@courseAvailableForEnrollment": {
+    "placeholders": {
+      "course": {"type": "String"}
+    }
+  },
+  "registrationDeadline": "Registration Deadline",
+  "registrationDeadlineMessage": "Course registration for {semester} ends in {days, plural, =1{1 day} other{{days} days}}",
+  "@registrationDeadlineMessage": {
+    "placeholders": {
+      "semester": {"type": "String"},
+      "days": {"type": "int"}
+    }
+  },
+  "spring2024": "Spring 2024",
+  "databaseSystems": "Database Systems",
+  "artificialIntelligence": "Artificial Intelligence",
+  "advancedAlgorithms": "Advanced Algorithms",
+  "hoursAgo": "{count, plural, =0{Just now} =1{1 hour ago} other{{count} hours ago}}",
+  "@hoursAgo": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "daysAgo": "{count, plural, =0{Today} =1{1 day ago} other{{count} days ago}}",
+  "@daysAgo": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
 }

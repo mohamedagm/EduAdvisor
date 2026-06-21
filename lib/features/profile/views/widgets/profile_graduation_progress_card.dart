@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -19,8 +20,8 @@ class ProfileGraduationProgressCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Progress to Graduation",
+            Text(
+              context.l10n.progressToGraduation,
               style: AppTextStyles.heading2PoppinsSb18,
             ),
             const SizedBox(height: 12),
@@ -29,12 +30,15 @@ class ProfileGraduationProgressCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Credits Completed",
+                  context.l10n.creditsCompleted,
                   style: AppTextStyles.bodyInterMedium14.copyWith(
                     color: context.themeColors.textSecondary,
                   ),
                 ),
-                Text("65/140", style: AppTextStyles.bodyInterMedium14),
+                Text(
+                  context.l10n.creditsRatio('65', '140'),
+                  style: AppTextStyles.bodyInterMedium14,
+                ),
               ],
             ),
 
@@ -51,7 +55,7 @@ class ProfileGraduationProgressCard extends StatelessWidget {
             const SizedBox(height: 8),
 
             Text(
-              "75 credits remaining",
+              context.l10n.creditsRemaining(75),
               style: AppTextStyles.bodyInterMedium14.copyWith(
                 color: context.themeColors.textSecondary,
               ),

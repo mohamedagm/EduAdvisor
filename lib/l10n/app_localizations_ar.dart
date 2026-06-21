@@ -444,4 +444,164 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get codeDigitsOnly => 'يجب أن يحتوي الرمز على أرقام فقط';
+
+  @override
+  String get myProfile => 'ملفي الشخصي';
+
+  @override
+  String profileStudentId(String id) {
+    return 'المعرّف: $id';
+  }
+
+  @override
+  String get progressToGraduation => 'التقدم نحو التخرج';
+
+  @override
+  String get creditsCompleted => 'الساعات المعتمدة المكتملة';
+
+  @override
+  String creditsRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ساعة معتمدة متبقية',
+      many: '$count ساعة معتمدة متبقية',
+      few: '$count ساعات معتمدة متبقية',
+      two: 'ساعتان معتمدتان متبقيتان',
+      one: 'ساعة معتمدة واحدة متبقية',
+      zero: 'لا توجد ساعات معتمدة متبقية',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get myCourses => 'مقرراتي';
+
+  @override
+  String get completed => 'مكتملة';
+
+  @override
+  String get inProgress => 'قيد الدراسة';
+
+  @override
+  String get remaining => 'متبقية';
+
+  @override
+  String get noProfileCourses => 'لا توجد مقررات هنا بعد.';
+
+  @override
+  String get courseFallbackName => 'مقرر';
+
+  @override
+  String creditHoursShort(String credits) {
+    return '$credits س.م.';
+  }
+
+  @override
+  String get notifications => 'الإشعارات';
+
+  @override
+  String unreadNotifications(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count إشعار غير مقروء',
+      many: '$count إشعارًا غير مقروء',
+      few: '$count إشعارات غير مقروءة',
+      two: 'إشعاران غير مقروءين',
+      one: 'إشعار واحد غير مقروء',
+      zero: 'لا توجد إشعارات غير مقروءة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get markAllAsRead => 'تحديد الكل كمقروء';
+
+  @override
+  String get courseRegistrationApproved => 'تمت الموافقة على تسجيل المقرر';
+
+  @override
+  String get courseRegistrationApprovedMessage =>
+      'تمت الموافقة على طلب تسجيل المقرر الخاص بك';
+
+  @override
+  String get courseRegistrationRejected => 'تم رفض تسجيل المقرر';
+
+  @override
+  String get courseRegistrationRejectedMessage =>
+      'تم رفض طلب تسجيل المقرر الخاص بك';
+
+  @override
+  String get newNotification => 'جديد';
+
+  @override
+  String get viewRejectionReason => 'عرض سبب الرفض';
+
+  @override
+  String get newCourseAvailable => 'مقرر جديد متاح';
+
+  @override
+  String courseAvailableForEnrollment(String course) {
+    return 'أصبح $course متاحًا للتسجيل';
+  }
+
+  @override
+  String get registrationDeadline => 'الموعد النهائي للتسجيل';
+
+  @override
+  String registrationDeadlineMessage(String semester, int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days يوم',
+      many: '$days يومًا',
+      few: '$days أيام',
+      two: 'يومين',
+      one: 'يوم واحد',
+    );
+    return 'ينتهي تسجيل المقررات لفصل $semester خلال $_temp0';
+  }
+
+  @override
+  String get spring2024 => 'ربيع 2024';
+
+  @override
+  String get databaseSystems => 'نظم قواعد البيانات';
+
+  @override
+  String get artificialIntelligence => 'الذكاء الاصطناعي';
+
+  @override
+  String get advancedAlgorithms => 'الخوارزميات المتقدمة';
+
+  @override
+  String hoursAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'منذ $count ساعة',
+      many: 'منذ $count ساعة',
+      few: 'منذ $count ساعات',
+      two: 'منذ ساعتين',
+      one: 'منذ ساعة واحدة',
+      zero: 'الآن',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String daysAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'منذ $count يوم',
+      many: 'منذ $count يومًا',
+      few: 'منذ $count أيام',
+      two: 'منذ يومين',
+      one: 'منذ يوم واحد',
+      zero: 'اليوم',
+    );
+    return '$_temp0';
+  }
 }

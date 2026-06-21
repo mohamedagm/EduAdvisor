@@ -913,6 +913,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Code must contain only digits'**
   String get codeDigitsOnly;
+
+  /// No description provided for @myProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get myProfile;
+
+  /// No description provided for @profileStudentId.
+  ///
+  /// In en, this message translates to:
+  /// **'ID: {id}'**
+  String profileStudentId(String id);
+
+  /// No description provided for @progressToGraduation.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress to Graduation'**
+  String get progressToGraduation;
+
+  /// No description provided for @creditsCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Credits Completed'**
+  String get creditsCompleted;
+
+  /// No description provided for @creditsRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No credits remaining} =1{1 credit remaining} other{{count} credits remaining}}'**
+  String creditsRemaining(int count);
+
+  /// No description provided for @myCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'My Courses'**
+  String get myCourses;
+
+  /// No description provided for @completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completed;
+
+  /// No description provided for @inProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get inProgress;
+
+  /// No description provided for @remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get remaining;
+
+  /// No description provided for @noProfileCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'No courses here yet.'**
+  String get noProfileCourses;
+
+  /// No description provided for @courseFallbackName.
+  ///
+  /// In en, this message translates to:
+  /// **'Course'**
+  String get courseFallbackName;
+
+  /// No description provided for @creditHoursShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{credits} cr'**
+  String creditHoursShort(String credits);
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @unreadNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No unread notifications} =1{1 unread notification} other{{count} unread notifications}}'**
+  String unreadNotifications(int count);
+
+  /// No description provided for @markAllAsRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all as read'**
+  String get markAllAsRead;
+
+  /// No description provided for @courseRegistrationApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Registration Approved'**
+  String get courseRegistrationApproved;
+
+  /// No description provided for @courseRegistrationApprovedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your course registration request has been approved'**
+  String get courseRegistrationApprovedMessage;
+
+  /// No description provided for @courseRegistrationRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Registration Rejected'**
+  String get courseRegistrationRejected;
+
+  /// No description provided for @courseRegistrationRejectedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your course registration request was rejected'**
+  String get courseRegistrationRejectedMessage;
+
+  /// No description provided for @newNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get newNotification;
+
+  /// No description provided for @viewRejectionReason.
+  ///
+  /// In en, this message translates to:
+  /// **'View rejection reason'**
+  String get viewRejectionReason;
+
+  /// No description provided for @newCourseAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'New Course Available'**
+  String get newCourseAvailable;
+
+  /// No description provided for @courseAvailableForEnrollment.
+  ///
+  /// In en, this message translates to:
+  /// **'{course} is now available for enrollment'**
+  String courseAvailableForEnrollment(String course);
+
+  /// No description provided for @registrationDeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Deadline'**
+  String get registrationDeadline;
+
+  /// No description provided for @registrationDeadlineMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Course registration for {semester} ends in {days, plural, =1{1 day} other{{days} days}}'**
+  String registrationDeadlineMessage(String semester, int days);
+
+  /// No description provided for @spring2024.
+  ///
+  /// In en, this message translates to:
+  /// **'Spring 2024'**
+  String get spring2024;
+
+  /// No description provided for @databaseSystems.
+  ///
+  /// In en, this message translates to:
+  /// **'Database Systems'**
+  String get databaseSystems;
+
+  /// No description provided for @artificialIntelligence.
+  ///
+  /// In en, this message translates to:
+  /// **'Artificial Intelligence'**
+  String get artificialIntelligence;
+
+  /// No description provided for @advancedAlgorithms.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Algorithms'**
+  String get advancedAlgorithms;
+
+  /// No description provided for @hoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Just now} =1{1 hour ago} other{{count} hours ago}}'**
+  String hoursAgo(int count);
+
+  /// No description provided for @daysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Today} =1{1 day ago} other{{count} days ago}}'**
+  String daysAgo(int count);
 }
 
 class _AppLocalizationsDelegate

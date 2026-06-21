@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
@@ -22,16 +23,10 @@ class _ProfileCoursesSectionState extends State<ProfileCoursesSection>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
-  final List<String> _filters = ['Completed', 'In Progress', 'Remaining'];
-
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      length: _filters.length,
-      vsync: this,
-      initialIndex: 2,
-    );
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 2);
   }
 
   @override
@@ -42,6 +37,12 @@ class _ProfileCoursesSectionState extends State<ProfileCoursesSection>
 
   @override
   Widget build(BuildContext context) {
+    final filters = [
+      context.l10n.completed,
+      context.l10n.inProgress,
+      context.l10n.remaining,
+    ];
+
     return BlocProvider(
       create: (context) => ProfileCoursesCubit(
         profileCoursesRepo: ProfileCoursesRepo(apiConsumer: DioConsumer()),
@@ -58,11 +59,14 @@ class _ProfileCoursesSectionState extends State<ProfileCoursesSection>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('My Courses', style: AppTextStyles.heading2PoppinsSb18),
+              Text(
+                context.l10n.myCourses,
+                style: AppTextStyles.heading2PoppinsSb18,
+              ),
               const SizedBox(height: 20),
               TabBar(
                 controller: _tabController,
-                tabs: _filters.map((f) => Tab(text: f)).toList(),
+                tabs: filters.map((filter) => Tab(text: filter)).toList(),
                 labelStyle: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -180,7 +184,7 @@ class _ProfileCoursesList extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 24),
         child: Center(
           child: Text(
-            'No courses here yet.',
+            context.l10n.noProfileCourses,
             style: TextStyle(color: context.themeColors.textMuted),
           ),
         ),
@@ -224,7 +228,7 @@ class _ProfileCoursesError extends StatelessWidget {
             const SizedBox(height: 8),
             TextButton(
               onPressed: context.read<ProfileCoursesCubit>().getMyCourses,
-              child: const Text('Try again'),
+              child: Text(context.l10n.retry),
             ),
           ],
         ),
