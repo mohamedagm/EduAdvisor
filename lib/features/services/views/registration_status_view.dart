@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/services/data/repo/course_registration_repo.dart';
 import 'package:edu_advisor/features/services/manager/registration_status_cubit/registration_status_cubit.dart';
@@ -11,6 +12,7 @@ import 'package:edu_advisor/features/services/views/widgets/service_app_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RegistrationStatusView extends StatelessWidget {
   const RegistrationStatusView({super.key});
@@ -50,7 +52,7 @@ class _RegistrationStatusBody extends StatelessWidget {
 
           if (state is RegistrationStatusLoaded) {
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -63,7 +65,7 @@ class _RegistrationStatusBody extends StatelessWidget {
                         count: state.pendingCount.toString(),
                         label: context.l10n.pending,
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12.w),
                       RegistrationSummaryBox(
                         icon: Icons.check_circle_outline,
                         color: context.themeColors.success,
@@ -71,7 +73,7 @@ class _RegistrationStatusBody extends StatelessWidget {
                         count: state.approvedCount.toString(),
                         label: context.l10n.approved,
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12.w),
                       RegistrationSummaryBox(
                         icon: Icons.cancel_outlined,
                         color: context.colorScheme.error,
@@ -81,25 +83,25 @@ class _RegistrationStatusBody extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.w),
                   Text(
                     context.l10n.allRegistrations,
                     style: AppTextStyles.heading1_20b.copyWith(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       color: context.themeColors.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.w),
                   if (state.requests.isEmpty)
                     const _EmptyRegistrationRequests()
                   else
                     ...state.requests.map(
                       (request) => Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
+                        padding: EdgeInsets.only(bottom: 16.w),
                         child: RegistrationStatusCard(request: request),
                       ),
                     ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.w),
                 ],
               ),
             );
@@ -118,7 +120,7 @@ class _RegistrationStatusShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       physics: const NeverScrollableScrollPhysics(),
       child: AppShimmer(
         child: Column(
@@ -127,19 +129,19 @@ class _RegistrationStatusShimmer extends StatelessWidget {
             Row(
               children: List.generate(
                 3,
-                (index) => const Expanded(
+                (index) => Expanded(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4),
-                    child: AppShimmerBox(height: 96, borderRadius: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
+                    child: AppShimmerBox(height: 96.w, borderRadius: 16.r),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-            const AppShimmerBox(width: 132, height: 18),
-            const SizedBox(height: 16),
+            SizedBox(height: 24.w),
+            AppShimmerBox(width: 132.w, height: 18.w),
+            SizedBox(height: 16.w),
             const _RegistrationStatusSkeletonCard(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.w),
             const _RegistrationStatusSkeletonCard(),
           ],
         ),
@@ -154,10 +156,10 @@ class _RegistrationStatusSkeletonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: context.themeColors.border),
       ),
       child: Column(
@@ -165,31 +167,31 @@ class _RegistrationStatusSkeletonCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              AppShimmerBox(width: 20, height: 20, shape: BoxShape.circle),
-              SizedBox(width: 8),
-              AppShimmerBox(width: 76, height: 24, borderRadius: 12),
+              AppShimmerBox(width: 20.r, height: 20.r, shape: BoxShape.circle),
+              SizedBox(width: 8.w),
+              AppShimmerBox(width: 76.w, height: 24.w, borderRadius: 12.r),
             ],
           ),
-          SizedBox(height: 20),
-          AppShimmerBox(height: 14),
-          SizedBox(height: 12),
-          AppShimmerBox(width: 220, height: 14),
-          SizedBox(height: 12),
-          AppShimmerBox(width: 180, height: 14),
-          SizedBox(height: 20),
-          Divider(height: 1, color: context.themeColors.border),
-          SizedBox(height: 16),
+          SizedBox(height: 20.w),
+          AppShimmerBox(height: 14.w),
+          SizedBox(height: 12.w),
+          AppShimmerBox(width: 220.w, height: 14.w),
+          SizedBox(height: 12.w),
+          AppShimmerBox(width: 180.w, height: 14.w),
+          SizedBox(height: 20.w),
+          Divider(height: 1.w, color: context.themeColors.border),
+          SizedBox(height: 16.w),
           Row(
             children: [
-              AppShimmerBox(width: 32, height: 32, shape: BoxShape.circle),
-              SizedBox(width: 12),
+              AppShimmerBox(width: 32.r, height: 32.r, shape: BoxShape.circle),
+              SizedBox(width: 12.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppShimmerBox(width: 126, height: 14),
-                    SizedBox(height: 6),
-                    AppShimmerBox(width: 98, height: 12),
+                    AppShimmerBox(width: 126.w, height: 14.w),
+                    SizedBox(height: 6.w),
+                    AppShimmerBox(width: 98.w, height: 12.w),
                   ],
                 ),
               ),
@@ -208,16 +210,16 @@ class _EmptyRegistrationRequests extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: context.themeColors.border),
       ),
       child: Text(
         context.l10n.noRegistrationRequests,
         textAlign: TextAlign.center,
-        style: AppTextStyles.bodyInterMedium14.copyWith(
+        style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
           color: context.themeColors.textMuted,
         ),
       ),
@@ -234,20 +236,24 @@ class _RegistrationStatusError extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(24.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline, color: context.colorScheme.error),
-            const SizedBox(height: 8),
+            Icon(
+              Icons.error_outline,
+              size: 24.r,
+              color: context.colorScheme.error,
+            ),
+            SizedBox(height: 8.w),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: AppTextStyles.bodyInterMedium14.copyWith(
+              style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
                 color: context.themeColors.textSecondary,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.w),
             TextButton(
               onPressed: context
                   .read<RegistrationStatusCubit>()

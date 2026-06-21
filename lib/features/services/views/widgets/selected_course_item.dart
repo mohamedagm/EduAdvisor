@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import '../../data/models/available_course_model.dart';
 import 'course_icon_widget.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SelectedCourseItem extends StatelessWidget {
   final AvailableCourseModel course;
@@ -19,11 +21,11 @@ class SelectedCourseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.only(bottom: 12),
+      padding: EdgeInsets.all(16.w),
+      margin: EdgeInsets.only(bottom: 12.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: context.themeColors.border),
       ),
       child: Column(
@@ -33,37 +35,40 @@ class SelectedCourseItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CourseIconWidget(course: course),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       course.displayCode,
-                      style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                        color: context.themeColors.textPrimary,
-                      ),
+                      style: AppTextStyles.heading3PoppinsReg16.responsive
+                          .copyWith(color: context.themeColors.textPrimary),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.w),
                     Text(
                       course.courseName.isNotEmpty
                           ? course.courseName
                           : context.l10n.courseFallbackName,
-                      style: AppTextStyles.poppinsRegular14.copyWith(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.poppinsRegular14.responsive.copyWith(
                         color: context.themeColors.textMuted,
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    Row(
+                    SizedBox(height: 12.w),
+                    Wrap(
+                      spacing: 8.w,
+                      runSpacing: 8.w,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 4.w,
                           ),
                           decoration: BoxDecoration(
                             color: context.themeColors.card,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.r),
                             border: Border.all(
                               color: context.colorScheme.outline,
                             ),
@@ -72,22 +77,22 @@ class SelectedCourseItem extends StatelessWidget {
                             context.l10n.courseCredits(
                               course.creditHours.toString(),
                             ),
-                            style: AppTextStyles.bodyInterRegular12.copyWith(
-                              color: context.themeColors.textPrimary,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: AppTextStyles.bodyInterRegular12.responsive
+                                .copyWith(
+                                  color: context.themeColors.textPrimary,
+                                  fontWeight: FontWeight.w500,
+                                ),
                           ),
                         ),
                         if (course.isRetake) ...[
-                          const SizedBox(width: 8),
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                              vertical: 4.w,
                             ),
                             decoration: BoxDecoration(
                               color: context.themeColors.infoContainer,
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(8.r),
                               border: Border.all(
                                 color: context.colorScheme.primary.withValues(
                                   alpha: 0.2,
@@ -96,10 +101,11 @@ class SelectedCourseItem extends StatelessWidget {
                             ),
                             child: Text(
                               context.l10n.retake,
-                              style: AppTextStyles.bodyInterRegular12.copyWith(
-                                color: context.colorScheme.primary,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: AppTextStyles.bodyInterRegular12.responsive
+                                  .copyWith(
+                                    color: context.colorScheme.primary,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                             ),
                           ),
                         ],
@@ -113,7 +119,7 @@ class SelectedCourseItem extends StatelessWidget {
                 icon: Icon(
                   Icons.delete_outline,
                   color: context.colorScheme.error,
-                  size: 20,
+                  size: 20.r,
                 ),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
@@ -121,10 +127,10 @@ class SelectedCourseItem extends StatelessWidget {
             ],
           ),
           if (course.isRetake) ...[
-            const SizedBox(height: 12),
+            SizedBox(height: 12.w),
             Text(
               context.l10n.retakeCourseDescription,
-              style: AppTextStyles.bodyInterRegular12.copyWith(
+              style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                 color: context.themeColors.textMuted,
               ),
             ),

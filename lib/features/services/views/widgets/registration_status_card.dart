@@ -2,7 +2,9 @@ import 'package:edu_advisor/features/services/data/models/registration_request_m
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum RegistrationStatusType { pending, approved, rejected }
 
@@ -48,31 +50,31 @@ class RegistrationStatusCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.themeColors.card,
         border: Border.all(color: borderColor),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Header
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.w),
             child: Row(
               children: [
-                Icon(icon, color: color, size: 20),
-                const SizedBox(width: 8),
+                Icon(icon, color: color, size: 20.r),
+                SizedBox(width: 8.w),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 4.w,
                   ),
                   decoration: BoxDecoration(
                     color: badgeBgColor,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(color: color.withValues(alpha: 0.2)),
                   ),
                   child: Text(
                     badgeText,
-                    style: AppTextStyles.bodyInterRegular12.copyWith(
+                    style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                       color: color,
                       fontWeight: FontWeight.w600,
                     ),
@@ -83,7 +85,7 @@ class RegistrationStatusCard extends StatelessWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -94,13 +96,13 @@ class RegistrationStatusCard extends StatelessWidget {
                       ? request.semesterName
                       : context.l10n.semester,
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.w),
                 _InfoLine(
                   icon: Icons.menu_book_outlined,
                   title: context.l10n.coursesTab,
                   value: context.l10n.coursesCount(request.coursesCount),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.w),
                 _InfoLine(
                   icon: Icons.schedule_outlined,
                   title: context.l10n.submitted,
@@ -110,24 +112,24 @@ class RegistrationStatusCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 8),
-          Divider(height: 1, color: context.themeColors.border),
+          SizedBox(height: 8.w),
+          Divider(height: 1.w, color: context.themeColors.border),
 
           // Total Courses
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   context.l10n.totalCourses,
-                  style: AppTextStyles.bodyInterMedium14.copyWith(
+                  style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
                     color: context.themeColors.textSecondary,
                   ),
                 ),
                 Text(
                   '${request.coursesCount}',
-                  style: AppTextStyles.bodyInterMedium14.copyWith(
+                  style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
                     color: context.colorScheme.primary,
                   ),
                 ),
@@ -135,55 +137,59 @@ class RegistrationStatusCard extends StatelessWidget {
             ),
           ),
 
-          Divider(height: 1, color: context.themeColors.border),
+          Divider(height: 1.w, color: context.themeColors.border),
 
           // Advisor Info & Notes
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     CircleAvatar(
-                      radius: 16,
+                      radius: 16.r,
                       backgroundColor: context.themeColors.border,
                       child: Icon(
                         Icons.person,
                         color: context.themeColors.textMuted,
-                        size: 20,
+                        size: 20.r,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Dr. Hebatulla Nabil',
-                          style: AppTextStyles.bodyInterMedium14.copyWith(
-                            color: context.themeColors.textPrimary,
+                    SizedBox(width: 12.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Dr. Hebatulla Nabil',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.bodyInterMedium14.responsive
+                                .copyWith(
+                                  color: context.themeColors.textPrimary,
+                                ),
                           ),
-                        ),
-                        Text(
-                          context.l10n.academicAdvisor,
-                          style: AppTextStyles.bodyInterRegular12.copyWith(
-                            color: context.themeColors.textMuted,
+                          Text(
+                            context.l10n.academicAdvisor,
+                            style: AppTextStyles.bodyInterRegular12.responsive
+                                .copyWith(color: context.themeColors.textMuted),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
                 if (request.notes?.isNotEmpty == true) ...[
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.w),
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.all(12),
+                    padding: EdgeInsets.all(12.w),
                     decoration: BoxDecoration(
                       color: status == RegistrationStatusType.approved
                           ? context.themeColors.successContainer
                           : context.themeColors.dangerContainer,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,19 +198,21 @@ class RegistrationStatusCard extends StatelessWidget {
                           status == RegistrationStatusType.rejected
                               ? context.l10n.rejectionReason
                               : context.l10n.advisorNote,
-                          style: AppTextStyles.bodyInterRegular12.copyWith(
-                            color: context.themeColors.textSecondary,
-                          ),
+                          style: AppTextStyles.bodyInterRegular12.responsive
+                              .copyWith(
+                                color: context.themeColors.textSecondary,
+                              ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4.w),
                         Text(
                           request.notes!,
-                          style: AppTextStyles.bodyInterMedium14.copyWith(
-                            color: status == RegistrationStatusType.rejected
-                                ? context.themeColors.onDangerContainer
-                                : context.themeColors.textPrimary,
-                            height: 1.4,
-                          ),
+                          style: AppTextStyles.bodyInterMedium14.responsive
+                              .copyWith(
+                                color: status == RegistrationStatusType.rejected
+                                    ? context.themeColors.onDangerContainer
+                                    : context.themeColors.textPrimary,
+                                height: 1.4,
+                              ),
                         ),
                       ],
                     ),
@@ -245,19 +253,24 @@ class _InfoLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 18, color: context.colorScheme.primary),
-        const SizedBox(width: 10),
-        Text(
-          title,
-          style: AppTextStyles.bodyInterRegular12.copyWith(
-            color: context.themeColors.textMuted,
+        Icon(icon, size: 18.r, color: context.colorScheme.primary),
+        SizedBox(width: 10.w),
+        Expanded(
+          child: Text(
+            title,
+            style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
+              color: context.themeColors.textMuted,
+            ),
           ),
         ),
-        const Spacer(),
-        Text(
-          value,
-          style: AppTextStyles.bodyInterMedium14.copyWith(
-            color: context.themeColors.textPrimary,
+        SizedBox(width: 8.w),
+        Flexible(
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+            style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
+              color: context.themeColors.textPrimary,
+            ),
           ),
         ),
       ],

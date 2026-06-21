@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import '../../../../core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ServicesView extends StatelessWidget {
   const ServicesView({super.key});
@@ -13,46 +15,46 @@ class ServicesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               context.l10n.servicesTab,
               style: AppTextStyles.heading1_20b.copyWith(
-                fontSize: 28,
+                fontSize: 28.sp,
                 color: context.themeColors.textPrimary,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.w),
             Text(
               context.l10n.servicesDescription,
-              style: AppTextStyles.heading3PoppinsReg16.copyWith(
+              style: AppTextStyles.heading3PoppinsReg16.responsive.copyWith(
                 color: context.themeColors.textMuted,
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.w),
             Row(
               children: [
                 Container(
-                  width: 4,
-                  height: 20,
+                  width: 4.w,
+                  height: 20.w,
                   decoration: BoxDecoration(
                     color: context.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 Text(
                   context.l10n.academicTools,
                   style: AppTextStyles.heading1_20b.copyWith(
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     color: context.themeColors.textPrimary,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.w),
             _buildServiceCard(
               context: context,
               onTap: () {
@@ -74,7 +76,7 @@ class ServicesView extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.w),
             _buildServiceCard(
               context: context,
               onTap: () {
@@ -96,7 +98,7 @@ class ServicesView extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.w),
             _buildServiceCard(
               context: context,
               onTap: () {
@@ -137,24 +139,24 @@ class ServicesView extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
           color: context.themeColors.card,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: 48.r,
+              height: 48.r,
               decoration: BoxDecoration(
                 color: iconBgColor,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
-              child: Icon(iconData, color: iconForegroundColor, size: 24),
+              child: Icon(iconData, color: iconForegroundColor, size: 24.r),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,27 +167,26 @@ class ServicesView extends StatelessWidget {
                       Expanded(
                         child: Text(
                           title,
-                          style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                            color: context.themeColors.textPrimary,
-                          ),
+                          style: AppTextStyles.heading3PoppinsReg16.responsive
+                              .copyWith(color: context.themeColors.textPrimary),
                         ),
                       ),
                       Icon(
                         Icons.arrow_forward,
                         color: context.themeColors.textMuted,
-                        size: 20,
+                        size: 20.r,
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.w),
                   Text(
                     subtitle,
-                    style: AppTextStyles.poppinsRegular14.copyWith(
+                    style: AppTextStyles.poppinsRegular14.responsive.copyWith(
                       color: context.themeColors.textMuted,
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  Wrap(spacing: 8, runSpacing: 8, children: badges),
+                  SizedBox(height: 12.w),
+                  Wrap(spacing: 8.w, runSpacing: 8.w, children: badges),
                 ],
               ),
             ),
@@ -212,15 +213,15 @@ class _Badge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.w),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: borderColor),
       ),
       child: Text(
         text,
-        style: AppTextStyles.bodyInterRegular12.copyWith(
+        style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
           color: textColor,
           fontWeight: FontWeight.w500,
         ),

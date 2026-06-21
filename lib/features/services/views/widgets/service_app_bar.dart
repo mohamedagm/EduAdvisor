@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ServiceAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -25,13 +27,15 @@ class ServiceAppBar extends StatelessWidget implements PreferredSizeWidget {
             title,
             style: AppTextStyles.heading1_20b.copyWith(
               color: context.themeColors.textPrimary,
-              fontSize: 18,
+              fontSize: 18.sp,
             ),
           ),
-          const SizedBox(height: 2),
+          SizedBox(height: 2.w),
           Text(
             subtitle,
-            style: AppTextStyles.bodyInterRegular12.copyWith(
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
               color: context.themeColors.textMuted,
             ),
           ),
@@ -40,11 +44,11 @@ class ServiceAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1.0),
-        child: Container(color: context.themeColors.border, height: 1.0),
+        child: Container(color: context.themeColors.border, height: 1.w),
       ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 1.0);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight + 1.w);
 }

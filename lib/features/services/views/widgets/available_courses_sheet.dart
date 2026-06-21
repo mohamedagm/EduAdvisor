@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/services/data/models/available_course_model.dart';
 import 'package:edu_advisor/features/services/manager/course_registration_cubit/course_registration_cubit.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AvailableCoursesSheet extends StatelessWidget {
   const AvailableCoursesSheet({
@@ -25,9 +27,9 @@ class AvailableCoursesSheet extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
       ),
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24.w),
       height: MediaQuery.of(context).size.height * 0.8,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,21 +37,29 @@ class AvailableCoursesSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                context.l10n.availableCourses,
-                style: AppTextStyles.heading1_20b.copyWith(
-                  color: context.themeColors.textPrimary,
+              Expanded(
+                child: Text(
+                  context.l10n.availableCourses,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.heading1_20b.responsive.copyWith(
+                    color: context.themeColors.textPrimary,
+                  ),
                 ),
               ),
               IconButton(
                 onPressed: () => context.pop(),
-                icon: Icon(Icons.close, color: context.themeColors.textMuted),
+                icon: Icon(
+                  Icons.close,
+                  size: 24.r,
+                  color: context.themeColors.textMuted,
+                ),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.w),
           Expanded(
             child:
                 BlocBuilder<CourseRegistrationCubit, CourseRegistrationState>(
@@ -68,14 +78,18 @@ class AvailableCoursesSheet extends StatelessWidget {
                     if (state is AvailableCoursesLoaded) {
                       if (state.courses.isEmpty) {
                         return Center(
-                          child: Text(context.l10n.noAvailableCourses),
+                          child: Text(
+                            context.l10n.noAvailableCourses,
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.bodyInterMedium14.responsive,
+                          ),
                         );
                       }
 
                       return ListView.separated(
                         itemCount: state.courses.length,
                         separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12),
+                            SizedBox(height: 12.w),
                         itemBuilder: (context, index) {
                           final course = state.courses[index];
                           final isSelected = selectedCourseIds.contains(
@@ -110,7 +124,7 @@ class _AvailableCoursesShimmer extends StatelessWidget {
       child: ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         itemCount: 5,
-        separatorBuilder: (context, index) => const SizedBox(height: 12),
+        separatorBuilder: (context, index) => SizedBox(height: 12.w),
         itemBuilder: (context, index) => const _AvailableCourseSkeletonTile(),
       ),
     );
@@ -123,25 +137,25 @@ class _AvailableCourseSkeletonTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: context.themeColors.border),
       ),
-      child: const Row(
+      child: Row(
         children: [
-          AppShimmerBox(width: 48, height: 48, borderRadius: 12),
-          SizedBox(width: 16),
+          AppShimmerBox(width: 48.r, height: 48.r, borderRadius: 12.r),
+          SizedBox(width: 16.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppShimmerBox(width: 74, height: 16),
-                SizedBox(height: 7),
-                AppShimmerBox(height: 13),
-                SizedBox(height: 9),
-                AppShimmerBox(width: 68, height: 13),
+                AppShimmerBox(width: 74.w, height: 16.w),
+                SizedBox(height: 7.w),
+                AppShimmerBox(height: 13.w),
+                SizedBox(height: 9.w),
+                AppShimmerBox(width: 68.w, height: 13.w),
               ],
             ),
           ),
@@ -167,44 +181,45 @@ class _AvailableCourseTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
           color: context.themeColors.card,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
             color: isSelected
                 ? context.colorScheme.primary
                 : context.themeColors.border,
-            width: isSelected ? 2 : 1,
+            width: isSelected ? 2.w : 1.w,
           ),
         ),
         child: Row(
           children: [
             CourseIconWidget(course: course),
-            const SizedBox(width: 16),
+            SizedBox(width: 16.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     course.displayCode,
-                    style: AppTextStyles.heading3PoppinsReg16.copyWith(
-                      color: context.themeColors.textPrimary,
-                    ),
+                    style: AppTextStyles.heading3PoppinsReg16.responsive
+                        .copyWith(color: context.themeColors.textPrimary),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.w),
                   Text(
                     course.courseName.isNotEmpty
                         ? course.courseName
                         : context.l10n.courseFallbackName,
-                    style: AppTextStyles.bodyInterRegular12.copyWith(
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                       color: context.themeColors.textMuted,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.w),
                   Text(
                     context.l10n.courseCredits(course.creditHours.toString()),
-                    style: AppTextStyles.bodyInterMedium14.copyWith(
+                    style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
                       color: context.themeColors.textPrimary,
                       fontWeight: FontWeight.w700,
                     ),
@@ -213,7 +228,11 @@ class _AvailableCourseTile extends StatelessWidget {
               ),
             ),
             if (isSelected)
-              Icon(Icons.check_circle, color: context.colorScheme.primary),
+              Icon(
+                Icons.check_circle,
+                size: 24.r,
+                color: context.colorScheme.primary,
+              ),
           ],
         ),
       ),
@@ -232,16 +251,20 @@ class _AvailableCoursesError extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.error_outline, color: context.colorScheme.error),
-          const SizedBox(height: 8),
+          Icon(
+            Icons.error_outline,
+            size: 24.r,
+            color: context.colorScheme.error,
+          ),
+          SizedBox(height: 8.w),
           Text(
             message,
             textAlign: TextAlign.center,
-            style: AppTextStyles.bodyInterMedium14.copyWith(
+            style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
               color: context.themeColors.textSecondary,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.w),
           TextButton(
             onPressed: context
                 .read<CourseRegistrationCubit>()

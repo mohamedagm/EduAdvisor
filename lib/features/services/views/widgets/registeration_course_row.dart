@@ -1,6 +1,8 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RegistrationCourseRow extends StatelessWidget {
   final String code;
@@ -17,30 +19,32 @@ class RegistrationCourseRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
             Icons.menu_book_outlined,
             color: context.colorScheme.primary,
-            size: 20,
+            size: 20.r,
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   code,
-                  style: AppTextStyles.bodyInterMedium14.copyWith(
+                  style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
                     color: context.themeColors.textPrimary,
                   ),
                 ),
                 if (name.isNotEmpty)
                   Text(
                     name,
-                    style: AppTextStyles.bodyInterRegular12.copyWith(
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                       color: context.themeColors.textMuted,
                     ),
                   ),
@@ -48,15 +52,15 @@ class RegistrationCourseRow extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
             decoration: BoxDecoration(
               color: context.themeColors.card,
               border: Border.all(color: context.themeColors.border),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             ),
             child: Text(
               credits,
-              style: AppTextStyles.bodyInterRegular12.copyWith(
+              style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
                 color: context.themeColors.textPrimary,
                 fontWeight: FontWeight.w500,
               ),
