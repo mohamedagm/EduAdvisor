@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/reset_password_cubit.dart';
@@ -52,12 +53,12 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
         if (state is ResetPasswordSuccess) {
           AppToast.success(
             context,
-            title: 'Password updated',
+            title: context.l10n.passwordUpdated,
             description: state.message,
           );
 
           Future.delayed(const Duration(seconds: 1), () {
-            if (!mounted) return;
+            if (!context.mounted) return;
             if (widget.role == RegisterRole.student) {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -81,7 +82,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
         if (state is ResetPasswordFailure) {
           AppToast.error(
             context,
-            title: 'Password reset failed',
+            title: context.l10n.passwordResetFailed,
             description: state.errorMessage,
           );
         }
@@ -95,9 +96,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
               key: _formKey,
               child: Stack(
                 children: [
-                  const GradiantContainer(
-                    mainText: "New Password",
-                    optionalText: "Create a strong password for your account",
+                  GradiantContainer(
+                    mainText: context.l10n.newPassword,
+                    optionalText: context.l10n.strongPasswordHelp,
                   ),
 
                   Container(
@@ -130,16 +131,16 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                           enabled: !isLoading,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your new password';
+                              return context.l10n.enterNewPassword;
                             }
                             if (value.length < 6) {
-                              return 'Password must be at least 6 characters';
+                              return context.l10n.passwordSixCharacters;
                             }
                             return null;
                           },
                           decoration: InputDecoration(
-                            labelText: "New Password",
-                            hintText: "Enter your new password",
+                            labelText: context.l10n.newPassword,
+                            hintText: context.l10n.enterNewPassword,
                             prefixIcon: const Icon(Icons.lock),
                             filled: true,
                             fillColor: context.themeColors.textMuted.withValues(
@@ -160,16 +161,16 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                           enabled: !isLoading,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please confirm your password';
+                              return context.l10n.confirmPasswordRequired;
                             }
                             if (value != _passwordController.text) {
-                              return 'Passwords do not match';
+                              return context.l10n.passwordsDoNotMatch;
                             }
                             return null;
                           },
                           decoration: InputDecoration(
-                            labelText: "Confirm Password",
-                            hintText: "Confirm new password",
+                            labelText: context.l10n.confirmPassword,
+                            hintText: context.l10n.confirmNewPassword,
                             prefixIcon: const Icon(Icons.lock_reset),
                             filled: true,
                             fillColor: context.themeColors.textMuted.withValues(
@@ -186,8 +187,8 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
 
                         GradientElevatedButton(
                           buttonText: isLoading
-                              ? 'Loading...'
-                              : 'Reset Password',
+                              ? context.l10n.loading
+                              : context.l10n.resetPassword,
                           onPressed: isLoading
                               ? () {}
                               : () {
@@ -211,14 +212,14 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Remember your password? ",
+                              '${context.l10n.rememberPassword} ',
                               style: AppTextStyles.bodyInterMedium14.copyWith(
                                 color: context.themeColors.textSecondary,
                               ),
                             ),
                             CustomTextButton(
                               onTap: () => Navigator.pop(context),
-                              text: 'Back to Login',
+                              text: context.l10n.backToLogin,
                             ),
                           ],
                         ),

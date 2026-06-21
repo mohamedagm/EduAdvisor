@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
@@ -31,7 +32,7 @@ class _LoginFormState extends State<LoginForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Email',
+                context.l10n.email,
                 style: AppTextStyles.bodyInterMedium18.copyWith(
                   color: context.themeColors.textPrimary,
                 ),
@@ -50,7 +51,7 @@ class _LoginFormState extends State<LoginForm> {
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
                   ),
-                  hintText: 'email@university.edu',
+                  hintText: context.l10n.emailHint,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -65,10 +66,10 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Email is required';
+                    return context.l10n.emailRequired;
                   }
                   if (!value.contains('@')) {
-                    return 'Enter valid email';
+                    return context.l10n.validEmailRequired;
                   }
                   return null;
                 },
@@ -80,7 +81,7 @@ class _LoginFormState extends State<LoginForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Password',
+                context.l10n.password,
                 style: AppTextStyles.bodyInterMedium18.copyWith(
                   color: context.themeColors.textPrimary,
                 ),
@@ -102,7 +103,7 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   filled: true,
                   fillColor: context.themeColors.mutedSurface,
-                  hintText: 'Password',
+                  hintText: context.l10n.password,
                   contentPadding: const EdgeInsets.symmetric(
                     vertical: 16,
                     horizontal: 16,
@@ -125,10 +126,10 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Password is required';
+                    return context.l10n.passwordRequired;
                   }
                   if (value.length < 6) {
-                    return 'Password must be 6 characters';
+                    return context.l10n.passwordSixCharacters;
                   }
                   return null;
                 },

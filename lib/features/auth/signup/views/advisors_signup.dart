@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
@@ -22,7 +23,6 @@ import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:edu_advisor/valdations/valditors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AdvisorSignupScreen extends StatefulWidget {
   const AdvisorSignupScreen({super.key, required this.registerRole});
@@ -115,7 +115,7 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Failed to load departments',
+                          context.l10n.failedToLoadDepartments,
                           style: TextStyle(color: context.colorScheme.error),
                         ),
                         const SizedBox(height: 12),
@@ -123,7 +123,7 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                           onPressed: () => context
                               .read<DepartmentsCubit>()
                               .fetchDepartments(),
-                          child: const Text('Retry'),
+                          child: Text(context.l10n.retry),
                         ),
                       ],
                     ),
@@ -169,27 +169,30 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                                       },
                                     ),
                                     _buildField(
-                                      label: 'First Name',
-                                      hint: 'Enter your first name',
+                                      label: context.l10n.firstName,
+                                      hint: context.l10n.enterFirstName,
                                       icon: Icons.person,
                                       controller: nameController,
-                                      validator: Validators.name,
+                                      validator: (value) =>
+                                          Validators.name(value, context.l10n),
                                     ),
                                     const SizedBox(height: 12),
                                     _buildField(
-                                      label: 'Last Name',
-                                      hint: 'Enter your last name',
+                                      label: context.l10n.lastName,
+                                      hint: context.l10n.enterLastName,
                                       icon: Icons.person,
                                       controller: lastNameController,
-                                      validator: Validators.name,
+                                      validator: (value) =>
+                                          Validators.name(value, context.l10n),
                                     ),
                                     const SizedBox(height: 12),
                                     _buildField(
-                                      label: 'Email',
-                                      hint: 'Email',
+                                      label: context.l10n.email,
+                                      hint: context.l10n.email,
                                       icon: Icons.email,
                                       controller: emailController,
-                                      validator: Validators.email,
+                                      validator: (value) =>
+                                          Validators.email(value, context.l10n),
                                     ),
                                     const SizedBox(height: 12),
 
@@ -203,15 +206,15 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                                     ),
                                     const SizedBox(height: 12),
                                     _buildField(
-                                      label: 'Phone',
+                                      label: context.l10n.phone,
                                       hint: '+02115798392',
                                       icon: Icons.phone,
                                       controller: phoneController,
                                     ),
                                     const SizedBox(height: 12),
                                     _buildField(
-                                      label: 'National Id',
-                                      hint: 'Enter your national id',
+                                      label: context.l10n.nationalId,
+                                      hint: context.l10n.enterNationalId,
                                       icon: Icons.badge,
                                       controller: idController,
                                     ),
@@ -228,8 +231,8 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                                           width: double.infinity,
                                           child: GradientElevatedButton(
                                             buttonText: isLoading
-                                                ? 'Signing Up...'
-                                                : 'Sign Up',
+                                                ? context.l10n.signingUp
+                                                : context.l10n.signUp,
                                             onPressed: () => _onSignUpPressed(
                                               context,
                                               isLoading: isLoading,
@@ -265,7 +268,7 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
 
       AppToast.success(
         context,
-        title: 'Registration Successful',
+        title: context.l10n.registrationSuccessful,
         description: message,
       );
 
@@ -292,7 +295,7 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
 
       AppToast.error(
         context,
-        title: 'Registration Failed',
+        title: context.l10n.registrationFailed,
         description: message,
       );
     }
@@ -340,12 +343,12 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const FieldLabel(text: 'Password'),
+        FieldLabel(text: context.l10n.password),
         CustomTextField(
-          hint: 'Password',
+          hint: context.l10n.password,
           icon: Icons.lock,
           controller: passwordController,
-          validator: Validators.password,
+          validator: (value) => Validators.password(value, context.l10n),
           obscureText: isObscure,
           suffixIcon: IconButton(
             icon: Icon(isObscure ? Icons.visibility : Icons.visibility_off),
@@ -360,14 +363,17 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const FieldLabel(text: 'Confirm Password'),
+        FieldLabel(text: context.l10n.confirmPassword),
         CustomTextField(
-          hint: 'Confirm Password',
+          hint: context.l10n.confirmPassword,
           icon: Icons.lock,
           controller: confirmPasswordController,
           obscureText: isObscure,
-          validator: (value) =>
-              Validators.confirmPassword(value, passwordController.text),
+          validator: (value) => Validators.confirmPassword(
+            value,
+            passwordController.text,
+            context.l10n,
+          ),
           suffixIcon: IconButton(
             icon: Icon(isObscure ? Icons.visibility : Icons.visibility_off),
             onPressed: () => setState(() => isObscure = !isObscure),

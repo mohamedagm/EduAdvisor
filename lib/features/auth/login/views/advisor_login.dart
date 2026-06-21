@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
@@ -9,7 +10,6 @@ import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/departments_repo.dart';
-import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/login/views/forgot_password.dart';
 import 'package:edu_advisor/features/auth/signup/views/advisors_signup.dart';
 import 'package:edu_advisor/features/auth/widgets/auth_card.dart';
@@ -55,18 +55,18 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
             body: SingleChildScrollView(
               child: Stack(
                 children: [
-                  const GradiantContainer(
-                    mainText: 'Your Academic Success Partner',
+                  GradiantContainer(
+                    mainText: context.l10n.academicSuccessPartner,
                   ),
                   AuthCard(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 20),
-                        const Center(
+                        Center(
                           child: Text(
-                            'Login as Advisor',
-                            style: TextStyle(
+                            context.l10n.loginAsAdvisor,
+                            style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
@@ -79,7 +79,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                           passwordController: _passwordController,
                         ),
                         Align(
-                          alignment: Alignment.centerRight,
+                          alignment: AlignmentDirectional.centerEnd,
                           child: TextButton(
                             onPressed: () {
                               Navigator.push(
@@ -96,9 +96,9 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                               foregroundColor: context.colorScheme.secondary,
                               visualDensity: VisualDensity.compact,
                             ),
-                            child: const Text(
-                              'Forgot Password?',
-                              style: TextStyle(
+                            child: Text(
+                              context.l10n.forgotPassword,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -114,8 +114,8 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                               width: double.infinity,
                               child: GradientElevatedButton(
                                 buttonText: isLoading
-                                    ? 'Logging in...'
-                                    : 'Login as advisor',
+                                    ? context.l10n.loggingIn
+                                    : context.l10n.loginAsAdvisor,
                                 onPressed: () => _onLoginPressed(
                                   context,
                                   isLoading: isLoading,
@@ -129,7 +129,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Don't have an account? ",
+                              '${context.l10n.noAccount} ',
                               style: AppTextStyles.interRegular16.copyWith(
                                 color: context.themeColors.textSecondary,
                               ),
@@ -162,7 +162,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                                 ),
                               ),
                               child: Text(
-                                'Sign Up',
+                                context.l10n.signUp,
                                 style: AppTextStyles.bodyInterMedium18.copyWith(
                                   color: context.themeColors.info,
                                 ),
@@ -186,17 +186,20 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
     if (state is LoginSuccess) {
       AppToast.success(
         context,
-        title: 'Login Successful',
-        description: 'Welcome back, ${state.response.user.fullName}',
+        title: context.l10n.loginSuccessful,
+        description: context.l10n.welcomeBackName(state.response.user.fullName),
       );
       context.go(AppRoutes.advisorProfileSetup);
     }
 
     if (state is LoginFailure) {
+      final message = state.failure.message;
       AppToast.error(
         context,
-        title: 'Login Failed',
-        description: state.failure.message,
+        title: context.l10n.loginFailed,
+        description: message.toLowerCase().startsWith('this account is not a')
+            ? context.l10n.wrongRoleAccount(context.l10n.advisor)
+            : message,
       );
     }
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/reset_password_cubit.dart';
@@ -7,9 +8,7 @@ import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_state.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/reset_password_repo.dart';
-import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/login/views/new_pass.dart';
-import 'package:edu_advisor/features/auth/login/views/student_profile.dart';
 // 💡 ضيفي هنا مسار شاشة الـ ResetPasswordScreen لو مكنش موجود تلقائي
 // import 'package:edu_advisor/features/auth/login/views/reset_password_screen.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
@@ -87,8 +86,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     if (otpCode.length != otpLength) {
       AppToast.warning(
         context,
-        title: 'Incomplete code',
-        description: 'Please enter the complete 6-digit verification code.',
+        title: context.l10n.incompleteCode,
+        description: context.l10n.completeVerificationCode,
       );
       return;
     }
@@ -140,32 +139,29 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         if (state is VerifyOtpSuccess) {
           AppToast.success(
             context,
-            title: 'Code verified',
-            description: 'Your verification code was accepted successfully.',
+            title: context.l10n.codeVerified,
+            description: context.l10n.verificationCodeAccepted,
           );
 
           Future.delayed(const Duration(seconds: 1), () {
-            if (mounted) {
-              if (widget.isFromForgotPassword) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => BlocProvider(
-                      create: (_) => ResetPasswordCubit(
-                        resetPasswordRepo: ResetPasswordRepo(
-                          apiConsumer: DioConsumer(),
-                        ),
-                      ),
-                      child: NewPasswordScreen(
-                        role: widget.role,
-                        email: widget.email,
-                        token: state.response.data ?? '',
-                      ),
+            if (!context.mounted || !widget.isFromForgotPassword) return;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => BlocProvider(
+                  create: (_) => ResetPasswordCubit(
+                    resetPasswordRepo: ResetPasswordRepo(
+                      apiConsumer: DioConsumer(),
                     ),
                   ),
-                );
-              }
-            }
+                  child: NewPasswordScreen(
+                    role: widget.role,
+                    email: widget.email,
+                    token: state.response.data ?? '',
+                  ),
+                ),
+              ),
+            );
           });
         }
 
@@ -173,7 +169,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           debugPrint('VERIFY ERROR: "${state.failure.message}"');
           AppToast.error(
             context,
-            title: 'Verification failed',
+            title: context.l10n.verificationFailed,
             description: state.failure.message,
           );
         }
@@ -183,15 +179,15 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
           AppToast.success(
             context,
-            title: 'Code sent',
-            description: 'A new verification code was sent to your email.',
+            title: context.l10n.codeSent,
+            description: context.l10n.newVerificationCodeSent,
           );
         }
 
         if (state is ResendOtpFailure) {
           AppToast.error(
             context,
-            title: 'Could not resend code',
+            title: context.l10n.couldNotResendCode,
             description: state.failure.message,
           );
         }
@@ -204,9 +200,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           backgroundColor: context.colorScheme.surface,
           body: Column(
             children: [
-              const GradiantContainer(
-                mainText: "Verify Code",
-                optionalText: "Check your email for the code",
+              GradiantContainer(
+                mainText: context.l10n.verifyCode,
+                optionalText: context.l10n.checkEmailForCode,
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -248,8 +244,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                             : null,
                         child: Text(
                           resendCountdown > 0
-                              ? "Resend in $resendCountdown"
-                              : "Resend Code",
+                              ? context.l10n.resendIn(resendCountdown)
+                              : context.l10n.resendCode,
                         ),
                       ),
 
@@ -259,7 +255,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                         onPressed: isLoading ? null : submitOtpVerification,
                         child: isLoading
                             ? const CircularProgressIndicator()
-                            : const Text("Verify"),
+                            : Text(context.l10n.verify),
                       ),
                     ],
                   ),

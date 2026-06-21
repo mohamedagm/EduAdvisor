@@ -1,5 +1,5 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
-import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
@@ -20,7 +20,6 @@ import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class StudentLoginScreen extends StatefulWidget {
@@ -59,15 +58,15 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
             body: SingleChildScrollView(
               child: Stack(
                 children: [
-                  const GradiantContainer(
-                    mainText: 'Your Academic Success Partner',
+                  GradiantContainer(
+                    mainText: context.l10n.academicSuccessPartner,
                   ),
                   AuthCard(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Login as Student',
+                          context.l10n.loginAsStudent,
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w700,
@@ -82,7 +81,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                           passwordController: _passwordController,
                         ),
                         Align(
-                          alignment: Alignment.centerRight,
+                          alignment: AlignmentDirectional.centerEnd,
                           child: TextButton(
                             onPressed: () {
                               Navigator.push(
@@ -95,7 +94,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                                 ),
                               );
                             },
-                            child: const Text('Forgot Password?'),
+                            child: Text(context.l10n.forgotPassword),
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -105,8 +104,8 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                             width: double.infinity,
                             child: GradientElevatedButton(
                               buttonText: isLoading
-                                  ? 'Logging in...'
-                                  : 'Login as student',
+                                  ? context.l10n.loggingIn
+                                  : context.l10n.loginAsStudent,
                               onPressed: () => _onLoginPressed(
                                 context,
                                 isLoading: isLoading,
@@ -118,7 +117,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Don't have an account? "),
+                            Text('${context.l10n.noAccount} '),
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -152,7 +151,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
                                   ),
                                 );
                               },
-                              child: const Text('Sign Up'),
+                              child: Text(context.l10n.signUp),
                             ),
                           ],
                         ),
@@ -173,8 +172,8 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
     if (state is LoginSuccess) {
       AppToast.success(
         context,
-        title: 'Login Successful',
-        description: 'Welcome back, ${state.response.user.fullName}',
+        title: context.l10n.loginSuccessful,
+        description: context.l10n.welcomeBackName(state.response.user.fullName),
       );
 
       Navigator.pushReplacement(
@@ -207,8 +206,10 @@ class _StudentLoginScreenState extends State<StudentLoginScreen> {
 
       AppToast.error(
         context,
-        title: 'Login Failed',
-        description: state.failure.message,
+        title: context.l10n.loginFailed,
+        description: msg.startsWith('this account is not a')
+            ? context.l10n.wrongRoleAccount(context.l10n.student)
+            : state.failure.message,
       );
     }
   }

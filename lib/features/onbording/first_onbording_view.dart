@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
@@ -24,7 +25,9 @@ class FirstOnBordaingView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [CustomTextButton(onTap: onSkip, text: 'Skip')],
+            children: [
+              CustomTextButton(onTap: onSkip, text: context.l10n.skip),
+            ],
           ),
         ),
         const Spacer(),
@@ -58,7 +61,7 @@ class FirstOnBordaingView extends StatelessWidget {
         ),
         const SizedBox(height: 40),
         Text(
-          'AI-Powered Recommendations',
+          context.l10n.aiPoweredRecommendations,
           style: AppTextStyles.heading1_20b.copyWith(
             color: context.themeColors.textPrimary,
           ),
@@ -67,7 +70,7 @@ class FirstOnBordaingView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
           child: Text(
-            'Get personalized course suggestions to boost your GPA and achieve your goals',
+            context.l10n.personalizedCourseSuggestions,
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyInterMedium18.copyWith(
               color: context.themeColors.textSecondary,
@@ -78,7 +81,7 @@ class FirstOnBordaingView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: GradientElevatedButton(
-            buttonText: 'Next >',
+            buttonText: context.l10n.next,
             onPressed: onNext,
           ),
         ),

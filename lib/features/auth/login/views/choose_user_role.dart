@@ -1,6 +1,6 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
-import 'package:edu_advisor/features/auth/login/views/advisor_login.dart';
 import 'package:edu_advisor/features/auth/login/views/student_login.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class ChooseUserRole extends StatelessWidget {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            GradiantContainer(mainText: "Your Academic Success Partner"),
+            GradiantContainer(mainText: context.l10n.academicSuccessPartner),
             Container(
               width: double.infinity,
               margin: EdgeInsets.only(
@@ -47,7 +47,7 @@ class ChooseUserRole extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Choose Your Role",
+                    context.l10n.chooseYourRole,
                     style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w700,
@@ -58,7 +58,7 @@ class ChooseUserRole extends StatelessWidget {
                   const SizedBox(height: 8),
 
                   Text(
-                    "to continue to EduAdvisor",
+                    context.l10n.continueToApp,
                     style: TextStyle(
                       fontSize: 15,
                       color: context.themeColors.textSecondary,
@@ -70,8 +70,8 @@ class ChooseUserRole extends StatelessWidget {
                   _buildRoleOption(
                     context: context,
                     icon: Icons.school_rounded,
-                    title: "Student",
-                    subtitle: "Access courses, grades & schedule",
+                    title: context.l10n.student,
+                    subtitle: context.l10n.studentRoleDescription,
                     color: context.colorScheme.secondary,
                     onTap: () {
                       Navigator.push(
@@ -90,8 +90,8 @@ class ChooseUserRole extends StatelessWidget {
                   _buildRoleOption(
                     context: context,
                     icon: Icons.person_3_rounded,
-                    title: "Advisor",
-                    subtitle: "Manage students & academic advising",
+                    title: context.l10n.advisor,
+                    subtitle: context.l10n.advisorRoleDescription,
                     color: context.colorScheme.secondary,
                     onTap: () {
                       context.push(AppRoutes.advisorLogin);

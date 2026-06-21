@@ -1,70 +1,40 @@
+import 'package:edu_advisor/l10n/app_localizations.dart';
+
 class Validators {
+  const Validators._();
 
-  static String? name(String? value) {
-
-    if (value == null || value.isEmpty) {
-      return "Name is required";
-    }
-
-    if (value.length < 3) {
-      return "Name must be at least 3 characters";
-    }
-
+  static String? name(String? value, AppLocalizations l10n) {
+    if (value == null || value.isEmpty) return l10n.nameRequired;
+    if (value.length < 3) return l10n.nameMinLength;
     return null;
   }
 
-  static String? email(String? value) {
-
-    if (value == null || value.isEmpty) {
-      return "Email is required";
-    }
-
-    if (!value.contains("@")) {
-      return "Enter valid email";
-    }
-
+  static String? email(String? value, AppLocalizations l10n) {
+    if (value == null || value.isEmpty) return l10n.emailRequired;
+    if (!value.contains('@')) return l10n.validEmailRequired;
     return null;
   }
 
-  static String? password(String? value) {
-
-    if (value == null || value.isEmpty) {
-      return "Password required";
-    }
-
-    if (value.length < 6) {
-      return "Password must be at least 6 characters";
-    }
-   
-
+  static String? password(String? value, AppLocalizations l10n) {
+    if (value == null || value.isEmpty) return l10n.passwordRequired;
+    if (value.length < 6) return l10n.passwordSixCharacters;
     return null;
   }
 
-  static String? confirmPassword(String? value, String password) {
-
-  if (value == null || value.isEmpty) {
-    return "Confirm password is required";
-  }
-
-  if (value != password) {
-    return "Passwords do not match";
-  }
-
-  return null;
-}
-
-
-  static String? validateCode(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Code is required';
-    }
-    if (value.length != 6) {
-      return 'Code must be 6 digits';
-    }
-    if (!RegExp(r'^\d+$').hasMatch(value)) {
-      return 'Code must contain only digits';
-    }
+  static String? confirmPassword(
+    String? value,
+    String password,
+    AppLocalizations l10n,
+  ) {
+    if (value == null || value.isEmpty) return l10n.confirmPasswordRequired;
+    if (value != password) return l10n.passwordsDoNotMatch;
     return null;
   }
 
+  static String? validateCode(String? value, AppLocalizations l10n) {
+    if (value == null || value.isEmpty) return l10n.codeRequired;
+    if (value.length != 6) return l10n.codeSixDigits;
+    if (!RegExp(r'^\d+$').hasMatch(value)) return l10n.codeDigitsOnly;
+    return null;
+  }
 }

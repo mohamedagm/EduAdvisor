@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
@@ -58,7 +59,7 @@ class SecondOnBordaingView extends StatelessWidget {
         ),
         const SizedBox(height: 40),
         Text(
-          'Track Your Progress',
+          context.l10n.trackYourProgress,
           style: AppTextStyles.heading1_20b.copyWith(
             color: context.themeColors.textPrimary,
           ),
@@ -67,7 +68,7 @@ class SecondOnBordaingView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
           child: Text(
-            'Monitor your GPA, simulate grades, and plan your path to academic success',
+            context.l10n.trackProgressDescription,
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyInterMedium18.copyWith(
               color: context.themeColors.textSecondary,
@@ -78,7 +79,7 @@ class SecondOnBordaingView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: GradientElevatedButton(
-            buttonText: 'Get Started',
+            buttonText: context.l10n.getStarted,
             onPressed: onGetStarted,
           ),
         ),

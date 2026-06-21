@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/departments_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/departments_state.dart';
 import 'package:edu_advisor/features/auth/signup/widgets/signup_filed_label.dart';
@@ -22,7 +23,7 @@ class DepartmentDropdown extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const FieldLabel(text: 'Department'),
+        FieldLabel(text: context.l10n.department),
         const SizedBox(height: 8),
         BlocBuilder<DepartmentsCubit, DepartmentsState>(
           builder: (context, state) {
@@ -35,8 +36,8 @@ class DepartmentDropdown extends StatelessWidget {
               );
             } else if (state is DepartmentsSuccess) {
               return DropdownButtonFormField<String>(
-                value: value,
-                hint: const Text('Select your department'),
+                initialValue: value,
+                hint: Text(context.l10n.selectDepartment),
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: context.themeColors.mutedSurface,
@@ -71,11 +72,13 @@ class DepartmentDropdown extends StatelessWidget {
                 validator:
                     validator ??
                     (value) =>
-                        value == null ? 'Please select your department' : null,
+                        value == null ? context.l10n.departmentRequired : null,
               );
             } else if (state is DepartmentsFailure) {
               return Text(
-                'Failed to load departments: ${state.failure.message}',
+                context.l10n.failedToLoadDepartmentsMessage(
+                  state.failure.message,
+                ),
                 style: TextStyle(color: context.colorScheme.error),
               );
             }

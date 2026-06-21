@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/api/dio_consumer.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/forgot_password_cubit.dart';
@@ -48,7 +49,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           if (state is ForgotPasswordSuccess) {
             AppToast.success(
               context,
-              title: 'Verification code sent',
+              title: context.l10n.verificationCodeSent,
               description: state.response.message,
             );
             Navigator.push(
@@ -71,7 +72,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           if (state is ForgotPasswordFailure) {
             AppToast.error(
               context,
-              title: 'Could not send code',
+              title: context.l10n.couldNotSendCode,
               description: state.message,
             );
           }
@@ -85,9 +86,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 key: _formKey,
                 child: Stack(
                   children: [
-                    const GradiantContainer(
-                      mainText: "Forgot Password?",
-                      optionalText: "Don't worry! we'll help you reset it.",
+                    GradiantContainer(
+                      mainText: context.l10n.forgotPassword,
+                      optionalText: context.l10n.forgotPasswordHelp,
                     ),
                     Container(
                       margin: EdgeInsets.only(
@@ -120,12 +121,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Please enter your email';
+                                return context.l10n.emailRequired;
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                              hintText: "your.email@university.edu.eg",
+                              hintText: context.l10n.emailAddressHint,
                               prefixIcon: const Icon(Icons.email),
                               filled: true,
                               fillColor: context.themeColors.textMuted
@@ -138,7 +139,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           ),
                           const SizedBox(height: 24),
                           Text(
-                            "We'll send a 6-digit verification code to this email",
+                            context.l10n.emailVerificationHelp,
                             style: AppTextStyles.bodyInterMedium14.copyWith(
                               color: context.themeColors.textMuted,
                             ),
@@ -148,8 +149,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ignoring: isLoading,
                             child: GradientElevatedButton(
                               buttonText: isLoading
-                                  ? 'Sending...'
-                                  : 'Send Verification code',
+                                  ? context.l10n.sending
+                                  : context.l10n.sendVerificationCode,
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<ForgotPasswordCubit>().sendOtp(
@@ -165,14 +166,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Remember your password? ",
+                                '${context.l10n.rememberPassword} ',
                                 style: AppTextStyles.bodyInterMedium14.copyWith(
                                   color: context.themeColors.textSecondary,
                                 ),
                               ),
                               CustomTextButton(
                                 onTap: () => Navigator.pop(context),
-                                text: 'Back to Login',
+                                text: context.l10n.backToLogin,
                               ),
                             ],
                           ),

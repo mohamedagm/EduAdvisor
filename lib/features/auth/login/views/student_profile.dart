@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerWidget extends StatefulWidget {

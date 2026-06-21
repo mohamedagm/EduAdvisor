@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/api/dio_consumer.dart';
-import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
@@ -85,14 +85,14 @@ class _SignupScreenState extends State<SignupScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Failed to load departments',
+                        context.l10n.failedToLoadDepartments,
                         style: TextStyle(color: context.colorScheme.error),
                       ),
                       const SizedBox(height: 12),
                       ElevatedButton(
                         onPressed: () =>
                             context.read<DepartmentsCubit>().fetchDepartments(),
-                        child: const Text('Retry'),
+                        child: Text(context.l10n.retry),
                       ),
                     ],
                   ),
@@ -140,31 +140,34 @@ class _SignupScreenState extends State<SignupScreen> {
                                   const SizedBox(height: 16),
 
                                   _buildField(
-                                    label: 'First Name',
-                                    hint: 'Enter your first name',
+                                    label: context.l10n.firstName,
+                                    hint: context.l10n.enterFirstName,
                                     icon: Icons.person,
                                     controller: nameController,
-                                    validator: Validators.name,
+                                    validator: (value) =>
+                                        Validators.name(value, context.l10n),
                                   ),
                                   const SizedBox(height: 12),
                                   _buildField(
-                                    label: 'Last Name',
-                                    hint: 'Enter your last name',
+                                    label: context.l10n.lastName,
+                                    hint: context.l10n.enterLastName,
                                     icon: Icons.person,
                                     controller: lastNameController,
-                                    validator: Validators.name,
+                                    validator: (value) =>
+                                        Validators.name(value, context.l10n),
                                   ),
                                   const SizedBox(height: 12),
                                   _buildField(
-                                    label: 'Email',
-                                    hint: 'Email',
+                                    label: context.l10n.email,
+                                    hint: context.l10n.email,
                                     icon: Icons.email,
                                     controller: emailController,
-                                    validator: Validators.email,
+                                    validator: (value) =>
+                                        Validators.email(value, context.l10n),
                                   ),
                                   const SizedBox(height: 12),
                                   _buildField(
-                                    label: 'Student Code',
+                                    label: context.l10n.studentCode,
                                     hint: '2023-123',
                                     icon: Icons.code,
                                     controller: studentCodeController,
@@ -180,8 +183,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   ),
                                   const SizedBox(height: 12),
                                   _buildField(
-                                    label: 'National Id',
-                                    hint: 'Enter your national id',
+                                    label: context.l10n.nationalId,
+                                    hint: context.l10n.enterNationalId,
                                     icon: Icons.badge,
                                     controller: idController,
                                   ),
@@ -198,8 +201,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                         width: double.infinity,
                                         child: GradientElevatedButton(
                                           buttonText: isLoading
-                                              ? 'Signing Up...'
-                                              : 'Sign Up',
+                                              ? context.l10n.signingUp
+                                              : context.l10n.signUp,
                                           onPressed: () => _onSignUpPressed(
                                             context,
                                             isLoading: isLoading,
@@ -234,7 +237,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
       AppToast.success(
         context,
-        title: 'Registration Successful',
+        title: context.l10n.registrationSuccessful,
         description: message,
       );
 
@@ -265,7 +268,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
       AppToast.error(
         context,
-        title: 'Registration Failed',
+        title: context.l10n.registrationFailed,
         description: message,
       );
     }
@@ -325,12 +328,12 @@ class _SignupScreenState extends State<SignupScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const FieldLabel(text: 'Password'),
+        FieldLabel(text: context.l10n.password),
         CustomTextField(
-          hint: 'Password',
+          hint: context.l10n.password,
           icon: Icons.lock,
           controller: passwordController,
-          validator: Validators.password,
+          validator: (value) => Validators.password(value, context.l10n),
           obscureText: isObscure,
           suffixIcon: IconButton(
             icon: Icon(isObscure ? Icons.visibility : Icons.visibility_off),
@@ -345,14 +348,17 @@ class _SignupScreenState extends State<SignupScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const FieldLabel(text: 'Confirm Password'),
+        FieldLabel(text: context.l10n.confirmPassword),
         CustomTextField(
-          hint: 'Confirm Password',
+          hint: context.l10n.confirmPassword,
           icon: Icons.lock,
           controller: confirmPasswordController,
           obscureText: isObscure,
-          validator: (value) =>
-              Validators.confirmPassword(value, passwordController.text),
+          validator: (value) => Validators.confirmPassword(
+            value,
+            passwordController.text,
+            context.l10n,
+          ),
           suffixIcon: IconButton(
             icon: Icon(isObscure ? Icons.visibility : Icons.visibility_off),
             onPressed: () => setState(() => isObscure = !isObscure),

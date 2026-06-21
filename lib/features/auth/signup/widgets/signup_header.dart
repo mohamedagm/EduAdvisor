@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -19,9 +20,9 @@ class SignupHeader extends StatelessWidget {
         // ),
       ),
       alignment: Alignment.center,
-      child: const Text(
-        "Create Account",
-        style: TextStyle(
+      child: Text(
+        context.l10n.createAccount,
+        style: const TextStyle(
           color: Colors.white,
           fontSize: 22,
           fontWeight: FontWeight.bold,

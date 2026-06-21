@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -33,7 +34,10 @@ class SkipButton extends StatelessWidget {
               foregroundColor: context.themeColors.textSecondary,
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
-            child: const Text('Skip for Now', style: TextStyle(fontSize: 16)),
+            child: Text(
+              context.l10n.skipForNow,
+              style: const TextStyle(fontSize: 16),
+            ),
           ),
         ],
       ),

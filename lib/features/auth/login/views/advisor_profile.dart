@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
@@ -27,8 +28,8 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
       body: Stack(
         children: [
           GradiantContainer(
-            mainText: "Complete Your Profile",
-            optionalText: "Add a profile photo to personalize your account.",
+            mainText: context.l10n.completeYourProfile,
+            optionalText: context.l10n.addProfilePhoto,
           ),
 
           Align(
@@ -103,7 +104,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                             ),
                             const SizedBox(width: 16),
                             Text(
-                              'Why add a photo?',
+                              context.l10n.whyAddPhoto,
                               style: AppTextStyles.interRegular16.copyWith(
                                 color: context.themeColors.textSecondary,
                                 fontWeight: FontWeight.w600,
@@ -113,8 +114,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'A profile photo helps you establish and present yourself. '
-                          'You can always change or remove it later in your profile settings.',
+                          context.l10n.photoExplanation,
                           style: AppTextStyles.bodyInterMedium14.copyWith(
                             color: context.themeColors.textSecondary,
                           ),
@@ -127,7 +127,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                     onPressed: () {
                       context.go(AppRoutes.advisorMain);
                     },
-                    buttonText: 'Continue',
+                    buttonText: context.l10n.continueAction,
                   ),
                   const SizedBox(height: 32),
                   // Skip Button
