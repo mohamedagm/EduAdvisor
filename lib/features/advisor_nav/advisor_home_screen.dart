@@ -20,25 +20,18 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedTab = 0;
 
   final List<Widget> _screens = [
-    AdvisorRequests(
-    
-    ),
+    AdvisorRequests(),
     const StudentsScreen(),
     const AdvisorAnalytics(),
-  ];
   ];
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MyStudentsCubit(
-        advisorRepo: AdvisorRepo(apiConsumer: DioConsumer()),
-      ),
+      create: (context) =>
+          MyStudentsCubit(advisorRepo: AdvisorRepo(apiConsumer: DioConsumer())),
       child: Scaffold(
-        body: IndexedStack(
-          index: _selectedTab,
-          children: _screens,
-        ),
+        body: IndexedStack(index: _selectedTab, children: _screens),
         bottomNavigationBar: BottomNav(
           selected: _selectedTab,
           onTap: (i) => setState(() => _selectedTab = i),

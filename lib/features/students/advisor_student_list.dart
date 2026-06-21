@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_cubit.dart';
 import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_state.dart';

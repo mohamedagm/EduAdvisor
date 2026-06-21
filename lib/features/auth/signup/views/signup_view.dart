@@ -298,18 +298,6 @@ class _SignupScreenState extends State<SignupScreen> {
         profileImage: profileImageFile,
       ),
     );
-      RegisterStudentRequestModel(
-        firstName: nameController.text.trim(),
-        lastName: lastNameController.text.trim(),
-        email: emailController.text.trim(),
-        studentCode: studentCodeController.text.trim(),
-        departmentId: selectedDepartmentId ?? '',
-        nationalId: idController.text.trim(),
-        password: passwordController.text,
-        confirmPassword: confirmPasswordController.text,
-        profileImage: profileImageFile,
-      ),
-    );
   }
 
   Widget _buildField({
@@ -374,4 +362,3 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
-

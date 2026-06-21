@@ -26,7 +26,7 @@ import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AdvisorLoginScreen extends StatefulWidget {
-   final RegisterRole registerRole;
+  final RegisterRole registerRole;
   const AdvisorLoginScreen({super.key, required this.registerRole});
 
   @override
@@ -87,7 +87,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                               Navigator.push(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
@@ -166,31 +166,6 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                                   ),
                                 ),
                               ),
-                                context,
-                                MaterialPageRoute(
-                                  builder: (loginContext) => MultiBlocProvider(
-                                    providers: [
-                                      BlocProvider<AuthCubit>(
-                                        create: (context) => AuthCubit(
-                                          authRepo: AuthRepo(
-                                            apiConsumer: DioConsumer(),
-                                          ),
-                                        ),
-                                      ),
-                                      BlocProvider<DepartmentsCubit>(
-                                        create: (context) => DepartmentsCubit(
-                                          departmentsRepo: DepartmentsRepo(
-                                            apiConsumer: DioConsumer(),
-                                          ),
-                                        )..fetchDepartments(),
-                                      ),
-                                    ],
-                                    child: const AdvisorSignupScreen(
-                                      registerRole: RegisterRole.advisor,
-                                    ),
-                                  ),
-                                ),
-                              ),
                               child: Text(
                                 'Sign Up',
                                 style: AppTextStyles.bodyInterMedium18.copyWith(
@@ -219,37 +194,31 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
         title: 'Login Successful',
         description: 'Welcome back, ${state.response.user.fullName}',
       );
-
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen() ),
+        MaterialPageRoute(builder: (context) => const AdvisorProfile()),
       );
     }
 
     if (state is LoginFailure) {
       final msg = state.failure.message.toLowerCase();
 
-     
- if (msg.contains("accountnotverified"))  {
-             // في signup_screen.dart
-Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => BlocProvider(
-      create: (context) => VerifyCodeCubit(
-         verifyCodeRepo: VerifyCodeRepo(
-           apiConsumer: DioConsumer(),
-            
-         ),
-        
-      ), 
-      child: VerifyCodeScreen(
-        email: _emailController.text.trim(),
-        role: widget.registerRole,
-      ),
-    ),
-  ),
-);
+      if (msg.contains("accountnotverified")) {
+        // في signup_screen.dart
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) => VerifyCodeCubit(
+                verifyCodeRepo: VerifyCodeRepo(apiConsumer: DioConsumer()),
+              ),
+              child: VerifyCodeScreen(
+                email: _emailController.text.trim(),
+                role: widget.registerRole,
+              ),
+            ),
+          ),
+        );
         return;
       }
 

@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -53,7 +54,10 @@ class StudentInfoCard extends StatelessWidget {
                   children: [
                     Text(
                       studentName,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       "$department • ID: $studentCode",
@@ -61,11 +65,20 @@ class StudentInfoCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      decoration: BoxDecoration(color: Colors.blue[50], borderRadius: BorderRadius.circular(8)),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                       child: Text(
                         "Year $academicYear",
-                        style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],

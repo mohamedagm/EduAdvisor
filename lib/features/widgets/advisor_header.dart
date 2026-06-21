@@ -20,6 +20,66 @@ class AdvisorHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          AuthCubit(authRepo: AuthRepo(apiConsumer: DioConsumer())),
+      child: BlocConsumer<AuthCubit, AuthState>(
+        listener: _handleAuthState,
+        builder: (context, state) {
+          final isLoggingOut = state is LogoutLoading;
+
+          return BlocBuilder<CurrentUserCubit, CurrentUserState>(
+            builder: (context, userState) {
+              final user = userState is CurrentUserLoaded
+                  ? userState.user
+                  : null;
+
+              return _AdvisorHeaderContent(
+                user: user,
+                isLoggingOut: isLoggingOut,
+                studentCount: studentCount?.toString() ?? '0',
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  void _handleAuthState(BuildContext context, AuthState state) {
+    if (state is LogoutSuccess) {
+      AppToast.success(
+        context,
+        title: 'Logged out',
+        description: state.response.message,
+      );
+      context.go(AppRoutes.chooseUserRole);
+    }
+
+    if (state is LogoutFailure) {
+      AppToast.error(
+        context,
+        title: 'Logged out locally',
+        description: state.failure.message,
+      );
+      context.go(AppRoutes.chooseUserRole);
+    }
+  }
+}
+
+class _AdvisorHeaderContent extends StatelessWidget {
+  const _AdvisorHeaderContent({
+    required this.user,
+    required this.isLoggingOut,
+    required this.studentCount,
+  });
+
+  final CurrentUserModel? user;
+  final bool isLoggingOut;
+  final String studentCount;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(gradient: AppGradients.primary),
       child: SafeArea(
@@ -101,7 +161,7 @@ class AdvisorHeader extends StatelessWidget {
                 children: [
                   statCard(
                     icon: Icons.people_outline,
-                    value: studentCount?.toString() ?? '0',
+                    value: studentCount,
                     // value: studentCount.toString(),
                     label: 'Students',
                   ),

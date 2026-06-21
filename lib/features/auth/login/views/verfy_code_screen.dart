@@ -93,10 +93,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       code: otpCode,
       isFromForgotPassword: widget.isFromForgotPassword,
     );
-      email: widget.email,
-      code: otpCode,
-      isFromForgotPassword: widget.isFromForgotPassword,
-    );
   }
 
   void handleResendCode() {
@@ -259,7 +255,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                                 border: OutlineInputBorder(),
                               ),
                               onChanged: (value) => onOtpChanged(index, value),
-                              onChanged: (value) => onOtpChanged(index, value),
                             ),
                           );
                         }),
@@ -297,4 +292,3 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     );
   }
 }
-
