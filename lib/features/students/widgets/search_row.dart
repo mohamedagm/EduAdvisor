@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/advisor_nav/data/models/my_students_response_model.dart';
 import 'package:edu_advisor/features/students/models/student_model.dart';
 import 'package:edu_advisor/features/students/widgets/student_card.dart';
 import 'package:flutter/material.dart';
@@ -56,22 +57,24 @@ class SearchRow extends StatelessWidget {
 
 // ─────────────────────────────────────────────
 // STUDENT LIST
-// ─────────────────────────────────────────────
+
 
 class StudentList extends StatelessWidget {
-  final List<Student> students;
+  // 1. التغيير هنا: بنخلي الـ List تستقبل الموديل الحقيقي اللي جاي من السيرفر
+  final List<MyStudentModel> students;
 
   const StudentList({super.key, required this.students});
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.symmetric(vertical: 14),
+      padding: const EdgeInsets.symmetric(vertical: 14),
       itemCount: students.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 10),
-
-      ///space between cards
-      itemBuilder: (context, index) => StudentCard(student: students[index]),
+      separatorBuilder: (_, __) => const SizedBox(height: 10), // المسافة بين الكروت
+      itemBuilder: (context, index) {
+        // 2. التغيير هنا: بنمرر الطالب اللي عليه الدور في الـ Loop للكارت بتاعه باستخدام الـ index
+        return StudentCard(student: students[index]);
+      },
     );
   }
 }

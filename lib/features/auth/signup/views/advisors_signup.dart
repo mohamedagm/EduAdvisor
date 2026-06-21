@@ -63,29 +63,6 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
     super.dispose();
   }
 
-  // bool _isPickingImage = false;
-
-  // Future<void> _pickImage() async {
-  //   if (_isPickingImage) return;
-
-  //   _isPickingImage = true;
-
-  //   try {
-  //     final XFile? picked = await _picker.pickImage(
-  //       source: ImageSource.gallery,
-  //       imageQuality: 80,
-  //     );
-
-  //     if (picked != null && mounted) {
-  //       setState(() {
-  //         _selectedImage = File(picked.path);
-  //       });
-  //     }
-  //   } finally {
-  //     _isPickingImage = false;
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;

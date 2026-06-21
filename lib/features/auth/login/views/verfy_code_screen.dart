@@ -9,8 +9,6 @@ import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_state.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/reset_password_repo.dart';
 import 'package:edu_advisor/features/auth/login/views/new_pass.dart';
-// 💡 ضيفي هنا مسار شاشة الـ ResetPasswordScreen لو مكنش موجود تلقائي
-// import 'package:edu_advisor/features/auth/login/views/reset_password_screen.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,14 +17,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class VerifyCodeScreen extends StatefulWidget {
   final String email;
   final RegisterRole role;
-  final bool isFromForgotPassword; // 👈 1. زودنا الـ Flag هنا
+  final bool isFromForgotPassword;
 
   const VerifyCodeScreen({
     super.key,
     required this.email,
     required this.role,
-    this.isFromForgotPassword =
-        false, // 👈 2. خليناه اختياري وبقيمة افتراضية false عشان ما يضربش في الـ Register
+    this.isFromForgotPassword = false,
   });
 
   @override
@@ -136,6 +133,12 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<VerifyCodeCubit, VerifyCodeState>(
       listener: (context, state) {
+        if (state is VerifyOtpLoading) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text("Verifying...")));
+        }
+
         if (state is VerifyOtpSuccess) {
           AppToast.success(
             context,
@@ -144,6 +147,46 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           );
 
           Future.delayed(const Duration(seconds: 1), () {
+            if (mounted) {
+              if (widget.isFromForgotPassword) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider(
+                      create: (_) => ResetPasswordCubit(
+                        resetPasswordRepo: ResetPasswordRepo(
+                          apiConsumer: DioConsumer(),
+                        ),
+                      ),
+                      child: NewPasswordScreen(
+                        role: widget.role,
+                        email: widget.email,
+                        token: state.response.data ?? '',
+                      ),
+                    ),
+                  ),
+                );
+              }
+              if (widget.isFromForgotPassword) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider(
+                      create: (_) => ResetPasswordCubit(
+                        resetPasswordRepo: ResetPasswordRepo(
+                          apiConsumer: DioConsumer(),
+                        ),
+                      ),
+                      child: NewPasswordScreen(
+                        role: widget.role,
+                        email: widget.email,
+                        token: state.response.data ?? '',
+                      ),
+                    ),
+                  ),
+                );
+              }
+            }
             if (!context.mounted || !widget.isFromForgotPassword) return;
             Navigator.pushReplacement(
               context,
@@ -167,11 +210,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
         if (state is VerifyOtpFailure) {
           debugPrint('VERIFY ERROR: "${state.failure.message}"');
-          AppToast.error(
+          ScaffoldMessenger.of(
             context,
-            title: context.l10n.verificationFailed,
-            description: state.failure.message,
-          );
+          ).showSnackBar(SnackBar(content: Text(state.failure.message)));
         }
 
         if (state is ResendOtpSuccess) {
@@ -185,6 +226,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         }
 
         if (state is ResendOtpFailure) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.failure.message)));
           AppToast.error(
             context,
             title: context.l10n.couldNotResendCode,

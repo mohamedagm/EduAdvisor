@@ -33,7 +33,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  File? studentProfileImage; // الـ Variable الأساسي هنا
+  File? studentProfileImage;
 
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
@@ -118,10 +118,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             decoration: BoxDecoration(
                               color: context.themeColors.card,
                               borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   blurRadius: 10,
-                                  color: context.themeColors.shadow,
+                                  color: Colors.black12,
                                 ),
                               ],
                             ),
@@ -278,7 +278,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (isLoading || !_formKey.currentState!.validate()) return;
 
     MultipartFile? profileImageFile;
-    // تم تعديل المتغير هنا من _selectedImage إلى studentProfileImage ليتطابق مع الـ State
+
     if (studentProfileImage != null) {
       profileImageFile = await MultipartFile.fromFile(
         studentProfileImage!.path,

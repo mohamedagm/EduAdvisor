@@ -62,7 +62,7 @@ class VerifyCodeRepo {
 }) async {
   try {
     final response = await _apiConsumer.post(
-      ApiEndpoints.verifyResetOtp, // ✅ endpoint مختلف
+      ApiEndpoints.verifyResetOtp, 
       data: {'email': email, 'otp': code},
     );
     return Right(ApiResponseModel.fromJson(response));

@@ -44,10 +44,13 @@ final GoRouter appRouter = GoRouter(
     //   path: AppRoutes.studentLogin,
     //   builder: (context, state) => const StudentLoginScreen(),
     // ),
-    GoRoute(
-      path: AppRoutes.advisorLogin,
-      builder: (context, state) => const AdvisorLoginScreen(),
-    ),
+    //##########################################################
+    //Add role
+    // GoRoute(
+    //   path: AppRoutes.advisorLogin,
+    //   builder: (context, state) => const AdvisorLoginScreen(),
+    // ),
+    //##########################################################
     // GoRoute(
     //   path: AppRoutes.signup,
     //   builder: (context, state) {

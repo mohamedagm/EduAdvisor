@@ -1,7 +1,10 @@
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/request_cubit.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
+import 'package:edu_advisor/features/requests/views/request_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -33,7 +36,21 @@ class StudentRequestCard extends StatelessWidget {
 
         return GestureDetector(
           onTap: () {
-            context.push(AppRoutes.requestDetails, extra: request);
+            // 📌 بنمرر نفس instance بتاع RequestsCubit الموجودة فوق
+            // (في AdvisorRequests) لشاشة التفاصيل، عشان لما نعمل approve
+            // هناك، اللستة الرئيسية تتحدث تلقائيًا من غير ما نعمل fetch
+            // تاني أو نرجع نضطر نـ refresh الشاشة يدويًا
+            final requestsCubit = context.read<RequestsCubit>();
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BlocProvider.value(
+                  value: requestsCubit,
+                  child: RequestDetailsScreen(request: request),
+                ),
+              ),
+            );
           },
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
