@@ -7,8 +7,7 @@ import 'package:flutter/services.dart';
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: AppColors.white,
-      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: AppColors.white,      statusBarIconBrightness: Brightness.dark,
     ),
   );
 
@@ -22,7 +21,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  SplashView(),
+      home: SplashView(),
     );
   }
 }

@@ -31,7 +31,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  File? studentProfileImage; // الـ Variable الأساسي هنا
+  File? studentProfileImage;
 
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
@@ -117,7 +117,10 @@ class _SignupScreenState extends State<SignupScreen> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: const [
-                                BoxShadow(blurRadius: 10, color: Colors.black12),
+                                BoxShadow(
+                                  blurRadius: 10,
+                                  color: Colors.black12,
+                                ),
                               ],
                             ),
                             child: Form(
@@ -125,7 +128,6 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                
                                   ImagePickerWidget(
                                     onImageSelected: (image) {
                                       setState(() {
@@ -271,7 +273,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (isLoading || !_formKey.currentState!.validate()) return;
 
     MultipartFile? profileImageFile;
-    // تم تعديل المتغير هنا من _selectedImage إلى studentProfileImage ليتطابق مع الـ State
+
     if (studentProfileImage != null) {
       profileImageFile = await MultipartFile.fromFile(
         studentProfileImage!.path,
@@ -282,18 +284,18 @@ class _SignupScreenState extends State<SignupScreen> {
     if (!context.mounted) return;
 
     context.read<AuthCubit>().registerStudent(
-          RegisterStudentRequestModel(
-            firstName: nameController.text.trim(),
-            lastName: lastNameController.text.trim(),
-            email: emailController.text.trim(),
-            studentCode: studentCodeController.text.trim(),
-            departmentId: selectedDepartmentId ?? '',
-            nationalId: idController.text.trim(),
-            password: passwordController.text,
-            confirmPassword: confirmPasswordController.text,
-            profileImage: profileImageFile,
-          ),
-        );
+      RegisterStudentRequestModel(
+        firstName: nameController.text.trim(),
+        lastName: lastNameController.text.trim(),
+        email: emailController.text.trim(),
+        studentCode: studentCodeController.text.trim(),
+        departmentId: selectedDepartmentId ?? '',
+        nationalId: idController.text.trim(),
+        password: passwordController.text,
+        confirmPassword: confirmPasswordController.text,
+        profileImage: profileImageFile,
+      ),
+    );
   }
 
   Widget _buildField({

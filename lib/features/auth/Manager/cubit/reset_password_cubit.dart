@@ -27,8 +27,8 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     );
 
     result.fold(
-      (failure) => emit(ResetPasswordFailure(errorMessage: failure.apiResponse.message ?? "حدث خطأ ما")),
-      (apiResponse) => emit(ResetPasswordSuccess(message: apiResponse.message ?? "تم تغيير كلمة المرور بنجاح")),
+      (failure) => emit(ResetPasswordFailure(errorMessage: failure.apiResponse.message)),
+      (apiResponse) => emit(ResetPasswordSuccess(message: apiResponse.message)),
     );
   }
 }

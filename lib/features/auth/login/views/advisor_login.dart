@@ -2,15 +2,19 @@ import 'package:edu_advisor/core/api/dio_consumer.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
+import 'package:edu_advisor/features/advisor_nav/advisor_home_screen.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/departments_cubit.dart';
+import 'package:edu_advisor/features/auth/Manager/cubit/verify_code_cubit.dart';
 import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/departments_repo.dart';
+import 'package:edu_advisor/features/auth/data/repo/verify_code_repo.dart';
 import 'package:edu_advisor/features/auth/login/views/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/login/views/forgot_password.dart';
+import 'package:edu_advisor/features/auth/login/views/verfy_code_screen.dart';
 import 'package:edu_advisor/features/auth/signup/views/advisors_signup.dart';
 import 'package:edu_advisor/features/auth/widgets/auth_card.dart';
 import 'package:edu_advisor/features/auth/widgets/login_form.dart';
@@ -20,7 +24,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdvisorLoginScreen extends StatefulWidget {
-  const AdvisorLoginScreen({super.key});
+   final RegisterRole registerRole;
+  const AdvisorLoginScreen({super.key, required this.registerRole});
 
   @override
   State<AdvisorLoginScreen> createState() => _AdvisorLoginScreenState();
@@ -80,7 +85,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                             Navigator.push(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
@@ -134,31 +139,31 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                             ),
                             GestureDetector(
                               onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (loginContext) => MultiBlocProvider(
-                                      providers: [
-                                        BlocProvider<AuthCubit>(
-                                          create: (context) => AuthCubit(
-                                            authRepo: AuthRepo(
-                                              apiConsumer: DioConsumer(),
-                                            ),
+                                context,
+                                MaterialPageRoute(
+                                  builder: (loginContext) => MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider<AuthCubit>(
+                                        create: (context) => AuthCubit(
+                                          authRepo: AuthRepo(
+                                            apiConsumer: DioConsumer(),
                                           ),
                                         ),
-                                        BlocProvider<DepartmentsCubit>(
-                                          create: (context) => DepartmentsCubit(
-                                            departmentsRepo: DepartmentsRepo(
-                                              apiConsumer: DioConsumer(),
-                                            ),
-                                          )..fetchDepartments(),
-                                        ),
-                                      ],
-                                      child: const AdvisorSignupScreen(
-                                        registerRole: RegisterRole.advisor,
                                       ),
+                                      BlocProvider<DepartmentsCubit>(
+                                        create: (context) => DepartmentsCubit(
+                                          departmentsRepo: DepartmentsRepo(
+                                            apiConsumer: DioConsumer(),
+                                          ),
+                                        )..fetchDepartments(),
+                                      ),
+                                    ],
+                                    child: const AdvisorSignupScreen(
+                                      registerRole: RegisterRole.advisor,
                                     ),
                                   ),
                                 ),
+                              ),
                               child: Text(
                                 'Sign Up',
                                 style: AppTextStyles.bodyInterMedium18.copyWith(
@@ -187,13 +192,40 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
         title: 'Login Successful',
         description: 'Welcome back, ${state.response.user.fullName}',
       );
+
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const AdvisorProfile()),
+        MaterialPageRoute(builder: (context) => HomeScreen() ),
       );
     }
 
     if (state is LoginFailure) {
+      final msg = state.failure.message.toLowerCase();
+
+     
+ if (msg.contains("accountnotverified"))  {
+             // في signup_screen.dart
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => BlocProvider(
+      create: (context) => VerifyCodeCubit(
+         verifyCodeRepo: VerifyCodeRepo(
+           apiConsumer: DioConsumer(),
+            
+         ),
+        
+      ), 
+      child: VerifyCodeScreen(
+        email: _emailController.text.trim(),
+        role: widget.registerRole,
+      ),
+    ),
+  ),
+);
+        return;
+      }
+
       AppToast.error(
         context,
         title: 'Login Failed',
@@ -203,9 +235,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
   }
 
   void _onLoginPressed(BuildContext context, {required bool isLoading}) {
-    if (isLoading || !_formKey.currentState!.validate()) {
-      return;
-    }
+    if (isLoading || !_formKey.currentState!.validate()) return;
 
     context.read<AuthCubit>().login(
       LoginRequestModel(

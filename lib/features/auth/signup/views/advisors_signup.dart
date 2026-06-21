@@ -21,7 +21,6 @@ import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:edu_advisor/valdations/valditors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AdvisorSignupScreen extends StatefulWidget {
   const AdvisorSignupScreen({super.key, required this.registerRole});
@@ -61,29 +60,6 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
     confirmPasswordController.dispose();
     super.dispose();
   }
-
-  // bool _isPickingImage = false;
-
-  // Future<void> _pickImage() async {
-  //   if (_isPickingImage) return;
-
-  //   _isPickingImage = true;
-
-  //   try {
-  //     final XFile? picked = await _picker.pickImage(
-  //       source: ImageSource.gallery,
-  //       imageQuality: 80,
-  //     );
-
-  //     if (picked != null && mounted) {
-  //       setState(() {
-  //         _selectedImage = File(picked.path);
-  //       });
-  //     }
-  //   } finally {
-  //     _isPickingImage = false;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,8 @@ import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AdvisorHeader extends StatelessWidget {
-  const AdvisorHeader({super.key});
+  final int? studentCount;
+  const AdvisorHeader({super.key, required this.studentCount});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,6 @@ class AdvisorHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-        
               Row(
                 children: [
                   //handle profile immage and name
@@ -71,7 +71,8 @@ class AdvisorHeader extends StatelessWidget {
                 children: [
                   statCard(
                     icon: Icons.people_outline,
-                    value: '45',
+                    value: studentCount?.toString() ?? '0',
+                    // value: studentCount.toString(),
                     label: 'Students',
                   ),
                   const SizedBox(width: 12),

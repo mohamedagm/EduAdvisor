@@ -1,11 +1,10 @@
-
 import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/features/students/models/student_model.dart';
+import 'package:edu_advisor/features/advisor_nav/data/models/my_students_response_model.dart';
 import 'package:edu_advisor/features/students/widgets/student_info.dart';
 import 'package:flutter/material.dart';
 
 class StudentCard extends StatelessWidget {
-  final Student student;
+  final MyStudentModel student;
 
   const StudentCard({super.key, required this.student});
 
@@ -20,17 +19,17 @@ class StudentCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-         
           Expanded(
             child: StudentInfo(
-              fullName: student.fullName,
+              fullName: student.name,
               email: student.email,
+              imageUrl: student.imageUrl,
             ),
           ),
+
           StudentMeta(gpa: student.gpa, semester: student.semester),
         ],
       ),
     );
   }
 }
-

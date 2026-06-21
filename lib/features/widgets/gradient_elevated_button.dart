@@ -39,14 +39,14 @@ class GradientElevatedButton extends StatelessWidget {
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25), // ✅ نفس رقم الـ Container
+            borderRadius: BorderRadius.circular(25), 
           ),
         ),
         child: Text(
           buttonText ?? '',
           style: TextStyle(
             color: Colors.white,
-            fontSize: screenHeight * 0.022, // ✅ بدل 18 ثابتة
+            fontSize: screenHeight * 0.022, // 
             fontWeight: FontWeight.bold,
           ),
         ),

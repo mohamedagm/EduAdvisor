@@ -1,10 +1,10 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/features/students/models/student_model.dart';
+import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_cubit.dart';
+import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_state.dart';
 import 'package:edu_advisor/features/students/widgets/search_row.dart';
 import 'package:edu_advisor/features/widgets/advisor_header.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StudentsScreen extends StatefulWidget {
   const StudentsScreen({super.key});
@@ -15,22 +15,16 @@ class StudentsScreen extends StatefulWidget {
 
 class _StudentsScreenState extends State<StudentsScreen> {
   final TextEditingController _searchController = TextEditingController();
-  String _query = '';
-
-  List<Student> get _filteredStudents {
-    if (_query.trim().isEmpty) return allStudents;
-    final q = _query.toLowerCase();
-    return allStudents.where((s) =>
-      s.fullName.toLowerCase().contains(q) ||
-      s.email.toLowerCase().contains(q),
-    ).toList();
-  }
 
   @override
   void initState() {
     super.initState();
+    context.read<MyStudentsCubit>().fetchMyStudents();
+
     _searchController.addListener(() {
-      setState(() => _query = _searchController.text);
+      context.read<MyStudentsCubit>().fetchMyStudents(
+        searchText: _searchController.text,
+      );
     });
   }
 
@@ -47,9 +41,12 @@ class _StudentsScreenState extends State<StudentsScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            AdvisorHeader(),
-        
-        
+            BlocBuilder<MyStudentsCubit, MyStudentsState>(
+              builder: (context, state) {
+                final count = state is MyStudentsSuccess ? state.totalCount : 0;
+                return AdvisorHeader(studentCount: count);
+              },
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -58,10 +55,44 @@ class _StudentsScreenState extends State<StudentsScreen> {
                   children: [
                     const SizedBox(height: 18),
                     SearchRow(controller: _searchController),
-                    // const SizedBox(height: 14),
+                    const SizedBox(height: 14),
                     Expanded(
-                      child: 
-                          StudentList(students: _filteredStudents),
+                      child: BlocBuilder<MyStudentsCubit, MyStudentsState>(
+                        builder: (context, state) {
+                          if (state is MyStudentsLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.gray100,
+                              ),
+                            );
+                          } else if (state is MyStudentsSuccess) {
+                            final liveStudents = state.students;
+
+                            if (liveStudents.isEmpty) {
+                              return const Center(
+                                child: Text(
+                                  'No students found.',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              );
+                            }
+
+                            return StudentList(students: liveStudents);
+                          } else if (state is MyStudentsFailure) {
+                            return Center(
+                              child: Text(
+                                'Error: ${state.failure.apiResponse.message}',
+                                style: const TextStyle(color: Colors.red),
+                              ),
+                            );
+                          }
+
+                          return const SizedBox();
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -70,79 +101,6 @@ class _StudentsScreenState extends State<StudentsScreen> {
           ],
         ),
       ),
-     
     );
   }
 }
-
-
-class StatsRow extends StatelessWidget {
-  final int studentCount;
-  final int requestCount;
-
-  const StatsRow({super.key, required this.studentCount, required this.requestCount});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _StatChip(
-          icon: Icons.people_rounded,
-          label: 'Students',
-          value: studentCount.toString(),
-        ),
-        const SizedBox(width: 12),
-        _StatChip(
-          icon: Icons.inbox_rounded,
-          label: 'Requests',
-          value: requestCount.toString(),
-        ),
-      ],
-    );
-  }
-}
-
-class _StatChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-
-  const _StatChip({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white24,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.white, size: 18),
-          const SizedBox(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(value,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700)),
-              Text(label,
-                  style:
-                      const TextStyle(color: Colors.white70, fontSize: 11)),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-
-
