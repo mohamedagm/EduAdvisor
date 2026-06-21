@@ -1,5 +1,6 @@
 import 'package:edu_advisor/features/home/views/widgets/course_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RecommendedCoursesBuilder extends StatelessWidget {
   const RecommendedCoursesBuilder({super.key});
@@ -50,11 +51,11 @@ class RecommendedCoursesBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 220,
+      height: 220.w,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: _mockCourses.length,
-        separatorBuilder: (context, index) => const SizedBox(width: 12),
+        separatorBuilder: (context, index) => SizedBox(width: 12.w),
         itemBuilder: (context, index) {
           final course = _mockCourses[index];
           return CourseCard(

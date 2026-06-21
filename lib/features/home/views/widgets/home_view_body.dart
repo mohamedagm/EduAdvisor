@@ -4,6 +4,7 @@ import 'package:edu_advisor/features/home/views/widgets/registeration_alert.dart
 import 'package:edu_advisor/features/home/views/widgets/section_header.dart';
 import 'package:edu_advisor/features/home/views/widgets/welcome_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -12,19 +13,15 @@ class HomeViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: SingleChildScrollView(
           child: Column(
-            spacing: 12,
-            children: [
+            spacing: 12.w,
+            children: const [
               WelcomeCard(),
-
               SectionHeader(),
-
               RecommendedCoursesBuilder(),
-
               DegreeProgressIndicator(),
-
               RegisterationAlert(),
             ],
           ),

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WelcomeCard extends StatelessWidget {
   const WelcomeCard({super.key});
@@ -39,23 +40,23 @@ class _WelcomeCardContent extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: AppGradients.primary,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
             color: context.colorScheme.primary.withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            blurRadius: 12.r,
+            offset: Offset(0, 6.w),
           ),
         ],
       ),
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               CircleAvatar(
-                radius: 28,
+                radius: 28.r,
                 backgroundColor: AppColors.white,
                 child: user?.profileImageUrl?.isNotEmpty == true
                     ? ClipOval(
@@ -65,9 +66,9 @@ class _WelcomeCardContent extends StatelessWidget {
                           ),
                         ),
                       )
-                    : const Icon(Icons.person, size: 30),
+                    : Icon(Icons.person, size: 30.r),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +78,7 @@ class _WelcomeCardContent extends StatelessWidget {
                         user?.displayName ?? context.l10n.student,
                       ),
                       style: AppTextStyles.heading1_20b.copyWith(
+                        fontSize: 20.sp,
                         color: AppColors.white,
                       ),
                     ),
@@ -85,31 +87,41 @@ class _WelcomeCardContent extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.notifications_none, color: Colors.white),
+                icon: Icon(
+                  Icons.notifications_none,
+                  size: 24.r,
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16.w),
 
           // Stats Row
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            spacing: 8.w,
             children: [
-              _StatItem(
-                icon: Icons.school_outlined,
-                label: context.l10n.gpa,
-                value: user?.displayGpa ?? '--',
+              Expanded(
+                child: _StatItem(
+                  icon: Icons.school_outlined,
+                  label: context.l10n.gpa,
+                  value: user?.displayGpa ?? '--',
+                ),
               ),
-              _StatItem(
-                icon: Icons.menu_book_outlined,
-                label: context.l10n.creditsLabel,
-                value: user?.displayCredits ?? '--',
+              Expanded(
+                child: _StatItem(
+                  icon: Icons.menu_book_outlined,
+                  label: context.l10n.creditsLabel,
+                  value: user?.displayCredits ?? '--',
+                ),
               ),
-              _StatItem(
-                icon: Icons.trending_up,
-                label: context.l10n.level,
-                value: user?.displayLevel ?? '--',
+              Expanded(
+                child: _StatItem(
+                  icon: Icons.trending_up,
+                  label: context.l10n.level,
+                  value: user?.displayLevel ?? '--',
+                ),
               ),
             ],
           ),
@@ -125,15 +137,15 @@ class _WelcomeCardShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         gradient: AppGradients.primary,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
             color: context.colorScheme.primary.withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            blurRadius: 12.r,
+            offset: Offset(0, 6.w),
           ),
         ],
       ),
@@ -142,31 +154,39 @@ class _WelcomeCardShimmer extends StatelessWidget {
         highlightColor: Colors.white.withValues(alpha: 0.52),
         child: Column(
           children: [
-            const Row(
+            Row(
               children: [
-                AppShimmerBox(width: 56, height: 56, shape: BoxShape.circle),
-                SizedBox(width: 12),
+                AppShimmerBox(
+                  width: 56.r,
+                  height: 56.r,
+                  shape: BoxShape.circle,
+                ),
+                SizedBox(width: 12.w),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AppShimmerBox(width: 132, height: 18),
-                      SizedBox(height: 8),
-                      AppShimmerBox(width: 104, height: 16),
+                      AppShimmerBox(width: 132.w, height: 18.w),
+                      SizedBox(height: 8.w),
+                      AppShimmerBox(width: 104.w, height: 16.w),
                     ],
                   ),
                 ),
-                AppShimmerBox(width: 36, height: 36, shape: BoxShape.circle),
+                AppShimmerBox(
+                  width: 36.r,
+                  height: 36.r,
+                  shape: BoxShape.circle,
+                ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.w),
             Row(
               children: List.generate(
                 3,
-                (index) => const Expanded(
+                (index) => Expanded(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4),
-                    child: AppShimmerBox(height: 58, borderRadius: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
+                    child: AppShimmerBox(height: 58.w, borderRadius: 12.r),
                   ),
                 ),
               ),
@@ -192,30 +212,37 @@ class _StatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
       decoration: BoxDecoration(
         color: Colors.white12,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, color: AppColors.white, size: 14),
-              const SizedBox(width: 4),
-              Text(
-                label,
-                style: AppTextStyles.bodyInterRegular12.copyWith(
-                  color: AppColors.white,
+              Icon(icon, color: AppColors.white, size: 14.r),
+              SizedBox(width: 4.w),
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.bodyInterRegular12.copyWith(
+                    fontSize: 12.sp,
+                    color: AppColors.white,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.w),
           Text(
             value,
             style: AppTextStyles.poppinsRegular14.copyWith(
+              fontSize: 14.sp,
               color: AppColors.white,
             ),
           ),
