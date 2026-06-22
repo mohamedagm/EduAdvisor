@@ -34,14 +34,25 @@ class _AdvisorRequestsView extends StatefulWidget {
 }
 
 class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
-  String _currentFilter = 'New Requests'; // التاب الافتراضي عند فتح الشاشة
+  String _currentFilter = 'New Requests'; 
+  final TextEditingController _searchController = TextEditingController();
+
+  String _getMappedStatus(String filter) {
+    if (filter == 'New Requests') return 'Pending';
+    return filter; 
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         children: [
-          // الـ Header الخاص ببيانات المستشار وعدد الطلاب
           BlocBuilder<MyStudentsCubit, MyStudentsState>(
             builder: (context, state) {
               final count = state is MyStudentsSuccess ? state.totalCount : 0;
@@ -49,14 +60,50 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
             },
           ),
 
-          // بار التنقل بين التابات (New Requests, Approved, Rejected)
+          // حقل البحث الذكي متوافق بالكامل مع السيرفر والـ Cubit الحالي
+          if (_currentFilter != 'New Requests')
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search by student name...',
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: _searchController.text.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            _searchController.clear();
+                            context.read<RequestsCubit>().searchRequests(
+                                  '',
+                                  currentStatus: _getMappedStatus(_currentFilter),
+                                );
+                            setState(() {});
+                          },
+                        )
+                      : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                ),
+                onChanged: (value) {
+                  setState(() {}); 
+                  context.read<RequestsCubit>().searchRequests(
+                        value,
+                        currentStatus: _getMappedStatus(_currentFilter),
+                      );
+                },
+              ),
+            ),
+
           RequestFilterBar(
             onFilterChanged: (newStatus) {
               setState(() {
                 _currentFilter = newStatus;
+                _searchController.clear(); 
               });
 
-              // ✅ إصلاح المشكلة: استدعاء الفانكشن المناسبة لكل تابة من الـ Cubit لضمان تحديث الـ State والبيانات
               if (newStatus == 'New Requests') {
                 context.read<RequestsCubit>().fetchPendingRequests();
               } else if (newStatus == 'Approved') {
@@ -87,19 +134,16 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                 final List<StudentRequest> requestsToShow;
 
                 if (_currentFilter == 'New Requests') {
-                  requestsToShow = successState.pendingRequests
-                      .where((req) => req.status.toLowerCase() == 'pending')
-                      .toList();
+                  requestsToShow = successState.pendingRequests;
                 } else if (_currentFilter == 'Approved') {
                   requestsToShow = successState.approvedRequests;
                 } else {
-                  // في حالة تاب Rejected
                   requestsToShow = successState.rejectedRequests;
                 }
 
                 return requestsToShow.isEmpty
                     ? const EmptyRequestsWidget()
-                    : RequestsList(requests: requestsToShow.cast());
+                    : RequestsList(requests: requestsToShow);
               },
             ),
           ),

@@ -8,7 +8,7 @@ abstract final class SessionNavigation {
   }
 
   static void advisorSignedIn(BuildContext context) {
-    context.go(AppRoutes.advisorProfileSetup);
+    context.go(AppRoutes.advisorMain);
   }
 
   static void signedOut(BuildContext context) {
