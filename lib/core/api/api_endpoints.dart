@@ -32,5 +32,7 @@ class ApiEndpoints {
   static String rejectRequest(String id) => '/api/v1/Advisors/reject/$id';
   static String assignStudents(String advisorId) =>
       '/api/v1/Advisors/$advisorId/assign-students';
+  static String getRegistrationRequestDetails(String id) =>
+      '/api/v1/Advisors/RegistrationRequest/$id';
 
 }

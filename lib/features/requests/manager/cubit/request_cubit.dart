@@ -6,8 +6,8 @@ import 'request_state.dart';
 
 class RequestsCubit extends Cubit<RequestsState> {
   RequestsCubit({required AdvisorRequestRepo advisorRepo})
-    : _advisorRepo = advisorRepo,
-      super(const RequestsInitial());
+      : _advisorRepo = advisorRepo,
+        super(const RequestsInitial());
 
   final AdvisorRequestRepo _advisorRepo;
 
@@ -21,26 +21,29 @@ class RequestsCubit extends Cubit<RequestsState> {
       pageSize: 50,
     );
 
-    result.fold((failure) => emit(RequestsFailure(failure)), (data) {
-      final pending = data.requests
-          .where((r) => r.status.toLowerCase() == 'pending')
-          .toList();
-      final approved = data.requests
-          .where((r) => r.status.toLowerCase() == 'approved')
-          .toList();
-      final rejected = data.requests
-          .where((r) => r.status.toLowerCase() == 'rejected')
-          .toList();
+    result.fold(
+      (failure) => emit(RequestsFailure(failure)),
+      (data) {
+        final pending = data.requests
+            .where((r) => r.status.toLowerCase() == 'pending')
+            .toList();
+        final approved = data.requests
+            .where((r) => r.status.toLowerCase() == 'approved')
+            .toList();
+        final rejected = data.requests
+            .where((r) => r.status.toLowerCase() == 'rejected')
+            .toList();
 
-      emit(
-        RequestsSuccess(
-          pendingRequests: pending,
-          approvedRequests: approved,
-          rejectedRequests: rejected,
-          totalCount: data.totalCount,
-        ),
-      );
-    });
+        emit(
+          RequestsSuccess(
+            pendingRequests: pending,
+            approvedRequests: approved,
+            rejectedRequests: rejected,
+            totalCount: data.totalCount,
+          ),
+        );
+      },
+    );
   }
 
   Future<void> fetchPendingRequests() => fetchAllRequests();

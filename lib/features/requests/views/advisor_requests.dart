@@ -17,13 +17,11 @@ class AdvisorRequests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print("TOKEN: $token");
     return BlocProvider(
       create: (context) =>
           RequestsCubit(advisorRepo: getIt<AdvisorRequestRepo>())
             ..fetchPendingRequests(),
-      // 💡 استخدام الـ Builder لضمان تمرير الـ Context المشبع بالـ Cubit للشاشات الفرعية والتفاصيل بشكل سليم
-      child: Builder(builder: (context) => _AdvisorRequestsView()),
+      child: Builder(builder: (context) => const _AdvisorRequestsView()),
     );
   }
 }
@@ -58,8 +56,13 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                 _currentFilter = newStatus;
               });
 
-              if (newStatus == 'Approved') {
+              // ✅ إصلاح المشكلة: استدعاء الفانكشن المناسبة لكل تابة من الـ Cubit لضمان تحديث الـ State والبيانات
+              if (newStatus == 'New Requests') {
+                context.read<RequestsCubit>().fetchPendingRequests();
+              } else if (newStatus == 'Approved') {
                 context.read<RequestsCubit>().fetchApprovedRequests();
+              } else if (newStatus == 'Rejected') {
+                context.read<RequestsCubit>().fetchRejectedRequests();
               }
             },
           ),
@@ -81,7 +84,6 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                 }
 
                 final successState = state as RequestsSuccess;
-
                 final List<StudentRequest> requestsToShow;
 
                 if (_currentFilter == 'New Requests') {

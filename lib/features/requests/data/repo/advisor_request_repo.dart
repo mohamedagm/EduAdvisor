@@ -9,7 +9,7 @@ import 'package:edu_advisor/features/requests/models/student_requests.dart';
 
 class AdvisorRequestRepo {
   AdvisorRequestRepo({required ApiConsumer apiConsumer})
-    : _apiConsumer = apiConsumer;
+      : _apiConsumer = apiConsumer;
 
   final ApiConsumer _apiConsumer;
 
@@ -44,7 +44,6 @@ class AdvisorRequestRepo {
     }
   }
 
-  /// ✅ جلب كل الطلبات من endpoint واحد وتفليترهم في الـ Cubit
   Future<Either<Failure, ({List<StudentRequest> requests, int totalCount})>>
   getAllRequests({int? pageNumber, int? pageSize}) async {
     try {
@@ -73,7 +72,6 @@ class AdvisorRequestRepo {
     }
   }
 
-  // ✅ الـ aliases دي عشان الـ Cubit يفرق بينهم لو احتجتي
   Future<Either<Failure, ({List<StudentRequest> requests, int totalCount})>>
   getPendingRequests({int? pageNumber, int? pageSize}) =>
       getAllRequests(pageNumber: pageNumber, pageSize: pageSize);
@@ -86,7 +84,6 @@ class AdvisorRequestRepo {
   getRejectedRequests({int? pageNumber, int? pageSize}) =>
       getAllRequests(pageNumber: pageNumber, pageSize: pageSize);
 
-  /// ✅ الموافقة على طلب
   Future<Either<Failure, Unit>> approveRequest(String id) async {
     try {
       await _apiConsumer.patch(ApiEndpoints.approveRequest(id), data: const {});
