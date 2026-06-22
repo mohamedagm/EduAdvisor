@@ -777,6 +777,80 @@ class AppLocalizationsEn extends AppLocalizations {
   String get researchOpportunitiesBenefit => 'Research opportunities';
 
   @override
+  String get mediumDifficulty => 'Medium';
+
+  @override
+  String get cloudComputing => 'Cloud Computing';
+
+  @override
+  String get cloudComputingRecommendationReason =>
+      'Your strong results in Computer Networks and Operating Systems make this a natural next step.';
+
+  @override
+  String get networkingFoundationBenefit =>
+      'Builds on your networking foundation';
+
+  @override
+  String get cloudSkillsBenefit => 'Develops practical AWS and Azure skills';
+
+  @override
+  String get cloudCareerBenefit => 'Prepares you for cloud engineering roles';
+
+  @override
+  String get mobileApplicationDevelopment => 'Mobile Application Development';
+
+  @override
+  String get mobileDevelopmentRecommendationReason =>
+      'Your performance in OOP and Software Engineering indicates strong readiness for this project-based course.';
+
+  @override
+  String get portfolioProjectBenefit =>
+      'Adds a production-ready app to your portfolio';
+
+  @override
+  String get mobileCareerBenefit => 'Opens mobile and full-stack career paths';
+
+  @override
+  String get teamworkExperienceBenefit =>
+      'Provides hands-on team project experience';
+
+  @override
+  String get cybersecurityFundamentals => 'Cybersecurity Fundamentals';
+
+  @override
+  String get cybersecurityRecommendationReason =>
+      'Your networking knowledge and analytical performance are a strong fit for introductory security work.';
+
+  @override
+  String get cybersecurityDemandBenefit =>
+      'Fast-growing demand across industries';
+
+  @override
+  String get securityTrackBenefit => 'Unlocks advanced security electives';
+
+  @override
+  String get riskAssessmentBenefit => 'Builds practical risk assessment skills';
+
+  @override
+  String get appliedStatistics => 'Applied Statistics';
+
+  @override
+  String get statisticsRecommendationReason =>
+      'Recommended to strengthen data analysis skills for AI electives and your graduation project.';
+
+  @override
+  String get dataInterpretationBenefit =>
+      'Improves data interpretation and reporting';
+
+  @override
+  String get dataSciencePrerequisiteBenefit =>
+      'Supports advanced data science electives';
+
+  @override
+  String get graduationProjectBenefit =>
+      'Useful for research and graduation projects';
+
+  @override
   String get recommendationsUpdatedDaily => 'Recommendations updated daily';
 
   @override

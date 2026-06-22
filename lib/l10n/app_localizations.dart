@@ -1448,6 +1448,132 @@ abstract class AppLocalizations {
   /// **'Research opportunities'**
   String get researchOpportunitiesBenefit;
 
+  /// No description provided for @mediumDifficulty.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get mediumDifficulty;
+
+  /// No description provided for @cloudComputing.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud Computing'**
+  String get cloudComputing;
+
+  /// No description provided for @cloudComputingRecommendationReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Your strong results in Computer Networks and Operating Systems make this a natural next step.'**
+  String get cloudComputingRecommendationReason;
+
+  /// No description provided for @networkingFoundationBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Builds on your networking foundation'**
+  String get networkingFoundationBenefit;
+
+  /// No description provided for @cloudSkillsBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Develops practical AWS and Azure skills'**
+  String get cloudSkillsBenefit;
+
+  /// No description provided for @cloudCareerBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepares you for cloud engineering roles'**
+  String get cloudCareerBenefit;
+
+  /// No description provided for @mobileApplicationDevelopment.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile Application Development'**
+  String get mobileApplicationDevelopment;
+
+  /// No description provided for @mobileDevelopmentRecommendationReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Your performance in OOP and Software Engineering indicates strong readiness for this project-based course.'**
+  String get mobileDevelopmentRecommendationReason;
+
+  /// No description provided for @portfolioProjectBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Adds a production-ready app to your portfolio'**
+  String get portfolioProjectBenefit;
+
+  /// No description provided for @mobileCareerBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens mobile and full-stack career paths'**
+  String get mobileCareerBenefit;
+
+  /// No description provided for @teamworkExperienceBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Provides hands-on team project experience'**
+  String get teamworkExperienceBenefit;
+
+  /// No description provided for @cybersecurityFundamentals.
+  ///
+  /// In en, this message translates to:
+  /// **'Cybersecurity Fundamentals'**
+  String get cybersecurityFundamentals;
+
+  /// No description provided for @cybersecurityRecommendationReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Your networking knowledge and analytical performance are a strong fit for introductory security work.'**
+  String get cybersecurityRecommendationReason;
+
+  /// No description provided for @cybersecurityDemandBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast-growing demand across industries'**
+  String get cybersecurityDemandBenefit;
+
+  /// No description provided for @securityTrackBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocks advanced security electives'**
+  String get securityTrackBenefit;
+
+  /// No description provided for @riskAssessmentBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Builds practical risk assessment skills'**
+  String get riskAssessmentBenefit;
+
+  /// No description provided for @appliedStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied Statistics'**
+  String get appliedStatistics;
+
+  /// No description provided for @statisticsRecommendationReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended to strengthen data analysis skills for AI electives and your graduation project.'**
+  String get statisticsRecommendationReason;
+
+  /// No description provided for @dataInterpretationBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Improves data interpretation and reporting'**
+  String get dataInterpretationBenefit;
+
+  /// No description provided for @dataSciencePrerequisiteBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Supports advanced data science electives'**
+  String get dataSciencePrerequisiteBenefit;
+
+  /// No description provided for @graduationProjectBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Useful for research and graduation projects'**
+  String get graduationProjectBenefit;
+
   /// No description provided for @recommendationsUpdatedDaily.
   ///
   /// In en, this message translates to:

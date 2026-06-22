@@ -13,6 +13,8 @@ class CourseRecommendationsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final recommendations = _recommendations(context);
+
     return Scaffold(
       appBar: ServiceAppBar(
         title: context.l10n.courseRecommendationsTitle,
@@ -68,41 +70,13 @@ class CourseRecommendationsView extends StatelessWidget {
               ),
             ),
             SizedBox(height: 24.w),
-            _buildRecommendationCard(
-              context: context,
-              iconData: Icons.smart_toy_outlined,
-              iconBgColor: AppColors.aiPurple,
-              iconForegroundColor: AppColors.white,
-              courseCode: 'CS 301',
-              courseName: context.l10n.machineLearning,
-              matchScore: '95',
-              credits: context.l10n.courseCredits('3'),
-              difficulty: context.l10n.hardDifficulty,
-              reason: context.l10n.machineLearningRecommendationReason,
-              benefits: [
-                context.l10n.programmingStrengthBenefit,
-                context.l10n.jobMarketDemandBenefit,
-                context.l10n.gpaImprovementBenefit,
-              ],
-            ),
-            SizedBox(height: 16.w),
-            _buildRecommendationCard(
-              context: context,
-              iconData: Icons.architecture,
-              iconBgColor: context.themeColors.warning,
-              iconForegroundColor: context.themeColors.onWarning,
-              courseCode: 'MATH 301',
-              courseName: context.l10n.advancedLinearAlgebra,
-              matchScore: '78',
-              credits: context.l10n.courseCredits('4'),
-              difficulty: context.l10n.hardDifficulty,
-              reason: context.l10n.linearAlgebraRecommendationReason,
-              benefits: [
-                context.l10n.mlTrackBenefit,
-                context.l10n.mathBackgroundBenefit,
-                context.l10n.researchOpportunitiesBenefit,
-              ],
-            ),
+            for (var index = 0; index < recommendations.length; index++) ...[
+              _buildRecommendationCard(
+                context: context,
+                recommendation: recommendations[index],
+              ),
+              if (index != recommendations.length - 1) SizedBox(height: 16.w),
+            ],
             SizedBox(height: 24.w),
 
             Container(
@@ -159,16 +133,7 @@ class CourseRecommendationsView extends StatelessWidget {
 
   Widget _buildRecommendationCard({
     required BuildContext context,
-    required IconData iconData,
-    required Color iconBgColor,
-    required Color iconForegroundColor,
-    required String courseCode,
-    required String courseName,
-    required String matchScore,
-    required String credits,
-    required String difficulty,
-    required String reason,
-    required List<String> benefits,
+    required _RecommendationData recommendation,
   }) {
     return Container(
       padding: EdgeInsets.all(16.w),
@@ -187,10 +152,14 @@ class CourseRecommendationsView extends StatelessWidget {
                 width: 48.r,
                 height: 48.r,
                 decoration: BoxDecoration(
-                  color: iconBgColor,
+                  color: recommendation.iconBgColor,
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                child: Icon(iconData, color: iconForegroundColor, size: 28.r),
+                child: Icon(
+                  recommendation.iconData,
+                  color: recommendation.iconForegroundColor,
+                  size: 28.r,
+                ),
               ),
               SizedBox(width: 12.w),
               Expanded(
@@ -202,7 +171,7 @@ class CourseRecommendationsView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            courseCode,
+                            recommendation.courseCode,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.heading1_20b.copyWith(
@@ -231,7 +200,7 @@ class CourseRecommendationsView extends StatelessWidget {
                               ),
                               SizedBox(width: 4.w),
                               Text(
-                                matchScore,
+                                '${recommendation.matchScore}%',
                                 style: AppTextStyles
                                     .bodyInterMedium14
                                     .responsive
@@ -244,7 +213,7 @@ class CourseRecommendationsView extends StatelessWidget {
                     ),
                     SizedBox(height: 2.w),
                     Text(
-                      courseName,
+                      recommendation.courseName,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.poppinsRegular14.responsive.copyWith(
@@ -264,15 +233,17 @@ class CourseRecommendationsView extends StatelessWidget {
             children: [
               _buildSmallBadge(
                 context: context,
-                text: credits,
+                text: recommendation.credits,
                 textColor: context.themeColors.textPrimary,
                 borderColor: context.colorScheme.outline,
               ),
               _buildSmallBadge(
                 context: context,
-                text: difficulty,
-                textColor: context.colorScheme.error,
-                borderColor: context.colorScheme.error.withValues(alpha: 0.4),
+                text: recommendation.difficulty,
+                textColor: recommendation.difficultyColor,
+                borderColor: recommendation.difficultyColor.withValues(
+                  alpha: 0.4,
+                ),
               ),
             ],
           ),
@@ -286,7 +257,7 @@ class CourseRecommendationsView extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: Text(
-              reason,
+              recommendation.reason,
               style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
                 color: context.themeColors.textSecondary,
                 fontWeight: FontWeight.w400,
@@ -297,7 +268,7 @@ class CourseRecommendationsView extends StatelessWidget {
           SizedBox(height: 16.w),
 
           Column(
-            children: benefits.map((benefit) {
+            children: recommendation.benefits.map((benefit) {
               return Padding(
                 padding: EdgeInsets.only(bottom: 8.w),
                 child: Row(
@@ -350,4 +321,139 @@ class CourseRecommendationsView extends StatelessWidget {
       ),
     );
   }
+
+  List<_RecommendationData> _recommendations(BuildContext context) {
+    return [
+      _RecommendationData(
+        iconData: Icons.smart_toy_outlined,
+        iconBgColor: AppColors.aiPurple,
+        iconForegroundColor: AppColors.white,
+        courseCode: 'CS 301',
+        courseName: context.l10n.machineLearning,
+        matchScore: 95,
+        credits: context.l10n.courseCredits('3'),
+        difficulty: context.l10n.hardDifficulty,
+        difficultyColor: context.colorScheme.error,
+        reason: context.l10n.machineLearningRecommendationReason,
+        benefits: [
+          context.l10n.programmingStrengthBenefit,
+          context.l10n.jobMarketDemandBenefit,
+          context.l10n.gpaImprovementBenefit,
+        ],
+      ),
+      _RecommendationData(
+        iconData: Icons.cloud_outlined,
+        iconBgColor: context.themeColors.info,
+        iconForegroundColor: context.themeColors.onInfo,
+        courseCode: 'CS 315',
+        courseName: context.l10n.cloudComputing,
+        matchScore: 91,
+        credits: context.l10n.courseCredits('3'),
+        difficulty: context.l10n.mediumDifficulty,
+        difficultyColor: context.themeColors.warning,
+        reason: context.l10n.cloudComputingRecommendationReason,
+        benefits: [
+          context.l10n.networkingFoundationBenefit,
+          context.l10n.cloudSkillsBenefit,
+          context.l10n.cloudCareerBenefit,
+        ],
+      ),
+      _RecommendationData(
+        iconData: Icons.phone_android_outlined,
+        iconBgColor: context.themeColors.success,
+        iconForegroundColor: context.themeColors.onSuccess,
+        courseCode: 'CS 322',
+        courseName: context.l10n.mobileApplicationDevelopment,
+        matchScore: 88,
+        credits: context.l10n.courseCredits('3'),
+        difficulty: context.l10n.mediumDifficulty,
+        difficultyColor: context.themeColors.warning,
+        reason: context.l10n.mobileDevelopmentRecommendationReason,
+        benefits: [
+          context.l10n.portfolioProjectBenefit,
+          context.l10n.mobileCareerBenefit,
+          context.l10n.teamworkExperienceBenefit,
+        ],
+      ),
+      _RecommendationData(
+        iconData: Icons.security_outlined,
+        iconBgColor: AppColors.aiPink,
+        iconForegroundColor: AppColors.white,
+        courseCode: 'CS 340',
+        courseName: context.l10n.cybersecurityFundamentals,
+        matchScore: 85,
+        credits: context.l10n.courseCredits('3'),
+        difficulty: context.l10n.mediumDifficulty,
+        difficultyColor: context.themeColors.warning,
+        reason: context.l10n.cybersecurityRecommendationReason,
+        benefits: [
+          context.l10n.cybersecurityDemandBenefit,
+          context.l10n.securityTrackBenefit,
+          context.l10n.riskAssessmentBenefit,
+        ],
+      ),
+      _RecommendationData(
+        iconData: Icons.query_stats_outlined,
+        iconBgColor: context.themeColors.warning,
+        iconForegroundColor: context.themeColors.onWarning,
+        courseCode: 'STAT 310',
+        courseName: context.l10n.appliedStatistics,
+        matchScore: 82,
+        credits: context.l10n.courseCredits('3'),
+        difficulty: context.l10n.mediumDifficulty,
+        difficultyColor: context.themeColors.warning,
+        reason: context.l10n.statisticsRecommendationReason,
+        benefits: [
+          context.l10n.dataInterpretationBenefit,
+          context.l10n.dataSciencePrerequisiteBenefit,
+          context.l10n.graduationProjectBenefit,
+        ],
+      ),
+      _RecommendationData(
+        iconData: Icons.architecture,
+        iconBgColor: context.themeColors.warning,
+        iconForegroundColor: context.themeColors.onWarning,
+        courseCode: 'MATH 301',
+        courseName: context.l10n.advancedLinearAlgebra,
+        matchScore: 78,
+        credits: context.l10n.courseCredits('4'),
+        difficulty: context.l10n.hardDifficulty,
+        difficultyColor: context.colorScheme.error,
+        reason: context.l10n.linearAlgebraRecommendationReason,
+        benefits: [
+          context.l10n.mlTrackBenefit,
+          context.l10n.mathBackgroundBenefit,
+          context.l10n.researchOpportunitiesBenefit,
+        ],
+      ),
+    ];
+  }
+}
+
+class _RecommendationData {
+  const _RecommendationData({
+    required this.iconData,
+    required this.iconBgColor,
+    required this.iconForegroundColor,
+    required this.courseCode,
+    required this.courseName,
+    required this.matchScore,
+    required this.credits,
+    required this.difficulty,
+    required this.difficultyColor,
+    required this.reason,
+    required this.benefits,
+  });
+
+  final IconData iconData;
+  final Color iconBgColor;
+  final Color iconForegroundColor;
+  final String courseCode;
+  final String courseName;
+  final int matchScore;
+  final String credits;
+  final String difficulty;
+  final Color difficultyColor;
+  final String reason;
+  final List<String> benefits;
 }

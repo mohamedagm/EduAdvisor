@@ -787,6 +787,75 @@ class AppLocalizationsAr extends AppLocalizations {
   String get researchOpportunitiesBenefit => 'فرص بحثية';
 
   @override
+  String get mediumDifficulty => 'متوسط';
+
+  @override
+  String get cloudComputing => 'الحوسبة السحابية';
+
+  @override
+  String get cloudComputingRecommendationReason =>
+      'نتائجك القوية في شبكات الحاسب ونظم التشغيل تجعل هذا المقرر خطوة تالية مناسبة.';
+
+  @override
+  String get networkingFoundationBenefit => 'يبني على أساسك القوي في الشبكات';
+
+  @override
+  String get cloudSkillsBenefit => 'يطور مهارات عملية في AWS وAzure';
+
+  @override
+  String get cloudCareerBenefit => 'يؤهلك لوظائف هندسة الحوسبة السحابية';
+
+  @override
+  String get mobileApplicationDevelopment => 'تطوير تطبيقات الهاتف';
+
+  @override
+  String get mobileDevelopmentRecommendationReason =>
+      'أداؤك في البرمجة كائنية التوجه وهندسة البرمجيات يدل على استعداد قوي لهذا المقرر العملي.';
+
+  @override
+  String get portfolioProjectBenefit => 'يضيف تطبيقًا متكاملًا إلى معرض أعمالك';
+
+  @override
+  String get mobileCareerBenefit =>
+      'يفتح مسارات مهنية في تطوير الهاتف والـ Full Stack';
+
+  @override
+  String get teamworkExperienceBenefit => 'يمنحك خبرة عملية في مشروعات الفريق';
+
+  @override
+  String get cybersecurityFundamentals => 'أساسيات الأمن السيبراني';
+
+  @override
+  String get cybersecurityRecommendationReason =>
+      'معرفتك بالشبكات وأداؤك التحليلي يجعلانك مناسبًا للبدء في مجال الأمن السيبراني.';
+
+  @override
+  String get cybersecurityDemandBenefit => 'طلب متزايد في مختلف القطاعات';
+
+  @override
+  String get securityTrackBenefit => 'يفتح مقررات أمنية متقدمة';
+
+  @override
+  String get riskAssessmentBenefit => 'يبني مهارات عملية في تقييم المخاطر';
+
+  @override
+  String get appliedStatistics => 'الإحصاء التطبيقي';
+
+  @override
+  String get statisticsRecommendationReason =>
+      'موصى به لتقوية مهارات تحليل البيانات اللازمة لمقررات الذكاء الاصطناعي ومشروع التخرج.';
+
+  @override
+  String get dataInterpretationBenefit => 'يحسن تفسير البيانات وإعداد التقارير';
+
+  @override
+  String get dataSciencePrerequisiteBenefit =>
+      'يدعم مقررات علم البيانات المتقدمة';
+
+  @override
+  String get graduationProjectBenefit => 'مفيد للأبحاث ومشروعات التخرج';
+
+  @override
   String get recommendationsUpdatedDaily => 'تُحدّث الاقتراحات يوميًا';
 
   @override
