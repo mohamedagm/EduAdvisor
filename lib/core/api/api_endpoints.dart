@@ -24,15 +24,18 @@ class ApiEndpoints {
       '/api/v1/Students/registration-requests';
 
   static const String aiAdvisorChat = 'https://advisor.flowlogichub.space/chat';
-  static const String  getMyStudents = '/api/v1/Advisors/my-students';
+  static const String getMyStudents = '/api/v1/Advisors/my-students';
 
   static const String getPendingRequests = '/api/v1/Advisors/pending';
   static const String getApprovedRequests = '/api/v1/Advisors/approved';
+  
+  // 📌 الـ Endpoint الجديدة المضبوطة بالـ Swagger لمنع الـ 404
+  static const String getProcessedRequests = '/api/v1/Advisors/RegistrationRequests/Processed';
+
   static String approveRequest(String id) => '/api/v1/Advisors/approve/$id';
   static String rejectRequest(String id) => '/api/v1/Advisors/reject/$id';
   static String assignStudents(String advisorId) =>
       '/api/v1/Advisors/$advisorId/assign-students';
   static String getRegistrationRequestDetails(String id) =>
       '/api/v1/Advisors/RegistrationRequest/$id';
-
 }
