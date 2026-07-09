@@ -159,8 +159,8 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
               ),
             ),
             Container(
-              width: 170,
-              height: 170,
+              width: 200,
+              height: 200,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: context.themeColors.card,
@@ -173,16 +173,15 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                 ],
               ),
               child: ClipOval(
-                child: Padding(
-                  padding: const EdgeInsets.all(25),
-                  child: Image.asset(
-                    'assets/images/EduAdvisor_Logo.png',
-                    fit: BoxFit.contain,
-                    errorBuilder: (_, __, ___) => Icon(
-                      Icons.school,
-                      size: 70,
-                      color: context.colorScheme.secondary,
-                    ),
+                child: Image.asset(
+                  'assets/images/EduAdvisor_Logo.png',
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Icon(
+                    Icons.school,
+                    size: 70,
+                    color: context.colorScheme.secondary,
                   ),
                 ),
               ),
