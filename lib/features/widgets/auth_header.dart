@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class GradiantContainer extends StatelessWidget {
@@ -22,9 +23,9 @@ class GradiantContainer extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(
         width * 0.06,
-        MediaQuery.paddingOf(context).top + 24,
+        MediaQuery.paddingOf(context).top + 24.w,
         width * 0.06,
-        64,
+        64.w,
       ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -39,28 +40,32 @@ class GradiantContainer extends StatelessWidget {
             height: logoSize,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.r),
             ),
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(12.w),
             child: Image.asset(
               'assets/images/EduAdvisor_Logo.png',
               fit: BoxFit.cover,
             ),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16.w),
 
           Text(
             mainText,
-            style: AppTextStyles.heading1_20b.copyWith(color: Colors.white),
+            style: AppTextStyles.heading1_20b.copyWith(
+              fontSize: 20.sp,
+              color: Colors.white,
+            ),
             textAlign: TextAlign.center,
           ),
 
           if (optionalText != null) ...[
-            const SizedBox(height: 8),
+            SizedBox(height: 8.w),
             Text(
               optionalText!,
               style: AppTextStyles.heading3PoppinsReg16.copyWith(
+                fontSize: 16.sp,
                 color: Colors.white.withValues(alpha: 0.9),
               ),
               textAlign: TextAlign.center,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -23,10 +24,10 @@ class _RejectionDialogState extends State<RejectionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      title: const Text(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+      title: Text(
         "Reject Registration Request",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -39,7 +40,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
               fontSize: 13,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.w),
           TextField(
             controller: _controller,
             maxLines: 4,
@@ -53,7 +54,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
               filled: true,
               fillColor: context.themeColors.mutedSurface,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
                 borderSide: BorderSide.none,
               ),
             ),
@@ -78,7 +79,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12.w),
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
@@ -100,7 +101,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
                   "Confirm Rejection",
                   style: TextStyle(
                     color: context.colorScheme.onError,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                   ),
                 ),
               ),

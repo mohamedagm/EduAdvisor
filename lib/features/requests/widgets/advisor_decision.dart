@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class RequestActionButtons extends StatelessWidget {
@@ -14,7 +15,7 @@ class RequestActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
         border: Border(top: BorderSide(color: context.themeColors.border)),
@@ -36,7 +37,7 @@ class RequestActionButtons extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16.w),
           Expanded(
             child: OutlinedButton.icon(
               onPressed: onReject,

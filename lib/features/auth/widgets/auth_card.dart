@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AuthCard extends StatelessWidget {
@@ -14,21 +15,21 @@ class AuthCard extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.only(
         top: screenHeight * 0.30,
-        left: 20,
-        right: 20,
-        bottom: 40,
+        left: 20.w,
+        right: 20.w,
+        bottom: 40.w,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 32.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(28.r),
         boxShadow: [
           BoxShadow(
             color: context.themeColors.textPrimary.withValues(
               alpha: 0.05,
             ), //instead of opacity
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+            blurRadius: 20.r,
+            offset: Offset(0, 10.w),
           ),
         ],
       ),

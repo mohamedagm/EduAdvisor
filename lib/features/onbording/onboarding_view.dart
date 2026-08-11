@@ -2,6 +2,7 @@ import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/features/onbording/first_onbording_view.dart';
 import 'package:edu_advisor/features/onbording/second_onbording_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -59,23 +60,23 @@ class _OnboardingViewState extends State<OnboardingView> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 40.0),
+              padding: EdgeInsets.only(bottom: 40.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                   2,
                   (index) => AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    height: 8,
-                    width: _currentPage == index ? 24 : 8,
+                    margin: EdgeInsets.symmetric(horizontal: 4.w),
+                    height: 8.w,
+                    width: _currentPage == index ? 24.w : 8.w,
                     decoration: BoxDecoration(
                       color: _currentPage == index
                           ? context.colorScheme.secondary
                           : context.colorScheme.secondary.withValues(
                               alpha: 0.2,
                             ),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(4.r),
                     ),
                   ),
                 ),

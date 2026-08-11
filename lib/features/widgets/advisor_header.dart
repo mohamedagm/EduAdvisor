@@ -12,6 +12,7 @@ import 'package:edu_advisor/features/user/manager/current_user_cubit/current_use
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AdvisorHeader extends StatelessWidget {
   final int? studentCount;
@@ -83,21 +84,21 @@ class _AdvisorHeaderContent extends StatelessWidget {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 20),
+          padding: EdgeInsets.fromLTRB(16.w, 14.w, 16.w, 20.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   CircleAvatar(
-                    radius: 22,
+                    radius: 22.r,
                     backgroundColor: Colors.white24,
                     backgroundImage: user?.profileImageUrl?.isNotEmpty == true
                         ? NetworkImage(user!.profileImageUrl!)
                         : null,
                     child: user?.profileImageUrl?.isNotEmpty == true
                         ? null
-                        : const Icon(Icons.person, color: Colors.white),
+                        : Icon(Icons.person, color: Colors.white, size: 24.r),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -106,18 +107,18 @@ class _AdvisorHeaderContent extends StatelessWidget {
                       children: [
                         Text(
                           user?.displayName ?? 'Advisor',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
-                            fontSize: 15,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 2),
+                        SizedBox(height: 2.w),
                         Text(
                           user?.displayDepartment ?? 'Academic Advisor',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white70,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                         ),
                       ],
@@ -128,33 +129,33 @@ class _AdvisorHeaderContent extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () => context.read<AuthCubit>().logout(),
                       child: Container(
-                        width: 34,
-                        height: 34,
+                        width: 34.w,
+                        height: 34.w,
                         decoration: BoxDecoration(
                           color: Colors.white24,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
                         alignment: Alignment.center,
                         child: isLoggingOut
-                            ? const SizedBox(
-                                width: 16,
-                                height: 16,
+                            ? SizedBox(
+                                width: 16.w,
+                                height: 16.w,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
                                   color: Colors.white,
                                 ),
                               )
-                            : const Icon(
+                            : Icon(
                                 Icons.logout_rounded,
                                 color: Colors.white,
-                                size: 18,
+                                size: 18.r,
                               ),
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.w),
               Row(
                 children: [
                   statCard(
@@ -185,20 +186,20 @@ class _AdvisorHeaderContent extends StatelessWidget {
   }) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 14),
+        padding: EdgeInsets.symmetric(vertical: 14.w),
         decoration: BoxDecoration(
           color: AppColors.white.withValues(alpha: 0.15),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
         ),
         child: Column(
           children: [
-            Icon(icon, color: AppColors.white, size: 20),
-            const SizedBox(height: 6),
+            Icon(icon, color: AppColors.white, size: 20.r),
+            SizedBox(height: 6.w),
             Text(
               value,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
-                fontSize: 18,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),

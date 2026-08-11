@@ -2,6 +2,7 @@ import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -23,14 +24,14 @@ class ChooseUserRole extends StatelessWidget {
               width: double.infinity,
               margin: EdgeInsets.only(
                 top: screenHeight * 0.30,
-                left: 20,
-                right: 20,
-                bottom: 40,
+                left: 20.w,
+                right: 20.w,
+                bottom: 40.w,
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 32.w),
               decoration: BoxDecoration(
                 color: context.themeColors.card,
-                borderRadius: BorderRadius.circular(28),
+                borderRadius: BorderRadius.circular(28.r),
                 boxShadow: [
                   BoxShadow(
                     color: context.themeColors.textPrimary.withValues(
@@ -47,23 +48,13 @@ class ChooseUserRole extends StatelessWidget {
                   Text(
                     context.l10n.chooseYourRole,
                     style: TextStyle(
-                      fontSize: 26,
+                      fontSize: 26.sp,
                       fontWeight: FontWeight.w700,
                       color: context.themeColors.textPrimary,
                     ),
                   ),
-
-                  const SizedBox(height: 8),
-
-                  Text(
-                    context.l10n.continueToApp,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: context.themeColors.textSecondary,
-                    ),
-                  ),
-
-                  const SizedBox(height: 32),
+                  SizedBox(height: 8.w),
+                  SizedBox(height: 32.w),
 
                   _buildRoleOption(
                     context: context,
@@ -74,7 +65,7 @@ class ChooseUserRole extends StatelessWidget {
                     onTap: () => context.push(AppRoutes.studentLogin),
                   ),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.w),
 
                   _buildRoleOption(
                     context: context,
@@ -107,30 +98,30 @@ class ChooseUserRole extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
         decoration: BoxDecoration(
-          border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
-          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5.w),
+          borderRadius: BorderRadius.circular(20.r),
           color: context.themeColors.card,
           boxShadow: [
             BoxShadow(
               color: color.withValues(alpha: 0.1),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+              blurRadius: 12.r,
+              offset: Offset(0, 4.w),
             ),
           ],
         ),
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.r),
               ),
-              child: Icon(icon, size: 36, color: color),
+              child: Icon(icon, size: 36.r, color: color),
             ),
-            const SizedBox(width: 20),
+            SizedBox(width: 20.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +129,7 @@ class ChooseUserRole extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.w600,
                       color: context.themeColors.textPrimary,
                     ),
@@ -147,7 +138,7 @@ class ChooseUserRole extends StatelessWidget {
                   Text(
                     subtitle,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       color: context.themeColors.textSecondary,
                     ),
                   ),
@@ -156,7 +147,7 @@ class ChooseUserRole extends StatelessWidget {
             ),
             Icon(
               Icons.arrow_forward_ios_rounded,
-              size: 20,
+              size: 20.r,
               color: context.colorScheme.outline,
             ),
           ],

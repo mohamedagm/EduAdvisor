@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/departments_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/departments_state.dart';
 import 'package:edu_advisor/features/auth/signup/widgets/signup_filed_label.dart';
@@ -24,13 +25,13 @@ class DepartmentDropdown extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FieldLabel(text: context.l10n.department),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.w),
         BlocBuilder<DepartmentsCubit, DepartmentsState>(
           builder: (context, state) {
             if (state is DepartmentsLoading) {
-              return const Center(
+              return Center(
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.w),
                   child: CircularProgressIndicator(),
                 ),
               );
@@ -43,20 +44,21 @@ class DepartmentDropdown extends StatelessWidget {
                   fillColor: context.themeColors.mutedSurface,
                   prefixIcon: Icon(
                     Icons.business,
+                    size: 20.r,
                     color: context.themeColors.textMuted,
                   ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 12.w,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: BorderSide(
                       color: context.themeColors.textMuted,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: BorderSide(
                       color: context.themeColors.mutedSurface,
                     ),

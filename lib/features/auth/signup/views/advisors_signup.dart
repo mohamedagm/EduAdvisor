@@ -23,6 +23,7 @@ import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:edu_advisor/valdations/valditors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AdvisorSignupScreen extends StatefulWidget {
   const AdvisorSignupScreen({super.key, required this.registerRole});
@@ -115,21 +116,21 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                       child: SingleChildScrollView(
                         padding: EdgeInsets.only(
                           top: screenHeight * 0.01,
-                          bottom: 20,
+                          bottom: 20.w,
                         ),
                         child: Column(
                           children: [
                             Container(
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 24,
+                              margin: EdgeInsets.symmetric(
+                                horizontal: 24.w,
                               ),
-                              padding: const EdgeInsets.all(20),
+                              padding: EdgeInsets.all(20.w),
                               decoration: BoxDecoration(
                                 color: context.themeColors.card,
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(20.r),
                                 boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 10,
+                                    blurRadius: 10.r,
                                     color: context.themeColors.shadow,
                                   ),
                                 ],
@@ -198,7 +199,7 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                                     _buildPasswordField(),
                                     const SizedBox(height: 12),
                                     _buildConfirmPasswordField(),
-                                    const SizedBox(height: 20),
+                                    SizedBox(height: 20.w),
                                     IgnorePointer(
                                       ignoring: isLoading,
                                       child: Opacity(
@@ -221,7 +222,7 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 24),
+                            SizedBox(height: 24.w),
                           ],
                         ),
                       ),

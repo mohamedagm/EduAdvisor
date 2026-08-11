@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class GradientElevatedButton extends StatelessWidget {
@@ -24,12 +25,12 @@ class GradientElevatedButton extends StatelessWidget {
           end: Alignment.centerRight,
           colors: [context.colorScheme.primary, context.colorScheme.secondary],
         ),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(14.r),
         boxShadow: [
           BoxShadow(
             color: const Color.fromARGB(255, 169, 153, 196),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            blurRadius: 12.r,
+            offset: Offset(0, 6.w),
           ),
         ],
       ),
@@ -46,7 +47,7 @@ class GradientElevatedButton extends StatelessWidget {
           buttonText ?? '',
           style: TextStyle(
             color: Colors.white,
-            fontSize: screenHeight * 0.022, // 
+            fontSize: (screenHeight * 0.022).sp,
             fontWeight: FontWeight.bold,
           ),
         ),

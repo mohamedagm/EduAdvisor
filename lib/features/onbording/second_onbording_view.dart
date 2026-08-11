@@ -3,6 +3,7 @@ import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SecondOnBordaingView extends StatelessWidget {
@@ -14,22 +15,22 @@ class SecondOnBordaingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 60),
+        SizedBox(height: 60.w),
         const Spacer(),
         Stack(
           alignment: Alignment.center,
           children: [
             Container(
-              width: 220,
-              height: 220,
+              width: 220.w,
+              height: 220.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: AppGradients.primary,
               ),
             ),
             Container(
-              width: 240,
-              height: 240,
+              width: 240.w,
+              height: 240.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: SweepGradient(
@@ -40,7 +41,7 @@ class SecondOnBordaingView extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.w),
                 child: Container(
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -57,16 +58,16 @@ class SecondOnBordaingView extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 40),
+        SizedBox(height: 40.w),
         Text(
           context.l10n.trackYourProgress,
           style: AppTextStyles.heading1_20b.copyWith(
             color: context.themeColors.textPrimary,
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.w),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          padding: EdgeInsets.symmetric(horizontal: 32.w),
           child: Text(
             context.l10n.trackProgressDescription,
             textAlign: TextAlign.center,
@@ -77,13 +78,13 @@ class SecondOnBordaingView extends StatelessWidget {
         ),
         const Spacer(flex: 2),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: GradientElevatedButton(
             buttonText: context.l10n.getStarted,
             onPressed: onGetStarted,
           ),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 20.w),
       ],
     );
   }

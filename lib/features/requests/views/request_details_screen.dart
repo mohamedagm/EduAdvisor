@@ -7,8 +7,9 @@ import 'package:edu_advisor/features/requests/widgets/rejection_dialog.dart';
 import 'package:edu_advisor/features/requests/widgets/student_info_card.dart';
 import 'package:edu_advisor/features/widgets/advisor_header.dart';
 import 'package:flutter/material.dart';
-import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class RequestDetailsScreen extends StatefulWidget {
   final StudentRequest request;
@@ -100,7 +101,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
             AdvisorHeader(studentCount: 0),
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -111,14 +112,14 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                       academicYear: widget.request.academicYear,
                       photoUrl: widget.request.studentPhotoUrl,
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           "Spring 2025 Requests",
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -131,12 +132,12 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                                       ? context.themeColors.success
                                       : context.colorScheme.error),
                             fontWeight: FontWeight.bold,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.w),
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -158,7 +159,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                         );
                       },
                     ),
-                    const SizedBox(height: 100),
+                    SizedBox(height: 100.w),
                   ],
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class StudentInfoCard extends StatelessWidget {
@@ -23,14 +24,14 @@ class StudentInfoCard extends StatelessWidget {
     final hasPhoto = photoUrl != null && photoUrl!.trim().isNotEmpty;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
             color: context.themeColors.textPrimary.withValues(alpha: 0.05),
-            blurRadius: 10,
+            blurRadius: 10.r,
           ),
         ],
       ),
@@ -39,23 +40,23 @@ class StudentInfoCard extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                radius: 30,
+                radius: 30.r,
                 backgroundColor: AppColors.gray100,
                 backgroundImage: hasPhoto ? NetworkImage(photoUrl!) : null,
                 onBackgroundImageError: hasPhoto ? (_, __) {} : null,
                 child: !hasPhoto
-                    ? Icon(Icons.person, size: 30, color: Colors.grey[400])
+                    ? Icon(Icons.person, size: 30.r, color: Colors.grey[400])
                     : null,
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       studentName,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -63,21 +64,22 @@ class StudentInfoCard extends StatelessWidget {
                       "$department • ID: $studentCode",
                       style: TextStyle(color: Colors.grey[600]),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.w),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 4.w,
                       ),
                       decoration: BoxDecoration(
                         color: Colors.blue[50],
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                       ),
                       child: Text(
                         "Year $academicYear",
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
+                          fontSize: 12.sp,
                         ),
                       ),
                     ),

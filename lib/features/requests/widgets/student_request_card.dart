@@ -1,11 +1,10 @@
-import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/requests/manager/cubit/request_cubit.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
 import 'package:edu_advisor/features/requests/views/request_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class StudentRequestCard extends StatelessWidget {
@@ -53,11 +52,11 @@ class StudentRequestCard extends StatelessWidget {
             );
           },
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-            padding: const EdgeInsets.all(12),
+            margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.w),
+            padding: EdgeInsets.all(12.w),
             decoration: BoxDecoration(
               color: context.themeColors.card,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(14.r),
               border: Border.all(color: context.themeColors.border),
             ),
             child: Row(
@@ -88,20 +87,22 @@ class StudentRequestCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.interRegular16.copyWith(
+                          fontSize: 16.sp,
                           color: context.themeColors.textPrimary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6.w),
                       Text(
                         '${request.semester} • ${request.major}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.bodyInterRegular12.copyWith(
+                          fontSize: 12.sp,
                           color: context.themeColors.textSecondary,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.w),
 
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -110,11 +111,12 @@ class StudentRequestCard extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: statusColor.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Text(
                           request.status,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
+                            fontSize: 12.sp,
                             color: statusColor,
                             fontWeight: FontWeight.w500,
                           ),

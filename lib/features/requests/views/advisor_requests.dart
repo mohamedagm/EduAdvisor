@@ -11,6 +11,7 @@ import 'package:edu_advisor/features/requests/widgets/student_request_list.dart'
 import 'package:edu_advisor/features/widgets/advisor_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AdvisorRequests extends StatelessWidget {
   const AdvisorRequests({super.key});
@@ -63,7 +64,7 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
           // حقل البحث الذكي متوافق بالكامل مع السيرفر والـ Cubit الحالي
           if (_currentFilter != 'New Requests')
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
@@ -83,9 +84,9 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                         )
                       : null,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                  contentPadding: EdgeInsets.symmetric(vertical: 0.w),
                 ),
                 onChanged: (value) {
                   setState(() {}); 

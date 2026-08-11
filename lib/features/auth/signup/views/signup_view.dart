@@ -21,6 +21,7 @@ import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:edu_advisor/valdations/valditors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -108,19 +109,19 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: SingleChildScrollView(
                       padding: EdgeInsets.only(
                         top: screenHeight * 0.01,
-                        bottom: 20,
+                        bottom: 20.w,
                       ),
                       child: Column(
                         children: [
                           Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 24),
-                            padding: const EdgeInsets.all(20),
+                            margin: EdgeInsets.symmetric(horizontal: 24.w),
+                            padding: EdgeInsets.all(20.w),
                             decoration: BoxDecoration(
                               color: context.themeColors.card,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
+                              borderRadius: BorderRadius.circular(20.r),
+                              boxShadow: [
                                 BoxShadow(
-                                  blurRadius: 10,
+                                  blurRadius: 10.r,
                                   color: Colors.black12,
                                 ),
                               ],
@@ -137,7 +138,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       });
                                     },
                                   ),
-                                  const SizedBox(height: 16),
+                                  SizedBox(height: 16.w),
 
                                   _buildField(
                                     label: context.l10n.firstName,
@@ -192,7 +193,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   _buildPasswordField(),
                                   const SizedBox(height: 12),
                                   _buildConfirmPasswordField(),
-                                  const SizedBox(height: 20),
+                                  SizedBox(height: 20.w),
                                   IgnorePointer(
                                     ignoring: isLoading,
                                     child: Opacity(
@@ -215,7 +216,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.w),
                         ],
                       ),
                     ),

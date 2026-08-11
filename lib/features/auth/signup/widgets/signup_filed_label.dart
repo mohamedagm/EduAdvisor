@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class FieldLabel extends StatelessWidget {
@@ -12,6 +13,7 @@ class FieldLabel extends StatelessWidget {
     return Text(
       text,
       style: AppTextStyles.bodyInterMedium18.copyWith(
+        fontSize: 18.sp,
         color: context.themeColors.textPrimary,
       ),
     );

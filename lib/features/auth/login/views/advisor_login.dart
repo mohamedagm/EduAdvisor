@@ -21,6 +21,7 @@ import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class AdvisorLoginScreen extends StatefulWidget {
@@ -65,17 +66,17 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 20),
+                        SizedBox(height: 20.w),
                         Center(
                           child: Text(
                             context.l10n.loginAsAdvisor,
-                            style: const TextStyle(
-                              fontSize: 22,
+                            style: TextStyle(
+                              fontSize: 22.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        SizedBox(height: 30.w),
                         LoginForm(
                           formKey: _formKey,
                           emailController: _emailController,
@@ -101,14 +102,14 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                             ),
                             child: Text(
                               context.l10n.forgotPassword,
-                              style: const TextStyle(
-                                fontSize: 14,
+                              style: TextStyle(
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 24),
+                        SizedBox(height: 24.w),
                         IgnorePointer(
                           ignoring: isLoading,
                           child: Opacity(
@@ -127,13 +128,14 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 24),
+                        SizedBox(height: 24.w),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               '${context.l10n.noAccount} ',
                               style: AppTextStyles.interRegular16.copyWith(
+                                fontSize: 16.sp,
                                 color: context.themeColors.textSecondary,
                               ),
                             ),
@@ -167,6 +169,7 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                               child: Text(
                                 context.l10n.signUp,
                                 style: AppTextStyles.bodyInterMedium18.copyWith(
+                                  fontSize: 18.sp,
                                   color: context.themeColors.info,
                                 ),
                               ),

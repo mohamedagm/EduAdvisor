@@ -12,6 +12,7 @@ import 'package:edu_advisor/features/auth/login/views/new_pass.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
@@ -244,16 +245,16 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(24),
+                  padding: EdgeInsets.all(24.w),
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(otpLength, (index) {
                           return Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 4),
-                            width: 40,
-                            height: 56,
+                            margin: EdgeInsets.symmetric(horizontal: 4.w),
+                            width: 40.w,
+                            height: 56.w,
                             child: TextField(
                               controller: controllers[index],
                               focusNode: focusNodes[index],
@@ -274,7 +275,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                         }),
                       ),
 
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.w),
 
                       TextButton(
                         onPressed: (resendCountdown == 0 && !isLoading)
@@ -287,7 +288,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                         ),
                       ),
 
-                      const SizedBox(height: 30),
+                      SizedBox(height: 30.w),
 
                       ElevatedButton(
                         onPressed: isLoading ? null : submitOtpVerification,

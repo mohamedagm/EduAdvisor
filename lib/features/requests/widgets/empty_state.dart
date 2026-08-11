@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmptyRequestsWidget extends StatelessWidget {
   const EmptyRequestsWidget({super.key});
@@ -6,12 +7,12 @@ class EmptyRequestsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(40),
+      padding: EdgeInsets.all(40.w),
       child: Column(
-        children: const [
-          Icon(Icons.inbox_outlined, size: 50),
-          SizedBox(height: 10),
-          Text('No requests found'),
+        children: [
+          Icon(Icons.inbox_outlined, size: 50.r),
+          SizedBox(height: 10.w),
+          Text('No requests found', style: TextStyle(fontSize: 14.sp)),
         ],
       ),
     );

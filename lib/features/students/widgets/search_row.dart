@@ -1,8 +1,8 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/advisor_nav/data/models/my_students_response_model.dart';
-import 'package:edu_advisor/features/students/models/student_model.dart';
 import 'package:edu_advisor/features/students/widgets/student_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SearchRow extends StatelessWidget {
@@ -20,23 +20,23 @@ class SearchRow extends StatelessWidget {
             color: context.themeColors.textPrimary,
           ),
         ),
-        SizedBox(width: 16),
+        SizedBox(width: 16.w),
         Expanded(
           child: Container(
-            height: 40,
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            height: 40.w,
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
             decoration: BoxDecoration(
               color: context.themeColors.mutedSurface,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
             ),
             child: Row(
               children: [
                 Icon(
                   Icons.search,
-                  size: 18,
+                  size: 18.r,
                   color: context.themeColors.textMuted,
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 Expanded(
                   child: TextField(
                     controller: controller,
@@ -68,9 +68,9 @@ class StudentList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(vertical: 14),
+      padding: EdgeInsets.symmetric(vertical: 14.w),
       itemCount: students.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 10), // المسافة بين الكروت
+      separatorBuilder: (_, __) => SizedBox(height: 10.w), // المسافة بين الكروت
       itemBuilder: (context, index) {
         // 2. التغيير هنا: بنمرر الطالب اللي عليه الدور في الـ Loop للكارت بتاعه باستخدام الـ index
         return StudentCard(student: students[index]);

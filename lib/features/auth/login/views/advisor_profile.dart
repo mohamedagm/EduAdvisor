@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/features/auth/widgets/skip_botton.dart';
@@ -35,13 +36,13 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
           Align(
             alignment: Alignment(0, 0.5),
             child: Container(
-              padding: const EdgeInsets.all(20),
-              margin: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.all(20.w),
+              margin: EdgeInsets.symmetric(horizontal: 24.w),
               decoration: BoxDecoration(
                 color: context.themeColors.card,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(20.r),
                 boxShadow: [
-                  BoxShadow(blurRadius: 10, color: context.themeColors.shadow),
+                  BoxShadow(blurRadius: 10.r, color: context.themeColors.shadow),
                 ],
               ),
               child: Column(
@@ -50,7 +51,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                   Stack(
                     children: [
                       CircleAvatar(
-                        radius: 60,
+                        radius: 60.r,
                         backgroundColor: context.themeColors.border,
                         backgroundImage: _image != null
                             ? FileImage(_image!)
@@ -58,7 +59,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                         child: _image == null
                             ? Icon(
                                 Icons.person,
-                                size: 60,
+                                size: 60.r,
                                 color: context.themeColors.textMuted,
                               )
                             : null,
@@ -69,11 +70,11 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                         child: InkWell(
                           onTap: pickImage,
                           child: Container(
-                            padding: const EdgeInsets.all(6),
+                            padding: EdgeInsets.all(6.w),
                             decoration: BoxDecoration(
                               color: context.colorScheme.primary,
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 2),
+                              border: Border.all(color: Colors.white, width: 2.w),
                             ),
                             child: const Icon(
                               Icons.camera_alt,
@@ -85,12 +86,12 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 24),
+                  SizedBox(height: 24.w),
                   Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
                       color: context.themeColors.infoContainer,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +103,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                               color: context.themeColors.info,
                               size: 20,
                             ),
-                            const SizedBox(width: 16),
+                            SizedBox(width: 16.w),
                             Text(
                               context.l10n.whyAddPhoto,
                               style: AppTextStyles.interRegular16.copyWith(
@@ -112,7 +113,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 8.w),
                         Text(
                           context.l10n.photoExplanation,
                           style: AppTextStyles.bodyInterMedium14.copyWith(
@@ -129,7 +130,7 @@ class _AdvisorProfileState extends State<AdvisorProfile> {
                     },
                     buttonText: context.l10n.continueAction,
                   ),
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.w),
                   // Skip Button
                   SkipButton(
                     onTap: () {

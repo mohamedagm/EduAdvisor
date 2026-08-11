@@ -6,6 +6,7 @@ import 'package:edu_advisor/features/students/widgets/search_row.dart';
 import 'package:edu_advisor/features/widgets/advisor_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StudentsScreen extends StatefulWidget {
   const StudentsScreen({super.key});
@@ -50,13 +51,13 @@ class _StudentsScreenState extends State<StudentsScreen> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18.w),
                     SearchRow(controller: _searchController),
-                    const SizedBox(height: 14),
+                    SizedBox(height: 14.w),
                     Expanded(
                       child: BlocBuilder<MyStudentsCubit, MyStudentsState>(
                         builder: (context, state) {

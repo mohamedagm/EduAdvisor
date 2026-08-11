@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class RequestFilterBar extends StatefulWidget {
@@ -20,11 +21,11 @@ class _RequestFilterBarState extends State<RequestFilterBar> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
         child: Row(
           children: filters.map((filter) {
             return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: EdgeInsets.only(right: 8.w),
               child: ChoiceChip(
                 label: Text(filter),
 
@@ -44,7 +45,7 @@ class _RequestFilterBarState extends State<RequestFilterBar> {
 
                 backgroundColor: context.themeColors.mutedSurface,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                   side: BorderSide(
                     color: selectedFilter == filter
                         ? context.colorScheme.primary

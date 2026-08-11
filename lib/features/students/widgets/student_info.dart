@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class StudentInfo extends StatelessWidget {
@@ -32,7 +33,7 @@ class StudentInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         CircleAvatar(
-          radius: 22,
+          radius: 22.r,
           backgroundColor: AppColors.gray200,
           backgroundImage: hasImage ? NetworkImage(imageUrl!) : null,
           onBackgroundImageError: hasImage ? (_, __) {} : null,
@@ -40,12 +41,13 @@ class StudentInfo extends StatelessWidget {
               ? Text(
                   _initials,
                   style: AppTextStyles.interRegular16.copyWith(
+                    fontSize: 16.sp,
                     color: AppColors.gray600,
                   ),
                 )
               : null,
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12.w),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,10 +59,11 @@ class StudentInfo extends StatelessWidget {
                   color: AppColors.gray600,
                 ),
               ),
-              const SizedBox(height: 3),
+              SizedBox(height: 3.w),
               Text(
                 email,
                 style: AppTextStyles.bodyInterMedium14.copyWith(
+                  fontSize: 14.sp,
                   color: AppColors.gray400,
                 ),
               ),
@@ -87,13 +90,15 @@ class StudentMeta extends StatelessWidget {
         Text(
           'GPA: ${gpa.toStringAsFixed(1)}',
           style: AppTextStyles.interRegular16.copyWith(
+            fontSize: 16.sp,
             color: context.themeColors.textSecondary,
           ),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.w),
         Text(
           'Semester $semester',
           style: AppTextStyles.bodyInterMedium14.copyWith(
+            fontSize: 14.sp,
             color: context.themeColors.textMuted,
           ),
         ),

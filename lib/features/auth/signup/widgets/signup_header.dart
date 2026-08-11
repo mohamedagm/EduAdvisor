@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SignupHeader extends StatelessWidget {
@@ -8,8 +9,8 @@ class SignupHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 50),
-      height: 120,
+      padding: EdgeInsets.only(top: 50.w),
+      height: 120.w,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [context.colorScheme.primary, context.colorScheme.secondary],
@@ -22,9 +23,9 @@ class SignupHeader extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         context.l10n.createAccount,
-        style: const TextStyle(
+        style: TextStyle(
           color: Colors.white,
-          fontSize: 22,
+          fontSize: 22.sp,
           fontWeight: FontWeight.bold,
         ),
       ),

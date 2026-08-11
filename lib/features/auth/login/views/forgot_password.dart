@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/forgot_password_cubit.dart';
 import 'package:edu_advisor/features/auth/Manager/cubit/forgot_password_state.dart';
@@ -97,19 +98,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         left: width * 0.03,
                       ),
                       constraints: BoxConstraints(minHeight: height * 0.35),
-                      padding: const EdgeInsets.all(24),
+                      padding: EdgeInsets.all(24.w),
                       decoration: BoxDecoration(
                         color: context.themeColors.card,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(30),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30.r),
                         ),
                         boxShadow: [
                           BoxShadow(
                             color: context.themeColors.textPrimary.withValues(
                               alpha: 0.1,
                             ),
-                            blurRadius: 10,
-                            offset: const Offset(0, -3),
+                            blurRadius: 10.r,
+                            offset: Offset(0, -3.w),
                           ),
                         ],
                       ),
@@ -127,12 +128,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             },
                             decoration: InputDecoration(
                               hintText: context.l10n.emailAddressHint,
-                              prefixIcon: const Icon(Icons.email),
+                              prefixIcon: Icon(Icons.email, size: 20.r),
                               filled: true,
                               fillColor: context.themeColors.textMuted
                                   .withValues(alpha: 0.1),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(12.r),
                                 borderSide: BorderSide.none,
                               ),
                             ),
@@ -160,7 +161,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.w),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

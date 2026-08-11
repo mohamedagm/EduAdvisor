@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerWidget extends StatefulWidget {
@@ -47,8 +48,8 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
     return GestureDetector(
       onTap: _pickImage,
       child: Container(
-        height: 100,
-        width: 100,
+        height: 100.w,
+        width: 100.w,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: context.themeColors.mutedSurface,
@@ -63,7 +64,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
         child: _selectedImage == null
             ? Icon(
                 Icons.add_a_photo,
-                size: 32,
+                size: 32.r,
                 color: context.themeColors.textMuted,
               )
             : null,

@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class LoginForm extends StatefulWidget {
@@ -34,33 +35,34 @@ class _LoginFormState extends State<LoginForm> {
               Text(
                 context.l10n.email,
                 style: AppTextStyles.bodyInterMedium18.copyWith(
+                  fontSize: 18.sp,
                   color: context.themeColors.textPrimary,
                 ),
               ),
               TextFormField(
                 controller: widget.emailController,
                 decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.email),
+                  prefixIcon: Icon(Icons.email, size: 20.r),
                   filled: true,
                   fillColor: context.themeColors.mutedSurface,
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 16,
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 16.w,
+                    horizontal: 16.w,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: BorderSide.none,
                   ),
                   hintText: context.l10n.emailHint,
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: BorderSide.none,
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: BorderSide(
                       color: context.colorScheme.outline,
-                      width: 1.5,
+                      width: 1.5.w,
                     ),
                   ),
                 ),
@@ -76,13 +78,14 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.w),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 context.l10n.password,
                 style: AppTextStyles.bodyInterMedium18.copyWith(
+                  fontSize: 18.sp,
                   color: context.themeColors.textPrimary,
                 ),
               ),
@@ -90,10 +93,11 @@ class _LoginFormState extends State<LoginForm> {
                 controller: widget.passwordController,
                 obscureText: isObscure,
                 decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.lock_outline),
+                  prefixIcon: Icon(Icons.lock_outline, size: 20.r),
                   suffixIcon: IconButton(
                     icon: Icon(
                       isObscure ? Icons.visibility_off : Icons.visibility,
+                      size: 20.r,
                     ),
                     onPressed: () {
                       setState(() {
@@ -104,23 +108,23 @@ class _LoginFormState extends State<LoginForm> {
                   filled: true,
                   fillColor: context.themeColors.mutedSurface,
                   hintText: context.l10n.password,
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 16,
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 16.w,
+                    horizontal: 16.w,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: BorderSide.none,
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: BorderSide.none,
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: BorderSide(
                       color: context.colorScheme.outline,
-                      width: 1.5,
+                      width: 1.5.w,
                     ),
                   ),
                 ),
@@ -136,7 +140,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.w),
         ],
       ),
     );

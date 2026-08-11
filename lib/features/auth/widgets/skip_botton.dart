@@ -1,5 +1,6 @@
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class SkipButton extends StatelessWidget {
@@ -11,32 +12,32 @@ class SkipButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10.r),
         boxShadow: [
           BoxShadow(
             color: context.colorScheme.secondary.withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            blurRadius: 12.r,
+            offset: Offset(0, 6.w),
           ),
         ],
       ),
       width: double.infinity,
-      height: 48,
-      margin: const EdgeInsets.symmetric(horizontal: 32),
+      height: 48.w,
+      margin: EdgeInsets.symmetric(horizontal: 32.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.skip_next),
-          SizedBox(width: 16),
+          Icon(Icons.skip_next, size: 20.r),
+          SizedBox(width: 16.w),
           TextButton(
             onPressed: onTap,
             style: TextButton.styleFrom(
               foregroundColor: context.themeColors.textSecondary,
-              padding: const EdgeInsets.symmetric(vertical: 12),
+              padding: EdgeInsets.symmetric(vertical: 12.w),
             ),
             child: Text(
               context.l10n.skipForNow,
-              style: const TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16.sp),
             ),
           ),
         ],
