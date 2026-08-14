@@ -1,4 +1,4 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
@@ -41,11 +41,15 @@ class StudentInfoCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 30.r,
-                backgroundColor: AppColors.gray100,
+                backgroundColor: context.themeColors.mutedSurface,
                 backgroundImage: hasPhoto ? NetworkImage(photoUrl!) : null,
                 onBackgroundImageError: hasPhoto ? (_, __) {} : null,
                 child: !hasPhoto
-                    ? Icon(Icons.person, size: 30.r, color: Colors.grey[400])
+                    ? Icon(
+                        Icons.person,
+                        size: 30.r,
+                        color: context.themeColors.textMuted,
+                      )
                     : null,
               ),
               SizedBox(width: 16.w),
@@ -55,14 +59,16 @@ class StudentInfoCard extends StatelessWidget {
                   children: [
                     Text(
                       studentName,
-                      style: TextStyle(
+                      style: AppTextStyles.heading1_20b.copyWith(
                         fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
+                        color: context.themeColors.textPrimary,
                       ),
                     ),
                     Text(
                       "$department • ID: $studentCode",
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: AppTextStyles.bodyInterMedium14.copyWith(
+                        color: context.themeColors.textSecondary,
+                      ),
                     ),
                     SizedBox(height: 4.w),
                     Container(
@@ -71,14 +77,13 @@ class StudentInfoCard extends StatelessWidget {
                         vertical: 4.w,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.blue[50],
+                        color: context.themeColors.infoContainer,
                         borderRadius: BorderRadius.circular(8.r),
                       ),
                       child: Text(
                         "Year $academicYear",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
+                        style: AppTextStyles.bodyInterMedium14.copyWith(
+                          color: context.themeColors.info,
                           fontSize: 12.sp,
                         ),
                       ),

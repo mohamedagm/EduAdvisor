@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/di/service_locator.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_cubit.dart';
 import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_state.dart';
 import 'package:edu_advisor/features/requests/data/repo/advisor_request_repo.dart';
@@ -126,7 +127,7 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                   return Center(
                     child: Text(
                       'Error: ${state.failure.apiResponse.message}',
-                      style: const TextStyle(color: Colors.red),
+                      style: TextStyle(color: context.colorScheme.error),
                     ),
                   );
                 }

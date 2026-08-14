@@ -60,7 +60,7 @@ class SearchRow extends StatelessWidget {
 
 
 class StudentList extends StatelessWidget {
-  // 1. التغيير هنا: بنخلي الـ List تستقبل الموديل الحقيقي اللي جاي من السيرفر
+ 
   final List<MyStudentModel> students;
 
   const StudentList({super.key, required this.students});
@@ -70,9 +70,9 @@ class StudentList extends StatelessWidget {
     return ListView.separated(
       padding: EdgeInsets.symmetric(vertical: 14.w),
       itemCount: students.length,
-      separatorBuilder: (_, __) => SizedBox(height: 10.w), // المسافة بين الكروت
+      separatorBuilder: (_, __) => SizedBox(height: 10.w), 
       itemBuilder: (context, index) {
-        // 2. التغيير هنا: بنمرر الطالب اللي عليه الدور في الـ Loop للكارت بتاعه باستخدام الـ index
+       
         return StudentCard(student: students[index]);
       },
     );

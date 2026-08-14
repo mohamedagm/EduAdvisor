@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,9 +11,19 @@ class EmptyRequestsWidget extends StatelessWidget {
       padding: EdgeInsets.all(40.w),
       child: Column(
         children: [
-          Icon(Icons.inbox_outlined, size: 50.r),
+          Icon(
+            Icons.inbox_outlined,
+            size: 50.r,
+            color: context.themeColors.textMuted,
+          ),
           SizedBox(height: 10.w),
-          Text('No requests found', style: TextStyle(fontSize: 14.sp)),
+          Text(
+            'No requests found',
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: context.themeColors.textSecondary,
+            ),
+          ),
         ],
       ),
     );

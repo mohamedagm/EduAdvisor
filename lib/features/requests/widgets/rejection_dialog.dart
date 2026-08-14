@@ -89,9 +89,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(
-                    0xFFF07171,
-                  ), // لون أحمر هادي زي الصورة
+                  backgroundColor: context.colorScheme.error,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

@@ -1,4 +1,3 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_cubit.dart';
 import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_state.dart';
@@ -63,20 +62,18 @@ class _StudentsScreenState extends State<StudentsScreen> {
                         builder: (context, state) {
                           if (state is MyStudentsLoading) {
                             return const Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.gray100,
-                              ),
+                              child: CircularProgressIndicator(),
                             );
                           } else if (state is MyStudentsSuccess) {
                             final liveStudents = state.students;
 
                             if (liveStudents.isEmpty) {
-                              return const Center(
+                              return Center(
                                 child: Text(
                                   'No students found.',
                                   style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
+                                    color: context.themeColors.textSecondary,
+                                    fontSize: 16.sp,
                                   ),
                                 ),
                               );
@@ -87,7 +84,9 @@ class _StudentsScreenState extends State<StudentsScreen> {
                             return Center(
                               child: Text(
                                 'Error: ${state.failure.apiResponse.message}',
-                                style: const TextStyle(color: Colors.red),
+                                style: TextStyle(
+                                  color: context.colorScheme.error,
+                                ),
                               ),
                             );
                           }

@@ -26,4 +26,5 @@ class AppRoutes {
   static const String requestDetails = '/advisor/request-details';
 
   static String signupFor(String role) => '/auth/signup/$role';
+  // static const String home = '/advisor_nav';
 }

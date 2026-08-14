@@ -1,4 +1,3 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +33,7 @@ class StudentInfo extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 22.r,
-          backgroundColor: AppColors.gray200,
+          backgroundColor: context.themeColors.mutedSurface,
           backgroundImage: hasImage ? NetworkImage(imageUrl!) : null,
           onBackgroundImageError: hasImage ? (_, __) {} : null,
           child: !hasImage
@@ -42,7 +41,7 @@ class StudentInfo extends StatelessWidget {
                   _initials,
                   style: AppTextStyles.interRegular16.copyWith(
                     fontSize: 16.sp,
-                    color: AppColors.gray600,
+                    color: context.themeColors.textPrimary,
                   ),
                 )
               : null,
@@ -56,7 +55,7 @@ class StudentInfo extends StatelessWidget {
               Text(
                 fullName,
                 style: AppTextStyles.interRegular16.copyWith(
-                  color: AppColors.gray600,
+                  color: context.themeColors.textPrimary,
                 ),
               ),
               SizedBox(height: 3.w),
@@ -64,7 +63,7 @@ class StudentInfo extends StatelessWidget {
                 email,
                 style: AppTextStyles.bodyInterMedium14.copyWith(
                   fontSize: 14.sp,
-                  color: AppColors.gray400,
+                  color: context.themeColors.textSecondary,
                 ),
               ),
             ],

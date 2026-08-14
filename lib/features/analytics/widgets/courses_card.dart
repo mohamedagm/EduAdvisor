@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
@@ -8,15 +9,17 @@ class CoursesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _cardWrapper(
       context: context,
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Popular Courses',
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+            style: AppTextStyles.heading3PoppinsReg16.copyWith(
+              color: context.themeColors.textPrimary,
+            ),
           ),
-          SizedBox(height: 14),
-          _CourseRow(code: 'CS201', name: 'Data Structures', enrolled: 32),
+          const SizedBox(height: 14),
+          const _CourseRow(code: 'CS201', name: 'Data Structures', enrolled: 32),
         ],
       ),
     );
@@ -49,7 +52,20 @@ class _CourseRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [Text('$code - $name'), Text('$enrolled')],
+      children: [
+        Text(
+          '$code - $name',
+          style: AppTextStyles.bodyInterMedium14.copyWith(
+            color: context.themeColors.textPrimary,
+          ),
+        ),
+        Text(
+          '$enrolled',
+          style: AppTextStyles.bodyInterRegular12.copyWith(
+            color: context.themeColors.textSecondary,
+          ),
+        ),
+      ],
     );
   }
 }
