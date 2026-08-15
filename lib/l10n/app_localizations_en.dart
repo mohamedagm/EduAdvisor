@@ -107,6 +107,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signUp => 'Sign up';
 
   @override
+  String get login => 'Login';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account?';
+
+  @override
   String get loginSuccessful => 'Login successful';
 
   @override
@@ -411,6 +417,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get departmentRequired => 'Please select your department';
+
+  @override
+  String get faculty => 'Faculty';
+
+  @override
+  String get selectFaculty => 'Select your faculty';
+
+  @override
+  String get facultyRequired => 'Please select your faculty';
+
+  @override
+  String get selectFacultyFirst => 'Select your faculty first';
+
+  @override
+  String get fullNameArabic => 'Full name (Arabic)';
+
+  @override
+  String get fullNameEnglish => 'Full name (English)';
+
+  @override
+  String get enterFullName => 'Enter your name';
+
+  @override
+  String get studentId => 'Student ID';
+
+  @override
+  String get enterStudentId => '202012345';
+
+  @override
+  String get emailPlaceholder => 'student@university.edu';
 
   @override
   String get createAccount => 'Create account';

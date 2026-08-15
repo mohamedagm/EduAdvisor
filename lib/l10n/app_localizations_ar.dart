@@ -107,6 +107,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get signUp => 'إنشاء حساب';
 
   @override
+  String get login => 'تسجيل الدخول';
+
+  @override
+  String get alreadyHaveAccount => 'لديك حساب بالفعل؟';
+
+  @override
   String get loginSuccessful => 'تم تسجيل الدخول';
 
   @override
@@ -410,6 +416,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get departmentRequired => 'يرجى اختيار القسم';
+
+  @override
+  String get faculty => 'الكلية';
+
+  @override
+  String get selectFaculty => 'اختر كليتك';
+
+  @override
+  String get facultyRequired => 'يرجى اختيار الكلية';
+
+  @override
+  String get selectFacultyFirst => 'اختر كليتك أولاً';
+
+  @override
+  String get fullNameArabic => 'الاسم الكامل (بالعربية)';
+
+  @override
+  String get fullNameEnglish => 'الاسم الكامل (بالإنجليزية)';
+
+  @override
+  String get enterFullName => 'أدخل اسمك';
+
+  @override
+  String get studentId => 'الرقم الجامعي';
+
+  @override
+  String get enterStudentId => '202012345';
+
+  @override
+  String get emailPlaceholder => 'student@university.edu';
 
   @override
   String get createAccount => 'إنشاء حساب';

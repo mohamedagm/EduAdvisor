@@ -290,6 +290,18 @@ abstract class AppLocalizations {
   /// **'Sign up'**
   String get signUp;
 
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @alreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAccount;
+
   /// No description provided for @loginSuccessful.
   ///
   /// In en, this message translates to:
@@ -847,6 +859,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select your department'**
   String get departmentRequired;
+
+  /// No description provided for @faculty.
+  ///
+  /// In en, this message translates to:
+  /// **'Faculty'**
+  String get faculty;
+
+  /// No description provided for @selectFaculty.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your faculty'**
+  String get selectFaculty;
+
+  /// No description provided for @facultyRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select your faculty'**
+  String get facultyRequired;
+
+  /// No description provided for @selectFacultyFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your faculty first'**
+  String get selectFacultyFirst;
+
+  /// No description provided for @fullNameArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name (Arabic)'**
+  String get fullNameArabic;
+
+  /// No description provided for @fullNameEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name (English)'**
+  String get fullNameEnglish;
+
+  /// No description provided for @enterFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name'**
+  String get enterFullName;
+
+  /// No description provided for @studentId.
+  ///
+  /// In en, this message translates to:
+  /// **'Student ID'**
+  String get studentId;
+
+  /// No description provided for @enterStudentId.
+  ///
+  /// In en, this message translates to:
+  /// **'202012345'**
+  String get enterStudentId;
+
+  /// No description provided for @emailPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'student@university.edu'**
+  String get emailPlaceholder;
 
   /// No description provided for @createAccount.
   ///
