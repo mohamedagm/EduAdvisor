@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 
 class RegisterStudentRequestModel {
   const RegisterStudentRequestModel({
-    required this.firstName,
-    required this.lastName,
+    required this.fullNameAR,
+    required this.fullNameEN,
     required this.email,
+    required this.facultyId,
     required this.studentCode,
     required this.departmentId,
     required this.nationalId,
@@ -13,9 +14,10 @@ class RegisterStudentRequestModel {
     this.profileImage,
   });
 
-  final String firstName;
-  final String lastName;
+  final String fullNameAR;
+  final String fullNameEN;
   final String email;
+  final String facultyId;
   final String studentCode;
   final String departmentId;
   final String nationalId;
@@ -25,9 +27,10 @@ class RegisterStudentRequestModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'FirstName': firstName,
-      'LastName': lastName,
+      'FullNameAR': fullNameAR,
+      'FullNameEN': fullNameEN,
       'Email': email,
+      'FacultyId': facultyId,
       'StudentCode': studentCode,
       'DepartmentId': departmentId,
       'NationalId': nationalId,
