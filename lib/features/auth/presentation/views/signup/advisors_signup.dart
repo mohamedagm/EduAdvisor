@@ -1,22 +1,18 @@
-import 'dart:io';
-import 'package:edu_advisor/core/theme/app_theme_colors.dart';
-
 import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
+import 'package:edu_advisor/features/auth/data/models/register_advisor_request_model.dart';
+import 'package:edu_advisor/features/auth/data/register_role.dart';
+import 'package:edu_advisor/features/auth/data/repo/verify_code_repo.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/departments_cubit.dart';
-import 'package:edu_advisor/features/auth/presentation/Manager/cubit/departments_state.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/verify_code_cubit.dart';
-import 'package:edu_advisor/features/auth/data/models/register_advisor_request_model.dart';
-import 'package:edu_advisor/features/auth/data/register_role.dart';
-import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
-import 'package:edu_advisor/features/auth/data/repo/verify_code_repo.dart';
-import 'package:edu_advisor/features/auth/presentation/views/login/student_profile.dart';
 import 'package:edu_advisor/features/auth/presentation/views/login/verfy_code_screen.dart';
 import 'package:edu_advisor/features/auth/presentation/views/widgets/custom_text_field.dart';
 import 'package:edu_advisor/features/auth/presentation/views/widgets/department_dropdown.dart';
+import 'package:edu_advisor/features/auth/presentation/views/widgets/faculty_dropdown.dart';
 import 'package:edu_advisor/features/auth/presentation/views/widgets/signup_filed_label.dart';
 import 'package:edu_advisor/features/auth/presentation/views/widgets/signup_header.dart';
 import 'package:edu_advisor/features/widgets/gradient_elevated_button.dart';
@@ -35,27 +31,22 @@ class AdvisorSignupScreen extends StatefulWidget {
 }
 
 class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
-  File? advisorProfileImage;
-  // File? _selectedImage;
-  // final ImagePicker _picker = ImagePicker();
-
   final _formKey = GlobalKey<FormState>();
-
-  final nameController = TextEditingController();
-  final lastNameController = TextEditingController();
+  final nameARController = TextEditingController();
+  final nameENController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final phoneController = TextEditingController();
   final idController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-
+  String? selectedFacultyId;
   String? selectedDepartmentId;
   bool isObscure = true;
 
   @override
   void dispose() {
-    nameController.dispose();
-    lastNameController.dispose();
+    nameARController.dispose();
+    nameENController.dispose();
     emailController.dispose();
     passwordController.dispose();
     phoneController.dispose();
@@ -68,171 +59,160 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return BlocProvider(
-      create: (context) => AuthCubit(authRepo: getIt<AuthRepo>()),
-      child: BlocConsumer<AuthCubit, AuthState>(
-        listener: _authListener,
-        builder: (context, state) {
-          final isLoading =
-              state is RegisterStudentLoading ||
-              state is RegisterAdvisorLoading;
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: _authListener,
+      builder: (context, state) {
+        final isLoading =
+            state is RegisterStudentLoading || state is RegisterAdvisorLoading;
 
-          return BlocBuilder<DepartmentsCubit, DepartmentsState>(
-            builder: (context, deptState) {
-              if (deptState is DepartmentsLoading) {
-                return const Scaffold(
-                  body: Center(child: CircularProgressIndicator()),
-                );
-              }
-
-              if (deptState is DepartmentsFailure) {
-                return Scaffold(
-                  body: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          context.l10n.failedToLoadDepartments,
-                          style: TextStyle(color: context.colorScheme.error),
-                        ),
-                        const SizedBox(height: 12),
-                        ElevatedButton(
-                          onPressed: () => context
-                              .read<DepartmentsCubit>()
-                              .fetchDepartments(),
-                          child: Text(context.l10n.retry),
-                        ),
-                      ],
-                    ),
+        return Scaffold(
+          body: Column(
+            children: [
+              const SignupHeader(),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    top: screenHeight * 0.01,
+                    bottom: 20.w,
                   ),
-                );
-              }
-
-              return Scaffold(
-                body: Column(
-                  children: [
-                    const SignupHeader(),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.only(
-                          top: screenHeight * 0.01,
-                          bottom: 20.w,
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 24.w),
-                              padding: EdgeInsets.all(20.w),
-                              decoration: BoxDecoration(
-                                color: context.themeColors.card,
-                                borderRadius: BorderRadius.circular(20.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 10.r,
-                                    color: context.themeColors.shadow,
-                                  ),
-                                ],
-                              ),
-                              child: Form(
-                                key: _formKey,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ImagePickerWidget(
-                                      onImageSelected: (image) {
-                                        advisorProfileImage = image;
-                                      },
-                                    ),
-                                    _buildField(
-                                      label: context.l10n.firstName,
-                                      hint: context.l10n.enterFirstName,
-                                      icon: Icons.person,
-                                      controller: nameController,
-                                      validator: (value) =>
-                                          Validators.name(value, context.l10n),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    _buildField(
-                                      label: context.l10n.lastName,
-                                      hint: context.l10n.enterLastName,
-                                      icon: Icons.person,
-                                      controller: lastNameController,
-                                      validator: (value) =>
-                                          Validators.name(value, context.l10n),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    _buildField(
-                                      label: context.l10n.email,
-                                      hint: context.l10n.email,
-                                      icon: Icons.email,
-                                      controller: emailController,
-                                      validator: (value) =>
-                                          Validators.email(value, context.l10n),
-                                    ),
-                                    const SizedBox(height: 12),
-
-                                    DepartmentDropdown(
-                                      value: selectedDepartmentId,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          selectedDepartmentId = value;
-                                        });
-                                      },
-                                    ),
-                                    const SizedBox(height: 12),
-                                    _buildField(
-                                      label: context.l10n.phone,
-                                      hint: '+02115798392',
-                                      icon: Icons.phone,
-                                      controller: phoneController,
-                                    ),
-                                    const SizedBox(height: 12),
-                                    _buildField(
-                                      label: context.l10n.nationalId,
-                                      hint: context.l10n.enterNationalId,
-                                      icon: Icons.badge,
-                                      controller: idController,
-                                    ),
-                                    const SizedBox(height: 12),
-                                    _buildPasswordField(),
-                                    const SizedBox(height: 12),
-                                    _buildConfirmPasswordField(),
-                                    SizedBox(height: 20.w),
-                                    IgnorePointer(
-                                      ignoring: isLoading,
-                                      child: Opacity(
-                                        opacity: isLoading ? 0.75 : 1,
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                          child: GradientElevatedButton(
-                                            buttonText: isLoading
-                                                ? context.l10n.signingUp
-                                                : context.l10n.signUp,
-                                            onPressed: () => _onSignUpPressed(
-                                              context,
-                                              isLoading: isLoading,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 24.w),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 24.w),
+                        padding: EdgeInsets.all(20.w),
+                        decoration: BoxDecoration(
+                          color: context.themeColors.card,
+                          borderRadius: BorderRadius.circular(20.r),
+                          boxShadow: [
+                            BoxShadow(blurRadius: 10.r, color: Colors.black12),
                           ],
                         ),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _buildField(
+                                label: context.l10n.fullNameArabic,
+                                hint: context.l10n.enterFullName,
+                                icon: Icons.person,
+                                controller: nameARController,
+                                validator: (value) =>
+                                    Validators.name(value, context.l10n),
+                              ),
+                              const SizedBox(height: 12),
+                              _buildField(
+                                label: context.l10n.fullNameEnglish,
+                                hint: context.l10n.enterFullName,
+                                icon: Icons.person,
+                                controller: nameENController,
+                                validator: (value) =>
+                                    Validators.name(value, context.l10n),
+                              ),
+                              const SizedBox(height: 12),
+                              _buildField(
+                                label: context.l10n.email,
+                                hint: context.l10n.emailPlaceholder,
+                                icon: Icons.email,
+                                controller: emailController,
+                                validator: (value) =>
+                                    Validators.email(value, context.l10n),
+                              ),
+                              const SizedBox(height: 12),
+                              FacultyDropdown(
+                                value: selectedFacultyId,
+                                onChanged: _onFacultyChanged,
+                              ),
+                              const SizedBox(height: 12),
+                              DepartmentDropdown(
+                                key: ValueKey(selectedFacultyId),
+                                value: selectedDepartmentId,
+                                facultyId: selectedFacultyId,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedDepartmentId = value;
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 12),
+                              _buildField(
+                                label: context.l10n.phone,
+                                hint: '+02115798392',
+                                icon: Icons.phone,
+                                controller: phoneController,
+                              ),
+                              const SizedBox(height: 12),
+                              _buildField(
+                                label: context.l10n.nationalId,
+                                hint: context.l10n.enterNationalId,
+                                icon: Icons.menu_book,
+                                controller: idController,
+                              ),
+                              const SizedBox(height: 12),
+                              _buildPasswordField(),
+                              const SizedBox(height: 12),
+                              _buildConfirmPasswordField(),
+                              SizedBox(height: 20.w),
+                              IgnorePointer(
+                                ignoring: isLoading,
+                                child: Opacity(
+                                  opacity: isLoading ? 0.75 : 1,
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: GradientElevatedButton(
+                                      buttonText: isLoading
+                                          ? context.l10n.signingUp
+                                          : context.l10n.signUp,
+                                      onPressed: () => _onSignUpPressed(
+                                        context,
+                                        isLoading: isLoading,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 20.w),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('${context.l10n.alreadyHaveAccount} '),
+                          GestureDetector(
+                            onTap: () => Navigator.of(context).maybePop(),
+                            child: Text(
+                              context.l10n.login,
+                              style: TextStyle(
+                                color: context.colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 24.w),
+                    ],
+                  ),
                 ),
-              );
-            },
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
+  }
+
+  void _onFacultyChanged(String? facultyId) {
+    setState(() {
+      selectedFacultyId = facultyId;
+      selectedDepartmentId = null;
+    });
+
+    if (facultyId != null) {
+      context.read<DepartmentsCubit>().fetchDepartments(facultyId: facultyId);
+    }
   }
 
   void _authListener(BuildContext context, AuthState state) {
@@ -247,19 +227,23 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
         description: message,
       );
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) =>
-                VerifyCodeCubit(verifyCodeRepo: getIt<VerifyCodeRepo>()),
-            child: VerifyCodeScreen(
-              email: emailController.text.trim(),
-              role: widget.registerRole,
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) =>
+                    VerifyCodeCubit(verifyCodeRepo: getIt<VerifyCodeRepo>()),
+                child: VerifyCodeScreen(
+                  email: emailController.text.trim(),
+                  role: widget.registerRole,
+                ),
+              ),
             ),
-          ),
-        ),
-      );
+          );
+        }
+      });
     }
 
     if (state is RegisterStudentFailure || state is RegisterAdvisorFailure) {
@@ -280,9 +264,10 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
 
     context.read<AuthCubit>().registerAdvisor(
       RegisterAdvisorRequestModel(
-        firstName: nameController.text.trim(),
-        lastName: lastNameController.text.trim(),
+        fullNameAR: nameARController.text.trim(),
+        fullNameEN: nameENController.text.trim(),
         email: emailController.text.trim(),
+        facultyId: selectedFacultyId ?? '',
         departmentId: selectedDepartmentId ?? '',
         nationalId: idController.text.trim(),
         phone: phoneController.text.trim(),

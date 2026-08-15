@@ -6,11 +6,13 @@ import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/departments_cubit.dart';
+import 'package:edu_advisor/features/auth/presentation/Manager/cubit/faculties_cubit.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/verify_code_cubit.dart';
 import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/departments_repo.dart';
+import 'package:edu_advisor/features/auth/data/repo/faculties_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/verify_code_repo.dart';
 import 'package:edu_advisor/features/auth/presentation/views/login/forgot_password.dart';
 import 'package:edu_advisor/features/auth/presentation/views/login/verfy_code_screen.dart';
@@ -157,7 +159,14 @@ class _AdvisorLoginScreenState extends State<AdvisorLoginScreen> {
                                           departmentsRepo: DepartmentsRepo(
                                             apiConsumer: DioConsumer(),
                                           ),
-                                        )..fetchDepartments(),
+                                        ),
+                                      ),
+                                      BlocProvider<FacultiesCubit>(
+                                        create: (context) => FacultiesCubit(
+                                          facultiesRepo: FacultiesRepo(
+                                            apiConsumer: DioConsumer(),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                     child: const AdvisorSignupScreen(
