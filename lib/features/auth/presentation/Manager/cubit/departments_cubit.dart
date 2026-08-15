@@ -1,4 +1,5 @@
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/departments_state.dart';
+import 'package:edu_advisor/features/auth/data/models/departments_query_params.dart';
 import 'package:edu_advisor/features/auth/data/repo/departments_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +16,9 @@ class DepartmentsCubit extends Cubit<DepartmentsState> {
 
     emit(const DepartmentsLoading());
 
-    final result = await _departmentsRepo.getDepartments();
+    final result = await _departmentsRepo.getDepartments(
+      DepartmentsQueryParams(),
+    );
 
     result.fold(
       (failure) => emit(DepartmentsFailure(failure)),

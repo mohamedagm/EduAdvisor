@@ -5,6 +5,7 @@ import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
 import 'package:edu_advisor/features/auth/data/models/department_model.dart';
+import 'package:edu_advisor/features/auth/data/models/departments_query_params.dart';
 
 class DepartmentsRepo {
   final ApiConsumer _apiConsumer;
@@ -12,9 +13,16 @@ class DepartmentsRepo {
   DepartmentsRepo({required ApiConsumer apiConsumer})
     : _apiConsumer = apiConsumer;
 
-  Future<Either<Failure, List<DepartmentModel>>> getDepartments() async {
+  Future<Either<Failure, List<DepartmentModel>>> getDepartments(
+    DepartmentsQueryParams params, {
+    String? language,
+  }) async {
     try {
-      final response = await _apiConsumer.get(ApiEndpoints.getDepartments);
+      final response = await _apiConsumer.get(
+        ApiEndpoints.getDepartments,
+        queryParameters: params.toMap(),
+        headers: language != null ? {'Accept-Language': language} : null,
+      );
 
       final apiResponse = ApiResponseModel.fromJson(response);
 
