@@ -22,7 +22,7 @@ Future<void> main() async {
   final preferences = await SharedPreferences.getInstance();
   runApp(
     DevicePreview(
-      enabled: !kReleaseMode,
+      enabled: false,
       availableLocales: AppLocalizations.supportedLocales,
       builder: (_) => MainApp(
         themePreferences: ThemePreferences(preferences),

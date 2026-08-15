@@ -4,7 +4,7 @@ import 'package:edu_advisor/core/api/api_endpoints.dart';
 import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
-import 'package:edu_advisor/features/auth/data/models/department_model.dart'; // مسار الموديل بتاعك
+import 'package:edu_advisor/features/auth/data/models/department_model.dart';
 
 class DepartmentsRepo {
   final ApiConsumer _apiConsumer;
@@ -18,9 +18,12 @@ class DepartmentsRepo {
 
       final apiResponse = ApiResponseModel.fromJson(response);
 
-      final List<dynamic> dataList = apiResponse.data as List? ?? [];
-      final departments = dataList
-          .map((json) => DepartmentModel.fromJson(json))
+      final data = apiResponse.data as Map<String, dynamic>;
+
+      final items = data['items'] as List<dynamic>? ?? [];
+
+      final departments = items
+          .map((json) => DepartmentModel.fromJson(json as Map<String, dynamic>))
           .toList();
 
       return Right(departments);

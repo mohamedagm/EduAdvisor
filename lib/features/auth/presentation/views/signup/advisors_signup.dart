@@ -121,9 +121,7 @@ class _AdvisorSignupScreenState extends State<AdvisorSignupScreen> {
                         child: Column(
                           children: [
                             Container(
-                              margin: EdgeInsets.symmetric(
-                                horizontal: 24.w,
-                              ),
+                              margin: EdgeInsets.symmetric(horizontal: 24.w),
                               padding: EdgeInsets.all(20.w),
                               decoration: BoxDecoration(
                                 color: context.themeColors.card,

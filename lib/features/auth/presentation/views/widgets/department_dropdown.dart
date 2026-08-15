@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/departments_cubit.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/departments_state.dart';
@@ -67,7 +68,11 @@ class DepartmentDropdown extends StatelessWidget {
                 items: state.departments.map((department) {
                   return DropdownMenuItem<String>(
                     value: department.id,
-                    child: Text(department.name),
+                    child: Text(
+                      AppLocalizations.supportedLocales.contains(Locale('ar'))
+                          ? department.nameAR
+                          : department.nameEN,
+                    ),
                   );
                 }).toList(),
                 onChanged: onChanged,
