@@ -1,7 +1,7 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/utils/app_screen_util.dart';
-import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
+import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';

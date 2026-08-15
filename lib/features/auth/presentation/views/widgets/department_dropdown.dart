@@ -1,8 +1,8 @@
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:edu_advisor/features/auth/Manager/cubit/departments_cubit.dart';
-import 'package:edu_advisor/features/auth/Manager/cubit/departments_state.dart';
-import 'package:edu_advisor/features/auth/signup/widgets/signup_filed_label.dart';
+import 'package:edu_advisor/features/auth/presentation/Manager/cubit/departments_cubit.dart';
+import 'package:edu_advisor/features/auth/presentation/Manager/cubit/departments_state.dart';
+import 'package:edu_advisor/features/auth/presentation/views/widgets/signup_filed_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';

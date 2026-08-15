@@ -1,4 +1,4 @@
-import 'package:edu_advisor/features/auth/Manager/cubit/departments_state.dart';
+import 'package:edu_advisor/features/auth/presentation/Manager/cubit/departments_state.dart';
 import 'package:edu_advisor/features/auth/data/repo/departments_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

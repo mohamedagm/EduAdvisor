@@ -1,5 +1,5 @@
 // forgot_password_cubit.dart
-import 'package:edu_advisor/features/auth/Manager/cubit/forgot_password_state.dart';
+import 'package:edu_advisor/features/auth/presentation/Manager/cubit/forgot_password_state.dart';
 import 'package:edu_advisor/features/auth/data/repo/forgot_password_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,5 +1,5 @@
 import 'package:edu_advisor/core/di/service_locator.dart';
-import 'package:edu_advisor/features/auth/Manager/cubit/auth_cubit.dart';
+import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_view_body.dart';
 import 'package:edu_advisor/features/user/data/repo/user_repo.dart';

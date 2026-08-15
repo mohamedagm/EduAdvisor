@@ -2,7 +2,7 @@ import 'package:edu_advisor/features/auth/data/models/login_request_model.dart';
 import 'package:edu_advisor/features/auth/data/models/register_advisor_request_model.dart';
 import 'package:edu_advisor/features/auth/data/models/register_student_request_model.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
-import 'package:edu_advisor/features/auth/Manager/cubit/auth_state.dart';
+import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
