@@ -12,6 +12,7 @@ import 'package:edu_advisor/features/AIChat/data/repo/ai_chat_repo.dart';
 import 'package:edu_advisor/features/advisor_nav/data/repo/advisor_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/departments_repo.dart';
+import 'package:edu_advisor/features/auth/data/repo/faculties_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/forgot_password_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/reset_password_repo.dart';
 import 'package:edu_advisor/features/auth/data/repo/verify_code_repo.dart';
@@ -67,6 +68,10 @@ void setupDependencyInjection() {
 
   getIt.registerLazySingleton<DepartmentsRepo>(
     () => DepartmentsRepo(apiConsumer: getIt()),
+  );
+
+  getIt.registerLazySingleton<FacultiesRepo>(
+    () => FacultiesRepo(apiConsumer: getIt()),
   );
 
   getIt.registerLazySingleton<AdvisorRepo>(
