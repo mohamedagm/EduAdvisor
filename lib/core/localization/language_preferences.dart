@@ -12,7 +12,7 @@ class LanguagePreferences {
     final storedCode = _preferences.getString(_languageCodeKey);
 
     if (storedCode == null || storedCode.isEmpty) {
-      return const Locale('ar');
+      return const Locale('en');
     }
 
     return Locale(storedCode);
