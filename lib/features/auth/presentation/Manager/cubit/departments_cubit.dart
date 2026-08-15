@@ -10,14 +10,13 @@ class DepartmentsCubit extends Cubit<DepartmentsState> {
       : _departmentsRepo = departmentsRepo,
         super(const DepartmentsInitial());
 
-  Future<void> fetchDepartments() async {
-    
+  Future<void> fetchDepartments({String? facultyId}) async {
     if (state is DepartmentsLoading) return;
 
     emit(const DepartmentsLoading());
 
     final result = await _departmentsRepo.getDepartments(
-      DepartmentsQueryParams(),
+      DepartmentsQueryParams(facultyId: facultyId),
     );
 
     result.fold(
