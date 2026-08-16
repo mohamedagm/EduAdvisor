@@ -75,7 +75,8 @@ class _WelcomeCardContent extends StatelessWidget {
                   children: [
                     Text(
                       context.l10n.welcomeBackName(
-                        user?.displayName ?? context.l10n.student,
+                        user?.nameFor(Localizations.localeOf(context)) ??
+                            context.l10n.student,
                       ),
                       style: AppTextStyles.heading1_20b.copyWith(
                         fontSize: 20.sp,

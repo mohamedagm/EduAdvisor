@@ -13,7 +13,7 @@ class ApiEndpoints {
   static const String registerStudent = '/api/Auth/register/student';
   static const String registerAdvisor = '/api/Auth/register/advisor';
   static const String myPermissions = '/api/Auth/me/permissions';
-  static const String me = '/api/Auth/me';
+  static const String me = '/api/Account/me';
   static const String validateToken = '/api/Auth/validate-token';
   static const String getFaculty = '/api/Faculty';
   static const String getDepartments = '/api/Department';
@@ -29,9 +29,10 @@ class ApiEndpoints {
 
   static const String getPendingRequests = '/api/v1/Advisors/pending';
   static const String getApprovedRequests = '/api/v1/Advisors/approved';
-  
+
   // 📌 الـ Endpoint الجديدة المضبوطة بالـ Swagger لمنع الـ 404
-  static const String getProcessedRequests = '/api/v1/Advisors/RegistrationRequests/Processed';
+  static const String getProcessedRequests =
+      '/api/v1/Advisors/RegistrationRequests/Processed';
 
   static String approveRequest(String id) => '/api/v1/Advisors/approve/$id';
   static String rejectRequest(String id) => '/api/v1/Advisors/reject/$id';

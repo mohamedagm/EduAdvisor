@@ -116,7 +116,8 @@ class _ProfileHeaderContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      user?.displayName ?? context.l10n.student,
+                      user?.nameFor(Localizations.localeOf(context)) ??
+                          context.l10n.student,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.heading3PoppinsReg16.responsive
@@ -136,7 +137,8 @@ class _ProfileHeaderContent extends StatelessWidget {
                         alpha: 0.8,
                       ),
                       label: Text(
-                        user?.displayDepartment ?? context.l10n.department,
+                        user?.departmentFor(Localizations.localeOf(context)) ??
+                            context.l10n.department,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.bodyInterRegular12.responsive

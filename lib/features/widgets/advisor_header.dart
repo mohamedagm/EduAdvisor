@@ -106,7 +106,8 @@ class _AdvisorHeaderContent extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          user?.displayName ?? 'Advisor',
+                          user?.nameFor(Localizations.localeOf(context)) ??
+                              'Advisor',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15.sp,
@@ -115,7 +116,10 @@ class _AdvisorHeaderContent extends StatelessWidget {
                         ),
                         SizedBox(height: 2.w),
                         Text(
-                          user?.displayDepartment ?? 'Academic Advisor',
+                          user?.departmentFor(
+                                Localizations.localeOf(context),
+                              ) ??
+                              'Academic Advisor',
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 12.sp,

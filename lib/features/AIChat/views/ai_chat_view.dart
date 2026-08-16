@@ -70,8 +70,10 @@ class _AIChatViewBodyState extends State<_AIChatViewBody> {
     final request = AiChatRequestModel(
       studentId: studentId,
       studentContext:
-          'Name: ${user.displayName} | GPA: ${user.displayGpa} | '
-          'Major: ${user.displayDepartment} | Level: ${user.displayLevel}',
+          'Name: ${user.nameFor(Localizations.localeOf(context))} | '
+          'GPA: ${user.displayGpa} | '
+          'Major: ${user.departmentFor(Localizations.localeOf(context))} | '
+          'Level: ${user.displayLevel}',
       question: question,
     );
 

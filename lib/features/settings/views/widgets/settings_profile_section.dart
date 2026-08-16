@@ -78,7 +78,8 @@ class SettingsProfileSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            user?.displayName ?? '--',
+                            user?.nameFor(Localizations.localeOf(context)) ??
+                                '--',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.bodyInterMedium14.responsive
