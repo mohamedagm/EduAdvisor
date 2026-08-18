@@ -112,26 +112,6 @@ class CourseDetailsSheet extends StatelessWidget {
               SizedBox(height: 16.w),
 
               _SectionTitle(
-                icon: Icons.school_outlined,
-                label: context.l10n.academicPlacement,
-                iconColor: context.themeColors.warning,
-              ),
-
-              SizedBox(height: 6.w),
-
-              Text(
-                context.l10n.courseAcademicPlacement(
-                  course.standardLevel.toString(),
-                  course.standardSemester.toString(),
-                ),
-                style: AppTextStyles.interRegular16.responsive.copyWith(
-                  color: context.themeColors.textSecondary,
-                ),
-              ),
-
-              SizedBox(height: 16.w),
-
-              _SectionTitle(
                 icon: Icons.account_tree_outlined,
                 label: context.l10n.department,
                 iconColor: context.themeColors.success,
