@@ -1,14 +1,41 @@
-import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/features/user/data/models/current_user_model.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
+import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DegreeProgressIndicator extends StatelessWidget {
   const DegreeProgressIndicator({super.key});
 
+  static const int totalRequiredCredits = 144;
+
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<CurrentUserCubit, CurrentUserState>(
+      builder: (context, state) {
+        final user = state is CurrentUserLoaded ? state.user : null;
+
+        return _DegreeProgressContent(user: user);
+      },
+    );
+  }
+}
+
+class _DegreeProgressContent extends StatelessWidget {
+  const _DegreeProgressContent({required this.user});
+
+  final CurrentUserModel? user;
+
+  @override
+  Widget build(BuildContext context) {
+    final completed = user?.completedCreditHours?.toInt() ?? 0;
+    final total = DegreeProgressIndicator.totalRequiredCredits;
+    final ratio = total > 0 ? (completed / total).clamp(0.0, 1.0) : 0.0;
+
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -58,7 +85,10 @@ class DegreeProgressIndicator extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    context.l10n.creditsRatio('65', '140'),
+                    context.l10n.creditsRatio(
+                      completed.toString(),
+                      total.toString(),
+                    ),
                     style: AppTextStyles.interRegular16.copyWith(
                       fontSize: 16.sp,
                       color: context.themeColors.info,
@@ -77,21 +107,17 @@ class DegreeProgressIndicator extends StatelessWidget {
               ),
             ],
           ),
-
           SizedBox(height: 16.w),
-
           LinearProgressIndicator(
             borderRadius: BorderRadius.circular(16.r),
-            value: 65 / 140,
+            value: ratio,
             minHeight: 10.w,
             backgroundColor: context.themeColors.border,
             valueColor: AlwaysStoppedAnimation<Color>(
               context.themeColors.textPrimary,
             ),
           ),
-
           SizedBox(height: 16.w),
-
           Text(
             context.l10n.onTrackToGraduate(context.l10n.spring2026),
             style: AppTextStyles.poppinsRegular14.copyWith(
