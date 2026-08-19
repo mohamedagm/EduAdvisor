@@ -80,12 +80,33 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     setState(() {});
   }
 
-  void submitOtpVerification() {
+///////////////////handl e submit otp verification
+ void submitOtpVerification() {
     if (otpCode.length != otpLength) {
       AppToast.warning(
         context,
         title: context.l10n.incompleteCode,
         description: context.l10n.completeVerificationCode,
+      );
+      return;
+    }
+
+    if (widget.isFromForgotPassword) {
+      
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => ResetPasswordCubit(
+              resetPasswordRepo: getIt<ResetPasswordRepo>(),
+            ),
+            child: NewPasswordScreen(
+              role: widget.role,
+              email: widget.email,
+              otp: otpCode,
+            ),
+          ),
+        ),
       );
       return;
     }
@@ -96,7 +117,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       isFromForgotPassword: widget.isFromForgotPassword,
     );
   }
-
   void handleResendCode() {
     if (resendCountdown > 0) return;
 
@@ -160,29 +180,29 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                       child: NewPasswordScreen(
                         role: widget.role,
                         email: widget.email,
-                        token: state.response.data ?? '',
+                        otp: otpCode,
                       ),
                     ),
                   ),
                 );
               }
-              if (widget.isFromForgotPassword) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => BlocProvider(
-                      create: (_) => ResetPasswordCubit(
-                        resetPasswordRepo: getIt<ResetPasswordRepo>(),
-                      ),
-                      child: NewPasswordScreen(
-                        role: widget.role,
-                        email: widget.email,
-                        token: state.response.data ?? '',
-                      ),
-                    ),
-                  ),
-                );
-              }
+              // if (widget.isFromForgotPassword) {
+              //   Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (_) => BlocProvider(
+              //         create: (_) => ResetPasswordCubit(
+              //           resetPasswordRepo: getIt<ResetPasswordRepo>(),
+              //         ),
+              //         child: NewPasswordScreen(
+              //           role: widget.role,
+              //           email: widget.email,
+              //           token: state.response.data ?? '',
+              //         ),
+              //       ),
+              //     ),
+              //   );
+              // }
             }
             if (!context.mounted || !widget.isFromForgotPassword) return;
             Navigator.pushReplacement(
@@ -195,7 +215,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   child: NewPasswordScreen(
                     role: widget.role,
                     email: widget.email,
-                    token: state.response.data ?? '',
+                    otp: otpCode,
                   ),
                 ),
               ),
@@ -243,6 +263,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                 mainText: context.l10n.verifyCode,
                 optionalText: context.l10n.checkEmailForCode,
               ),
+
+
+              /////////////otp input fields
               Expanded(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.all(24.w),
@@ -253,7 +276,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                         children: List.generate(otpLength, (index) {
                           return Container(
                             margin: EdgeInsets.symmetric(horizontal: 4.w),
-                            width: 40.w,
+                            width: 45.w,
                             height: 56.w,
                             child: TextField(
                               controller: controllers[index],
@@ -262,11 +285,17 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                               textAlign: TextAlign.center,
                               maxLength: 1,
                               keyboardType: TextInputType.number,
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
                               ],
                               decoration: const InputDecoration(
                                 counterText: '',
+                                contentPadding: EdgeInsets.zero,
                                 border: OutlineInputBorder(),
                               ),
                               onChanged: (value) => onOtpChanged(index, value),
@@ -277,17 +306,16 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
                       SizedBox(height: 20.w),
 
-                      TextButton(
-                        onPressed: (resendCountdown == 0 && !isLoading)
-                            ? handleResendCode
-                            : null,
-                        child: Text(
-                          resendCountdown > 0
-                              ? context.l10n.resendIn(resendCountdown)
-                              : context.l10n.resendCode,
-                        ),
-                      ),
-
+                      // TextButton(
+                      //   onPressed: (resendCountdown == 0 && !isLoading)
+                      //       ? handleResendCode
+                      //       : null,
+                      //   child: Text(
+                      //     resendCountdown > 0
+                      //         ? context.l10n.resendIn(resendCountdown)
+                      //         : context.l10n.resendCode,
+                      //   ),
+                      // ),
                       SizedBox(height: 30.w),
 
                       ElevatedButton(

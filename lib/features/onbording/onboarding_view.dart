@@ -30,7 +30,7 @@ class _OnboardingViewState extends State<OnboardingView> {
   }
 
   void _onGetStarted() {
-    context.go(AppRoutes.chooseUserRole); ////////////////change
+    context.go(AppRoutes.chooseUserRole);////////////////change
   }
 
   @override
