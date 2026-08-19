@@ -4,7 +4,8 @@ import 'package:edu_advisor/core/api/api_endpoints.dart';
 import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
-
+//////////////////////////////write otp and verfy 
+///
 class VerifyCodeRepo {
   VerifyCodeRepo({required ApiConsumer apiConsumer})
       : _apiConsumer = apiConsumer;

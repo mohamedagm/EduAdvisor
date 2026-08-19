@@ -17,13 +17,13 @@ import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 class NewPasswordScreen extends StatefulWidget {
   final RegisterRole role;
   final String email;
-  final String token;
+    final String otp;
 
   const NewPasswordScreen({
     super.key,
     required this.role,
     required this.email,
-    required this.token,
+    required this.otp,
   });
 
   @override
@@ -198,11 +198,10 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                     context
                                         .read<ResetPasswordCubit>()
                                         .resetPassword(
-                                          email: widget.email,
-                                          token: widget.token,
-                                          newPassword: _passwordController.text,
-                                          confirmPassword:
-                                              _confirmPasswordController.text,
+                                           email: widget.email,
+      otp: widget.otp,
+      newPassword: _passwordController.text,
+      confirmPassword: _confirmPasswordController.text,
                                         );
                                   }
                                 },
