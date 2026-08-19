@@ -6,11 +6,11 @@ import 'package:edu_advisor/features/auth/presentation/views/login/advisor_login
 import 'package:edu_advisor/features/auth/presentation/views/login/advisor_profile.dart';
 import 'package:edu_advisor/features/auth/presentation/views/login/choose_user_role.dart';
 import 'package:edu_advisor/features/auth/presentation/views/login/student_login.dart';
+
 import 'package:edu_advisor/features/main/main_view.dart';
 import 'package:edu_advisor/features/onbording/onboarding_view.dart';
 import 'package:edu_advisor/features/onbording/splash_view.dart';
 import 'package:edu_advisor/features/profile/views/notifications_view.dart';
-import 'package:edu_advisor/features/profile/views/profile_view.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
 import 'package:edu_advisor/features/requests/views/request_details_screen.dart';
 import 'package:edu_advisor/features/services/views/course_recommendations_view.dart';
@@ -67,10 +67,10 @@ final GoRouter appRouter = GoRouter(
     //   path: AppRoutes.verifyCode,
     //   builder: (context, state) => const VerifyCodeScreen(),
     // ),
-    GoRoute(
-      path: AppRoutes.studentProfileSetup,
-      builder: (context, state) => const  ProfileView(),
-    ),
+    // GoRoute(
+    //   path: AppRoutes.studentProfileSetup,
+    //   builder: (context, state) => const StudentProfile(),
+    // ),
     GoRoute(
       path: AppRoutes.advisorProfileSetup,
       builder: (context, state) => const AdvisorProfile(),
