@@ -1,17 +1,19 @@
-import 'dart:async';
 import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
+import 'package:edu_advisor/features/auth/presentation/Manager/cubit/forgot_password_cubit.dart';
+import 'package:edu_advisor/features/auth/presentation/Manager/cubit/forgot_password_state.dart';
+import 'package:edu_advisor/features/auth/data/repo/forgot_password_repo.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/reset_password_cubit.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/verify_code_cubit.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/verify_code_state.dart';
 import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/reset_password_repo.dart';
 import 'package:edu_advisor/features/auth/presentation/views/login/new_pass.dart';
+import 'package:edu_advisor/features/auth/presentation/views/widgets/otp_digit_field.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,8 +39,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   late List<TextEditingController> controllers;
   late List<FocusNode> focusNodes;
 
-  int resendCountdown = 0;
-  Timer? _timer;
+  late List<FocusNode> keyboardFocusNodes;
 
   @override
   void initState() {
@@ -46,6 +47,10 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
     controllers = List.generate(otpLength, (_) => TextEditingController());
     focusNodes = List.generate(otpLength, (_) => FocusNode());
+    keyboardFocusNodes = List.generate(
+      otpLength,
+      (_) => FocusNode(skipTraversal: true),
+    );
 
     Future.delayed(const Duration(milliseconds: 200), () {
       if (mounted) focusNodes[0].requestFocus();
@@ -60,7 +65,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     for (var f in focusNodes) {
       f.dispose();
     }
-    _timer?.cancel();
+    for (var f in keyboardFocusNodes) {
+      f.dispose();
+    }
     super.dispose();
   }
 
@@ -69,6 +76,10 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   void onOtpChanged(int index, String value) {
     if (value.isNotEmpty && index < otpLength - 1) {
       focusNodes[index + 1].requestFocus();
+    }
+
+    if (value.isEmpty && index > 0) {
+      focusNodes[index - 1].requestFocus();
     }
 
     if (value.length > 1) {
@@ -80,8 +91,15 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     setState(() {});
   }
 
-///////////////////handl e submit otp verification
- void submitOtpVerification() {
+  void onBackspaceOnEmptyField(int index) {
+    if (index == 0) return;
+    focusNodes[index - 1].requestFocus();
+    controllers[index - 1].clear();
+    setState(() {});
+  }
+
+  ///////////////////handle submit otp verification
+  void submitOtpVerification(BuildContext context) {
     if (otpCode.length != otpLength) {
       AppToast.warning(
         context,
@@ -92,7 +110,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     }
 
     if (widget.isFromForgotPassword) {
-      
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -117,59 +134,64 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       isFromForgotPassword: widget.isFromForgotPassword,
     );
   }
-  void handleResendCode() {
-    if (resendCountdown > 0) return;
+
+  void handleResendCode(BuildContext context) {
+    if (widget.isFromForgotPassword) {
+      context.read<ForgotPasswordCubit>().sendOtp(email: widget.email);
+      return;
+    }
 
     context.read<VerifyCodeCubit>().resendOtp(email: widget.email);
   }
 
-  void startTimer() {
-    setState(() {
-      resendCountdown = 30;
-
-      for (var c in controllers) {
-        c.clear();
-      }
-    });
-
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (!mounted) return;
-
-      setState(() {
-        resendCountdown--;
-
-        if (resendCountdown <= 0) {
-          timer.cancel();
-        }
-      });
-    });
-
-    Future.delayed(const Duration(milliseconds: 100), () {
-      if (mounted) focusNodes[0].requestFocus();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<VerifyCodeCubit, VerifyCodeState>(
-      listener: (context, state) {
-        if (state is VerifyOtpLoading) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text("Verifying...")));
-        }
+    return BlocProvider(
+      create: (_) => ForgotPasswordCubit(repo: getIt<ForgotPasswordRepo>()),
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
+            listener: (context, state) {
+              if (state is ForgotPasswordSuccess) {
+                for (var c in controllers) {
+                  c.clear();
+                }
+                if (mounted) focusNodes[0].requestFocus();
 
-        if (state is VerifyOtpSuccess) {
-          AppToast.success(
-            context,
-            title: context.l10n.codeVerified,
-            description: context.l10n.verificationCodeAccepted,
-          );
+                AppToast.success(
+                  context,
+                  title: context.l10n.codeSent,
+                  description: context.l10n.newVerificationCodeSent,
+                );
+              }
 
-          Future.delayed(const Duration(seconds: 1), () {
-            if (mounted) {
-              if (widget.isFromForgotPassword) {
+              if (state is ForgotPasswordFailure) {
+                AppToast.error(
+                  context,
+                  title: context.l10n.couldNotResendCode,
+                  description: state.message,
+                );
+              }
+            },
+          ),
+        ],
+        child: BlocConsumer<VerifyCodeCubit, VerifyCodeState>(
+          listener: (context, state) {
+            if (state is VerifyOtpLoading) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text("Verifying...")));
+            }
+
+            if (state is VerifyOtpSuccess) {
+              AppToast.success(
+                context,
+                title: context.l10n.codeVerified,
+                description: context.l10n.verificationCodeAccepted,
+              );
+
+              Future.delayed(const Duration(seconds: 1), () {
+                if (!context.mounted || !widget.isFromForgotPassword) return;
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -185,153 +207,103 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                     ),
                   ),
                 );
-              }
-              // if (widget.isFromForgotPassword) {
-              //   Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (_) => BlocProvider(
-              //         create: (_) => ResetPasswordCubit(
-              //           resetPasswordRepo: getIt<ResetPasswordRepo>(),
-              //         ),
-              //         child: NewPasswordScreen(
-              //           role: widget.role,
-              //           email: widget.email,
-              //           token: state.response.data ?? '',
-              //         ),
-              //       ),
-              //     ),
-              //   );
-              // }
+              });
             }
-            if (!context.mounted || !widget.isFromForgotPassword) return;
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => BlocProvider(
-                  create: (_) => ResetPasswordCubit(
-                    resetPasswordRepo: getIt<ResetPasswordRepo>(),
+
+            if (state is VerifyOtpFailure) {
+              debugPrint('VERIFY ERROR: "${state.failure.message}"');
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.failure.message)));
+            }
+
+            if (state is ResendOtpSuccess) {
+              for (var c in controllers) {
+                c.clear();
+              }
+              if (mounted) focusNodes[0].requestFocus();
+
+              AppToast.success(
+                context,
+                title: context.l10n.codeSent,
+                description: context.l10n.newVerificationCodeSent,
+              );
+            }
+
+            if (state is ResendOtpFailure) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.failure.message)));
+              AppToast.error(
+                context,
+                title: context.l10n.couldNotResendCode,
+                description: state.failure.message,
+              );
+            }
+          },
+          builder: (context, state) {
+            final isLoading =
+                state is VerifyOtpLoading || state is ResendOtpLoading;
+
+            return Scaffold(
+              backgroundColor: context.colorScheme.surface,
+              body: Column(
+                children: [
+                  GradiantContainer(
+                    mainText: context.l10n.verifyCode,
+                    optionalText: context.l10n.checkEmailForCode,
                   ),
-                  child: NewPasswordScreen(
-                    role: widget.role,
-                    email: widget.email,
-                    otp: otpCode,
+
+                  /////////////otp input fields
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: EdgeInsets.all(24.w),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(otpLength, (index) {
+                              return OtpDigitField(
+                                controller: controllers[index],
+                                focusNode: focusNodes[index],
+                                keyboardFocusNode: keyboardFocusNodes[index],
+                                enabled: !isLoading,
+                                onChanged: (value) =>
+                                    onOtpChanged(index, value),
+                                onBackspaceOnEmpty: () =>
+                                    onBackspaceOnEmptyField(index),
+                              );
+                            }),
+                          ),
+
+                          SizedBox(height: 20.w),
+
+                          TextButton(
+                            onPressed: isLoading
+                                ? null
+                                : () => handleResendCode(context),
+                            child: Text(context.l10n.resendCode),
+                          ),
+                          SizedBox(height: 30.w),
+
+                          ElevatedButton(
+                            onPressed: isLoading
+                                ? null
+                                : () => submitOtpVerification(context),
+                            child: isLoading
+                                ? const CircularProgressIndicator()
+                                : Text(context.l10n.verify),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             );
-          });
-        }
-
-        if (state is VerifyOtpFailure) {
-          debugPrint('VERIFY ERROR: "${state.failure.message}"');
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.failure.message)));
-        }
-
-        if (state is ResendOtpSuccess) {
-          startTimer();
-
-          AppToast.success(
-            context,
-            title: context.l10n.codeSent,
-            description: context.l10n.newVerificationCodeSent,
-          );
-        }
-
-        if (state is ResendOtpFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.failure.message)));
-          AppToast.error(
-            context,
-            title: context.l10n.couldNotResendCode,
-            description: state.failure.message,
-          );
-        }
-      },
-      builder: (context, state) {
-        final isLoading =
-            state is VerifyOtpLoading || state is ResendOtpLoading;
-
-        return Scaffold(
-          backgroundColor: context.colorScheme.surface,
-          body: Column(
-            children: [
-              GradiantContainer(
-                mainText: context.l10n.verifyCode,
-                optionalText: context.l10n.checkEmailForCode,
-              ),
-
-
-              /////////////otp input fields
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.all(24.w),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(otpLength, (index) {
-                          return Container(
-                            margin: EdgeInsets.symmetric(horizontal: 4.w),
-                            width: 45.w,
-                            height: 56.w,
-                            child: TextField(
-                              controller: controllers[index],
-                              focusNode: focusNodes[index],
-                              enabled: !isLoading,
-                              textAlign: TextAlign.center,
-                              maxLength: 1,
-                              keyboardType: TextInputType.number,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                              decoration: const InputDecoration(
-                                counterText: '',
-                                contentPadding: EdgeInsets.zero,
-                                border: OutlineInputBorder(),
-                              ),
-                              onChanged: (value) => onOtpChanged(index, value),
-                            ),
-                          );
-                        }),
-                      ),
-
-                      SizedBox(height: 20.w),
-
-                      // TextButton(
-                      //   onPressed: (resendCountdown == 0 && !isLoading)
-                      //       ? handleResendCode
-                      //       : null,
-                      //   child: Text(
-                      //     resendCountdown > 0
-                      //         ? context.l10n.resendIn(resendCountdown)
-                      //         : context.l10n.resendCode,
-                      //   ),
-                      // ),
-                      SizedBox(height: 30.w),
-
-                      ElevatedButton(
-                        onPressed: isLoading ? null : submitOtpVerification,
-                        child: isLoading
-                            ? const CircularProgressIndicator()
-                            : Text(context.l10n.verify),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+          },
+        ),
+      ),
     );
   }
 }
