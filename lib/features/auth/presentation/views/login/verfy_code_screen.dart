@@ -12,6 +12,8 @@ import 'package:edu_advisor/features/auth/data/register_role.dart';
 import 'package:edu_advisor/features/auth/data/repo/reset_password_repo.dart';
 import 'package:edu_advisor/features/auth/presentation/views/login/new_pass.dart';
 import 'package:edu_advisor/features/auth/presentation/views/widgets/otp_digit_field.dart';
+import 'package:edu_advisor/features/auth/presentation/views/login/advisor_login.dart';
+import 'package:edu_advisor/features/auth/presentation/views/login/student_login.dart';
 import 'package:edu_advisor/features/widgets/auth_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -191,21 +193,39 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
               );
 
               Future.delayed(const Duration(seconds: 1), () {
-                if (!context.mounted || !widget.isFromForgotPassword) return;
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => BlocProvider(
-                      create: (_) => ResetPasswordCubit(
-                        resetPasswordRepo: getIt<ResetPasswordRepo>(),
-                      ),
-                      child: NewPasswordScreen(
-                        role: widget.role,
-                        email: widget.email,
-                        otp: otpCode,
+                if (!context.mounted) return;
+
+                if (widget.isFromForgotPassword) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BlocProvider(
+                        create: (_) => ResetPasswordCubit(
+                          resetPasswordRepo: getIt<ResetPasswordRepo>(),
+                        ),
+                        child: NewPasswordScreen(
+                          role: widget.role,
+                          email: widget.email,
+                          otp: otpCode,
+                        ),
                       ),
                     ),
+                  );
+                  return;
+                }
+
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => widget.role == RegisterRole.advisor
+                        ? const AdvisorLoginScreen(
+                            registerRole: RegisterRole.advisor,
+                          )
+                        : const StudentLoginScreen(
+                            registerRole: RegisterRole.student,
+                          ),
                   ),
+                  (route) => false,
                 );
               });
             }
