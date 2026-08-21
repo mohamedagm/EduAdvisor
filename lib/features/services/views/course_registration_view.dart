@@ -12,7 +12,6 @@ import '../data/models/available_course_model.dart';
 import '../data/repo/course_registration_repo.dart';
 import '../manager/course_registration_cubit/course_registration_cubit.dart';
 import '../manager/course_registration_cubit/course_registration_state.dart';
-import 'widgets/course_status_card.dart';
 import 'widgets/empty_courses_card.dart';
 import 'widgets/selected_course_item.dart';
 import 'widgets/available_courses_sheet.dart';
@@ -29,12 +28,8 @@ class CourseRegistrationView extends StatefulWidget {
 
 class _CourseRegistrationViewState extends State<CourseRegistrationView> {
   final List<AvailableCourseModel> _selectedCourses = [];
-  final int _maxCredits = 18;
-  final int _minCredits = 12;
+  final int _maxCourses = 10;
   late final CourseRegistrationCubit _courseRegistrationCubit;
-
-  int get _currentCredits =>
-      _selectedCourses.fold(0, (sum, course) => sum + course.creditHours);
 
   @override
   void initState() {
@@ -84,8 +79,7 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
                           });
                           setModalState(() {});
                         } else {
-                          if (_currentCredits + course.creditHours <=
-                              _maxCredits) {
+                          if (_selectedCourses.length < _maxCourses) {
                             setState(() {
                               _selectedCourses.add(course);
                             });
@@ -129,8 +123,7 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
 
   @override
   Widget build(BuildContext context) {
-    final bool canSubmit =
-        _currentCredits >= _minCredits && _currentCredits <= _maxCredits;
+    final bool canSubmit = _selectedCourses.isNotEmpty;
 
     return BlocProvider.value(
       value: _courseRegistrationCubit,
@@ -166,11 +159,6 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CourseStatusCard(
-                    currentCredits: _currentCredits,
-                    minCredits: _minCredits,
-                    maxCredits: _maxCredits,
-                  ),
                   SizedBox(height: 24.w),
                   Wrap(
                     alignment: WrapAlignment.spaceBetween,

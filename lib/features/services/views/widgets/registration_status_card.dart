@@ -6,7 +6,7 @@ import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-enum RegistrationStatusType { pending, approved, rejected }
+enum RegistrationStatusType { pending, approved, rejected, completed }
 
 class RegistrationStatusCard extends StatelessWidget {
   const RegistrationStatusCard({super.key, required this.request});
@@ -43,6 +43,13 @@ class RegistrationStatusCard extends StatelessWidget {
         badgeBgColor = context.themeColors.dangerContainer;
         badgeText = context.l10n.rejected;
         icon = Icons.cancel_outlined;
+        break;
+      case RegistrationStatusType.completed:
+        borderColor = context.themeColors.success.withValues(alpha: 0.3);
+        color = context.themeColors.success;
+        badgeBgColor = context.themeColors.successContainer;
+        badgeText = context.l10n.completed;
+        icon = Icons.check_circle_outline;
         break;
     }
 
@@ -92,9 +99,7 @@ class RegistrationStatusCard extends StatelessWidget {
                 _InfoLine(
                   icon: Icons.calendar_month_outlined,
                   title: context.l10n.semester,
-                  value: request.semesterName.isNotEmpty
-                      ? request.semesterName
-                      : context.l10n.semester,
+                  value: request.displaySemester,
                 ),
                 SizedBox(height: 10.w),
                 _InfoLine(
@@ -180,7 +185,8 @@ class RegistrationStatusCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (request.notes?.isNotEmpty == true) ...[
+                if (status != RegistrationStatusType.pending &&
+                    request.notes?.isNotEmpty == true) ...[
                   SizedBox(height: 16.w),
                   Container(
                     width: double.infinity,
@@ -226,12 +232,14 @@ class RegistrationStatusCard extends StatelessWidget {
     );
   }
 
-  RegistrationStatusType _statusType(String status) {
-    switch (status.trim().toLowerCase()) {
-      case 'approved':
+  RegistrationStatusType _statusType(int status) {
+    switch (status) {
+      case 2:
         return RegistrationStatusType.approved;
-      case 'rejected':
+      case 3:
         return RegistrationStatusType.rejected;
+      case 4:
+        return RegistrationStatusType.completed;
       default:
         return RegistrationStatusType.pending;
     }

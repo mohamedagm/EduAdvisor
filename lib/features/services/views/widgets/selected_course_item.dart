@@ -74,9 +74,7 @@ class SelectedCourseItem extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            context.l10n.courseCredits(
-                              course.creditHours.toString(),
-                            ),
+                            context.l10n.courseLevel(course.level.toString()),
                             style: AppTextStyles.bodyInterRegular12.responsive
                                 .copyWith(
                                   color: context.themeColors.textPrimary,
@@ -84,31 +82,6 @@ class SelectedCourseItem extends StatelessWidget {
                                 ),
                           ),
                         ),
-                        if (course.isRetake) ...[
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10.w,
-                              vertical: 4.w,
-                            ),
-                            decoration: BoxDecoration(
-                              color: context.themeColors.infoContainer,
-                              borderRadius: BorderRadius.circular(8.r),
-                              border: Border.all(
-                                color: context.colorScheme.primary.withValues(
-                                  alpha: 0.2,
-                                ),
-                              ),
-                            ),
-                            child: Text(
-                              context.l10n.retake,
-                              style: AppTextStyles.bodyInterRegular12.responsive
-                                  .copyWith(
-                                    color: context.colorScheme.primary,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                          ),
-                        ],
                       ],
                     ),
                   ],
@@ -126,15 +99,7 @@ class SelectedCourseItem extends StatelessWidget {
               ),
             ],
           ),
-          if (course.isRetake) ...[
-            SizedBox(height: 12.w),
-            Text(
-              context.l10n.retakeCourseDescription,
-              style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
-                color: context.themeColors.textMuted,
-              ),
-            ),
-          ],
+
         ],
       ),
     );

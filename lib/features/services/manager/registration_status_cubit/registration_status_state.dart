@@ -18,17 +18,12 @@ class RegistrationStatusLoaded extends RegistrationStatusState {
 
   final List<RegistrationRequestModel> requests;
 
-  int get pendingCount => _countByStatus('pending');
-  int get approvedCount => _countByStatus('approved');
-  int get rejectedCount => _countByStatus('rejected');
+  int get pendingCount => _countByStatus(1);
+  int get approvedCount => _countByStatus(2);
+  int get rejectedCount => _countByStatus(3);
 
-  int _countByStatus(String status) {
-    return requests
-        .where(
-          (request) =>
-              request.status.trim().toLowerCase() == status.toLowerCase(),
-        )
-        .length;
+  int _countByStatus(int status) {
+    return requests.where((request) => request.status == status).length;
   }
 }
 
