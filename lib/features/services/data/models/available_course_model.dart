@@ -6,42 +6,65 @@ class AvailableCourseModel {
   const AvailableCourseModel({
     required this.semesterCourseId,
     required this.courseId,
+    required this.courseNameAr,
+    required this.courseNameEn,
     required this.courseCode,
-    required this.courseName,
-    required this.creditHours,
-    required this.isRetake,
+    required this.level,
+    required this.isOffered,
+    this.semesterId,
+    this.departmentId,
   });
 
   final String semesterCourseId;
   final String courseId;
+  final String courseNameAr;
+  final String courseNameEn;
   final String courseCode;
-  final String courseName;
-  final int creditHours;
-  final bool isRetake;
+  final int level;
+  final bool isOffered;
+  final String? semesterId;
+  final String? departmentId;
 
   factory AvailableCourseModel.fromJson(Map<String, dynamic> json) {
     return AvailableCourseModel(
-      semesterCourseId: json['semesterCourseId'] as String? ?? '',
+      semesterCourseId: json['id'] as String? ?? '',
       courseId: json['courseId'] as String? ?? '',
+      courseNameAr: json['courseNameAr'] as String? ?? '',
+      courseNameEn: json['courseNameEn'] as String? ?? '',
       courseCode: json['courseCode'] as String? ?? '',
-      courseName: json['courseName'] as String? ?? '',
-      creditHours: json['creditHours'] as int? ?? 0,
-      isRetake: json['isRetake'] as bool? ?? false,
+      level: json['level'] as int? ?? 0,
+      isOffered: json['isOffered'] as bool? ?? true,
+      semesterId: json['semesterId'] as String?,
+      departmentId: json['departmentId'] as String?,
     );
   }
 
+  String get courseName => _firstNonEmpty([courseNameEn, courseNameAr], 'Course');
+
+  String nameFor(Locale locale) => locale.languageCode.toLowerCase() == 'ar'
+      ? _firstNonEmpty([courseNameAr, courseNameEn], 'Course')
+      : courseName;
+
+  static String _firstNonEmpty(List<String> candidates, String fallback) {
+    for (final candidate in candidates) {
+      if (candidate.trim().isNotEmpty) return candidate;
+    }
+    return fallback;
+  }
+
   String get displayCode => courseCode.isNotEmpty ? courseCode : '--';
-  String get displayName => courseName.isNotEmpty ? courseName : 'Course';
+  String get displayName => courseName;
 
   IconData get icon {
     final code = courseCode.toUpperCase();
 
     if (code.startsWith('CS')) return Icons.computer;
-    if (code.startsWith('MATH') || code.startsWith('GEN')) {
+    if (code.startsWith('MATH') || code.startsWith('GEN') || code.startsWith('BS')) {
       return Icons.calculate;
     }
     if (code.startsWith('PH')) return Icons.science_outlined;
     if (code.startsWith('EE')) return Icons.electrical_services;
+    if (code.startsWith('IS')) return Icons.account_tree_outlined;
 
     return Icons.menu_book_outlined;
   }
@@ -59,7 +82,7 @@ class AvailableCourseModel {
   Gradient? get iconGradient {
     final code = courseCode.toUpperCase();
 
-    if (code.startsWith('GEN')) return AppGradients.primary;
+    if (code.startsWith('GEN') || code.startsWith('BS')) return AppGradients.primary;
 
     return null;
   }
