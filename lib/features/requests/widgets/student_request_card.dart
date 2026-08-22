@@ -13,12 +13,12 @@ class StudentRequestCard extends StatelessWidget {
   const StudentRequestCard({super.key, required this.request});
 
   Color _getStatusColor(BuildContext context) {
-    switch (request.status.toLowerCase()) {
-      case 'approved':
+    switch (request.status) {
+      case 2:
         return context.themeColors.success;
-      case 'pending':
+      case 1:
         return context.themeColors.warning;
-      case 'rejected':
+      case 3:
         return context.colorScheme.error;
       default:
         return context.themeColors.textMuted;
@@ -31,14 +31,10 @@ class StudentRequestCard extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final avatarSize = constraints.maxWidth * 0.12; // 👈 responsive
+        final avatarSize = constraints.maxWidth * 0.12;
 
         return GestureDetector(
           onTap: () {
-            // 📌 بنمرر نفس instance بتاع RequestsCubit الموجودة فوق
-            // (في AdvisorRequests) لشاشة التفاصيل، عشان لما نعمل approve
-            // هناك، اللستة الرئيسية تتحدث تلقائيًا من غير ما نعمل fetch
-            // تاني أو نرجع نضطر نـ refresh الشاشة يدويًا
             final requestsCubit = context.read<RequestsCubit>();
 
             Navigator.push(
@@ -61,7 +57,6 @@ class StudentRequestCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                /// 👤 Avatar (Responsive)
                 Container(
                   width: avatarSize,
                   height: avatarSize,
@@ -75,9 +70,7 @@ class StudentRequestCard extends StatelessWidget {
                     color: context.themeColors.textMuted,
                   ),
                 ),
-
                 SizedBox(width: avatarSize * 0.3),
-
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +87,7 @@ class StudentRequestCard extends StatelessWidget {
                       ),
                       SizedBox(height: 6.w),
                       Text(
-                        '${request.semester} • ${request.major}',
+                        '${request.semesterName} • ${request.totalCreditHours} Credit Hours',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.bodyInterRegular12.copyWith(
@@ -103,7 +96,6 @@ class StudentRequestCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 8.w),
-
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: avatarSize * 0.25,
@@ -114,7 +106,7 @@ class StudentRequestCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Text(
-                          request.status,
+                          request.statusName,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
                             fontSize: 12.sp,
                             color: statusColor,
@@ -125,7 +117,6 @@ class StudentRequestCard extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 Icon(
                   Icons.chevron_right,
                   size: avatarSize * 0.6,

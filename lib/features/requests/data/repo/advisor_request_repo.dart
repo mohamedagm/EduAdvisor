@@ -13,9 +13,8 @@ class AdvisorRequestRepo {
 
   final ApiConsumer _apiConsumer;
 
-  // لجلب طلاب المرشد الأكاديمي
   Future<Either<Failure, ({List<MyStudentModel> students, int totalCount})>>
-  getMyStudents({String? search, int? pageNumber, int? pageSize}) async {
+      getMyStudents({String? search, int? pageNumber, int? pageSize}) async {
     try {
       final Map<String, dynamic> queryParameters = {};
       if (search != null && search.isNotEmpty) {
@@ -45,25 +44,35 @@ class AdvisorRequestRepo {
     }
   }
 
-  // الطلبات الـ Pending
   Future<Either<Failure, ({List<StudentRequest> requests, int totalCount})>>
-  getAllRequests({int? pageNumber, int? pageSize}) async {
+      getRegistrations({
+    int? status, // 0 = Pending, 1 = Approved, 2 = Rejected
+    String? studentId,
+    String? semesterId,
+    int? pageNumber,
+    int? pageSize,
+  }) async {
     try {
       final Map<String, dynamic> queryParameters = {};
+      if (status != null) queryParameters['Status'] = status;
+      if (studentId != null && studentId.isNotEmpty) queryParameters['StudentId'] = studentId;
+      if (semesterId != null && semesterId.isNotEmpty) queryParameters['SemesterId'] = semesterId;
       if (pageNumber != null) queryParameters['PageNumber'] = pageNumber;
       if (pageSize != null) queryParameters['PageSize'] = pageSize;
 
       final response = await _apiConsumer.get(
-        ApiEndpoints.getPendingRequests,
+        ApiEndpoints.getRegistrations, //
         queryParameters: queryParameters,
       );
 
       final apiResponse = ApiResponseModel.fromJson(response);
       final dataMap = apiResponse.data as Map<String, dynamic>? ?? {};
       final List rawList = dataMap['items'] as List? ?? [];
+      
       final requestsList = rawList
           .map((e) => StudentRequest.fromJson(Map<String, dynamic>.from(e)))
           .toList();
+          
       final totalCount = dataMap['totalCount'] as int? ?? requestsList.length;
 
       return Right((requests: requestsList, totalCount: totalCount));
@@ -74,88 +83,55 @@ class AdvisorRequestRepo {
     }
   }
 
-  // 📌 جلب الطلبات المعالجة (Approved / Rejected) - تم حل مشكلة الـ List Casting هنا
+
   Future<Either<Failure, ({List<StudentRequest> requests, int totalCount})>>
-  getProcessedRequests({
-    String? status,
-    String? search,
-    int? pageNumber,
-    int? pageSize,
-  }) async {
-    try {
-      final Map<String, dynamic> queryParameters = {};
-      
-      if (status != null && status.isNotEmpty) queryParameters['status'] = status;
-      if (search != null && search.isNotEmpty) queryParameters['search'] = search;
-      if (pageNumber != null) queryParameters['PageNumber'] = pageNumber;
-      if (pageSize != null) queryParameters['PageSize'] = pageSize;
+      getPendingRequests({int? pageNumber, int? pageSize}) =>
+          getRegistrations(status: 0, pageNumber: pageNumber, pageSize: pageSize);
 
-      final response = await _apiConsumer.get(
-        ApiEndpoints.getProcessedRequests,
-        queryParameters: queryParameters,
-      );
+  Future<Either<Failure, ({List<StudentRequest> requests, int totalCount})>>
+      getApprovedRequests({int? pageNumber, int? pageSize}) =>
+          getRegistrations(status: 1, pageNumber: pageNumber, pageSize: pageSize);
 
-      final apiResponse = ApiResponseModel.fromJson(response);
-      
-      // هنا الـ data بتيجي List مباشرة طبقاً للـ Log الجديد
-      final List rawList = apiResponse.data as List? ?? [];
-      final requestsList = rawList
-          .map((e) => StudentRequest.fromJson(Map<String, dynamic>.from(e)))
-          .toList();
-      final totalCount = requestsList.length;
+  Future<Either<Failure, ({List<StudentRequest> requests, int totalCount})>>
+      getRejectedRequests({int? pageNumber, int? pageSize}) =>
+          getRegistrations(status: 2, pageNumber: pageNumber, pageSize: pageSize);
 
-      return Right((requests: requestsList, totalCount: totalCount));
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.apiResponse));
-    } catch (e) {
-      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
-    }
+  
+ //aprove student request
+
+Future<Either<Failure, Unit>> approveRequest(String id) async {
+  try {
+    await _apiConsumer.patch(
+      ApiEndpoints.approveRequest(id),
+      data: const {},
+    );
+    return const Right(unit);
+  } on ServerException catch (e) {
+    return Left(ServerFailure(e.apiResponse));
+  } catch (e) {
+    return Left(ServerFailure(ApiResponseModel.message(e.toString())));
   }
+}
 
-  Future<Either<Failure, ({List<StudentRequest> requests, int totalCount})>>
-  getPendingRequests({int? pageNumber, int? pageSize}) =>
-      getAllRequests(pageNumber: pageNumber, pageSize: pageSize);
-
-  Future<Either<Failure, ({List<StudentRequest> requests, int totalCount})>>
-  getApprovedRequests({int? pageNumber, int? pageSize, String? search}) =>
-      getProcessedRequests(status: 'Approved', search: search, pageNumber: pageNumber, pageSize: pageSize);
-
-  Future<Either<Failure, ({List<StudentRequest> requests, int totalCount})>>
-  getRejectedRequests({int? pageNumber, int? pageSize, String? search}) =>
-      getProcessedRequests(status: 'Rejected', search: search, pageNumber: pageNumber, pageSize: pageSize);
-
-  // قبول الطلب
-  Future<Either<Failure, Unit>> approveRequest(String id) async {
-    try {
-      await _apiConsumer.patch(ApiEndpoints.approveRequest(id), data: const {});
-      return const Right(unit);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.apiResponse));
-    } catch (e) {
-      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
-    }
+// Reject student request
+Future<Either<Failure, Unit>> rejectRequest(
+  String id, {
+  required String reason,
+}) async {
+  try {
+    await _apiConsumer.patch(
+      ApiEndpoints.rejectRequest(id),
+      data: {"reason": reason},
+    );
+    return const Right(unit);
+  } on ServerException catch (e) {
+    return Left(ServerFailure(e.apiResponse));
+  } catch (e) {
+    return Left(ServerFailure(ApiResponseModel.message(e.toString())));
   }
-
-  // رفض الطلب
-  Future<Either<Failure, Unit>> rejectRequest(
-    String id, {
-    String reason = "Rejected by Advisor",
-  }) async {
-    try {
-      await _apiConsumer.patch(
-        ApiEndpoints.rejectRequest(id),
-        data: {"Reason": reason},
-      );
-      return const Right(unit);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.apiResponse));
-    } catch (e) {
-      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
-    }
-  }
-
-  // تفاصيل الطلب
-  Future<Either<Failure, Map<String, dynamic>>> getRegistrationRequestDetails(
+}
+/////////////
+  Future<Either<Failure, StudentRequest>> getRegistrationRequestDetails(
     String id,
   ) async {
     try {
@@ -163,7 +139,9 @@ class AdvisorRequestRepo {
         ApiEndpoints.getRegistrationRequestDetails(id),
       );
       final apiResponse = ApiResponseModel.fromJson(response);
-      return Right(apiResponse.data as Map<String, dynamic>? ?? {});
+      final singleData = apiResponse.data as Map<String, dynamic>? ?? {};
+      
+      return Right(StudentRequest.fromJson(singleData));
     } on ServerException catch (e) {
       return Left(ServerFailure(e.apiResponse));
     } catch (e) {

@@ -1,5 +1,4 @@
 import 'package:edu_advisor/core/di/service_locator.dart';
-import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_cubit.dart';
 import 'package:edu_advisor/features/advisor_nav/manger/cubit/my_students_state.dart';
 import 'package:edu_advisor/features/requests/data/repo/advisor_request_repo.dart';
@@ -36,12 +35,13 @@ class _AdvisorRequestsView extends StatefulWidget {
 }
 
 class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
-  String _currentFilter = 'New Requests'; 
+  String _currentFilter = 'New Requests';
   final TextEditingController _searchController = TextEditingController();
 
-  String _getMappedStatus(String filter) {
-    if (filter == 'New Requests') return 'Pending';
-    return filter; 
+  int _getMappedStatus(String filter) {
+    if (filter == 'Approved') return 2;
+    if (filter == 'Rejected') return 3;
+    return 1; // New Requests / Pending
   }
 
   @override
@@ -62,57 +62,48 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
             },
           ),
 
-          // حقل البحث الذكي متوافق بالكامل مع السيرفر والـ Cubit الحالي
-          if (_currentFilter != 'New Requests')
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search by student name...',
-                  prefixIcon: const Icon(Icons.search),
-                  suffixIcon: _searchController.text.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.clear),
-                          onPressed: () {
-                            _searchController.clear();
-                            context.read<RequestsCubit>().searchRequests(
-                                  '',
-                                  currentStatus: _getMappedStatus(_currentFilter),
-                                );
-                            setState(() {});
-                          },
-                        )
-                      : null,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 0.w),
-                ),
-                onChanged: (value) {
-                  setState(() {}); 
-                  context.read<RequestsCubit>().searchRequests(
-                        value,
-                        currentStatus: _getMappedStatus(_currentFilter),
-                      );
-                },
-              ),
-            ),
-
+          // if (_currentFilter != 'New Requests')
+          //   Padding(
+          //     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+          //     child: TextField(
+          //       controller: _searchController,
+          //       decoration: InputDecoration(
+          //         hintText: 'Search by student name...',
+          //         prefixIcon: const Icon(Icons.search),
+          //         suffixIcon: _searchController.text.isNotEmpty
+          //             ? IconButton(
+          //                 icon: const Icon(Icons.clear),
+          //                 onPressed: () {
+          //                   _searchController.clear();
+          //                   context.read<RequestsCubit>().fetchRequests(
+          //                         status: _getMappedStatus(_currentFilter),
+          //                       );
+          //                   setState(() {});
+          //                 },
+          //               )
+          //             : null,
+          //         border: OutlineInputBorder(
+          //           borderRadius: BorderRadius.circular(12.r),
+          //         ),
+          //         contentPadding: EdgeInsets.symmetric(vertical: 0.w),
+          //       ),
+          //       onChanged: (value) {
+          //         setState(() {});
+          //         context.read<RequestsCubit>().fetchRequests(
+          //               status: _getMappedStatus(_currentFilter),
+          //             );
+          //       },
+          //     ),
+          //   ),
           RequestFilterBar(
             onFilterChanged: (newStatus) {
               setState(() {
                 _currentFilter = newStatus;
-                _searchController.clear(); 
+                _searchController.clear();
               });
 
-              if (newStatus == 'New Requests') {
-                context.read<RequestsCubit>().fetchPendingRequests();
-              } else if (newStatus == 'Approved') {
-                context.read<RequestsCubit>().fetchApprovedRequests();
-              } else if (newStatus == 'Rejected') {
-                context.read<RequestsCubit>().fetchRejectedRequests();
-              }
+              final mappedStatus = _getMappedStatus(newStatus);
+              context.read<RequestsCubit>().fetchRequests(status: mappedStatus);
             },
           ),
 
@@ -127,7 +118,9 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                   return Center(
                     child: Text(
                       'Error: ${state.failure.apiResponse.message}',
-                      style: TextStyle(color: context.colorScheme.error),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
                     ),
                   );
                 }
