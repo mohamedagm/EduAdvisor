@@ -10,29 +10,27 @@ class RequestsCubit extends Cubit<RequestsState> {
 
   final AdvisorRequestRepo _advisorRepo;
 
-  /// ميثود رئيسية موحدة لجلب البيانات من الـ API المناسب بناءً على الـ status والـ search
-  Future<void> fetchRequests({String? status, String? search, int page = 1}) async {
+  // جلب البيانات بالاعتماد على Status الأرقام (0=Pending, 1=Approved, 2=Rejected)
+  Future<void> fetchRequests({
+    int? status = 1,
+    int page = 1,
+  }) async {
     emit(const RequestsLoading());
 
-    // لو الحالة تحت المراجعة نطلب من الـ API القديم، ولو مقبولة أو مرفوضة نطلب من الـ API الجديد للـ Processed
-    final result = (status == 'Pending' || status == null)
-        ? await _advisorRepo.getAllRequests(pageNumber: page, pageSize: 50)
-        : await _advisorRepo.getProcessedRequests(
-            status: status,
-            search: search,
-            pageNumber: page,
-            pageSize: 50,
-          );
+    final result = await _advisorRepo.getRegistrations(
+      status: status,
+      pageNumber: page,
+      pageSize: 50,
+    );
 
     result.fold(
       (failure) => emit(RequestsFailure(failure)),
       (data) {
-        // نضع البيانات في الـ List المقابلة للحالة المطلوبة للحفاظ على استقرار الـ UI القديم
         emit(
           RequestsSuccess(
-            pendingRequests: (status == 'Pending' || status == null) ? data.requests : [],
-            approvedRequests: status == 'Approved' ? data.requests : [],
-            rejectedRequests: status == 'Rejected' ? data.requests : [],
+            pendingRequests: status == 1 ? data.requests : [],
+            approvedRequests: status == 2 ? data.requests : [],
+            rejectedRequests: status == 3 ? data.requests : [],
             totalCount: data.totalCount,
           ),
         );
@@ -40,25 +38,12 @@ class RequestsCubit extends Cubit<RequestsState> {
     );
   }
 
-  // استدعاءات مخصصة وسهلة لكل تابة أو شاشة في الـ UI
-  Future<void> fetchPendingRequests() => fetchRequests(status: 'Pending');
-  
-  Future<void> fetchApprovedRequests({String? search}) => 
-      fetchRequests(status: 'Approved', search: search);
-      
-  Future<void> fetchRejectedRequests({String? search}) => 
-      fetchRequests(status: 'Rejected', search: search);
+  Future<void> fetchPendingRequests() => fetchRequests(status: 1);
 
-  /// ميثود لتنفيذ عملية البحث (Search) من جهة السيرفر
-  Future<void> searchRequests(String query, {required String currentStatus}) async {
-    if (query.trim().isEmpty) {
-      await fetchRequests(status: currentStatus);
-    } else {
-      await fetchRequests(status: currentStatus, search: query);
-    }
-  }
+  Future<void> fetchApprovedRequests() => fetchRequests(status: 2);
 
-  /// ميثود الموافقة على طلب
+  Future<void> fetchRejectedRequests() => fetchRequests(status: 3);
+
   Future<Failure?> approveRequest(String id) async {
     final result = await _advisorRepo.approveRequest(id);
     final failure = result.fold((f) => f, (_) => null);
@@ -68,12 +53,10 @@ class RequestsCubit extends Cubit<RequestsState> {
       return failure;
     }
 
-    // عمل تحديث تلقائي للقائمة بعد الموافقة الناجحة لنقل الطلب
-    await fetchRequests(status: 'Pending');
+    await fetchPendingRequests();
     return null;
   }
 
-  /// ميثود رفض طلب مع تقديم سبب
   Future<Failure?> rejectRequest(
     String id, {
     String reason = "Rejected by Advisor",
@@ -86,8 +69,7 @@ class RequestsCubit extends Cubit<RequestsState> {
       return failure;
     }
 
-    // عمل تحديث تلقائي للقائمة بعد الرفض
-    await fetchRequests(status: 'Pending');
+    await fetchPendingRequests();
     return null;
   }
 }

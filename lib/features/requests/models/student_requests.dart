@@ -1,131 +1,137 @@
+class EnrollmentModel {
+  final String id;
+  final String semesterCourseId;
+  final String courseCode;
+  final String courseName;
+  final int creditHours;
+  final double? coursePercentage;
+  final double? courseGpa;
+  final int status;
+  final String? rejectionReason;
+
+  EnrollmentModel({
+    required this.id,
+    required this.semesterCourseId,
+    required this.courseCode,
+    required this.courseName,
+    required this.creditHours,
+    this.coursePercentage,
+    this.courseGpa,
+    required this.status,
+    this.rejectionReason,
+  });
+
+  factory EnrollmentModel.fromJson(Map<String, dynamic> json) {
+    return EnrollmentModel(
+      id: json['id']?.toString() ?? '',
+      semesterCourseId: json['semesterCourseId']?.toString() ?? '',
+      courseCode: json['courseCode']?.toString() ?? '',
+      courseName: json['courseName']?.toString() ?? '',
+      creditHours: json['creditHours'] is int
+          ? json['creditHours']
+          : int.tryParse('${json['creditHours']}') ?? 0,
+      coursePercentage: (json['coursePercentage'] as num?)?.toDouble(),
+      courseGpa: (json['courseGpa'] as num?)?.toDouble(),
+      status: json['status'] is int
+          ? json['status']
+          : int.tryParse('${json['status']}') ?? 0,
+      rejectionReason: json['rejectionReason'] as String?,
+    );
+  }
+}
+
 class StudentRequest {
-  final String id; // registrationRequestId - id الطلب نفسه (يُستخدم مع approve/{id})
-  final String studentId; // id الطالب نفسه
-  final String studentName;
+  final String id;
+  final String studentId;
   final String studentCode;
-  final String? studentPhotoUrl;
-  final String department;
-  final int academicYear;
-  final int coursesCount;
-  String status;
+  final String studentName;
+  final String semesterId;
+  final String semesterName;
+  final int status; // int: 0 = Pending, 1 = Approved, 2 = Rejected
+  final String? notes;
   final DateTime submittedAt;
+  final int totalCreditHours;
+  final List<EnrollmentModel> enrollments;
 
   StudentRequest({
     required this.id,
     required this.studentId,
-    required this.studentName,
     required this.studentCode,
-    this.studentPhotoUrl,
-    required this.department,
-    required this.academicYear,
-    required this.coursesCount,
+    required this.studentName,
+    required this.semesterId,
+    required this.semesterName,
     required this.status,
+    this.notes,
     required this.submittedAt,
+    required this.totalCreditHours,
+    required this.enrollments,
   });
 
-  // 📌 الحقول دي مطابقة بالظبط لشكل الـ response الحقيقي من
-  // GET /api/v1/Advisors/pending:
-  // registrationRequestId, studentId, studentName, studentCode,
-  // studentPhotoUrl, departmentName, academicYear, submittedAt,
-  // coursesCount, status
   factory StudentRequest.fromJson(Map<String, dynamic> json) {
-    final rawId = json['registrationRequestId'] ??
-        json['requestId'] ??
-        json['id'] ??
-        json['registrationRequestID'] ??
-        '';
-    final rawStudentId = json['studentId'] ??
-        json['studentID'] ??
-        json['student_id'] ??
-        '';
-    final rawStatus = json['status'] ?? json['requestStatus'] ?? 'Pending';
-
     return StudentRequest(
-      id: rawId.toString(),
-      studentId: rawStudentId.toString(),
-      studentName: json['studentName'] ?? '',
+      id: json['id']?.toString() ?? '',
+      studentId: json['studentId']?.toString() ?? '',
       studentCode: (json['studentCode'] ?? '').toString(),
-      studentPhotoUrl: json['studentPhotoUrl'] as String?,
-      department: json['departmentName'] ?? '',
-      academicYear: json['academicYear'] is int
-          ? json['academicYear']
-          : int.tryParse('${json['academicYear']}') ?? 1,
-      coursesCount: json['coursesCount'] is int
-          ? json['coursesCount']
-          : int.tryParse('${json['coursesCount']}') ?? 0,
-      status: rawStatus.toString(),
-      submittedAt:
-          DateTime.tryParse(json['submittedAt']?.toString() ?? '') ??
-              DateTime.now(),
+      studentName: json['studentName']?.toString() ?? '',
+      semesterId: json['semesterId']?.toString() ?? '',
+      semesterName: json['semesterName']?.toString() ?? '',
+      status: json['status'] is int
+          ? json['status']
+          : int.tryParse('${json['status']}') ?? 0,
+      notes: json['notes'] as String?,
+      submittedAt: DateTime.tryParse(json['submittedAt']?.toString() ?? '') ??
+          DateTime.now(),
+      totalCreditHours: json['totalCreditHours'] is int
+          ? json['totalCreditHours']
+          : int.tryParse('${json['totalCreditHours']}') ?? 0,
+      enrollments: (json['enrollments'] as List<dynamic>?)
+              ?.map((e) => EnrollmentModel.fromJson(Map<String, dynamic>.from(e)))
+              .toList() ??
+          [],
     );
+  }
+
+
+  int get coursesCount => enrollments.length;
+  String get semester => semesterName;
+  
+  String get statusName {
+    switch (status) {
+      case 2:
+        return 'Approved';
+      case 3:
+        return 'Rejected';
+      case 1:
+      default:
+        return 'Pending';
+    }
   }
 
   StudentRequest copyWith({
     String? id,
     String? studentId,
-    String? studentName,
     String? studentCode,
-    String? studentPhotoUrl,
-    String? department,
-    int? academicYear,
-    int? coursesCount,
-    String? status,
+    String? studentName,
+    String? semesterId,
+    String? semesterName,
+    int? status,
+    String? notes,
     DateTime? submittedAt,
+    int? totalCreditHours,
+    List<EnrollmentModel>? enrollments,
   }) {
     return StudentRequest(
       id: id ?? this.id,
       studentId: studentId ?? this.studentId,
-      studentName: studentName ?? this.studentName,
       studentCode: studentCode ?? this.studentCode,
-      studentPhotoUrl: studentPhotoUrl ?? this.studentPhotoUrl,
-      department: department ?? this.department,
-      academicYear: academicYear ?? this.academicYear,
-      coursesCount: coursesCount ?? this.coursesCount,
+      studentName: studentName ?? this.studentName,
+      semesterId: semesterId ?? this.semesterId,
+      semesterName: semesterName ?? this.semesterName,
       status: status ?? this.status,
+      notes: notes ?? this.notes,
       submittedAt: submittedAt ?? this.submittedAt,
+      totalCreditHours: totalCreditHours ?? this.totalCreditHours,
+      enrollments: enrollments ?? this.enrollments,
     );
   }
-
-  // 📌 خصائص مساعدة عشان نحافظ على توافق الـ UI الحالي اللي بيستخدم
-  // studentName / semester / major (الكروت والـ widgets القديمة)
-  String get semester => 'Year $academicYear';
-  String get major => department;
 }
-
-////////////////////////
-
-final List<StudentRequest> dummyRequests = [
-  StudentRequest(
-    id: '1',
-    studentId: 's1',
-    studentName: 'Aliaa Mohamed',
-    studentCode: '2023070',
-    department: 'Information System',
-    academicYear: 4,
-    coursesCount: 3,
-    status: 'Pending',
-    submittedAt: DateTime.now(),
-  ),
-  StudentRequest(
-    id: '2',
-    studentId: 's2',
-    studentName: 'Ahmed Hassan',
-    studentCode: '2023071',
-    department: 'Computer Science',
-    academicYear: 3,
-    coursesCount: 4,
-    status: 'Approved',
-    submittedAt: DateTime.now(),
-  ),
-  StudentRequest(
-    id: '3',
-    studentId: 's3',
-    studentName: 'Nour Ibrahim',
-    studentCode: '2023072',
-    department: 'Software Engineering',
-    academicYear: 5,
-    coursesCount: 2,
-    status: 'Rejected',
-    submittedAt: DateTime.now(),
-  ),
-];

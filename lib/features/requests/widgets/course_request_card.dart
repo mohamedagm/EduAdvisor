@@ -87,6 +87,8 @@ class CourseRequestCard extends StatelessWidget {
                   fontSize: 13,
                 ),
               ),
+
+              /////////////////////pre-req warning
               if (hasWarning) ...[
                 SizedBox(width: 16.w),
                 Icon(

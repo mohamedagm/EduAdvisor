@@ -164,7 +164,7 @@ class _AdvisorHeaderContent extends StatelessWidget {
                 children: [
                   statCard(
                     icon: Icons.people_outline,
-                    value: user!.studentsCount.toString(),
+                  value: user?.studentsCount.toString() ?? '--',
                     // value: studentCount.toString(),
                     label: 'Students',
                   ),
