@@ -95,7 +95,6 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
           //       },
           //     ),
           //   ),
-
           RequestFilterBar(
             onFilterChanged: (newStatus) {
               setState(() {
@@ -103,8 +102,8 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                 _searchController.clear();
               });
 
-             final mappedStatus = _getMappedStatus(newStatus);
-    context.read<RequestsCubit>().fetchRequests(status: mappedStatus);
+              final mappedStatus = _getMappedStatus(newStatus);
+              context.read<RequestsCubit>().fetchRequests(status: mappedStatus);
             },
           ),
 
@@ -119,7 +118,9 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                   return Center(
                     child: Text(
                       'Error: ${state.failure.apiResponse.message}',
-                      style: TextStyle(color: Theme.of(context).colorScheme.error),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
                     ),
                   );
                 }
