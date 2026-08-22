@@ -19,7 +19,7 @@ class AdvisorRequestRepo {
     try {
       final Map<String, dynamic> queryParameters = {};
       if (search != null && search.isNotEmpty) {
-        queryParameters['Search'] = search;
+        queryParameters['SearchTerm'] = search;
       }
       if (pageNumber != null) queryParameters['PageNumber'] = pageNumber;
       if (pageSize != null) queryParameters['PageSize'] = pageSize;

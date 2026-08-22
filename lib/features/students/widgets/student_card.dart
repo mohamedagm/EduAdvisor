@@ -11,6 +11,8 @@ class StudentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.w),
       decoration: BoxDecoration(
@@ -22,13 +24,14 @@ class StudentCard extends StatelessWidget {
         children: [
           Expanded(
             child: StudentInfo(
-              fullName: student.name,
-              email: student.email,
-              imageUrl: student.imageUrl,
+              fullName: student.nameFor(locale),
+              studentCode: student.studentCode,
             ),
           ),
-
-          StudentMeta(gpa: student.gpa, semester: student.semester),
+          StudentMeta(
+            gpa: student.overAllGPA,
+            academicYear: student.academicYear,
+          ),
         ],
       ),
     );

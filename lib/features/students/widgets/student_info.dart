@@ -5,14 +5,12 @@ import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class StudentInfo extends StatelessWidget {
   final String fullName;
-  final String email;
-  final String? imageUrl;
+  final String studentCode;
 
   const StudentInfo({
     super.key,
     required this.fullName,
-    required this.email,
-    this.imageUrl,
+    required this.studentCode,
   });
 
   String get _initials {
@@ -26,25 +24,19 @@ class StudentInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasImage = imageUrl != null && imageUrl!.trim().isNotEmpty;
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         CircleAvatar(
           radius: 22.r,
           backgroundColor: context.themeColors.mutedSurface,
-          backgroundImage: hasImage ? NetworkImage(imageUrl!) : null,
-          onBackgroundImageError: hasImage ? (_, __) {} : null,
-          child: !hasImage
-              ? Text(
-                  _initials,
-                  style: AppTextStyles.interRegular16.copyWith(
-                    fontSize: 16.sp,
-                    color: context.themeColors.textPrimary,
-                  ),
-                )
-              : null,
+          child: Text(
+            _initials,
+            style: AppTextStyles.interRegular16.copyWith(
+              fontSize: 16.sp,
+              color: context.themeColors.textPrimary,
+            ),
+          ),
         ),
         SizedBox(width: 12.w),
         Expanded(
@@ -60,7 +52,7 @@ class StudentInfo extends StatelessWidget {
               ),
               SizedBox(height: 3.w),
               Text(
-                email,
+                studentCode,
                 style: AppTextStyles.bodyInterMedium14.copyWith(
                   fontSize: 14.sp,
                   color: context.themeColors.textSecondary,
@@ -74,12 +66,11 @@ class StudentInfo extends StatelessWidget {
   }
 }
 
-//Student Meta (GPA and Semester)
 class StudentMeta extends StatelessWidget {
   final double gpa;
-  final int semester;
+  final int academicYear;
 
-  const StudentMeta({super.key, required this.gpa, required this.semester});
+  const StudentMeta({super.key, required this.gpa, required this.academicYear});
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +86,7 @@ class StudentMeta extends StatelessWidget {
         ),
         SizedBox(height: 4.w),
         Text(
-          'Semester $semester',
+          'Year $academicYear',
           style: AppTextStyles.bodyInterMedium14.copyWith(
             fontSize: 14.sp,
             color: context.themeColors.textMuted,
