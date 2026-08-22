@@ -97,35 +97,39 @@ class AdvisorRequestRepo {
           getRegistrations(status: 2, pageNumber: pageNumber, pageSize: pageSize);
 
   
-  Future<Either<Failure, Unit>> approveRequest(String id) async {
-    try {
-      await _apiConsumer.patch(ApiEndpoints.approveRequest(id), data: const {});
-      return const Right(unit);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.apiResponse));
-    } catch (e) {
-      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
-    }
+ //aprove student request
+
+Future<Either<Failure, Unit>> approveRequest(String id) async {
+  try {
+    await _apiConsumer.patch(
+      ApiEndpoints.approveRequest(id),
+      data: const {},
+    );
+    return const Right(unit);
+  } on ServerException catch (e) {
+    return Left(ServerFailure(e.apiResponse));
+  } catch (e) {
+    return Left(ServerFailure(ApiResponseModel.message(e.toString())));
   }
+}
 
-
-  Future<Either<Failure, Unit>> rejectRequest(
-    String id, {
-    String reason = "Rejected by Advisor",
-  }) async {
-    try {
-      await _apiConsumer.patch(
-        ApiEndpoints.rejectRequest(id),
-        data: {"Reason": reason},
-      );
-      return const Right(unit);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.apiResponse));
-    } catch (e) {
-      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
-    }
+// Reject student request
+Future<Either<Failure, Unit>> rejectRequest(
+  String id, {
+  required String reason,
+}) async {
+  try {
+    await _apiConsumer.patch(
+      ApiEndpoints.rejectRequest(id),
+      data: {"reason": reason},
+    );
+    return const Right(unit);
+  } on ServerException catch (e) {
+    return Left(ServerFailure(e.apiResponse));
+  } catch (e) {
+    return Left(ServerFailure(ApiResponseModel.message(e.toString())));
   }
-
+}
 /////////////
   Future<Either<Failure, StudentRequest>> getRegistrationRequestDetails(
     String id,

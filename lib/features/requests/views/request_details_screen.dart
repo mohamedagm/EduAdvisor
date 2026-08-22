@@ -90,7 +90,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isPending = widget.request.status == 0;
+    final bool isPending = widget.request.status == 1;
 
     return Scaffold(
       backgroundColor: context.colorScheme.surface,
