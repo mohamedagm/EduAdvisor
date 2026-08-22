@@ -90,15 +90,14 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String currentStatus = widget.request.status.toLowerCase();
-    final bool isPending = currentStatus == 'pending';
+    final bool isPending = widget.request.status == 0;
 
     return Scaffold(
       backgroundColor: context.colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
-            AdvisorHeader(studentCount: 0),
+            const AdvisorHeader(studentCount: 0),
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(16.w),
@@ -108,29 +107,29 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                     StudentInfoCard(
                       studentName: widget.request.studentName,
                       studentCode: widget.request.studentCode,
-                      department: widget.request.department,
-                      academicYear: widget.request.academicYear,
-                      photoUrl: widget.request.studentPhotoUrl,
+                      department: widget.request.semesterName,
+                      academicYear: widget.request.totalCreditHours,
+                      photoUrl: null,
                     ),
                     SizedBox(height: 24.w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Spring 2025 Requests",
+                          "${widget.request.semesterName} Requests",
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          "STATUS: ${widget.request.status.toUpperCase()}",
+                          "STATUS: ${widget.request.statusName.toUpperCase()}",
                           style: TextStyle(
                             color: isPending
                                 ? context.themeColors.warning
-                                : (widget.request.status == 'approved'
-                                      ? context.themeColors.success
-                                      : context.colorScheme.error),
+                                : (widget.request.status == 2
+                                    ? context.themeColors.success
+                                    : context.colorScheme.error),
                             fontWeight: FontWeight.bold,
                             fontSize: 12.sp,
                           ),
@@ -138,24 +137,19 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                       ],
                     ),
                     SizedBox(height: 16.w),
+                    
+                ///////////////////new
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: widget.request.coursesCount == 0
-                          ? 3
-                          : widget.request.coursesCount,
+                      itemCount: widget.request.enrollments.length,
                       itemBuilder: (context, index) {
+                        final enrollment = widget.request.enrollments[index];
                         return CourseRequestCard(
-                          code: index == 0
-                              ? "MATH 301"
-                              : (index == 1 ? "CS 310" : "IS 312"),
-                          name: index == 0
-                              ? "Math 3"
-                              : (index == 1
-                                  ? "Operating Systems"
-                                  : "Database System"),
-                          credits: index == 1 ? 4 : 3,
-                          date: "Feb 18, 2026",
+                          code: enrollment.courseCode,
+                          name: enrollment.courseName,
+                          credits: enrollment.creditHours,
+                          date: "${widget.request.submittedAt.day}/${widget.request.submittedAt.month}/${widget.request.submittedAt.year}",
                         );
                       },
                     ),

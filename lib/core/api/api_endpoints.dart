@@ -28,7 +28,7 @@ class ApiEndpoints {
 
   static const String getPendingRequests = '/api/v1/Advisors/pending';
   static const String getApprovedRequests = '/api/v1/Advisors/approved';
-
+static const String   getRegistrations= '/api/Registrations';
   // 📌 الـ Endpoint الجديدة المضبوطة بالـ Swagger لمنع الـ 404
   static const String getProcessedRequests =
       '/api/v1/Advisors/RegistrationRequests/Processed';

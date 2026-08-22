@@ -16,9 +16,7 @@ class RequestsLoading extends RequestsState {
 class RequestsSuccess extends RequestsState {
   final List<StudentRequest> pendingRequests;
   final List<StudentRequest> approvedRequests;
-  // ⚠️ مفيش endpoint بترجع لستة الـ rejected من السيرفر، فدي بتتسجل
-  // محليًا بس (في الذاكرة) أول ما تعملي reject لطلب من جوه التطبيق،
-  // وبتتصفر مع أي Hot Restart أو إعادة فتح للتطبيق
+ 
   final List<StudentRequest> rejectedRequests;
   final int totalCount;
 
