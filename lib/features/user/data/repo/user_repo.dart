@@ -5,6 +5,7 @@ import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
 import 'package:edu_advisor/core/services/user_cache_service.dart';
+import 'package:edu_advisor/features/user/data/models/change_password_request_model.dart';
 import 'package:edu_advisor/features/user/data/models/current_user_model.dart';
 
 class UserRepo {
@@ -42,6 +43,23 @@ class UserRepo {
       await _userCacheService.saveCurrentUser(userData);
 
       return Right(CurrentUserModel.fromJson(userData));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.apiResponse));
+    } catch (e) {
+      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
+    }
+  }
+
+  Future<Either<Failure, ApiResponseModel>> changePassword(
+    ChangePasswordRequestModel request,
+  ) async {
+    try {
+      final response = await _apiConsumer.post(
+        ApiEndpoints.changePassword,
+        data: request.toJson(),
+      );
+
+      return Right(ApiResponseModel.fromJson(response));
     } on ServerException catch (e) {
       return Left(ServerFailure(e.apiResponse));
     } catch (e) {

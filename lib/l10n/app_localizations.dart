@@ -398,6 +398,18 @@ abstract class AppLocalizations {
   /// **'New password'**
   String get newPassword;
 
+  /// No description provided for @currentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get currentPassword;
+
+  /// No description provided for @updatePasswordBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Password'**
+  String get updatePasswordBtn;
+
   /// No description provided for @strongPasswordHelp.
   ///
   /// In en, this message translates to:

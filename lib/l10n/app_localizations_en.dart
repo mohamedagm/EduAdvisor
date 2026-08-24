@@ -166,6 +166,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newPassword => 'New password';
 
   @override
+  String get currentPassword => 'Current password';
+
+  @override
+  String get updatePasswordBtn => 'Update Password';
+
+  @override
   String get strongPasswordHelp => 'Create a strong password for your account';
 
   @override

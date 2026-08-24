@@ -50,6 +50,8 @@
   "passwordUpdated": "تم تحديث كلمة المرور",
   "passwordResetFailed": "فشل إعادة تعيين كلمة المرور",
   "newPassword": "كلمة المرور الجديدة",
+  "currentPassword": "كلمة المرور الحالية",
+  "updatePasswordBtn": "تحديث كلمة المرور",
   "strongPasswordHelp": "أنشئ كلمة مرور قوية لحسابك",
   "enterNewPassword": "أدخل كلمة المرور الجديدة",
   "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",

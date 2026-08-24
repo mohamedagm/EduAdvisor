@@ -72,6 +72,8 @@
   "passwordUpdated": "Password updated",
   "passwordResetFailed": "Password reset failed",
   "newPassword": "New password",
+  "currentPassword": "Current password",
+  "updatePasswordBtn": "Update Password",
   "strongPasswordHelp": "Create a strong password for your account",
   "enterNewPassword": "Enter your new password",
   "confirmPasswordRequired": "Please confirm your password",

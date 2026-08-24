@@ -166,6 +166,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get newPassword => 'كلمة المرور الجديدة';
 
   @override
+  String get currentPassword => 'كلمة المرور الحالية';
+
+  @override
+  String get updatePasswordBtn => 'تحديث كلمة المرور';
+
+  @override
   String get strongPasswordHelp => 'أنشئ كلمة مرور قوية لحسابك';
 
   @override

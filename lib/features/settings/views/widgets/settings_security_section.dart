@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/utils/app_screen_util.dart';
+import 'package:edu_advisor/features/settings/views/widgets/change_password_sheet.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_info_row.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,10 @@ class SettingsSecuritySection extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16.w),
-          SettingsInfoRow(title: context.l10n.changePassword),
+          GestureDetector(
+            onTap: () => ChangePasswordSheet.show(context),
+            child: SettingsInfoRow(title: context.l10n.changePassword),
+          ),
         ],
       ),
     );

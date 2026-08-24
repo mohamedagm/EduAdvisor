@@ -36,8 +36,7 @@ class _ProfileCoursesSectionBody extends StatefulWidget {
       _ProfileCoursesSectionBodyState();
 }
 
-class _ProfileCoursesSectionBodyState
-    extends State<_ProfileCoursesSectionBody>
+class _ProfileCoursesSectionBodyState extends State<_ProfileCoursesSectionBody>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 

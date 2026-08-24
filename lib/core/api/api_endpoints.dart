@@ -9,7 +9,7 @@ class ApiEndpoints {
   static const String forgotPassword = '/api/Auth/forgot-password';
   static const String verifyResetOtp = '/api/Auth/verify-reset-otp';
   static const String resetPassword = '/api/Auth/reset-password';
-  static const String changePassword = '/api/Auth/change-password';
+  static const String changePassword = '/api/Account/change-password';
   static const String registerStudent = '/api/Auth/register/student';
   static const String registerAdvisor = '/api/Auth/register/advisor';
   static const String myPermissions = '/api/Auth/me/permissions';
