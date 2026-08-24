@@ -522,6 +522,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get remaining => 'Remaining';
 
   @override
+  String get allFilter => 'All';
+
+  @override
+  String get passed => 'Passed';
+
+  @override
+  String get failed => 'Failed';
+
+  @override
   String get noProfileCourses => 'No courses here yet.';
 
   @override

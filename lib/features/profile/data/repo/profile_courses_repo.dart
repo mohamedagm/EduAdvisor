@@ -4,7 +4,7 @@ import 'package:edu_advisor/core/api/api_endpoints.dart';
 import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
-import 'package:edu_advisor/features/profile/data/models/student_courses_model.dart';
+import 'package:edu_advisor/features/profile/data/models/student_enrollment_model.dart';
 
 class ProfileCoursesRepo {
   const ProfileCoursesRepo({required ApiConsumer apiConsumer})
@@ -12,13 +12,31 @@ class ProfileCoursesRepo {
 
   final ApiConsumer _apiConsumer;
 
-  Future<Either<Failure, StudentCoursesModel>> getMyCourses() async {
+  Future<Either<Failure, List<StudentEnrollmentModel>>> getEnrollments({
+    bool? isPassed,
+  }) async {
     try {
-      final response = await _apiConsumer.get(ApiEndpoints.myCourses);
-      final apiResponse = ApiResponseModel.fromJson(response);
-      final data = Map<String, dynamic>.from(apiResponse.data as Map? ?? {});
+      final Map<String, dynamic> queryParameters = {};
+      if (isPassed != null) {
+        queryParameters['isPassed'] = isPassed;
+      }
 
-      return Right(StudentCoursesModel.fromJson(data));
+      final response = await _apiConsumer.get(
+        ApiEndpoints.studentEnrollments,
+        queryParameters: queryParameters,
+      );
+      final apiResponse = ApiResponseModel.fromJson(response);
+      final data = apiResponse.data as List? ?? [];
+
+      return Right(
+        data
+            .map(
+              (e) => StudentEnrollmentModel.fromJson(
+                Map<String, dynamic>.from(e as Map? ?? {}),
+              ),
+            )
+            .toList(),
+      );
     } on ServerException catch (e) {
       return Left(ServerFailure(e.apiResponse));
     } catch (e) {

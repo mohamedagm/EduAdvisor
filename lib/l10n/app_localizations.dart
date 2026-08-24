@@ -1040,6 +1040,24 @@ abstract class AppLocalizations {
   /// **'Remaining'**
   String get remaining;
 
+  /// No description provided for @allFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allFilter;
+
+  /// No description provided for @passed.
+  ///
+  /// In en, this message translates to:
+  /// **'Passed'**
+  String get passed;
+
+  /// No description provided for @failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get failed;
+
   /// No description provided for @noProfileCourses.
   ///
   /// In en, this message translates to:

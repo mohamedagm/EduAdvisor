@@ -523,6 +523,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get remaining => 'متبقية';
 
   @override
+  String get allFilter => 'الكل';
+
+  @override
+  String get passed => 'ناجح';
+
+  @override
+  String get failed => 'راسب';
+
+  @override
   String get noProfileCourses => 'لا توجد مقررات هنا بعد.';
 
   @override

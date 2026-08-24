@@ -1,6 +1,5 @@
 import 'package:edu_advisor/core/errors/failures.dart';
-import 'package:edu_advisor/features/profile/data/models/student_course_model.dart';
-import 'package:edu_advisor/features/profile/data/models/student_courses_model.dart';
+import 'package:edu_advisor/features/profile/data/models/student_enrollment_model.dart';
 
 abstract class ProfileCoursesState {
   const ProfileCoursesState();
@@ -15,20 +14,24 @@ class ProfileCoursesLoading extends ProfileCoursesState {
 }
 
 class ProfileCoursesLoaded extends ProfileCoursesState {
-  const ProfileCoursesLoaded(this.courses);
+  const ProfileCoursesLoaded({
+    required this.all,
+    required this.passed,
+    required this.failed,
+  });
 
-  final StudentCoursesModel courses;
+  final List<StudentEnrollmentModel> all;
+  final List<StudentEnrollmentModel> passed;
+  final List<StudentEnrollmentModel> failed;
 
-  List<StudentCourseModel> coursesForTab(int index) {
+  List<StudentEnrollmentModel> coursesForTab(int index) {
     switch (index) {
-      case 0:
-        return courses.completed;
       case 1:
-        return courses.inProgress;
+        return passed;
       case 2:
-        return courses.remaining;
+        return failed;
       default:
-        return courses.remaining;
+        return all;
     }
   }
 }

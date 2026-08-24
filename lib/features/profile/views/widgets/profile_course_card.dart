@@ -1,7 +1,7 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/utils/app_screen_util.dart';
-import 'package:edu_advisor/features/profile/data/models/student_course_model.dart';
+import 'package:edu_advisor/features/profile/data/models/student_enrollment_model.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,11 +9,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ProfileCourseCard extends StatelessWidget {
   const ProfileCourseCard({super.key, required this.course});
 
-  final StudentCourseModel course;
+  final StudentEnrollmentModel course;
 
   @override
   Widget build(BuildContext context) {
-    final progress = course.progress;
+    final name = course.nameFor(Localizations.localeOf(context));
+    final hasGrade = course.hasGrade;
+    final gpa = course.courseGpa?.toDouble();
+    final progress = course.progressValue;
 
     return Container(
       padding: EdgeInsets.all(14.w),
@@ -38,64 +41,85 @@ class ProfileCourseCard extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  Icons.access_time_rounded,
+                  Icons.menu_book_outlined,
                   color: context.themeColors.info,
                   size: 22.r,
                 ),
               ),
               SizedBox(width: 12.w),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      course.displayCode,
-                      style: AppTextStyles.heading3PoppinsReg16.responsive,
-                    ),
-                    SizedBox(height: 2.w),
-                    Text(
-                      course.name.isNotEmpty
-                          ? course.name
-                          : context.l10n.courseFallbackName,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.poppinsRegular14.responsive.copyWith(
-                        color: context.themeColors.textSecondary,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  name.isNotEmpty ? name : context.l10n.courseFallbackName,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.heading3PoppinsReg16.responsive,
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    '${(progress * 100).toInt()}%',
+              SizedBox(width: 8.w),
+              if (hasGrade)
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 4.w,
+                  ),
+                  decoration: BoxDecoration(
+                    color: _gpaColor(context, gpa!).withValues(alpha: 0.14),
+                    borderRadius: BorderRadius.circular(20.r),
+                    border: Border.all(
+                      color: _gpaColor(context, gpa).withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Text(
+                    'GPA $gpa',
                     style: AppTextStyles.interRegular16.responsive.copyWith(
-                      color: context.themeColors.info,
+                      fontSize: 12.sp,
+                      color: _gpaColor(context, gpa),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Text(
-                    context.l10n.creditHoursShort(course.displayCreditHours),
-                    style: AppTextStyles.poppinsRegular14.responsive.copyWith(
-                      color: context.themeColors.textSecondary,
-                    ),
-                  ),
-                ],
-              ),
+                ),
             ],
           ),
-          SizedBox(height: 12.w),
-          LinearProgressIndicator(
-            borderRadius: BorderRadius.circular(10.r),
-            value: progress,
-            minHeight: 8.w,
-            color: context.themeColors.textPrimary,
-            backgroundColor: context.colorScheme.outline,
+          SizedBox(height: 10.w),
+          Row(
+            children: [
+              Text(
+                context.l10n.creditHoursShort(course.creditHours.toString()),
+                style: AppTextStyles.poppinsRegular14.responsive.copyWith(
+                  color: context.themeColors.textSecondary,
+                ),
+              ),
+              if (course.coursePercentage != null) ...[
+                const Spacer(),
+                Text(
+                  '${course.coursePercentage!.toStringAsFixed(0)}%',
+                  style: AppTextStyles.interRegular16.responsive.copyWith(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w600,
+                    color: context.themeColors.textSecondary,
+                  ),
+                ),
+              ],
+            ],
           ),
+          if (progress != null) ...[
+            SizedBox(height: 8.w),
+            LinearProgressIndicator(
+              borderRadius: BorderRadius.circular(10.r),
+              value: progress,
+              minHeight: 6.w,
+              color: context.themeColors.info,
+              backgroundColor: context.colorScheme.outline,
+            ),
+          ],
         ],
       ),
     );
+  }
+
+  Color _gpaColor(BuildContext context, double gpa) {
+    if (gpa >= 3.0) return context.themeColors.success;
+    if (gpa >= 2.0) return context.themeColors.warning;
+    return context.colorScheme.error;
   }
 }
