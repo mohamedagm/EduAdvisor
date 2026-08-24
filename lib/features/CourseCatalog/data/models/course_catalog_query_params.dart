@@ -15,7 +15,7 @@ class CourseCatalogQueryParams {
     return {
       'PageNumber': pageNumber,
       'PageSize': pageSize,
-      if (search?.trim().isNotEmpty == true) 'Search': search!.trim(),
+      if (search?.trim().isNotEmpty == true) 'SearchTerm': search!.trim(),
       if (isDeleted != null) 'IsDeleted': isDeleted,
     };
   }
