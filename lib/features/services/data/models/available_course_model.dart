@@ -5,36 +5,29 @@ import 'package:flutter/material.dart';
 class AvailableCourseModel {
   const AvailableCourseModel({
     required this.semesterCourseId,
-    required this.courseId,
     required this.courseNameAr,
     required this.courseNameEn,
     required this.courseCode,
-    required this.level,
-    required this.isOffered,
-    this.semesterId,
+    required this.creditHours,
     this.departmentId,
   });
 
   final String semesterCourseId;
-  final String courseId;
   final String courseNameAr;
   final String courseNameEn;
   final String courseCode;
-  final int level;
-  final bool isOffered;
-  final String? semesterId;
+  final int creditHours;
   final String? departmentId;
 
   factory AvailableCourseModel.fromJson(Map<String, dynamic> json) {
     return AvailableCourseModel(
-      semesterCourseId: json['id'] as String? ?? '',
-      courseId: json['courseId'] as String? ?? '',
+      semesterCourseId: json['semesterCourseId'] as String? ??
+          json['id'] as String? ??
+          '',
       courseNameAr: json['courseNameAr'] as String? ?? '',
       courseNameEn: json['courseNameEn'] as String? ?? '',
       courseCode: json['courseCode'] as String? ?? '',
-      level: json['level'] as int? ?? 0,
-      isOffered: json['isOffered'] as bool? ?? true,
-      semesterId: json['semesterId'] as String?,
+      creditHours: json['creditHours'] as int? ?? 0,
       departmentId: json['departmentId'] as String?,
     );
   }

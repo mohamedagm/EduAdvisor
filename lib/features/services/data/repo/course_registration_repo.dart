@@ -19,8 +19,7 @@ class CourseRegistrationRepo {
     try {
       final response = await _apiConsumer.get(ApiEndpoints.availableCourses);
       final apiResponse = ApiResponseModel.fromJson(response);
-      final data = Map<String, dynamic>.from(apiResponse.data as Map? ?? {});
-      final courses = data['items'] as List? ?? [];
+      final courses = apiResponse.data as List? ?? [];
 
       return Right(
         courses

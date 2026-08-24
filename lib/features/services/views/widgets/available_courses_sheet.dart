@@ -218,7 +218,7 @@ class _AvailableCourseTile extends StatelessWidget {
                   ),
                   SizedBox(height: 8.w),
                   Text(
-                    context.l10n.courseLevel(course.level.toString()),
+                    context.l10n.creditHoursShort(course.creditHours.toString()),
                     style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
                       color: context.themeColors.textPrimary,
                       fontWeight: FontWeight.w700,

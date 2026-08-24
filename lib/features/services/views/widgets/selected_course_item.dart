@@ -74,7 +74,9 @@ class SelectedCourseItem extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            context.l10n.courseLevel(course.level.toString()),
+                            context.l10n.creditHoursShort(
+                              course.creditHours.toString(),
+                            ),
                             style: AppTextStyles.bodyInterRegular12.responsive
                                 .copyWith(
                                   color: context.themeColors.textPrimary,
