@@ -1,8 +1,11 @@
+import 'package:edu_advisor/features/analytics/data/models/advisor_dashboard_model.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class PerformanceCard extends StatelessWidget {
-  const PerformanceCard({super.key});
+  const PerformanceCard({super.key, required this.distribution});
+
+  final GpaDistributionModel distribution;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +27,8 @@ class PerformanceCard extends StatelessWidget {
           _gpaRow(
             context: context,
             label: 'GPA ≥ 3.5',
-            count: 15,
-            total: 45,
+            count: distribution.highGpaCount,
+            percentage: distribution.highGpaPercentage,
             color: context.themeColors.success,
             bg: context.themeColors.successContainer,
           ),
@@ -35,8 +38,8 @@ class PerformanceCard extends StatelessWidget {
           _gpaRow(
             context: context,
             label: 'GPA 2.0 - 3.5',
-            count: 25,
-            total: 45,
+            count: distribution.midGpaCount,
+            percentage: distribution.midGpaPercentage,
             color: context.themeColors.warning,
             bg: context.themeColors.warningContainer,
           ),
@@ -46,8 +49,8 @@ class PerformanceCard extends StatelessWidget {
           _gpaRow(
             context: context,
             label: 'GPA < 2.0',
-            count: 5,
-            total: 45,
+            count: distribution.lowGpaCount,
+            percentage: distribution.lowGpaPercentage,
             color: context.colorScheme.error,
             bg: context.themeColors.dangerContainer,
           ),
@@ -60,12 +63,10 @@ class PerformanceCard extends StatelessWidget {
     required BuildContext context,
     required String label,
     required int count,
-    required int total,
+    required num percentage,
     required Color color,
     required Color bg,
   }) {
-    final percent = (count / total * 100).round();
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
@@ -94,7 +95,7 @@ class PerformanceCard extends StatelessWidget {
               border: Border.all(color: color.withValues(alpha: 0.3)),
             ),
             child: Text(
-              '$count students ($percent%)',
+              '$count students (${percentage.toStringAsFixed(0)}%)',
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,

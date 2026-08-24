@@ -5,12 +5,27 @@ import 'package:edu_advisor/core/api/api_endpoints.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
 import 'package:edu_advisor/features/advisor_nav/data/models/my_students_response_model.dart';
+import 'package:edu_advisor/features/analytics/data/models/advisor_dashboard_model.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
 
 class AdvisorRepo {
   AdvisorRepo({required ApiConsumer apiConsumer}) : _apiConsumer = apiConsumer;
 
   final ApiConsumer _apiConsumer;
+
+  Future<Either<Failure, AdvisorDashboardModel>> getDashboard() async {
+    try {
+      final response = await _apiConsumer.get(ApiEndpoints.advisorDashboard);
+      final apiResponse = ApiResponseModel.fromJson(response);
+      final data = Map<String, dynamic>.from(apiResponse.data as Map? ?? {});
+
+      return Right(AdvisorDashboardModel.fromJson(data));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.apiResponse));
+    } catch (e) {
+      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
+    }
+  }
 
   Future<Either<Failure, ({List<MyStudentModel> students, int totalCount})>>
       getMyStudents({
