@@ -1,5 +1,4 @@
 import 'package:edu_advisor/core/routing/app_routes.dart';
-import 'package:edu_advisor/features/advisor_nav/advisor_home_screen.dart';
 import 'package:edu_advisor/features/onbording/first_onbording_view.dart';
 import 'package:edu_advisor/features/onbording/second_onbording_view.dart';
 import 'package:flutter/material.dart';

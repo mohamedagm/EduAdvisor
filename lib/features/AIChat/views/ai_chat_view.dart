@@ -2,7 +2,6 @@ import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/AIChat/Manager/cubit/ai_chat_cubit.dart';
 import 'package:edu_advisor/features/AIChat/Manager/cubit/ai_chat_state.dart';
-import 'package:edu_advisor/features/AIChat/data/datasources/ai_chat_remote_data_source.dart';
 import 'package:edu_advisor/features/AIChat/data/models/ai_chat_request_model.dart';
 import 'package:edu_advisor/features/AIChat/data/repo/ai_chat_repo.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/ai_input_field.dart';

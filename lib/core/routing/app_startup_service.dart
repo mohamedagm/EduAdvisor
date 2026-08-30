@@ -1,4 +1,3 @@
-import 'package:edu_advisor/core/api/api_consumer.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/services/token_storage_service.dart';
 import 'package:edu_advisor/core/services/user_cache_service.dart';
