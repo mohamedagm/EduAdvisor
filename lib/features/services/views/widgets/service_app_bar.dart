@@ -7,9 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ServiceAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final String subtitle;
+  final String? subtitle;
 
-  const ServiceAppBar({super.key, required this.title, required this.subtitle});
+  const ServiceAppBar({super.key, required this.title, this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +31,15 @@ class ServiceAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           SizedBox(height: 2.w),
-          Text(
-            subtitle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
-              color: context.themeColors.textMuted,
+          if (subtitle != null)
+            Text(
+              subtitle!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
+                color: context.themeColors.textMuted,
+              ),
             ),
-          ),
         ],
       ),
       centerTitle: false,

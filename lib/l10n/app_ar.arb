@@ -248,6 +248,26 @@
       "credits": {"type": "String"}
     }
   },
+  "validSelectionString": "الاختيار صحيح ({total} ساعة)",
+  "@validSelectionString": {
+    "placeholders": {
+      "total": {"type": "int"}
+    }
+  },
+  "invalidSelectionString": "اخترت {total} ساعة. المطلوب بين {min} و {max} ساعة.",
+  "@invalidSelectionString": {
+    "placeholders": {
+      "total": {"type": "int"},
+      "min": {"type": "int"},
+      "max": {"type": "int"}
+    }
+  },
+  "attemptNumber": "المحاولة {number}",
+  "@attemptNumber": {
+    "placeholders": {
+      "number": {"type": "int"}
+    }
+  },
   "notifications": "الإشعارات",
   "unreadNotifications": "{count, plural, =0{لا توجد إشعارات غير مقروءة} =1{إشعار واحد غير مقروء} =2{إشعاران غير مقروءين} few{{count} إشعارات غير مقروءة} many{{count} إشعارًا غير مقروء} other{{count} إشعار غير مقروء}}",
   "@unreadNotifications": {
@@ -428,6 +448,7 @@
   },
   "submitted": "تاريخ الإرسال",
   "totalCourses": "إجمالي المقررات",
+  "enrolledCourses": "المقررات المسجلة",
   "academicAdvisor": "المرشد الأكاديمي",
   "rejectionReason": "سبب الرفض:",
   "advisorNote": "ملاحظة المرشد:"

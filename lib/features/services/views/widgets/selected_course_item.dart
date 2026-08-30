@@ -41,15 +41,13 @@ class SelectedCourseItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      course.displayCode,
+                      course.courseCode,
                       style: AppTextStyles.heading3PoppinsReg16.responsive
                           .copyWith(color: context.themeColors.textPrimary),
                     ),
                     SizedBox(height: 4.w),
                     Text(
-                      course.courseName.isNotEmpty
-                          ? course.courseName
-                          : context.l10n.courseFallbackName,
+                      course.nameFor(Localizations.localeOf(context)),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.poppinsRegular14.responsive.copyWith(
@@ -101,7 +99,6 @@ class SelectedCourseItem extends StatelessWidget {
               ),
             ],
           ),
-
         ],
       ),
     );

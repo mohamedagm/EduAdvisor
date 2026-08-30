@@ -1088,6 +1088,24 @@ abstract class AppLocalizations {
   /// **'{credits} cr'**
   String creditHoursShort(String credits);
 
+  /// No description provided for @validSelectionString.
+  ///
+  /// In en, this message translates to:
+  /// **'Selection is valid ({total} hours)'**
+  String validSelectionString(int total);
+
+  /// No description provided for @invalidSelectionString.
+  ///
+  /// In en, this message translates to:
+  /// **'You selected {total} hours. Required is between {min} and {max} hours.'**
+  String invalidSelectionString(int total, int min, int max);
+
+  /// No description provided for @attemptNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Attempt {number}'**
+  String attemptNumber(int number);
+
   /// No description provided for @notifications.
   ///
   /// In en, this message translates to:
@@ -1855,6 +1873,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total Courses'**
   String get totalCourses;
+
+  /// No description provided for @enrolledCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrolled Courses'**
+  String get enrolledCourses;
 
   /// No description provided for @academicAdvisor.
   ///

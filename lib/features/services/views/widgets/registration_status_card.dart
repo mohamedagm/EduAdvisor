@@ -117,30 +117,51 @@ class RegistrationStatusCard extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 8.w),
-          Divider(height: 1.w, color: context.themeColors.border),
-
-          // Total Courses
+          // Total Courses & Hours
           Padding(
             padding: EdgeInsets.all(16.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  context.l10n.totalCourses,
-                  style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
-                    color: context.themeColors.textSecondary,
-                  ),
+                _TotalItem(
+                  icon: Icons.menu_book_outlined,
+                  label: context.l10n.totalCourses,
+                  value: '${request.coursesCount}',
                 ),
-                Text(
-                  '${request.coursesCount}',
-                  style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
-                    color: context.colorScheme.primary,
-                  ),
+                _TotalItem(
+                  icon: Icons.schedule_outlined,
+                  label: context.l10n.totalCreditHours,
+                  value: '${request.totalCreditHours}',
                 ),
               ],
             ),
           ),
+
+          Divider(height: 1.w, color: context.themeColors.border),
+
+          // Enrolled Courses List
+          if (request.enrollments.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.all(16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.l10n.enrolledCourses,
+                    style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
+                      color: context.themeColors.textPrimary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: 12.w),
+                  for (final enrollment in request.enrollments)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10.w),
+                      child: _EnrollmentTile(enrollment: enrollment),
+                    ),
+                ],
+              ),
+            ),
 
           Divider(height: 1.w, color: context.themeColors.border),
 
@@ -243,6 +264,98 @@ class RegistrationStatusCard extends StatelessWidget {
       default:
         return RegistrationStatusType.pending;
     }
+  }
+}
+
+class _TotalItem extends StatelessWidget {
+  const _TotalItem({required this.icon, required this.label, required this.value});
+
+  final IconData icon;
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 16.r, color: context.colorScheme.primary),
+              SizedBox(width: 6.w),
+              Text(
+                label,
+                style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
+                  color: context.themeColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 6.w),
+          Text(
+            value,
+            style: AppTextStyles.heading1_20b.responsive.copyWith(
+              color: context.themeColors.textPrimary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EnrollmentTile extends StatelessWidget {
+  const _EnrollmentTile({required this.enrollment});
+
+  final EnrollmentModel enrollment;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(12.w),
+      decoration: BoxDecoration(
+        color: context.themeColors.mutedSurface,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: context.themeColors.border),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
+            decoration: BoxDecoration(
+              color: context.themeColors.infoContainer,
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            child: Text(
+              enrollment.courseCode,
+              style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
+                color: context.themeColors.onInfoContainer,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Text(
+              enrollment.courseName,
+              style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
+                color: context.themeColors.textPrimary,
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          Text(
+            context.l10n.creditHoursShort(enrollment.creditHours.toString()),
+            style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
+              color: context.themeColors.textPrimary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

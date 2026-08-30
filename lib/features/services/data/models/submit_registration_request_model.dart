@@ -10,7 +10,7 @@ class SubmitRegistrationRequestModel {
   Map<String, dynamic> toJson() {
     return {
       'semesterCourses': semesterCourseIds,
-      if (notes != null && notes!.trim().isNotEmpty) 'notes': notes!.trim(),
+      'notes': notes?.trim() ?? '',
     };
   }
 }

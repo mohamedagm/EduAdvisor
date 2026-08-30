@@ -152,7 +152,6 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
           return Scaffold(
             appBar: ServiceAppBar(
               title: context.l10n.courseRegistrationTitle,
-              subtitle: context.l10n.spring2024Semester,
             ),
             body: SingleChildScrollView(
               padding: EdgeInsets.all(24.w),
@@ -160,20 +159,22 @@ class _CourseRegistrationViewState extends State<CourseRegistrationView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 24.w),
-                  Wrap(
-                    alignment: WrapAlignment.spaceBetween,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 12.w,
-                    runSpacing: 12.w,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        context.l10n.selectedCoursesCount(
-                          _selectedCourses.length,
-                        ),
-                        style: AppTextStyles.interRegular16.responsive.copyWith(
-                          color: context.themeColors.textPrimary,
+                      Expanded(
+                        child: Text(
+                          context.l10n.selectedCoursesCount(
+                            _selectedCourses.length,
+                          ),
+                          style: AppTextStyles.interRegular16.responsive
+                              .copyWith(
+                                color: context.themeColors.textPrimary,
+                              ),
                         ),
                       ),
+                      SizedBox(width: 12.w),
                       ElevatedButton.icon(
                         onPressed: isSubmitting ? null : _showAvailableCourses,
                         style: ElevatedButton.styleFrom(

@@ -1,82 +1,62 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
-import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:flutter/material.dart';
 
 class AvailableCourseModel {
   const AvailableCourseModel({
     required this.semesterCourseId,
+    required this.courseCode,
     required this.courseNameAr,
     required this.courseNameEn,
-    required this.courseCode,
+    required this.courseType,
     required this.creditHours,
-    this.departmentId,
+    required this.attemptCount,
+    required this.departmentId,
   });
 
   final String semesterCourseId;
+  final String courseCode;
   final String courseNameAr;
   final String courseNameEn;
-  final String courseCode;
+  final int courseType;
   final int creditHours;
-  final String? departmentId;
+  final int attemptCount;
+  final String departmentId;
 
   factory AvailableCourseModel.fromJson(Map<String, dynamic> json) {
     return AvailableCourseModel(
-      semesterCourseId: json['semesterCourseId'] as String? ??
-          json['id'] as String? ??
-          '',
+      semesterCourseId: json['semesterCourseId'] as String? ?? '',
+      courseCode: json['courseCode'] as String? ?? '',
       courseNameAr: json['courseNameAr'] as String? ?? '',
       courseNameEn: json['courseNameEn'] as String? ?? '',
-      courseCode: json['courseCode'] as String? ?? '',
+      courseType: json['courseType'] as int? ?? 0,
       creditHours: json['creditHours'] as int? ?? 0,
-      departmentId: json['departmentId'] as String?,
+      attemptCount: json['attemptCount'] as int? ?? 0,
+      departmentId: json['departmentId'] as String? ?? '',
     );
   }
 
-  String get courseName => _firstNonEmpty([courseNameEn, courseNameAr], 'Course');
+  String nameFor(Locale locale) =>
+      locale.languageCode.toLowerCase() == 'ar'
+          ? (courseNameAr.isNotEmpty ? courseNameAr : courseNameEn)
+          : (courseNameEn.isNotEmpty ? courseNameEn : courseNameAr);
 
-  String nameFor(Locale locale) => locale.languageCode.toLowerCase() == 'ar'
-      ? _firstNonEmpty([courseNameAr, courseNameEn], 'Course')
-      : courseName;
-
-  static String _firstNonEmpty(List<String> candidates, String fallback) {
-    for (final candidate in candidates) {
-      if (candidate.trim().isNotEmpty) return candidate;
-    }
-    return fallback;
+  // Helper for Course Type
+  String get typeLabel {
+    return switch (courseType) {
+      1 => "University Req", // حسب الـ IDs اللي عندك
+      2 => "Faculty Req",
+      4 => "Department Req",
+      5 => "Elective",
+      _ => "Other",
+    };
   }
 
-  String get displayCode => courseCode.isNotEmpty ? courseCode : '--';
-  String get displayName => courseName;
-
-  IconData get icon {
-    final code = courseCode.toUpperCase();
-
-    if (code.startsWith('CS')) return Icons.computer;
-    if (code.startsWith('MATH') || code.startsWith('GEN') || code.startsWith('BS')) {
-      return Icons.calculate;
-    }
-    if (code.startsWith('PH')) return Icons.science_outlined;
-    if (code.startsWith('EE')) return Icons.electrical_services;
-    if (code.startsWith('IS')) return Icons.account_tree_outlined;
-
-    return Icons.menu_book_outlined;
-  }
-
-  Color? get iconBackgroundColor {
-    final code = courseCode.toUpperCase();
-
-    if (code.startsWith('CS')) return AppColors.bluePrimary;
-    if (code.startsWith('EE')) return AppColors.purplePrimary;
-    if (code.startsWith('PH')) return AppColors.successGreen;
-
-    return null;
-  }
-
-  Gradient? get iconGradient {
-    final code = courseCode.toUpperCase();
-
-    if (code.startsWith('GEN') || code.startsWith('BS')) return AppGradients.primary;
-
-    return null;
+  Color get typeColor {
+    return switch (courseType) {
+      1 => Colors.blue,
+      2 => Colors.green,
+      4 => Colors.purple,
+      5 => Colors.orange,
+      _ => Colors.grey,
+    };
   }
 }

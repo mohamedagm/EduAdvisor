@@ -1,6 +1,6 @@
 import 'package:edu_advisor/core/errors/failures.dart';
 import 'package:edu_advisor/core/api/api_response_model.dart';
-import 'package:edu_advisor/features/services/data/models/available_course_model.dart';
+import 'package:edu_advisor/features/services/data/models/available_courses_response_model.dart';
 
 abstract class CourseRegistrationState {
   const CourseRegistrationState();
@@ -15,9 +15,9 @@ class AvailableCoursesLoading extends CourseRegistrationState {
 }
 
 class AvailableCoursesLoaded extends CourseRegistrationState {
-  const AvailableCoursesLoaded(this.courses);
+  const AvailableCoursesLoaded(this.response);
 
-  final List<AvailableCourseModel> courses;
+  final AvailableCoursesResponseModel response;
 }
 
 class AvailableCoursesFailure extends CourseRegistrationState {

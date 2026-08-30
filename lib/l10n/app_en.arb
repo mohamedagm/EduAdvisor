@@ -280,6 +280,26 @@
       "credits": {"type": "String"}
     }
   },
+  "validSelectionString": "Selection is valid ({total} hours)",
+  "@validSelectionString": {
+    "placeholders": {
+      "total": {"type": "int"}
+    }
+  },
+  "invalidSelectionString": "You selected {total} hours. Required is between {min} and {max} hours.",
+  "@invalidSelectionString": {
+    "placeholders": {
+      "total": {"type": "int"},
+      "min": {"type": "int"},
+      "max": {"type": "int"}
+    }
+  },
+  "attemptNumber": "Attempt {number}",
+  "@attemptNumber": {
+    "placeholders": {
+      "number": {"type": "int"}
+    }
+  },
   "notifications": "Notifications",
   "unreadNotifications": "{count, plural, =0{No unread notifications} =1{1 unread notification} other{{count} unread notifications}}",
   "@unreadNotifications": {
@@ -460,6 +480,7 @@
   },
   "submitted": "Submitted",
   "totalCourses": "Total Courses",
+  "enrolledCourses": "Enrolled Courses",
   "academicAdvisor": "Academic Advisor",
   "rejectionReason": "Rejection Reason:",
   "advisorNote": "Advisor Note:"

@@ -548,6 +548,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String validSelectionString(int total) {
+    return 'Selection is valid ($total hours)';
+  }
+
+  @override
+  String invalidSelectionString(int total, int min, int max) {
+    return 'You selected $total hours. Required is between $min and $max hours.';
+  }
+
+  @override
+  String attemptNumber(int number) {
+    return 'Attempt $number';
+  }
+
+  @override
   String get notifications => 'Notifications';
 
   @override
@@ -1013,6 +1028,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get totalCourses => 'Total Courses';
+
+  @override
+  String get enrolledCourses => 'Enrolled Courses';
 
   @override
   String get academicAdvisor => 'Academic Advisor';

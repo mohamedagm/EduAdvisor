@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../data/models/available_course_model.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,16 +10,17 @@ class CourseIconWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.themeColors;
+
     return Container(
       width: 48.r,
       height: 48.r,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.r),
-        color: course.iconBackgroundColor ?? context.themeColors.textMuted,
-        gradient: course.iconGradient,
+        color: colors.infoContainer,
       ),
       child: Center(
-        child: Icon(course.icon, color: AppColors.white, size: 24.r),
+        child: Icon(Icons.menu_book, color: colors.onInfoContainer, size: 24.r),
       ),
     );
   }

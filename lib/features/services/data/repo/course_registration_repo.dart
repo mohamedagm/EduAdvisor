@@ -4,7 +4,7 @@ import 'package:edu_advisor/core/api/api_endpoints.dart';
 import 'package:edu_advisor/core/api/api_response_model.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
-import 'package:edu_advisor/features/services/data/models/available_course_model.dart';
+import 'package:edu_advisor/features/services/data/models/available_courses_response_model.dart';
 import 'package:edu_advisor/features/services/data/models/registration_request_model.dart';
 import 'package:edu_advisor/features/services/data/models/submit_registration_request_model.dart';
 
@@ -14,22 +14,14 @@ class CourseRegistrationRepo {
 
   final ApiConsumer _apiConsumer;
 
-  Future<Either<Failure, List<AvailableCourseModel>>>
+  Future<Either<Failure, AvailableCoursesResponseModel>>
   getAvailableCourses() async {
     try {
       final response = await _apiConsumer.get(ApiEndpoints.availableCourses);
       final apiResponse = ApiResponseModel.fromJson(response);
-      final courses = apiResponse.data as List? ?? [];
+      final data = Map<String, dynamic>.from(apiResponse.data as Map? ?? {});
 
-      return Right(
-        courses
-            .map(
-              (course) => AvailableCourseModel.fromJson(
-                Map<String, dynamic>.from(course as Map? ?? {}),
-              ),
-            )
-            .toList(),
-      );
+      return Right(AvailableCoursesResponseModel.fromJson(data));
     } on ServerException catch (e) {
       return Left(ServerFailure(e.apiResponse));
     } catch (e) {

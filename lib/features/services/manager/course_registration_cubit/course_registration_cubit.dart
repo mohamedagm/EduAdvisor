@@ -19,7 +19,7 @@ class CourseRegistrationCubit extends Cubit<CourseRegistrationState> {
 
     result.fold(
       (failure) => emit(AvailableCoursesFailure(failure)),
-      (courses) => emit(AvailableCoursesLoaded(courses)),
+      (response) => emit(AvailableCoursesLoaded(response)),
     );
   }
 

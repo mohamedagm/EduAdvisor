@@ -549,6 +549,21 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String validSelectionString(int total) {
+    return 'الاختيار صحيح ($total ساعة)';
+  }
+
+  @override
+  String invalidSelectionString(int total, int min, int max) {
+    return 'اخترت $total ساعة. المطلوب بين $min و $max ساعة.';
+  }
+
+  @override
+  String attemptNumber(int number) {
+    return 'المحاولة $number';
+  }
+
+  @override
   String get notifications => 'الإشعارات';
 
   @override
@@ -1024,6 +1039,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get totalCourses => 'إجمالي المقررات';
+
+  @override
+  String get enrolledCourses => 'المقررات المسجلة';
 
   @override
   String get academicAdvisor => 'المرشد الأكاديمي';
