@@ -46,68 +46,53 @@ class SettingsProfileSection extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 16.w),
-              Container(
-                padding: EdgeInsets.all(12.w),
-                decoration: BoxDecoration(
-                  color: context.colorScheme.surface,
-                  borderRadius: BorderRadius.circular(12.r),
-                  border: Border.all(color: context.themeColors.border),
-                ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 20.r,
-                      backgroundColor: context.themeColors.border,
-                      child: user?.profileImageUrl?.isNotEmpty == true
-                          ? ClipOval(
-                              child: SizedBox.expand(
-                                child: AppShimmerNetworkImage(
-                                  imageUrl: user!.profileImageUrl!,
-                                ),
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 24.r,
+                    backgroundColor: context.themeColors.mutedSurface,
+                    child: user?.profileImageUrl?.isNotEmpty == true
+                        ? ClipOval(
+                            child: SizedBox.expand(
+                              child: AppShimmerNetworkImage(
+                                imageUrl: user!.profileImageUrl!,
                               ),
-                            )
-                          : Icon(
-                              Icons.person,
-                              size: 24.r,
-                              color: context.themeColors.textMuted,
                             ),
-                    ),
-                    SizedBox(width: 12.w),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            user?.nameFor(Localizations.localeOf(context)) ??
-                                '--',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.bodyInterMedium14.responsive
-                                .copyWith(
-                                  color: context.themeColors.textPrimary,
-                                ),
+                          )
+                        : Icon(
+                            Icons.person,
+                            size: 24.r,
+                            color: context.themeColors.textMuted,
                           ),
-                          SizedBox(height: 2.w),
-                          Text(
-                            user?.email ?? '--',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.bodyInterRegular12.responsive
-                                .copyWith(color: context.themeColors.textMuted),
-                          ),
-                        ],
-                      ),
+                  ),
+                  SizedBox(width: 16.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          user?.nameFor(Localizations.localeOf(context)) ??
+                              '--',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.bodyInterRegular12.responsive
+                              .copyWith(color: context.themeColors.textPrimary),
+                        ),
+                        SizedBox(height: 4.w),
+                        Text(
+                          user?.email ?? '--',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.bodyInterRegular12.responsive
+                              .copyWith(color: context.themeColors.textMuted),
+                        ),
+                      ],
                     ),
-                    Icon(
-                      Directionality.of(context) == TextDirection.rtl
-                          ? Icons.chevron_left
-                          : Icons.chevron_right,
-                      color: context.themeColors.textMuted,
-                      size: 24.r,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              SizedBox(height: 24.w),
+              Divider(color: context.themeColors.border, height: 1),
               SizedBox(height: 16.w),
               SettingsInfoRow(
                 icon: Icons.mail_outline,

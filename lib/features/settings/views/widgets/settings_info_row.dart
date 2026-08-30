@@ -10,11 +10,13 @@ class SettingsInfoRow extends StatelessWidget {
     this.icon,
     required this.title,
     this.subtitle,
+    this.showChevron = false,
   });
 
   final IconData? icon;
   final String title;
   final String? subtitle;
+  final bool showChevron;
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +48,14 @@ class SettingsInfoRow extends StatelessWidget {
             ],
           ),
         ),
-        Icon(
-          Directionality.of(context) == TextDirection.rtl
-              ? Icons.chevron_left
-              : Icons.chevron_right,
-          color: context.themeColors.textMuted,
-          size: 24.r,
-        ),
+        if (showChevron)
+          Icon(
+            Directionality.of(context) == TextDirection.rtl
+                ? Icons.chevron_left
+                : Icons.chevron_right,
+            color: context.themeColors.textMuted,
+            size: 24.r,
+          ),
       ],
     );
   }

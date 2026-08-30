@@ -38,7 +38,10 @@ class SettingsSecuritySection extends StatelessWidget {
           SizedBox(height: 16.w),
           GestureDetector(
             onTap: () => ChangePasswordSheet.show(context),
-            child: SettingsInfoRow(title: context.l10n.changePassword),
+            child: SettingsInfoRow(
+              title: context.l10n.changePassword,
+              showChevron: true,
+            ),
           ),
         ],
       ),

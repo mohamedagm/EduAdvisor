@@ -1,5 +1,4 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
-import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
@@ -51,26 +50,18 @@ class SettingsToggleRow extends StatelessWidget {
           ),
         ),
         SizedBox(width: 12.w),
-        GestureDetector(
-          onTap: () => onChanged(!isOn),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.w),
-            decoration: BoxDecoration(
-              color: isOn
-                  ? context.themeColors.successContainer
-                  : context.themeColors.border,
-              borderRadius: BorderRadius.circular(16.r),
-            ),
-            child: Text(
-              isOn ? context.l10n.settingOn : context.l10n.settingOff,
-              style: AppTextStyles.bodyInterMedium14.copyWith(
-                color: isOn
-                    ? context.themeColors.success
-                    : context.themeColors.textMuted,
-                fontSize: 12.sp,
-              ),
-            ),
-          ),
+        Switch.adaptive(
+          value: isOn,
+          onChanged: onChanged,
+          activeColor: context.colorScheme.primary,
+          activeTrackColor: context.colorScheme.primary,
+          thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
+            if (states.contains(WidgetState.selected)) {
+              return Colors.white;
+            }
+            return context.themeColors.textMuted;
+          }),
+          trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
         ),
       ],
     );

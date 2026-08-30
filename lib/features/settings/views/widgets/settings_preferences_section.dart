@@ -21,26 +21,42 @@ class SettingsPreferencesSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            context.l10n.preferences,
-            style: AppTextStyles.bodyInterMedium18.responsive.copyWith(
-              color: context.themeColors.textPrimary,
-            ),
+          Row(
+            children: [
+              Icon(
+                Icons.tune_outlined,
+                size: 24.r,
+                color: context.colorScheme.primary,
+              ),
+              SizedBox(width: 8.w),
+              Expanded(
+                child: Text(
+                  context.l10n.preferences,
+                  style: AppTextStyles.bodyInterMedium18.responsive.copyWith(
+                    color: context.themeColors.textPrimary,
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 16.w),
-          BlocBuilder<LanguageCubit, Locale>(
-            builder: (context, locale) {
-              final isArabicLocale = locale.languageCode == 'ar';
-              return SettingsInfoRow(
-                icon: Icons.language_outlined,
-                title: context.l10n.language,
-                subtitle: isArabicLocale
-                    ? context.l10n.arabicLanguage
-                    : context.l10n.englishLanguage,
-              );
-            },
+          Row(
+            children: [
+              Icon(
+                Icons.language_outlined,
+                size: 24.r,
+                color: context.colorScheme.primary,
+              ),
+              SizedBox(width: 8.w),
+              Text(
+                context.l10n.language,
+                style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
+                  color: context.themeColors.textPrimary,
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 10.w),
+          SizedBox(height: 12.w),
           BlocBuilder<LanguageCubit, Locale>(
             builder: (context, locale) {
               final isArabicLocale = locale.languageCode == 'ar';
@@ -76,18 +92,33 @@ class SettingsPreferencesSection extends StatelessWidget {
           ),
           SizedBox(height: 20.w),
 
-          Text(
-            context.l10n.appearance,
-            style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
-              color: context.themeColors.textPrimary,
-            ),
-          ),
-          SizedBox(height: 4.w),
-          Text(
-            context.l10n.appearanceDescription,
-            style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
-              color: context.themeColors.textMuted,
-            ),
+          Row(
+            children: [
+              Icon(
+                Icons.palette_outlined,
+                size: 24.r,
+                color: context.colorScheme.primary,
+              ),
+              SizedBox(width: 8.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.l10n.appearance,
+                      style: AppTextStyles.bodyInterMedium14.responsive
+                          .copyWith(color: context.themeColors.textPrimary),
+                    ),
+                    SizedBox(height: 2.w),
+                    Text(
+                      context.l10n.appearanceDescription,
+                      style: AppTextStyles.bodyInterRegular12.responsive
+                          .copyWith(color: context.themeColors.textMuted),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 12.w),
           BlocBuilder<ThemeCubit, ThemeMode>(

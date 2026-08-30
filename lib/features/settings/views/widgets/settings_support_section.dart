@@ -16,21 +16,35 @@ class SettingsSupportSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            context.l10n.support,
-            style: AppTextStyles.bodyInterMedium18.responsive.copyWith(
-              color: context.themeColors.textPrimary,
-            ),
+          Row(
+            children: [
+              Icon(
+                Icons.support_agent_outlined,
+                size: 24.r,
+                color: context.colorScheme.primary,
+              ),
+              SizedBox(width: 8.w),
+              Expanded(
+                child: Text(
+                  context.l10n.support,
+                  style: AppTextStyles.bodyInterMedium18.responsive.copyWith(
+                    color: context.themeColors.textPrimary,
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 16.w),
           SettingsInfoRow(
             icon: Icons.help_outline,
             title: context.l10n.helpCenter,
+            showChevron: true,
           ),
           SizedBox(height: 16.w),
           SettingsInfoRow(
             icon: Icons.info_outline,
             title: context.l10n.aboutEduAdvisor,
+            showChevron: true,
           ),
         ],
       ),

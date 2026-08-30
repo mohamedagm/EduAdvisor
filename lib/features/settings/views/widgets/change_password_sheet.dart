@@ -62,12 +62,12 @@ class _ChangePasswordSheetBodyState extends State<_ChangePasswordSheetBody> {
     if (!_formKey.currentState!.validate()) return;
 
     context.read<ChangePasswordCubit>().changePassword(
-          ChangePasswordRequestModel(
-            currentPassword: _currentController.text,
-            newPassword: _newController.text,
-            confirmPassword: _confirmController.text,
-          ),
-        );
+      ChangePasswordRequestModel(
+        currentPassword: _currentController.text,
+        newPassword: _newController.text,
+        confirmPassword: _confirmController.text,
+      ),
+    );
   }
 
   @override
@@ -76,139 +76,135 @@ class _ChangePasswordSheetBodyState extends State<_ChangePasswordSheetBody> {
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(24.w, 12.w, 24.w, 24.w),
-          decoration: BoxDecoration(
-            color: context.themeColors.card,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
-          ),
-          child: SingleChildScrollView(
-            child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
-              listener: (context, state) {
-                if (state is ChangePasswordSuccess) {
-                  AppToast.success(
-                    context,
-                    title: context.l10n.passwordUpdated,
-                    description: state.message,
-                  );
-                  Navigator.pop(context);
-                }
-
-                if (state is ChangePasswordFailure) {
-                  AppToast.error(
-                    context,
-                    title: context.l10n.passwordResetFailed,
-                    description: state.failure.message,
-                  );
-                }
-              },
-              builder: (context, state) {
-                final isLoading = state is ChangePasswordLoading;
-
-                return Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 40.w,
-                        height: 4.w,
-                        margin: EdgeInsets.only(bottom: 20.w),
-                        decoration: BoxDecoration(
-                          color: context.themeColors.border,
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.lock_reset_rounded,
-                            color: context.colorScheme.primary,
-                            size: 26.r,
-                          ),
-                          SizedBox(width: 10.w),
-                          Text(
-                            context.l10n.changePassword,
-                            style: AppTextStyles.heading2PoppinsSb18
-                                .responsive.copyWith(
-                              color: context.themeColors.textPrimary,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20.w),
-                      _passwordField(
-                        context: context,
-                        controller: _currentController,
-                        label: context.l10n.currentPassword,
-                        hint: '••••••••',
-                        obscure: _obscureCurrent,
-                        toggleObscure: () => setState(
-                          () => _obscureCurrent = !_obscureCurrent,
-                        ),
-                        enabled: !isLoading,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.l10n.passwordRequired;
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 16.w),
-                      _passwordField(
-                        context: context,
-                        controller: _newController,
-                        label: context.l10n.newPassword,
-                        hint: context.l10n.enterNewPassword,
-                        obscure: _obscureNew,
-                        toggleObscure: () =>
-                            setState(() => _obscureNew = !_obscureNew),
-                        enabled: !isLoading,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.l10n.enterNewPassword;
-                          }
-                          if (value.length < 6) {
-                            return context.l10n.passwordSixCharacters;
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 16.w),
-                      _passwordField(
-                        context: context,
-                        controller: _confirmController,
-                        label: context.l10n.confirmNewPassword,
-                        hint: context.l10n.confirmNewPassword,
-                        obscure: _obscureConfirm,
-                        toggleObscure: () => setState(
-                          () => _obscureConfirm = !_obscureConfirm,
-                        ),
-                        enabled: !isLoading,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.l10n.confirmPasswordRequired;
-                          }
-                          if (value != _newController.text) {
-                            return context.l10n.passwordsDoNotMatch;
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 24.w),
-                      GradientElevatedButton(
-                        buttonText: isLoading
-                            ? context.l10n.loading
-                            : context.l10n.updatePasswordBtn,
-                        onPressed: isLoading ? () {} : _submit,
-                      ),
-                    ],
-                  ),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(24.w, 12.w, 24.w, 24.w),
+        decoration: BoxDecoration(
+          color: context.themeColors.card,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+        ),
+        child: SingleChildScrollView(
+          child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
+            listener: (context, state) {
+              if (state is ChangePasswordSuccess) {
+                AppToast.success(
+                  context,
+                  title: context.l10n.passwordUpdated,
+                  description: state.message,
                 );
-              },
-            ),
+                Navigator.pop(context);
+              }
+
+              if (state is ChangePasswordFailure) {
+                AppToast.error(
+                  context,
+                  title: context.l10n.passwordResetFailed,
+                  description: state.failure.message,
+                );
+              }
+            },
+            builder: (context, state) {
+              final isLoading = state is ChangePasswordLoading;
+
+              return Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 40.w,
+                      height: 4.w,
+                      margin: EdgeInsets.only(bottom: 20.w),
+                      decoration: BoxDecoration(
+                        color: context.themeColors.border,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.lock_reset_rounded,
+                          color: context.colorScheme.primary,
+                          size: 26.r,
+                        ),
+                        SizedBox(width: 10.w),
+                        Text(
+                          context.l10n.changePassword,
+                          style: AppTextStyles.heading2PoppinsSb18.responsive
+                              .copyWith(color: context.themeColors.textPrimary),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.w),
+                    _passwordField(
+                      context: context,
+                      controller: _currentController,
+                      label: context.l10n.currentPassword,
+                      hint: '••••••••',
+                      obscure: _obscureCurrent,
+                      toggleObscure: () =>
+                          setState(() => _obscureCurrent = !_obscureCurrent),
+                      enabled: !isLoading,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return context.l10n.passwordRequired;
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 16.w),
+                    _passwordField(
+                      context: context,
+                      controller: _newController,
+                      label: context.l10n.newPassword,
+                      hint: context.l10n.enterNewPassword,
+                      obscure: _obscureNew,
+                      toggleObscure: () =>
+                          setState(() => _obscureNew = !_obscureNew),
+                      enabled: !isLoading,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return context.l10n.enterNewPassword;
+                        }
+                        if (value.length < 6) {
+                          return context.l10n.passwordSixCharacters;
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 16.w),
+                    _passwordField(
+                      context: context,
+                      controller: _confirmController,
+                      label: context.l10n.confirmNewPassword,
+                      hint: context.l10n.confirmNewPassword,
+                      obscure: _obscureConfirm,
+                      toggleObscure: () =>
+                          setState(() => _obscureConfirm = !_obscureConfirm),
+                      enabled: !isLoading,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return context.l10n.confirmPasswordRequired;
+                        }
+                        if (value != _newController.text) {
+                          return context.l10n.passwordsDoNotMatch;
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 24.w),
+                    GradientElevatedButton(
+                      buttonText: isLoading
+                          ? context.l10n.loading
+                          : context.l10n.updatePasswordBtn,
+                      onPressed: isLoading ? () {} : _submit,
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ),
+      ),
     );
   }
 
