@@ -148,21 +148,9 @@ class CourseDetailsSheet extends StatelessWidget {
               const Divider(),
               SizedBox(height: 12.w),
 
-              Row(
-                children: [
-                  Expanded(
-                    child: _InfoTile(
-                      title: context.l10n.creditsLabel,
-                      value: course.displayCreditHours,
-                    ),
-                  ),
-                  Expanded(
-                    child: _InfoTile(
-                      title: context.l10n.semester,
-                      value: course.standardSemester.toString(),
-                    ),
-                  ),
-                ],
+              _InfoTile(
+                title: context.l10n.creditsLabel,
+                value: course.displayCreditHours,
               ),
             ],
           ),

@@ -115,18 +115,7 @@ class CourseCatalogItem extends StatelessWidget {
                   ],
                 ),
 
-                Wrap(
-                  spacing: 8.w,
-                  runSpacing: 8.w,
-                  children: [
-                    Tag(label: course.displayDepartment),
-                    Tag(
-                      label: context.l10n.courseSemester(
-                        course.standardSemester.toString(),
-                      ),
-                    ),
-                  ],
-                ),
+                Tag(label: course.displayDepartment),
               ],
             ),
           ),
