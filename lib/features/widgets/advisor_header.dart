@@ -7,6 +7,7 @@ import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_cubit.dart';
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
+import 'package:edu_advisor/features/settings/views/settings_view.dart';
 import 'package:edu_advisor/features/user/data/models/current_user_model.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
@@ -128,32 +129,26 @@ class _AdvisorHeaderContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                  IgnorePointer(
-                    ignoring: isLoggingOut,
-                    child: GestureDetector(
-                      onTap: () => context.read<AuthCubit>().logout(),
-                      child: Container(
-                        width: 34.w,
-                        height: 34.w,
-                        decoration: BoxDecoration(
-                          color: Colors.white24,
-                          borderRadius: BorderRadius.circular(10.r),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const SettingsView(),
                         ),
-                        alignment: Alignment.center,
-                        child: isLoggingOut
-                            ? SizedBox(
-                                width: 16.w,
-                                height: 16.w,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Icon(
-                                Icons.logout_rounded,
-                                color: Colors.white,
-                                size: 18.r,
-                              ),
+                      );
+                    },
+                    child: Container(
+                      width: 34.w,
+                      height: 34.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white24,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.settings_outlined,
+                        color: Colors.white,
+                        size: 18.r,
                       ),
                     ),
                   ),
@@ -164,8 +159,7 @@ class _AdvisorHeaderContent extends StatelessWidget {
                 children: [
                   statCard(
                     icon: Icons.people_outline,
-                  value: user?.studentsCount.toString() ?? '--',
-                    // value: studentCount.toString(),
+                    value: user?.studentsCount.toString() ?? '--',
                     label: 'Students',
                   ),
                   const SizedBox(width: 12),
