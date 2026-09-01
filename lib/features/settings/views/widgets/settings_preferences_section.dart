@@ -5,7 +5,6 @@ import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/theme/theme_cubit.dart';
 import 'package:edu_advisor/core/localization/language_cubit.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
-import 'package:edu_advisor/features/settings/views/widgets/settings_info_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

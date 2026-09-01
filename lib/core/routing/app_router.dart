@@ -8,6 +8,7 @@ import 'package:edu_advisor/features/auth/presentation/views/login/choose_user_r
 import 'package:edu_advisor/features/auth/presentation/views/login/student_login.dart';
 
 import 'package:edu_advisor/features/main/main_view.dart';
+import 'package:edu_advisor/features/home/views/recommended_courses_list_view.dart';
 import 'package:edu_advisor/features/onbording/onboarding_view.dart';
 import 'package:edu_advisor/features/onbording/splash_view.dart';
 import 'package:edu_advisor/features/profile/views/notifications_view.dart';
@@ -118,6 +119,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.courseRecommendations,
       builder: (context, state) => const CourseRecommendationsView(),
+    ),
+    GoRoute(
+      path: AppRoutes.recommendedCoursesList,
+      builder: (context, state) => const RecommendedCoursesListView(),
     ),
     GoRoute(
       path: AppRoutes.courseRegistration,

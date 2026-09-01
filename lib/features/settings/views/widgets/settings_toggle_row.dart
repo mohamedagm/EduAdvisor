@@ -53,7 +53,6 @@ class SettingsToggleRow extends StatelessWidget {
         Switch.adaptive(
           value: isOn,
           onChanged: onChanged,
-          activeColor: context.colorScheme.primary,
           activeTrackColor: context.colorScheme.primary,
           thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
             if (states.contains(WidgetState.selected)) {
