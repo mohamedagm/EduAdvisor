@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
 import 'package:edu_advisor/features/requests/widgets/course_request_card.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RequestHeaderSection extends StatelessWidget {
   final StudentRequest request;
@@ -59,14 +59,9 @@ class CoursesListView extends StatelessWidget {
       itemCount: request.enrollments.length,
       itemBuilder: (context, index) {
         final enrollment = request.enrollments[index];
-        final dateFormatted =
-            "${request.submittedAt.day}/${request.submittedAt.month}/${request.submittedAt.year}";
 
         return CourseRequestCard(
-          code: enrollment.courseCode,
-          name: enrollment.courseName,
-          credits: enrollment.creditHours,
-          date: dateFormatted,
+          enrollment: enrollment,
         );
       },
     );

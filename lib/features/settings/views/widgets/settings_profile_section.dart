@@ -1,18 +1,33 @@
-import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_card.dart';
 import 'package:edu_advisor/features/settings/views/widgets/settings_info_row.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:edu_advisor/core/theme/app_theme_colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsProfileSection extends StatelessWidget {
   const SettingsProfileSection({super.key});
+
+  Future<void> _pickAndUploadImage(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 70,
+    );
+
+    if (pickedFile != null && context.mounted) {
+      final file = File(pickedFile.path);
+      context.read<CurrentUserCubit>().updateProfilePhoto(file);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,22 +63,43 @@ class SettingsProfileSection extends StatelessWidget {
               SizedBox(height: 16.w),
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 24.r,
-                    backgroundColor: context.themeColors.mutedSurface,
-                    child: user?.profileImageUrl?.isNotEmpty == true
-                        ? ClipOval(
-                            child: SizedBox.expand(
-                              child: AppShimmerNetworkImage(
-                                imageUrl: user!.profileImageUrl!,
+                  // 👈 الأفاتار المطور مع إضافة زر الكاميرا للتعديل
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 28.r,
+                        backgroundColor: context.themeColors.mutedSurface,
+                        child: user?.profileImageUrl?.isNotEmpty == true
+                            ? ClipOval(
+                                child: SizedBox.expand(
+                                  child: AppShimmerNetworkImage(
+                                    imageUrl: user!.profileImageUrl!,
+                                  ),
+                                ),
+                              )
+                            : Icon(
+                                Icons.person,
+                                size: 28.r,
+                                color: context.themeColors.textMuted,
                               ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () => _pickAndUploadImage(context),
+                          child: CircleAvatar(
+                            radius: 10.r,
+                            backgroundColor: context.colorScheme.primary,
+                            child: Icon(
+                              Icons.camera_alt_rounded,
+                              size: 11.r,
+                              color: Colors.white,
                             ),
-                          )
-                        : Icon(
-                            Icons.person,
-                            size: 24.r,
-                            color: context.themeColors.textMuted,
                           ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(width: 16.w),
                   Expanded(
