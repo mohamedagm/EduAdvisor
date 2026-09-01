@@ -1,11 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
-
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/utils/app_screen_util.dart';
-import 'widgets/service_app_bar.dart';
+import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/utils/app_screen_util.dart';
+import 'package:edu_advisor/core/widgets/app_shimmer.dart';
+import 'package:edu_advisor/features/services/data/models/recommendation_data_model.dart';
+import 'package:edu_advisor/features/services/data/models/suggested_course_model.dart';
+import 'package:edu_advisor/features/services/data/repo/recommendation_repo.dart';
+import 'package:edu_advisor/features/services/manager/recommendation_cubit/recommendation_cubit.dart';
+import 'package:edu_advisor/features/services/manager/recommendation_cubit/recommendation_state.dart';
+import 'package:edu_advisor/features/services/views/widgets/service_app_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CourseRecommendationsView extends StatelessWidget {
@@ -13,128 +20,264 @@ class CourseRecommendationsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recommendations = _recommendations(context);
+    return BlocProvider(
+      create: (context) =>
+          RecommendationCubit(repo: getIt<RecommendationRepo>())
+            ..getRecommendations(),
+      child: const _RecommendationsBody(),
+    );
+  }
+}
 
+class _RecommendationsBody extends StatelessWidget {
+  const _RecommendationsBody();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.colorScheme.surface,
       appBar: ServiceAppBar(
         title: context.l10n.courseRecommendationsTitle,
         subtitle: context.l10n.aiPoweredSuggestionsForYou,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: context.themeColors.infoContainer,
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(8.w),
-                    decoration: BoxDecoration(
-                      color: context.themeColors.card,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.auto_awesome,
-                      color: AppColors.aiPurple,
-                      size: 24.r,
-                    ),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.l10n.personalizedForYou,
-                          style: AppTextStyles.heading3PoppinsReg16.responsive
-                              .copyWith(
-                                color: context.themeColors.textPrimary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                        SizedBox(height: 2.w),
-                        Text(
-                          context.l10n.basedOnAcademicProfile,
-                          style: AppTextStyles.bodyInterRegular12.responsive
-                              .copyWith(color: context.themeColors.textMuted),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 24.w),
-            for (var index = 0; index < recommendations.length; index++) ...[
-              _buildRecommendationCard(
-                context: context,
-                recommendation: recommendations[index],
-              ),
-              if (index != recommendations.length - 1) SizedBox(height: 16.w),
-            ],
-            SizedBox(height: 24.w),
+      body: BlocBuilder<RecommendationCubit, RecommendationState>(
+        builder: (context, state) {
+          if (state is RecommendationLoading ||
+              state is RecommendationInitial) {
+            return const _RecommendationsShimmer();
+          }
 
-            Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: context.themeColors.infoContainer,
-                border: Border.all(
-                  color: context.colorScheme.primary.withValues(alpha: 0.2),
-                ),
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.workspace_premium_outlined,
-                    color: context.colorScheme.primary,
-                    size: 24.r,
-                  ),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.l10n.recommendationsUpdatedDaily,
-                          style: AppTextStyles.interRegular16.responsive
-                              .copyWith(
-                                color: context.themeColors.textPrimary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                        SizedBox(height: 4.w),
-                        Text(
-                          context.l10n.recommendationsAiDescription,
-                          style: AppTextStyles.bodyInterRegular12.responsive
-                              .copyWith(
-                                color: context.themeColors.textSecondary,
-                                height: 1.4,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 24.w),
-          ],
-        ),
+          if (state is RecommendationFailure) {
+            return _RecommendationsError(message: state.failure.message);
+          }
+
+          if (state is RecommendationLoaded) {
+            return _RecommendationsContent(data: state.data);
+          }
+
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
+}
 
-  Widget _buildRecommendationCard({
-    required BuildContext context,
-    required _RecommendationData recommendation,
-  }) {
+class _RecommendationsContent extends StatelessWidget {
+  const _RecommendationsContent({required this.data});
+
+  final RecommendationDataModel data;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _AiHeroHeader(),
+          SizedBox(height: 20.w),
+          Row(
+            children: [
+              Expanded(
+                child: _SummaryCard(
+                  icon: Icons.schedule,
+                  color: context.themeColors.info,
+                  bgColor: context.themeColors.infoContainer,
+                  value: '${data.totalCreditHours}',
+                  label: context.l10n.totalSelectedHours,
+                ),
+              ),
+              SizedBox(width: 12.w),
+              Expanded(
+                child: _SummaryCard(
+                  icon: Icons.balance,
+                  color: context.themeColors.warning,
+                  bgColor: context.themeColors.warningContainer,
+                  value: '${data.maxAllowedHours}',
+                  label: context.l10n.maxAllowedHoursLabel,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 24.w),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                context.l10n.recommendedCourses,
+                style: AppTextStyles.heading1_20b.copyWith(
+                  fontSize: 16.sp,
+                  color: context.themeColors.textPrimary,
+                ),
+              ),
+              Text(
+                context.l10n.recommendedCoursesCount(
+                  data.suggestedCourses.length,
+                ),
+                style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
+                  color: context.themeColors.textMuted,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16.w),
+          if (data.suggestedCourses.isEmpty)
+            const _EmptyRecommendations()
+          else
+            ...data.suggestedCourses.map(
+              (course) => Padding(
+                padding: EdgeInsets.only(bottom: 16.w),
+                child: _RecommendedCourseCard(course: course),
+              ),
+            ),
+          SizedBox(height: 16.w),
+        ],
+      ),
+    );
+  }
+}
+
+class _AiHeroHeader extends StatelessWidget {
+  const _AiHeroHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(20.w),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.aiPurple,
+            AppColors.purplePrimary,
+            AppColors.bluePrimary,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20.r),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.aiPurple.withValues(alpha: 0.25),
+            blurRadius: 18.r,
+            offset: Offset(0, 6.r),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(10.w),
+                decoration: BoxDecoration(
+                  color: AppColors.white.withValues(alpha: 0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.auto_awesome,
+                  color: AppColors.white,
+                  size: 26.r,
+                ),
+              ),
+              SizedBox(width: 14.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.l10n.aiRecommendationHeaderTitle,
+                      style: AppTextStyles.heading3PoppinsReg16.responsive
+                          .copyWith(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                    SizedBox(height: 2.w),
+                    Text(
+                      context.l10n.basedOnAcademicProfile,
+                      style: AppTextStyles.bodyInterRegular12.responsive
+                          .copyWith(color: AppColors.white.withValues(alpha: 0.9)),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16.w),
+          Text(
+            context.l10n.aiRecommendationHeaderSubtitle,
+            style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
+              color: AppColors.white.withValues(alpha: 0.92),
+              height: 1.4,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SummaryCard extends StatelessWidget {
+  const _SummaryCard({
+    required this.icon,
+    required this.color,
+    required this.bgColor,
+    required this.value,
+    required this.label,
+  });
+
+  final IconData icon;
+  final Color color;
+  final Color bgColor;
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: context.themeColors.card,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: context.themeColors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.all(8.w),
+            decoration: BoxDecoration(color: bgColor, shape: BoxShape.circle),
+            child: Icon(icon, color: color, size: 20.r),
+          ),
+          SizedBox(height: 12.w),
+          Text(
+            value,
+            style: AppTextStyles.heading2PoppinsSb18.responsive.copyWith(
+              color: context.themeColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 4.w),
+          Text(
+            label,
+            style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
+              color: context.themeColors.textMuted,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RecommendedCourseCard extends StatelessWidget {
+  const _RecommendedCourseCard({required this.course});
+
+  final SuggestedCourseModel course;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -149,16 +292,16 @@ class CourseRecommendationsView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 48.r,
-                height: 48.r,
+                width: 46.r,
+                height: 46.r,
                 decoration: BoxDecoration(
-                  color: recommendation.iconBgColor,
+                  color: context.themeColors.purpleContainer,
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Icon(
-                  recommendation.iconData,
-                  color: recommendation.iconForegroundColor,
-                  size: 28.r,
+                  Icons.menu_book_outlined,
+                  color: AppColors.aiPurple,
+                  size: 26.r,
                 ),
               ),
               SizedBox(width: 12.w),
@@ -166,294 +309,262 @@ class CourseRecommendationsView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            recommendation.courseCode,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.heading1_20b.copyWith(
-                              fontSize: 18.sp,
-                              color: context.themeColors.textPrimary,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 10.w,
-                            vertical: 4.w,
-                          ),
-                          decoration: BoxDecoration(
-                            color: context.themeColors.purpleContainer,
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.star_border,
-                                color: AppColors.aiPurple,
-                                size: 16.r,
-                              ),
-                              SizedBox(width: 4.w),
-                              Text(
-                                '${recommendation.matchScore}%',
-                                style: AppTextStyles
-                                    .bodyInterMedium14
-                                    .responsive
-                                    .copyWith(color: AppColors.aiPurple),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    Text(
+                      course.code,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.heading1_20b.copyWith(
+                        fontSize: 16.sp,
+                        color: context.themeColors.textPrimary,
+                      ),
                     ),
                     SizedBox(height: 2.w),
                     Text(
-                      recommendation.courseName,
+                      course.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.poppinsRegular14.responsive.copyWith(
-                        color: context.themeColors.textMuted,
-                      ),
+                      style: AppTextStyles.poppinsRegular14.responsive
+                          .copyWith(color: context.themeColors.textMuted),
                     ),
                   ],
                 ),
               ),
+              SizedBox(width: 8.w),
+              _AdvisorScoreBadge(score: course.advisorScore),
             ],
           ),
           SizedBox(height: 16.w),
-
-          Wrap(
-            spacing: 8.w,
-            runSpacing: 8.w,
+          Divider(height: 1.w, color: context.themeColors.border),
+          SizedBox(height: 12.w),
+          Row(
             children: [
-              _buildSmallBadge(
-                context: context,
-                text: recommendation.credits,
-                textColor: context.themeColors.textPrimary,
-                borderColor: context.colorScheme.outline,
+              Icon(
+                Icons.schedule,
+                size: 16.r,
+                color: context.themeColors.textMuted,
               ),
-              _buildSmallBadge(
-                context: context,
-                text: recommendation.difficulty,
-                textColor: recommendation.difficultyColor,
-                borderColor: recommendation.difficultyColor.withValues(
-                  alpha: 0.4,
+              SizedBox(width: 6.w),
+              Text(
+                '${course.hours} ${context.l10n.creditHoursLabel}',
+                style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
+                  color: context.themeColors.textSecondary,
                 ),
               ),
             ],
-          ),
-          SizedBox(height: 16.w),
-
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(12.w),
-            decoration: BoxDecoration(
-              color: context.colorScheme.surface,
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            child: Text(
-              recommendation.reason,
-              style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
-                color: context.themeColors.textSecondary,
-                fontWeight: FontWeight.w400,
-                height: 1.4,
-              ),
-            ),
-          ),
-          SizedBox(height: 16.w),
-
-          Column(
-            children: recommendation.benefits.map((benefit) {
-              return Padding(
-                padding: EdgeInsets.only(bottom: 8.w),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.trending_up,
-                      color: context.themeColors.success,
-                      size: 18.r,
-                    ),
-                    SizedBox(width: 8.w),
-                    Expanded(
-                      child: Text(
-                        benefit,
-                        style: AppTextStyles.bodyInterRegular12.copyWith(
-                          color: context.themeColors.textSecondary,
-                          fontSize: 13.sp,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildSmallBadge({
-    required BuildContext context,
-    required String text,
-    required Color textColor,
-    required Color borderColor,
-  }) {
+class _AdvisorScoreBadge extends StatelessWidget {
+  const _AdvisorScoreBadge({required this.score});
+
+  final num score;
+
+  int get _percent {
+    if (score <= 1) {
+      return (score * 100).round();
+    }
+    return score.round();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.w),
+      decoration: BoxDecoration(
+        color: context.themeColors.purpleContainer,
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.star_rounded, color: AppColors.aiPurple, size: 16.r),
+              SizedBox(width: 2.w),
+              Text(
+                '$_percent%',
+                style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
+                  color: AppColors.aiPurple,
+                ),
+              ),
+            ],
+          ),
+          Text(
+            context.l10n.advisorScore,
+            style: AppTextStyles.bodyInterRegular12.copyWith(
+              fontSize: 10.sp,
+              color: context.themeColors.textMuted,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EmptyRecommendations extends StatelessWidget {
+  const _EmptyRecommendations();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(24.w),
       decoration: BoxDecoration(
         color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: borderColor),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: context.themeColors.border),
       ),
-      child: Text(
-        text,
-        style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
-          color: textColor,
-          fontWeight: FontWeight.w500,
+      child: Column(
+        children: [
+          Icon(
+            Icons.sentiment_satisfied_alt_outlined,
+            size: 40.r,
+            color: context.themeColors.textMuted,
+          ),
+          SizedBox(height: 12.w),
+          Text(
+            context.l10n.noRecommendationsTitle,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
+              color: context.themeColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 8.w),
+          Text(
+            context.l10n.noRecommendationsDescription,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.bodyInterRegular12.responsive.copyWith(
+              color: context.themeColors.textMuted,
+              height: 1.4,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RecommendationsShimmer extends StatelessWidget {
+  const _RecommendationsShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16.w),
+      physics: const NeverScrollableScrollPhysics(),
+      child: AppShimmer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppShimmerBox(height: 132.w, borderRadius: 20.r),
+            SizedBox(height: 20.w),
+            Row(
+              children: [
+                Expanded(
+                  child: AppShimmerBox(height: 110.w, borderRadius: 16.r),
+                ),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: AppShimmerBox(height: 110.w, borderRadius: 16.r),
+                ),
+              ],
+            ),
+            SizedBox(height: 24.w),
+            AppShimmerBox(width: 140.w, height: 18.w),
+            SizedBox(height: 16.w),
+            const _SkeletonCard(),
+            SizedBox(height: 16.w),
+            const _SkeletonCard(),
+          ],
         ),
       ),
     );
   }
+}
 
-  List<_RecommendationData> _recommendations(BuildContext context) {
-    return [
-      _RecommendationData(
-        iconData: Icons.smart_toy_outlined,
-        iconBgColor: AppColors.aiPurple,
-        iconForegroundColor: AppColors.white,
-        courseCode: 'CS 301',
-        courseName: context.l10n.machineLearning,
-        matchScore: 95,
-        credits: context.l10n.courseCredits('3'),
-        difficulty: context.l10n.hardDifficulty,
-        difficultyColor: context.colorScheme.error,
-        reason: context.l10n.machineLearningRecommendationReason,
-        benefits: [
-          context.l10n.programmingStrengthBenefit,
-          context.l10n.jobMarketDemandBenefit,
-          context.l10n.gpaImprovementBenefit,
+class _SkeletonCard extends StatelessWidget {
+  const _SkeletonCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: context.themeColors.card,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: context.themeColors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              AppShimmerBox(width: 46.r, height: 46.r, borderRadius: 12.r),
+              SizedBox(width: 12.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppShimmerBox(width: 96.w, height: 16.w),
+                    SizedBox(height: 8.w),
+                    AppShimmerBox(width: 180.w, height: 14.w),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16.w),
+          Divider(height: 1.w, color: context.themeColors.border),
+          SizedBox(height: 12.w),
+          AppShimmerBox(width: 100.w, height: 14.w),
         ],
       ),
-      _RecommendationData(
-        iconData: Icons.cloud_outlined,
-        iconBgColor: context.themeColors.info,
-        iconForegroundColor: context.themeColors.onInfo,
-        courseCode: 'CS 315',
-        courseName: context.l10n.cloudComputing,
-        matchScore: 91,
-        credits: context.l10n.courseCredits('3'),
-        difficulty: context.l10n.mediumDifficulty,
-        difficultyColor: context.themeColors.warning,
-        reason: context.l10n.cloudComputingRecommendationReason,
-        benefits: [
-          context.l10n.networkingFoundationBenefit,
-          context.l10n.cloudSkillsBenefit,
-          context.l10n.cloudCareerBenefit,
-        ],
-      ),
-      _RecommendationData(
-        iconData: Icons.phone_android_outlined,
-        iconBgColor: context.themeColors.success,
-        iconForegroundColor: context.themeColors.onSuccess,
-        courseCode: 'CS 322',
-        courseName: context.l10n.mobileApplicationDevelopment,
-        matchScore: 88,
-        credits: context.l10n.courseCredits('3'),
-        difficulty: context.l10n.mediumDifficulty,
-        difficultyColor: context.themeColors.warning,
-        reason: context.l10n.mobileDevelopmentRecommendationReason,
-        benefits: [
-          context.l10n.portfolioProjectBenefit,
-          context.l10n.mobileCareerBenefit,
-          context.l10n.teamworkExperienceBenefit,
-        ],
-      ),
-      _RecommendationData(
-        iconData: Icons.security_outlined,
-        iconBgColor: AppColors.aiPink,
-        iconForegroundColor: AppColors.white,
-        courseCode: 'CS 340',
-        courseName: context.l10n.cybersecurityFundamentals,
-        matchScore: 85,
-        credits: context.l10n.courseCredits('3'),
-        difficulty: context.l10n.mediumDifficulty,
-        difficultyColor: context.themeColors.warning,
-        reason: context.l10n.cybersecurityRecommendationReason,
-        benefits: [
-          context.l10n.cybersecurityDemandBenefit,
-          context.l10n.securityTrackBenefit,
-          context.l10n.riskAssessmentBenefit,
-        ],
-      ),
-      _RecommendationData(
-        iconData: Icons.query_stats_outlined,
-        iconBgColor: context.themeColors.warning,
-        iconForegroundColor: context.themeColors.onWarning,
-        courseCode: 'STAT 310',
-        courseName: context.l10n.appliedStatistics,
-        matchScore: 82,
-        credits: context.l10n.courseCredits('3'),
-        difficulty: context.l10n.mediumDifficulty,
-        difficultyColor: context.themeColors.warning,
-        reason: context.l10n.statisticsRecommendationReason,
-        benefits: [
-          context.l10n.dataInterpretationBenefit,
-          context.l10n.dataSciencePrerequisiteBenefit,
-          context.l10n.graduationProjectBenefit,
-        ],
-      ),
-      _RecommendationData(
-        iconData: Icons.architecture,
-        iconBgColor: context.themeColors.warning,
-        iconForegroundColor: context.themeColors.onWarning,
-        courseCode: 'MATH 301',
-        courseName: context.l10n.advancedLinearAlgebra,
-        matchScore: 78,
-        credits: context.l10n.courseCredits('4'),
-        difficulty: context.l10n.hardDifficulty,
-        difficultyColor: context.colorScheme.error,
-        reason: context.l10n.linearAlgebraRecommendationReason,
-        benefits: [
-          context.l10n.mlTrackBenefit,
-          context.l10n.mathBackgroundBenefit,
-          context.l10n.researchOpportunitiesBenefit,
-        ],
-      ),
-    ];
+    );
   }
 }
 
-class _RecommendationData {
-  const _RecommendationData({
-    required this.iconData,
-    required this.iconBgColor,
-    required this.iconForegroundColor,
-    required this.courseCode,
-    required this.courseName,
-    required this.matchScore,
-    required this.credits,
-    required this.difficulty,
-    required this.difficultyColor,
-    required this.reason,
-    required this.benefits,
-  });
+class _RecommendationsError extends StatelessWidget {
+  const _RecommendationsError({required this.message});
 
-  final IconData iconData;
-  final Color iconBgColor;
-  final Color iconForegroundColor;
-  final String courseCode;
-  final String courseName;
-  final int matchScore;
-  final String credits;
-  final String difficulty;
-  final Color difficultyColor;
-  final String reason;
-  final List<String> benefits;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(24.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.cloud_off_outlined,
+              size: 40.r,
+              color: context.colorScheme.error,
+            ),
+            SizedBox(height: 12.w),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
+                color: context.themeColors.textSecondary,
+              ),
+            ),
+            SizedBox(height: 12.w),
+            TextButton(
+              onPressed: context
+                  .read<RecommendationCubit>()
+                  .getRecommendations,
+              child: Text(context.l10n.retry),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

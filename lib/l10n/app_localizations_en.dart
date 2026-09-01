@@ -807,121 +807,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get basedOnAcademicProfile => 'Based on your academic profile';
 
   @override
-  String get machineLearning => 'Machine Learning';
+  String get aiRecommendationHeaderTitle => 'AI-Powered Course Recommendations';
 
   @override
-  String get advancedLinearAlgebra => 'Advanced Linear Algebra';
+  String get aiRecommendationHeaderSubtitle =>
+      'Hand-picked courses based on your GPA, level, and academic history.';
 
   @override
-  String get hardDifficulty => 'Hard';
+  String get totalSelectedHours => 'Total Hours';
 
   @override
-  String get machineLearningRecommendationReason =>
-      'Strong performance in Data Structures. High demand field.';
+  String get maxAllowedHoursLabel => 'Max Allowed';
 
   @override
-  String get programmingStrengthBenefit =>
-      'Aligns with your strengths in programming';
+  String get advisorScore => 'Advisor Match';
 
   @override
-  String get jobMarketDemandBenefit => 'High job market demand';
+  String get creditHoursLabel => 'Credit Hours';
 
   @override
-  String get gpaImprovementBenefit => 'Can improve GPA by +0.4';
+  String recommendedCoursesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Recommended Courses',
+      one: '$count Recommended Course',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get linearAlgebraRecommendationReason =>
-      'Strong foundation for AI/ML specialization.';
+  String get noRecommendationsTitle => 'No recommendations yet';
 
   @override
-  String get mlTrackBenefit => 'Essential for ML/AI track';
-
-  @override
-  String get mathBackgroundBenefit => 'Strong math background advantage';
-
-  @override
-  String get researchOpportunitiesBenefit => 'Research opportunities';
-
-  @override
-  String get mediumDifficulty => 'Medium';
-
-  @override
-  String get cloudComputing => 'Cloud Computing';
-
-  @override
-  String get cloudComputingRecommendationReason =>
-      'Your strong results in Computer Networks and Operating Systems make this a natural next step.';
-
-  @override
-  String get networkingFoundationBenefit =>
-      'Builds on your networking foundation';
-
-  @override
-  String get cloudSkillsBenefit => 'Develops practical AWS and Azure skills';
-
-  @override
-  String get cloudCareerBenefit => 'Prepares you for cloud engineering roles';
-
-  @override
-  String get mobileApplicationDevelopment => 'Mobile Application Development';
-
-  @override
-  String get mobileDevelopmentRecommendationReason =>
-      'Your performance in OOP and Software Engineering indicates strong readiness for this project-based course.';
-
-  @override
-  String get portfolioProjectBenefit =>
-      'Adds a production-ready app to your portfolio';
-
-  @override
-  String get mobileCareerBenefit => 'Opens mobile and full-stack career paths';
-
-  @override
-  String get teamworkExperienceBenefit =>
-      'Provides hands-on team project experience';
-
-  @override
-  String get cybersecurityFundamentals => 'Cybersecurity Fundamentals';
-
-  @override
-  String get cybersecurityRecommendationReason =>
-      'Your networking knowledge and analytical performance are a strong fit for introductory security work.';
-
-  @override
-  String get cybersecurityDemandBenefit =>
-      'Fast-growing demand across industries';
-
-  @override
-  String get securityTrackBenefit => 'Unlocks advanced security electives';
-
-  @override
-  String get riskAssessmentBenefit => 'Builds practical risk assessment skills';
-
-  @override
-  String get appliedStatistics => 'Applied Statistics';
-
-  @override
-  String get statisticsRecommendationReason =>
-      'Recommended to strengthen data analysis skills for AI electives and your graduation project.';
-
-  @override
-  String get dataInterpretationBenefit =>
-      'Improves data interpretation and reporting';
-
-  @override
-  String get dataSciencePrerequisiteBenefit =>
-      'Supports advanced data science electives';
-
-  @override
-  String get graduationProjectBenefit =>
-      'Useful for research and graduation projects';
-
-  @override
-  String get recommendationsUpdatedDaily => 'Recommendations updated daily';
-
-  @override
-  String get recommendationsAiDescription =>
-      'Our AI analyzes your performance, prerequisites, and career goals to suggest the best courses.';
+  String get noRecommendationsDescription =>
+      'We couldn\'t find suitable courses for you right now. Please check back later.';
 
   @override
   String get creditLimitReached => 'Credit limit reached';

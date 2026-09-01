@@ -818,115 +818,45 @@ class AppLocalizationsAr extends AppLocalizations {
   String get basedOnAcademicProfile => 'بناءً على ملفك الأكاديمي';
 
   @override
-  String get machineLearning => 'تعلم الآلة';
+  String get aiRecommendationHeaderTitle =>
+      'اقتراحات المقررات بالذكاء الاصطناعي';
 
   @override
-  String get advancedLinearAlgebra => 'الجبر الخطي المتقدم';
+  String get aiRecommendationHeaderSubtitle =>
+      'مقررات مختارة بعناية بناءً على معدلك ومستواك وتاريخك الأكاديمي.';
 
   @override
-  String get hardDifficulty => 'صعب';
+  String get totalSelectedHours => 'إجمالي الساعات';
 
   @override
-  String get machineLearningRecommendationReason =>
-      'أداء قوي في هياكل البيانات ومجال مطلوب بشدة.';
+  String get maxAllowedHoursLabel => 'الحد الأقصى';
 
   @override
-  String get programmingStrengthBenefit => 'يتوافق مع نقاط قوتك في البرمجة';
+  String get advisorScore => 'توافق المرشد';
 
   @override
-  String get jobMarketDemandBenefit => 'طلب مرتفع في سوق العمل';
+  String get creditHoursLabel => 'ساعات معتمدة';
 
   @override
-  String get gpaImprovementBenefit => 'قد يحسّن معدلك بمقدار +0.4';
+  String recommendedCoursesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مقرر موصى به',
+      many: '$count مقررًا موصى به',
+      few: '$count مقررات موصى بها',
+      two: '$count مقرران موصى بهما',
+      one: '$count مقرر موصى به',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get linearAlgebraRecommendationReason =>
-      'أساس قوي لتخصص الذكاء الاصطناعي وتعلم الآلة.';
+  String get noRecommendationsTitle => 'لا توجد اقتراحات بعد';
 
   @override
-  String get mlTrackBenefit => 'أساسي لمسار تعلم الآلة والذكاء الاصطناعي';
-
-  @override
-  String get mathBackgroundBenefit => 'الاستفادة من خلفيتك الرياضية القوية';
-
-  @override
-  String get researchOpportunitiesBenefit => 'فرص بحثية';
-
-  @override
-  String get mediumDifficulty => 'متوسط';
-
-  @override
-  String get cloudComputing => 'الحوسبة السحابية';
-
-  @override
-  String get cloudComputingRecommendationReason =>
-      'نتائجك القوية في شبكات الحاسب ونظم التشغيل تجعل هذا المقرر خطوة تالية مناسبة.';
-
-  @override
-  String get networkingFoundationBenefit => 'يبني على أساسك القوي في الشبكات';
-
-  @override
-  String get cloudSkillsBenefit => 'يطور مهارات عملية في AWS وAzure';
-
-  @override
-  String get cloudCareerBenefit => 'يؤهلك لوظائف هندسة الحوسبة السحابية';
-
-  @override
-  String get mobileApplicationDevelopment => 'تطوير تطبيقات الهاتف';
-
-  @override
-  String get mobileDevelopmentRecommendationReason =>
-      'أداؤك في البرمجة كائنية التوجه وهندسة البرمجيات يدل على استعداد قوي لهذا المقرر العملي.';
-
-  @override
-  String get portfolioProjectBenefit => 'يضيف تطبيقًا متكاملًا إلى معرض أعمالك';
-
-  @override
-  String get mobileCareerBenefit =>
-      'يفتح مسارات مهنية في تطوير الهاتف والـ Full Stack';
-
-  @override
-  String get teamworkExperienceBenefit => 'يمنحك خبرة عملية في مشروعات الفريق';
-
-  @override
-  String get cybersecurityFundamentals => 'أساسيات الأمن السيبراني';
-
-  @override
-  String get cybersecurityRecommendationReason =>
-      'معرفتك بالشبكات وأداؤك التحليلي يجعلانك مناسبًا للبدء في مجال الأمن السيبراني.';
-
-  @override
-  String get cybersecurityDemandBenefit => 'طلب متزايد في مختلف القطاعات';
-
-  @override
-  String get securityTrackBenefit => 'يفتح مقررات أمنية متقدمة';
-
-  @override
-  String get riskAssessmentBenefit => 'يبني مهارات عملية في تقييم المخاطر';
-
-  @override
-  String get appliedStatistics => 'الإحصاء التطبيقي';
-
-  @override
-  String get statisticsRecommendationReason =>
-      'موصى به لتقوية مهارات تحليل البيانات اللازمة لمقررات الذكاء الاصطناعي ومشروع التخرج.';
-
-  @override
-  String get dataInterpretationBenefit => 'يحسن تفسير البيانات وإعداد التقارير';
-
-  @override
-  String get dataSciencePrerequisiteBenefit =>
-      'يدعم مقررات علم البيانات المتقدمة';
-
-  @override
-  String get graduationProjectBenefit => 'مفيد للأبحاث ومشروعات التخرج';
-
-  @override
-  String get recommendationsUpdatedDaily => 'تُحدّث الاقتراحات يوميًا';
-
-  @override
-  String get recommendationsAiDescription =>
-      'يحلل الذكاء الاصطناعي أداءك والمتطلبات السابقة وأهدافك المهنية لاقتراح أفضل المقررات.';
+  String get noRecommendationsDescription =>
+      'لم نتمكن من إيجاد مقررات مناسبة لك حاليًا. يرجى المحاولة لاحقًا.';
 
   @override
   String get creditLimitReached => 'تم بلوغ حد الساعات';

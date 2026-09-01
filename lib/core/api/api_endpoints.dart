@@ -23,6 +23,7 @@ class ApiEndpoints {
   static const String studentEnrollments = '/api/Student/students/me/enrollments';
   static const String availableCourses = '/api/SemesterCourse/available-courses';
   static const String registrationRequests = '/api/Registrations';
+  static const String recommendations = '/api/v1/recommend';
 
   static const String aiAdvisorChat = 'https://advisor.flowlogichub.space/chat';
   static const String getMyStudents = '/api/Advisor/my-students';

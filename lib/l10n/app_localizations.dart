@@ -1502,209 +1502,59 @@ abstract class AppLocalizations {
   /// **'Based on your academic profile'**
   String get basedOnAcademicProfile;
 
-  /// No description provided for @machineLearning.
+  /// No description provided for @aiRecommendationHeaderTitle.
   ///
   /// In en, this message translates to:
-  /// **'Machine Learning'**
-  String get machineLearning;
+  /// **'AI-Powered Course Recommendations'**
+  String get aiRecommendationHeaderTitle;
 
-  /// No description provided for @advancedLinearAlgebra.
+  /// No description provided for @aiRecommendationHeaderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Advanced Linear Algebra'**
-  String get advancedLinearAlgebra;
+  /// **'Hand-picked courses based on your GPA, level, and academic history.'**
+  String get aiRecommendationHeaderSubtitle;
 
-  /// No description provided for @hardDifficulty.
+  /// No description provided for @totalSelectedHours.
   ///
   /// In en, this message translates to:
-  /// **'Hard'**
-  String get hardDifficulty;
+  /// **'Total Hours'**
+  String get totalSelectedHours;
 
-  /// No description provided for @machineLearningRecommendationReason.
+  /// No description provided for @maxAllowedHoursLabel.
   ///
   /// In en, this message translates to:
-  /// **'Strong performance in Data Structures. High demand field.'**
-  String get machineLearningRecommendationReason;
+  /// **'Max Allowed'**
+  String get maxAllowedHoursLabel;
 
-  /// No description provided for @programmingStrengthBenefit.
+  /// No description provided for @advisorScore.
   ///
   /// In en, this message translates to:
-  /// **'Aligns with your strengths in programming'**
-  String get programmingStrengthBenefit;
+  /// **'Advisor Match'**
+  String get advisorScore;
 
-  /// No description provided for @jobMarketDemandBenefit.
+  /// No description provided for @creditHoursLabel.
   ///
   /// In en, this message translates to:
-  /// **'High job market demand'**
-  String get jobMarketDemandBenefit;
+  /// **'Credit Hours'**
+  String get creditHoursLabel;
 
-  /// No description provided for @gpaImprovementBenefit.
+  /// No description provided for @recommendedCoursesCount.
   ///
   /// In en, this message translates to:
-  /// **'Can improve GPA by +0.4'**
-  String get gpaImprovementBenefit;
+  /// **'{count, plural, =1{{count} Recommended Course} other{{count} Recommended Courses}}'**
+  String recommendedCoursesCount(int count);
 
-  /// No description provided for @linearAlgebraRecommendationReason.
+  /// No description provided for @noRecommendationsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Strong foundation for AI/ML specialization.'**
-  String get linearAlgebraRecommendationReason;
+  /// **'No recommendations yet'**
+  String get noRecommendationsTitle;
 
-  /// No description provided for @mlTrackBenefit.
+  /// No description provided for @noRecommendationsDescription.
   ///
   /// In en, this message translates to:
-  /// **'Essential for ML/AI track'**
-  String get mlTrackBenefit;
-
-  /// No description provided for @mathBackgroundBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Strong math background advantage'**
-  String get mathBackgroundBenefit;
-
-  /// No description provided for @researchOpportunitiesBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Research opportunities'**
-  String get researchOpportunitiesBenefit;
-
-  /// No description provided for @mediumDifficulty.
-  ///
-  /// In en, this message translates to:
-  /// **'Medium'**
-  String get mediumDifficulty;
-
-  /// No description provided for @cloudComputing.
-  ///
-  /// In en, this message translates to:
-  /// **'Cloud Computing'**
-  String get cloudComputing;
-
-  /// No description provided for @cloudComputingRecommendationReason.
-  ///
-  /// In en, this message translates to:
-  /// **'Your strong results in Computer Networks and Operating Systems make this a natural next step.'**
-  String get cloudComputingRecommendationReason;
-
-  /// No description provided for @networkingFoundationBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Builds on your networking foundation'**
-  String get networkingFoundationBenefit;
-
-  /// No description provided for @cloudSkillsBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Develops practical AWS and Azure skills'**
-  String get cloudSkillsBenefit;
-
-  /// No description provided for @cloudCareerBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Prepares you for cloud engineering roles'**
-  String get cloudCareerBenefit;
-
-  /// No description provided for @mobileApplicationDevelopment.
-  ///
-  /// In en, this message translates to:
-  /// **'Mobile Application Development'**
-  String get mobileApplicationDevelopment;
-
-  /// No description provided for @mobileDevelopmentRecommendationReason.
-  ///
-  /// In en, this message translates to:
-  /// **'Your performance in OOP and Software Engineering indicates strong readiness for this project-based course.'**
-  String get mobileDevelopmentRecommendationReason;
-
-  /// No description provided for @portfolioProjectBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Adds a production-ready app to your portfolio'**
-  String get portfolioProjectBenefit;
-
-  /// No description provided for @mobileCareerBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Opens mobile and full-stack career paths'**
-  String get mobileCareerBenefit;
-
-  /// No description provided for @teamworkExperienceBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Provides hands-on team project experience'**
-  String get teamworkExperienceBenefit;
-
-  /// No description provided for @cybersecurityFundamentals.
-  ///
-  /// In en, this message translates to:
-  /// **'Cybersecurity Fundamentals'**
-  String get cybersecurityFundamentals;
-
-  /// No description provided for @cybersecurityRecommendationReason.
-  ///
-  /// In en, this message translates to:
-  /// **'Your networking knowledge and analytical performance are a strong fit for introductory security work.'**
-  String get cybersecurityRecommendationReason;
-
-  /// No description provided for @cybersecurityDemandBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Fast-growing demand across industries'**
-  String get cybersecurityDemandBenefit;
-
-  /// No description provided for @securityTrackBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Unlocks advanced security electives'**
-  String get securityTrackBenefit;
-
-  /// No description provided for @riskAssessmentBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Builds practical risk assessment skills'**
-  String get riskAssessmentBenefit;
-
-  /// No description provided for @appliedStatistics.
-  ///
-  /// In en, this message translates to:
-  /// **'Applied Statistics'**
-  String get appliedStatistics;
-
-  /// No description provided for @statisticsRecommendationReason.
-  ///
-  /// In en, this message translates to:
-  /// **'Recommended to strengthen data analysis skills for AI electives and your graduation project.'**
-  String get statisticsRecommendationReason;
-
-  /// No description provided for @dataInterpretationBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Improves data interpretation and reporting'**
-  String get dataInterpretationBenefit;
-
-  /// No description provided for @dataSciencePrerequisiteBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Supports advanced data science electives'**
-  String get dataSciencePrerequisiteBenefit;
-
-  /// No description provided for @graduationProjectBenefit.
-  ///
-  /// In en, this message translates to:
-  /// **'Useful for research and graduation projects'**
-  String get graduationProjectBenefit;
-
-  /// No description provided for @recommendationsUpdatedDaily.
-  ///
-  /// In en, this message translates to:
-  /// **'Recommendations updated daily'**
-  String get recommendationsUpdatedDaily;
-
-  /// No description provided for @recommendationsAiDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Our AI analyzes your performance, prerequisites, and career goals to suggest the best courses.'**
-  String get recommendationsAiDescription;
+  /// **'We couldn\'t find suitable courses for you right now. Please check back later.'**
+  String get noRecommendationsDescription;
 
   /// No description provided for @creditLimitReached.
   ///

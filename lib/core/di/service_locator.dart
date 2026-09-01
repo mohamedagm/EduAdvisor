@@ -20,6 +20,7 @@ import 'package:edu_advisor/features/CourseCatalog/data/repo/course_catalog_repo
 import 'package:edu_advisor/features/profile/data/repo/profile_courses_repo.dart';
 import 'package:edu_advisor/features/requests/data/repo/advisor_request_repo.dart';
 import 'package:edu_advisor/features/services/data/repo/course_registration_repo.dart';
+import 'package:edu_advisor/features/services/data/repo/recommendation_repo.dart';
 import 'package:edu_advisor/features/user/data/repo/user_repo.dart';
 
 final getIt = GetIt.instance;
@@ -92,6 +93,10 @@ void setupDependencyInjection() {
 
   getIt.registerLazySingleton<CourseRegistrationRepo>(
     () => CourseRegistrationRepo(apiConsumer: getIt()),
+  );
+
+  getIt.registerLazySingleton<RecommendationRepo>(
+    () => RecommendationRepo(apiConsumer: getIt()),
   );
 
   getIt.registerLazySingleton<AiChatRemoteDataSource>(
