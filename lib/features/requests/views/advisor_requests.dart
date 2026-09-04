@@ -61,39 +61,6 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
             },
           ),
 
-          // if (_currentFilter != 'New Requests')
-          //   Padding(
-          //     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
-          //     child: TextField(
-          //       controller: _searchController,
-          //       decoration: InputDecoration(
-          //         hintText: 'Search by student name...',
-          //         prefixIcon: const Icon(Icons.search),
-          //         suffixIcon: _searchController.text.isNotEmpty
-          //             ? IconButton(
-          //                 icon: const Icon(Icons.clear),
-          //                 onPressed: () {
-          //                   _searchController.clear();
-          //                   context.read<RequestsCubit>().fetchRequests(
-          //                         status: _getMappedStatus(_currentFilter),
-          //                       );
-          //                   setState(() {});
-          //                 },
-          //               )
-          //             : null,
-          //         border: OutlineInputBorder(
-          //           borderRadius: BorderRadius.circular(12.r),
-          //         ),
-          //         contentPadding: EdgeInsets.symmetric(vertical: 0.w),
-          //       ),
-          //       onChanged: (value) {
-          //         setState(() {});
-          //         context.read<RequestsCubit>().fetchRequests(
-          //               status: _getMappedStatus(_currentFilter),
-          //             );
-          //       },
-          //     ),
-          //   ),
           RequestFilterBar(
             onFilterChanged: (newStatus) {
               setState(() {

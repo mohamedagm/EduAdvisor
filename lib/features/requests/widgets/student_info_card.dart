@@ -93,9 +93,7 @@ class StudentInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          // ⚠️ CGPA / Credits / Failed مش موجودين في الـ response الحالي
-          // بتاع /pending، فمسيباهم مخفيين مؤقتًا لحد ما يتوفر مصدر
-          // بيانات ليهم (زي endpoint تفاصيل الطالب الأكاديمية)
+
         ],
       ),
     );

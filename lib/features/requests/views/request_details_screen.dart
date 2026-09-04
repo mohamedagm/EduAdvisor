@@ -31,7 +31,8 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
-      if (_tabController.indexIsChanging || _tabController.index != _selectedTabIndex) {
+      if (_tabController.indexIsChanging ||
+          _tabController.index != _selectedTabIndex) {
         setState(() {
           _selectedTabIndex = _tabController.index;
         });
@@ -61,15 +62,19 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
     _setProcessing(true);
 
     final failure = await context.read<RequestsCubit>().rejectRequest(
-          widget.request.id,
-          reason: reason,
-        );
+      widget.request.id,
+      reason: reason,
+    );
 
     if (!mounted) return;
     _setProcessing(false);
 
     if (failure != null) {
-      _showToast(title: "Rejection Failed", desc: failure.apiResponse.message, isError: true);
+      _showToast(
+        title: "Rejection Failed",
+        desc: failure.apiResponse.message,
+        isError: true,
+      );
       return;
     }
 
@@ -84,13 +89,19 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
   Future<void> _approveRequest() async {
     _setProcessing(true);
 
-    final failure = await context.read<RequestsCubit>().approveRequest(widget.request.id);
+    final failure = await context.read<RequestsCubit>().approveRequest(
+      widget.request.id,
+    );
 
     if (!mounted) return;
     _setProcessing(false);
 
     if (failure != null) {
-      _showToast(title: "Approval Failed", desc: failure.apiResponse.message, isError: true);
+      _showToast(
+        title: "Approval Failed",
+        desc: failure.apiResponse.message,
+        isError: true,
+      );
       return;
     }
 
@@ -105,7 +116,11 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
     setState(() => _isProcessing = value);
   }
 
-  void _showToast({required String title, required String desc, bool isError = false}) {
+  void _showToast({
+    required String title,
+    required String desc,
+    bool isError = false,
+  }) {
     if (isError) {
       AppToast.error(context, title: title, description: desc);
     } else {
@@ -115,12 +130,13 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    // 👈 يظهر أزرار القرار فقط إذا كانت الحالة Pending وفي التبويب الأول (Current Requests)
-    final bool showActionButtons = widget.request.status == 1 && _selectedTabIndex == 0;
+    final bool showActionButtons =
+        widget.request.status == 1 && _selectedTabIndex == 0;
 
     return BlocProvider(
-      create: (context) => getIt<StudentHistoryCubit>()
-        ..fetchStudentHistory(widget.request.studentId),
+      create: (context) =>
+          getIt<StudentHistoryCubit>()
+            ..fetchStudentHistory(widget.request.studentId),
       child: Scaffold(
         backgroundColor: context.colorScheme.surface,
         body: SafeArea(

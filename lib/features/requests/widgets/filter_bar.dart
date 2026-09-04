@@ -60,8 +60,6 @@ class _RequestFilterBarState extends State<RequestFilterBar> {
                     });
 
                     widget.onFilterChanged(filter);
-
-                    // print("Selected Filter Sent to Parent: $filter");
                   }
                 },
               ),

@@ -5,16 +5,12 @@ import 'request_state.dart';
 
 class RequestsCubit extends Cubit<RequestsState> {
   RequestsCubit({required AdvisorRequestRepo advisorRepo})
-      : _advisorRepo = advisorRepo,
-        super(const RequestsInitial());
+    : _advisorRepo = advisorRepo,
+      super(const RequestsInitial());
 
   final AdvisorRequestRepo _advisorRepo;
 
-  // جلب البيانات بالاعتماد على Status الأرقام (0=Pending, 1=Approved, 2=Rejected)
-  Future<void> fetchRequests({
-    int? status = 1,
-    int page = 1,
-  }) async {
+  Future<void> fetchRequests({int? status = 1, int page = 1}) async {
     emit(const RequestsLoading());
 
     final result = await _advisorRepo.getRegistrations(
@@ -23,19 +19,16 @@ class RequestsCubit extends Cubit<RequestsState> {
       pageSize: 50,
     );
 
-    result.fold(
-      (failure) => emit(RequestsFailure(failure)),
-      (data) {
-        emit(
-          RequestsSuccess(
-            pendingRequests: status == 1 ? data.requests : [],
-            approvedRequests: status == 2 ? data.requests : [],
-            rejectedRequests: status == 3 ? data.requests : [],
-            totalCount: data.totalCount,
-          ),
-        );
-      },
-    );
+    result.fold((failure) => emit(RequestsFailure(failure)), (data) {
+      emit(
+        RequestsSuccess(
+          pendingRequests: status == 1 ? data.requests : [],
+          approvedRequests: status == 2 ? data.requests : [],
+          rejectedRequests: status == 3 ? data.requests : [],
+          totalCount: data.totalCount,
+        ),
+      );
+    });
   }
 
   Future<void> fetchPendingRequests() => fetchRequests(status: 1);
