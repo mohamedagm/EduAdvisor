@@ -11,29 +11,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CourseRequestCard extends StatelessWidget {
   final EnrollmentModel enrollment;
 
-  const CourseRequestCard({
-    super.key,
-    required this.enrollment,
-  });
+  const CourseRequestCard({super.key, required this.enrollment});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<PrerequisitesCubit>()
-        ..fetchCoursePrerequisites(enrollment.semesterCourseId),
+      create: (context) =>
+          getIt<PrerequisitesCubit>()
+            ..fetchCoursePrerequisites(enrollment.courseId),
       child: BlocBuilder<PrerequisitesCubit, PrerequisitesState>(
         builder: (context, state) {
           String? missingPrereq;
 
-          // 👈 ربط الداتا من PrerequisiteCourseModel
-          if (state is PrerequisitesSuccessState && state.prerequisites.isNotEmpty) {
-            final PrerequisiteCourseModel firstPrereq = state.prerequisites.first;
-            
-            // قراءة كود المادة واسمها الإنجليزي من الموديل
-            final String name = firstPrereq.courseNameEN.isNotEmpty 
-                ? firstPrereq.courseNameEN 
+          if (state is PrerequisitesSuccessState &&
+              state.prerequisites.isNotEmpty) {
+            final PrerequisiteCourseModel firstPrereq =
+                state.prerequisites.first;
+
+            final String name = firstPrereq.courseNameEN.isNotEmpty
+                ? firstPrereq.courseNameEN
                 : firstPrereq.courseNameAR;
-                
+
             missingPrereq = "${firstPrereq.courseCode}: $name";
           }
 
@@ -56,7 +54,6 @@ class CourseRequestCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 1. كود المادة
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -89,14 +86,15 @@ class CourseRequestCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10.w),
 
-                // 2. اسم المادة
                 Text(
                   enrollment.courseName,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.sp),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17.sp,
+                  ),
                 ),
                 const SizedBox(height: 12),
 
-                // 3. الساعات + تحذير المتطلب
                 Row(
                   children: [
                     Icon(
@@ -140,12 +138,15 @@ class CourseRequestCard extends StatelessWidget {
                   ],
                 ),
 
-                // 4. الشريط السفلي الأصفر للمادة المفقودة
+                // missing prerequisites warning section
                 if (hasWarning) ...[
                   const SizedBox(height: 12),
                   Container(
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.w),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 10.w,
+                    ),
                     decoration: BoxDecoration(
                       color: context.themeColors.warningContainer,
                       borderRadius: BorderRadius.circular(8.r),

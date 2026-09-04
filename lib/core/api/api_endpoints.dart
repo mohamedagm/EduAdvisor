@@ -44,4 +44,6 @@ static const String   getRegistrations= '/api/Registrations';
       '/api/v1/Advisors/RegistrationRequest/$id';
       static const String getCoursePrerequisites = '/api/Course/prerequisites';
       static const String changeProfilePhoto = '/api/Account/change-photo';
+      static String getStudentHistory(String studentId) =>
+    '/api/Registrations/history?studentId=$studentId';
 }

@@ -1,3 +1,7 @@
+import 'package:edu_advisor/features/requests/manager/cubit/student_hestory_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/requests/manager/cubit/request_cubit.dart';
@@ -6,8 +10,6 @@ import 'package:edu_advisor/features/requests/widgets/advisor_decision.dart';
 import 'package:edu_advisor/features/requests/widgets/rejection_dialog.dart';
 import 'package:edu_advisor/features/requests/widgets/request_details_body.dart';
 import 'package:edu_advisor/features/widgets/advisor_header.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RequestDetailsScreen extends StatefulWidget {
   final StudentRequest request;
@@ -18,8 +20,30 @@ class RequestDetailsScreen extends StatefulWidget {
   State<RequestDetailsScreen> createState() => _RequestDetailsScreenState();
 }
 
-class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
+class _RequestDetailsScreenState extends State<RequestDetailsScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   bool _isProcessing = false;
+  int _selectedTabIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging || _tabController.index != _selectedTabIndex) {
+        setState(() {
+          _selectedTabIndex = _tabController.index;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   void _showRejectionDialog() {
     showDialog(
@@ -91,30 +115,38 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isPending = widget.request.status == 1;
+    // 👈 يظهر أزرار القرار فقط إذا كانت الحالة Pending وفي التبويب الأول (Current Requests)
+    final bool showActionButtons = widget.request.status == 1 && _selectedTabIndex == 0;
 
-    return Scaffold(
-      backgroundColor: context.colorScheme.surface,
-      body: SafeArea(
-        child: Column(
-          children: [
-            const AdvisorHeader(studentCount: 0),
-            Expanded(
-              child: RequestDetailsBody(request: widget.request),
-            ),
-          ],
+    return BlocProvider(
+      create: (context) => getIt<StudentHistoryCubit>()
+        ..fetchStudentHistory(widget.request.studentId),
+      child: Scaffold(
+        backgroundColor: context.colorScheme.surface,
+        body: SafeArea(
+          child: Column(
+            children: [
+              const AdvisorHeader(studentCount: 0),
+              Expanded(
+                child: RequestDetailsBody(
+                  request: widget.request,
+                  tabController: _tabController,
+                ),
+              ),
+            ],
+          ),
         ),
+        bottomNavigationBar: showActionButtons
+            ? RequestActionButtons(
+                onAccept: () {
+                  if (!_isProcessing) _approveRequest();
+                },
+                onReject: () {
+                  if (!_isProcessing) _showRejectionDialog();
+                },
+              )
+            : null,
       ),
-      bottomNavigationBar: isPending
-          ? RequestActionButtons(
-              onAccept: () {
-                if (!_isProcessing) _approveRequest();
-              },
-              onReject: () {
-                if (!_isProcessing) _showRejectionDialog();
-              },
-            )
-          : null,
     );
   }
 }

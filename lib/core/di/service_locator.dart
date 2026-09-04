@@ -1,4 +1,6 @@
 import 'package:edu_advisor/features/requests/data/repo/prerequisites_repository.dart';
+import 'package:edu_advisor/features/requests/data/repo/student_history_repo.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/student_hestory_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:edu_advisor/core/api/api_consumer.dart';
@@ -127,5 +129,13 @@ getIt.registerFactory<PrerequisitesCubit>(
   () => PrerequisitesCubit(getIt<PrerequisitesRepository>()),
 );
 
+
+getIt.registerLazySingleton<StudentHistoryRepo>(
+  () => StudentHistoryRepo(apiConsumer: getIt<ApiConsumer>()),
+);
+
+getIt.registerFactory<StudentHistoryCubit>(
+  () => StudentHistoryCubit(getIt<StudentHistoryRepo>()),
+);
 
 }

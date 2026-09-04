@@ -1,35 +1,48 @@
-import 'package:edu_advisor/features/requests/models/student_requests.dart';
-import 'package:edu_advisor/features/requests/widgets/request_details_widgets.dart';
-import 'package:edu_advisor/features/requests/widgets/student_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/features/requests/models/student_requests.dart';
+import 'package:edu_advisor/features/requests/widgets/academic_history_tab.dart';
+import 'package:edu_advisor/features/requests/widgets/current_requests_tab.dart';
 
 class RequestDetailsBody extends StatelessWidget {
   final StudentRequest request;
+  final TabController tabController;
 
-  const RequestDetailsBody({super.key, required this.request});
+  const RequestDetailsBody({
+    super.key,
+    required this.request,
+    required this.tabController,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          StudentInfoCard(
-            studentName: request.studentName,
-            studentCode: request.studentCode,
-            department: request.semesterName,
-            academicYear: request.totalCreditHours,
-            photoUrl: null,
+    return Column(
+      children: [
+        Container(
+          color: context.colorScheme.surface,
+          child: TabBar(
+            controller: tabController,
+            indicatorColor: context.colorScheme.primary,
+            labelColor: context.colorScheme.primary,
+            unselectedLabelColor: context.themeColors.textMuted,
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+            tabs: const [
+              Tab(text: "Current Requests"),
+              Tab(text: "Academic History"),
+            ],
           ),
-          SizedBox(height: 24.w),
-          RequestHeaderSection(request: request),
-          SizedBox(height: 16.w),
-          CoursesListView(request: request),
-          SizedBox(height: 100.w),
-        ],
-      ),
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: tabController,
+            children: [
+              CurrentRequestsTab(request: request),
+              const AcademicHistoryTab(),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

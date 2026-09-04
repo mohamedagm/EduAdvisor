@@ -1,6 +1,7 @@
 class EnrollmentModel {
   final String id;
   final String semesterCourseId;
+  final String courseId; 
   final String courseCode;
   final String courseName;
   final int creditHours;
@@ -12,6 +13,7 @@ class EnrollmentModel {
   EnrollmentModel({
     required this.id,
     required this.semesterCourseId,
+    required this.courseId, 
     required this.courseCode,
     required this.courseName,
     required this.creditHours,
@@ -25,6 +27,7 @@ class EnrollmentModel {
     return EnrollmentModel(
       id: json['id']?.toString() ?? '',
       semesterCourseId: json['semesterCourseId']?.toString() ?? '',
+      courseId: json['courseId']?.toString() ?? '', 
       courseCode: json['courseCode']?.toString() ?? '',
       courseName: json['courseName']?.toString() ?? '',
       creditHours: json['creditHours'] is int
@@ -39,7 +42,7 @@ class EnrollmentModel {
     );
   }
 }
-
+//////////////////////////////
 class StudentRequest {
   final String id;
   final String studentId;
