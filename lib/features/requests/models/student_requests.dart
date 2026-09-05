@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class EnrollmentModel {
   final String id;
   final String semesterCourseId;
@@ -41,6 +43,8 @@ class EnrollmentModel {
       rejectionReason: json['rejectionReason'] as String?,
     );
   }
+
+  String displayCourseName(Locale locale) => courseName;
 }
 
 //////////////////////////////

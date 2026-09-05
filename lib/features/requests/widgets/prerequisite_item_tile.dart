@@ -16,9 +16,9 @@ class PrerequisiteItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String name = prerequisite.courseNameEN.isNotEmpty
-        ? prerequisite.courseNameEN
-        : prerequisite.courseNameAR;
+    final String name = prerequisite.displayCourseName(
+      Localizations.localeOf(context),
+    );
 
     final bool wasTaken = studentGpa != null;
 

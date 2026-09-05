@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class EnrollmentHistoryModel {
   final String registrationRequestId;
   final String semesterId;
@@ -36,6 +38,12 @@ class EnrollmentHistoryModel {
           .map((e) => EnrolledCourseHistoryModel.fromJson(Map<String, dynamic>.from(e)))
           .toList(),
     );
+  }
+
+  String displaySemesterName(Locale locale) {
+    return locale.languageCode.toLowerCase() == 'ar'
+        ? (semesterNameAr.isNotEmpty ? semesterNameAr : semesterNameEn)
+        : (semesterNameEn.isNotEmpty ? semesterNameEn : semesterNameAr);
   }
 }
 
@@ -87,5 +95,11 @@ class EnrolledCourseHistoryModel {
           ? json['status']
           : int.tryParse('${json['status']}') ?? 0,
     );
+  }
+
+  String displayCourseName(Locale locale) {
+    return locale.languageCode.toLowerCase() == 'ar'
+        ? (courseNameAr.isNotEmpty ? courseNameAr : courseNameEn)
+        : (courseNameEn.isNotEmpty ? courseNameEn : courseNameAr);
   }
 }

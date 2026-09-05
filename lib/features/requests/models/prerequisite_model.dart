@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class PrerequisiteCourseModel {
   final String id;
   final String courseCode;
@@ -21,5 +23,11 @@ class PrerequisiteCourseModel {
       courseNameAR: json['courseNameAR'] ?? '',
       creditHours: json['creditHours'] ?? 0,
     );
+  }
+
+  String displayCourseName(Locale locale) {
+    return locale.languageCode.toLowerCase() == 'ar'
+        ? (courseNameAR.isNotEmpty ? courseNameAR : courseNameEN)
+        : (courseNameEN.isNotEmpty ? courseNameEN : courseNameAR);
   }
 }

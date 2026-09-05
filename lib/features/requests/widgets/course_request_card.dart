@@ -62,7 +62,9 @@ class CourseRequestCard extends StatelessWidget {
                     _CourseHeader(courseCode: enrollment.courseCode),
                     SizedBox(height: 10.w),
                     Text(
-                      enrollment.courseName,
+                      enrollment.displayCourseName(
+                        Localizations.localeOf(context),
+                      ),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17.sp,

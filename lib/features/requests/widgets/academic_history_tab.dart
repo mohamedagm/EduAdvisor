@@ -53,7 +53,7 @@ class AcademicHistoryTab extends StatelessWidget {
                 child: ExpansionTile(
                   shape: const Border(),
                   title: Text(
-                    semester.semesterNameEn,
+                    semester.displaySemesterName(Localizations.localeOf(context)),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15.sp,
@@ -95,7 +95,9 @@ class AcademicHistoryTab extends StatelessWidget {
                                 ),
                                 SizedBox(height: 2.w),
                                 Text(
-                                  course.courseNameEn,
+                                  course.displayCourseName(
+                                    Localizations.localeOf(context),
+                                  ),
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
