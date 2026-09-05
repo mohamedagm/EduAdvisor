@@ -562,5 +562,7 @@
       "count": {"type": "int"},
       "percentage": {"type": "String"}
     }
-  }
+  },
+  "takePhoto": "Take Photo",
+  "chooseFromGallery": "Choose from Gallery"
 }

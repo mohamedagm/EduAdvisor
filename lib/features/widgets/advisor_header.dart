@@ -68,7 +68,7 @@ class AdvisorHeader extends StatelessWidget {
   }
 }
 
-class _AdvisorHeaderContent extends StatelessWidget {
+class _AdvisorHeaderContent extends StatefulWidget {
   const _AdvisorHeaderContent({
     required this.user,
     required this.isLoggingOut,
@@ -80,7 +80,25 @@ class _AdvisorHeaderContent extends StatelessWidget {
   final String studentCount;
 
   @override
+  State<_AdvisorHeaderContent> createState() => _AdvisorHeaderContentState();
+}
+
+class _AdvisorHeaderContentState extends State<_AdvisorHeaderContent> {
+  bool _imageLoadFailed = false;
+
+  @override
+  void didUpdateWidget(covariant _AdvisorHeaderContent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.user?.profileImageUrl != widget.user?.profileImageUrl) {
+      _imageLoadFailed = false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final bool hasValidImage =
+        widget.user?.profileImageUrl?.isNotEmpty == true && !_imageLoadFailed;
+
     return Container(
       decoration: BoxDecoration(gradient: AppGradients.primary),
       child: SafeArea(
@@ -95,10 +113,18 @@ class _AdvisorHeaderContent extends StatelessWidget {
                   CircleAvatar(
                     radius: 22.r,
                     backgroundColor: Colors.white24,
-                    backgroundImage: user?.profileImageUrl?.isNotEmpty == true
-                        ? NetworkImage(user!.profileImageUrl!)
+                    backgroundImage: hasValidImage
+                        ? NetworkImage(widget.user!.profileImageUrl!)
                         : null,
-                    child: user?.profileImageUrl?.isNotEmpty == true
+                    onBackgroundImageError: hasValidImage
+                        ? (exception, stackTrace) {
+                          
+                            if (mounted) {
+                              setState(() => _imageLoadFailed = true);
+                            }
+                          }
+                        : null,
+                    child: hasValidImage
                         ? null
                         : Icon(Icons.person, color: Colors.white, size: 24.r),
                   ),
@@ -108,7 +134,9 @@ class _AdvisorHeaderContent extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          user?.nameFor(Localizations.localeOf(context)) ??
+                          widget.user?.nameFor(
+                                Localizations.localeOf(context),
+                              ) ??
                               context.l10n.advisor,
                           style: TextStyle(
                             color: Colors.white,
@@ -118,7 +146,7 @@ class _AdvisorHeaderContent extends StatelessWidget {
                         ),
                         SizedBox(height: 2.w),
                         Text(
-                          user?.departmentFor(
+                          widget.user?.departmentFor(
                                 Localizations.localeOf(context),
                               ) ??
                               context.l10n.academicAdvisor,
@@ -158,13 +186,13 @@ class _AdvisorHeaderContent extends StatelessWidget {
                 children: [
                   statCard(
                     icon: Icons.people_outline,
-                    value: user?.studentsCount.toString() ?? '--',
+                    value: widget.user?.studentsCount.toString() ?? '--',
                     label: context.l10n.studentsLabel,
                   ),
                   const SizedBox(width: 12),
                   statCard(
                     icon: Icons.assignment_outlined,
-                    value: user?.displayPendingRequestsCount ?? '--',
+                    value: widget.user?.displayPendingRequestsCount ?? '--',
                     label: context.l10n.pending,
                   ),
                 ],

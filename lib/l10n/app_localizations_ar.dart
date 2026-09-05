@@ -1132,4 +1132,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String studentsPercentage(int count, String percentage) {
     return '$count طلاب ($percentage٪)';
   }
+
+  @override
+  String get takePhoto => 'Take Photo';
+
+  @override
+  String get chooseFromGallery => 'Choose from Gallery';
 }

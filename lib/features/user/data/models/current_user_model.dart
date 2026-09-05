@@ -19,6 +19,8 @@ class CurrentUserModel {
     this.advisorIsPending,
     this.studentsCount,
     this.pendingRequestsCount,
+    this.approvedRequestsCount,
+    this.totalRequestsCount,
   });
 
   final String id;
@@ -46,6 +48,8 @@ class CurrentUserModel {
   final bool? advisorIsPending;
   final int? studentsCount;
   final int? pendingRequestsCount;
+  final int? approvedRequestsCount;
+  final int? totalRequestsCount;
 
   factory CurrentUserModel.fromJson(Map<String, dynamic> json) {
     return CurrentUserModel(
@@ -76,6 +80,8 @@ class CurrentUserModel {
       advisorIsPending: json['isPending'] as bool?,
       studentsCount: json['studentCount'] as int?,
       pendingRequestsCount: json['pendingRequestsCount'] as int?,
+      approvedRequestsCount: json['approvedRequestsCount'] as int?,
+      totalRequestsCount: json['totalRequestsCount'] as int?,
     );
   }
 
@@ -131,6 +137,12 @@ class CurrentUserModel {
 
   String get displayPendingRequestsCount =>
       pendingRequestsCount?.toString() ?? '--';
+
+  String get displayApprovedRequestsCount =>
+      approvedRequestsCount?.toString() ?? '--';
+
+  String get displayTotalRequestsCount =>
+      totalRequestsCount?.toString() ?? '--';
 
   // ─────────────────────────────────────────────
   // Helpers

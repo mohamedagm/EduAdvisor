@@ -16,10 +16,13 @@ import 'package:edu_advisor/features/user/manager/current_user_cubit/current_use
 class SettingsProfileSection extends StatelessWidget {
   const SettingsProfileSection({super.key});
 
-  Future<void> _pickAndUploadImage(BuildContext context) async {
+  Future<void> _pickAndUploadImage(
+    BuildContext context,
+    ImageSource source,
+  ) async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
+      source: source,
       imageQuality: 70,
     );
 
@@ -27,6 +30,57 @@ class SettingsProfileSection extends StatelessWidget {
       final file = File(pickedFile.path);
       context.read<CurrentUserCubit>().updateProfilePhoto(file);
     }
+  }
+
+  void _showImageSourceSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (sheetContext) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 12.w),
+              Container(
+                width: 40.w,
+                height: 4.w,
+                decoration: BoxDecoration(
+                  color: sheetContext.themeColors.mutedSurface,
+                  borderRadius: BorderRadius.circular(4.r),
+                ),
+              ),
+              SizedBox(height: 16.w),
+              ListTile(
+                leading: Icon(
+                  Icons.camera_alt_outlined,
+                  color: sheetContext.colorScheme.primary,
+                ),
+                title: Text(sheetContext.l10n.takePhoto),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  _pickAndUploadImage(context, ImageSource.camera);
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.photo_library_outlined,
+                  color: sheetContext.colorScheme.primary,
+                ),
+                title: Text(sheetContext.l10n.chooseFromGallery),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  _pickAndUploadImage(context, ImageSource.gallery);
+                },
+              ),
+              SizedBox(height: 8.w),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -63,7 +117,6 @@ class SettingsProfileSection extends StatelessWidget {
               SizedBox(height: 16.w),
               Row(
                 children: [
-                  // 👈 الأفاتار المطور مع إضافة زر الكاميرا للتعديل
                   Stack(
                     children: [
                       CircleAvatar(
@@ -87,7 +140,7 @@ class SettingsProfileSection extends StatelessWidget {
                         bottom: 0,
                         right: 0,
                         child: GestureDetector(
-                          onTap: () => _pickAndUploadImage(context),
+                          onTap: () => _showImageSourceSheet(context),
                           child: CircleAvatar(
                             radius: 10.r,
                             backgroundColor: context.colorScheme.primary,
