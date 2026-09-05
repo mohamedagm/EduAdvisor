@@ -1,3 +1,6 @@
+import 'package:edu_advisor/features/requests/data/repo/prerequisites_repository.dart';
+import 'package:edu_advisor/features/requests/data/repo/student_history_repo.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/student_hestory_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:edu_advisor/core/api/api_consumer.dart';
@@ -22,6 +25,8 @@ import 'package:edu_advisor/features/requests/data/repo/advisor_request_repo.dar
 import 'package:edu_advisor/features/services/data/repo/course_registration_repo.dart';
 import 'package:edu_advisor/features/services/data/repo/recommendation_repo.dart';
 import 'package:edu_advisor/features/user/data/repo/user_repo.dart';
+
+import 'package:edu_advisor/features/requests/manager/cubit/prerequisites_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -114,4 +119,23 @@ void setupDependencyInjection() {
       userRepo: getIt(),
     ),
   );
+// 1. Register Prerequisites Repository
+getIt.registerLazySingleton<PrerequisitesRepository>(
+  () => PrerequisitesRepository(apiConsumer: getIt()),
+);
+
+
+getIt.registerFactory<PrerequisitesCubit>(
+  () => PrerequisitesCubit(getIt<PrerequisitesRepository>()),
+);
+
+
+getIt.registerLazySingleton<StudentHistoryRepo>(
+  () => StudentHistoryRepo(apiConsumer: getIt<ApiConsumer>()),
+);
+
+getIt.registerFactory<StudentHistoryCubit>(
+  () => StudentHistoryCubit(getIt<StudentHistoryRepo>()),
+);
+
 }

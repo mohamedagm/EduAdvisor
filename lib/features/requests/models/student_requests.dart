@@ -1,6 +1,7 @@
 class EnrollmentModel {
   final String id;
   final String semesterCourseId;
+  final String courseId;
   final String courseCode;
   final String courseName;
   final int creditHours;
@@ -12,6 +13,7 @@ class EnrollmentModel {
   EnrollmentModel({
     required this.id,
     required this.semesterCourseId,
+    required this.courseId,
     required this.courseCode,
     required this.courseName,
     required this.creditHours,
@@ -25,6 +27,7 @@ class EnrollmentModel {
     return EnrollmentModel(
       id: json['id']?.toString() ?? '',
       semesterCourseId: json['semesterCourseId']?.toString() ?? '',
+      courseId: json['courseId']?.toString() ?? '',
       courseCode: json['courseCode']?.toString() ?? '',
       courseName: json['courseName']?.toString() ?? '',
       creditHours: json['creditHours'] is int
@@ -40,6 +43,7 @@ class EnrollmentModel {
   }
 }
 
+//////////////////////////////
 class StudentRequest {
   final String id;
   final String studentId;
@@ -79,22 +83,25 @@ class StudentRequest {
           ? json['status']
           : int.tryParse('${json['status']}') ?? 0,
       notes: json['notes'] as String?,
-      submittedAt: DateTime.tryParse(json['submittedAt']?.toString() ?? '') ??
+      submittedAt:
+          DateTime.tryParse(json['submittedAt']?.toString() ?? '') ??
           DateTime.now(),
       totalCreditHours: json['totalCreditHours'] is int
           ? json['totalCreditHours']
           : int.tryParse('${json['totalCreditHours']}') ?? 0,
-      enrollments: (json['enrollments'] as List<dynamic>?)
-              ?.map((e) => EnrollmentModel.fromJson(Map<String, dynamic>.from(e)))
+      enrollments:
+          (json['enrollments'] as List<dynamic>?)
+              ?.map(
+                (e) => EnrollmentModel.fromJson(Map<String, dynamic>.from(e)),
+              )
               .toList() ??
           [],
     );
   }
 
-
   int get coursesCount => enrollments.length;
   String get semester => semesterName;
-  
+
   String get statusName {
     switch (status) {
       case 2:

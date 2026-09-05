@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:edu_advisor/core/api/api_consumer.dart';
 import 'package:edu_advisor/core/api/api_endpoints.dart';
 import 'package:edu_advisor/core/api/api_response_model.dart';
@@ -12,8 +14,8 @@ class UserRepo {
   UserRepo({
     required ApiConsumer apiConsumer,
     UserCacheService? userCacheService,
-  }) : _apiConsumer = apiConsumer,
-       _userCacheService = userCacheService ?? UserCacheService();
+  })  : _apiConsumer = apiConsumer,
+        _userCacheService = userCacheService ?? UserCacheService();
 
   final ApiConsumer _apiConsumer;
   final UserCacheService _userCacheService;
@@ -60,6 +62,30 @@ class UserRepo {
       );
 
       return Right(ApiResponseModel.fromJson(response));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.apiResponse));
+    } catch (e) {
+      return Left(ServerFailure(ApiResponseModel.message(e.toString())));
+    }
+  }
+
+// Change profile photo
+  Future<Either<Failure, Unit>> changeProfilePhoto(File imageFile) async {
+    try {
+      final formData = FormData.fromMap({
+        'ProfileImage': await MultipartFile.fromFile(
+          imageFile.path,
+          filename: imageFile.path.split('/').last,
+        ),
+      });
+
+      await _apiConsumer.post(
+        ApiEndpoints.changeProfilePhoto, // '/api/Account/change-photo'
+        data: formData,
+        isFormData: true,
+      );
+
+      return const Right(unit);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.apiResponse));
     } catch (e) {

@@ -4,6 +4,26 @@ import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
 import 'package:edu_advisor/features/requests/widgets/course_request_card.dart';
 
+class CurrentRequestsTab extends StatelessWidget {
+  final StudentRequest request;
+
+  const CurrentRequestsTab({super.key, required this.request});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16.w),
+      child: Column(
+        children: [
+          RequestHeaderSection(request: request),
+          SizedBox(height: 16.w),
+          CoursesListView(request: request),
+        ],
+      ),
+    );
+  }
+}
+
 class RequestHeaderSection extends StatelessWidget {
   final StudentRequest request;
 
@@ -59,7 +79,6 @@ class CoursesListView extends StatelessWidget {
       itemCount: request.enrollments.length,
       itemBuilder: (context, index) {
         final enrollment = request.enrollments[index];
-
         return CourseRequestCard(
           enrollment: enrollment,
         );
