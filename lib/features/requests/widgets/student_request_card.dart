@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 class StudentRequestCard extends StatelessWidget {
   final StudentRequest request;
@@ -87,7 +88,7 @@ class StudentRequestCard extends StatelessWidget {
                       ),
                       SizedBox(height: 6.w),
                       Text(
-                        '${request.semesterName} • ${request.totalCreditHours} Credit Hours',
+                        '${request.semesterName} • ${context.l10n.creditHours(request.totalCreditHours)}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.bodyInterRegular12.copyWith(
@@ -106,7 +107,11 @@ class StudentRequestCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Text(
-                          request.statusName,
+                          request.status == 2
+                              ? context.l10n.approved
+                              : request.status == 3
+                              ? context.l10n.rejected
+                              : context.l10n.pending,
                           style: AppTextStyles.bodyInterRegular12.copyWith(
                             fontSize: 12.sp,
                             color: statusColor,

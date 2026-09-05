@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 class RequestActionButtons extends StatelessWidget {
   final VoidCallback onAccept;
@@ -26,7 +27,7 @@ class RequestActionButtons extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: onAccept,
               icon: const Icon(Icons.check_circle_outline),
-              label: const Text("Accept"),
+              label: Text(context.l10n.acceptRequest),
               style: ElevatedButton.styleFrom(
                 backgroundColor: context.themeColors.success,
                 foregroundColor: context.themeColors.onSuccess,
@@ -42,7 +43,7 @@ class RequestActionButtons extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: onReject,
               icon: const Icon(Icons.cancel_outlined),
-              label: const Text("Reject"),
+              label: Text(context.l10n.rejectRequest),
               style: OutlinedButton.styleFrom(
                 foregroundColor: context.colorScheme.error,
                 side: BorderSide(color: context.colorScheme.error),

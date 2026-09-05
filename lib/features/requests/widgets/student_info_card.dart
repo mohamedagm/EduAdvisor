@@ -2,6 +2,7 @@ import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 class StudentInfoCard extends StatelessWidget {
   final String studentName;
@@ -81,7 +82,7 @@ class StudentInfoCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8.r),
                       ),
                       child: Text(
-                        "Year $academicYear",
+                        context.l10n.yearLabel(academicYear),
                         style: AppTextStyles.bodyInterMedium14.copyWith(
                           color: context.themeColors.info,
                           fontSize: 12.sp,
@@ -93,7 +94,6 @@ class StudentInfoCard extends StatelessWidget {
               ),
             ],
           ),
-
         ],
       ),
     );

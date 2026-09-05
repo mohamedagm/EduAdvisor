@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 class AdvisorAnalytics extends StatelessWidget {
   const AdvisorAnalytics({super.key});
@@ -18,8 +19,8 @@ class AdvisorAnalytics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DashboardCubit(repo: getIt<AdvisorRepo>())
-        ..fetchDashboard(),
+      create: (context) =>
+          DashboardCubit(repo: getIt<AdvisorRepo>())..fetchDashboard(),
       child: const _AdvisorAnalyticsBody(),
     );
   }
@@ -36,9 +37,7 @@ class _AdvisorAnalyticsBody extends StatelessWidget {
           children: [
             BlocBuilder<MyStudentsCubit, MyStudentsState>(
               builder: (context, state) {
-                final count = state is MyStudentsSuccess
-                    ? state.totalCount
-                    : 0;
+                final count = state is MyStudentsSuccess ? state.totalCount : 0;
                 return AdvisorHeader(studentCount: count);
               },
             ),
@@ -50,7 +49,7 @@ class _AdvisorAnalyticsBody extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Analytics & Reports',
+                      context.l10n.analyticsAndReports,
                       style: AppTextStyles.heading3PoppinsReg16.copyWith(
                         color: context.themeColors.textPrimary,
                       ),
@@ -74,11 +73,9 @@ class _AdvisorAnalyticsBody extends StatelessWidget {
                             child: Text(
                               state.failure.message,
                               textAlign: TextAlign.center,
-                              style: AppTextStyles.bodyInterMedium14
-                                  .copyWith(
-                                    color:
-                                        context.themeColors.onDangerContainer,
-                                  ),
+                              style: AppTextStyles.bodyInterMedium14.copyWith(
+                                color: context.themeColors.onDangerContainer,
+                              ),
                             ),
                           );
                         }
@@ -93,12 +90,10 @@ class _AdvisorAnalyticsBody extends StatelessWidget {
                                   Expanded(
                                     child: _StatBox(
                                       icon: Icons.people_outline,
-                                      value: dashboard.totalStudents
-                                          .toString(),
-                                      label: 'Total Students',
+                                      value: dashboard.totalStudents.toString(),
+                                      label: context.l10n.totalStudents,
                                       color: context.colorScheme.primary,
-                                      bg: context
-                                          .themeColors.mutedSurface,
+                                      bg: context.themeColors.mutedSurface,
                                     ),
                                   ),
                                   SizedBox(width: 12.w),
@@ -108,10 +103,9 @@ class _AdvisorAnalyticsBody extends StatelessWidget {
                                       value: dashboard
                                           .pendingRegistrationRequests
                                           .toString(),
-                                      label: 'Pending Requests',
+                                      label: context.l10n.pendingRequests,
                                       color: context.themeColors.warning,
-                                      bg: context
-                                          .themeColors.warningContainer,
+                                      bg: context.themeColors.warningContainer,
                                     ),
                                   ),
                                 ],

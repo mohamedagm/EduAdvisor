@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/di/service_locator.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/routing/session_navigation.dart';
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
@@ -108,7 +109,7 @@ class _AdvisorHeaderContent extends StatelessWidget {
                       children: [
                         Text(
                           user?.nameFor(Localizations.localeOf(context)) ??
-                              'Advisor',
+                              context.l10n.advisor,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15.sp,
@@ -120,7 +121,7 @@ class _AdvisorHeaderContent extends StatelessWidget {
                           user?.departmentFor(
                                 Localizations.localeOf(context),
                               ) ??
-                              'Academic Advisor',
+                              context.l10n.academicAdvisor,
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 12.sp,
@@ -132,9 +133,7 @@ class _AdvisorHeaderContent extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const SettingsView(),
-                        ),
+                        MaterialPageRoute(builder: (_) => const SettingsView()),
                       );
                     },
                     child: Container(
@@ -160,13 +159,13 @@ class _AdvisorHeaderContent extends StatelessWidget {
                   statCard(
                     icon: Icons.people_outline,
                     value: user?.studentsCount.toString() ?? '--',
-                    label: 'Students',
+                    label: context.l10n.studentsLabel,
                   ),
                   const SizedBox(width: 12),
                   statCard(
                     icon: Icons.assignment_outlined,
                     value: user?.displayPendingRequestsCount ?? '--',
-                    label: 'Pending',
+                    label: context.l10n.pending,
                   ),
                 ],
               ),

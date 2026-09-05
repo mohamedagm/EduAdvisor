@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 class BottomNav extends StatelessWidget {
@@ -20,7 +21,7 @@ class BottomNav extends StatelessWidget {
             Icons.inbox_rounded,
             color: context.themeColors.info,
           ),
-          label: 'Requests',
+          label: context.l10n.requestsTab,
         ),
         NavigationDestination(
           icon: Icon(Icons.people_outline),
@@ -28,7 +29,7 @@ class BottomNav extends StatelessWidget {
             Icons.people_rounded,
             color: context.themeColors.info,
           ),
-          label: 'Students',
+          label: context.l10n.studentsLabel,
         ),
         NavigationDestination(
           icon: Icon(Icons.bar_chart_outlined),
@@ -36,7 +37,7 @@ class BottomNav extends StatelessWidget {
             Icons.bar_chart_rounded,
             color: context.themeColors.info,
           ),
-          label: 'Analytics',
+          label: context.l10n.analyticsTab,
         ),
       ],
     );

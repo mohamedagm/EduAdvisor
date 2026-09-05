@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 import 'package:edu_advisor/features/requests/manager/cubit/student_history_state.dart';
 
@@ -30,7 +31,7 @@ class AcademicHistoryTab extends StatelessWidget {
           if (state.history.isEmpty) {
             return Center(
               child: Text(
-                "No previous academic history found.",
+                context.l10n.noAcademicHistory,
                 style: TextStyle(color: context.themeColors.textMuted),
               ),
             );
@@ -52,7 +53,7 @@ class AcademicHistoryTab extends StatelessWidget {
                 child: ExpansionTile(
                   shape: const Border(),
                   title: Text(
-                    semester.semesterNameEn,
+                    semester.displaySemesterName(Localizations.localeOf(context)),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15.sp,
@@ -60,7 +61,7 @@ class AcademicHistoryTab extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(
-                    "${semester.courses.length} Courses Enrolled",
+                    context.l10n.coursesEnrolled(semester.courses.length),
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: context.themeColors.textMuted,
@@ -69,7 +70,10 @@ class AcademicHistoryTab extends StatelessWidget {
                   children: semester.courses.map((course) {
                     return Container(
                       padding: EdgeInsets.all(12.w),
-                      margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.w),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 4.w,
+                      ),
                       decoration: BoxDecoration(
                         color: context.colorScheme.surface,
                         borderRadius: BorderRadius.circular(8.r),
@@ -91,7 +95,9 @@ class AcademicHistoryTab extends StatelessWidget {
                                 ),
                                 SizedBox(height: 2.w),
                                 Text(
-                                  course.courseNameEn,
+                                  course.displayCourseName(
+                                    Localizations.localeOf(context),
+                                  ),
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
@@ -104,7 +110,7 @@ class AcademicHistoryTab extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "${course.creditHours} Hours",
+                                context.l10n.creditHours(course.creditHours),
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   color: context.themeColors.textMuted,
@@ -114,7 +120,8 @@ class AcademicHistoryTab extends StatelessWidget {
                                 SizedBox(height: 4.w),
                                 Builder(
                                   builder: (context) {
-                                    final bool isLowGpa = course.courseGpa! < 2.0;
+                                    final bool isLowGpa =
+                                        course.courseGpa! < 2.0;
 
                                     return Container(
                                       padding: EdgeInsets.symmetric(
@@ -124,11 +131,17 @@ class AcademicHistoryTab extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         color: isLowGpa
                                             ? context.colorScheme.errorContainer
-                                            : context.themeColors.successContainer,
-                                        borderRadius: BorderRadius.circular(4.r),
+                                            : context
+                                                  .themeColors
+                                                  .successContainer,
+                                        borderRadius: BorderRadius.circular(
+                                          4.r,
+                                        ),
                                       ),
                                       child: Text(
-                                        "GPA: ${course.courseGpa}",
+                                        context.l10n.gpaValue(
+                                          course.courseGpa.toString(),
+                                        ),
                                         style: TextStyle(
                                           fontSize: 11.sp,
                                           fontWeight: FontWeight.bold,

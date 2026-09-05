@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,7 +19,7 @@ class EmptyRequestsWidget extends StatelessWidget {
           ),
           SizedBox(height: 10.w),
           Text(
-            'No requests found',
+            context.l10n.noRequestsFound,
             style: TextStyle(
               fontSize: 14.sp,
               color: context.themeColors.textSecondary,

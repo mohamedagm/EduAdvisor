@@ -981,4 +981,155 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get advisorNote => 'ملاحظة المرشد:';
+
+  @override
+  String get newRequests => 'طلبات جديدة';
+
+  @override
+  String statusLabel(String status) {
+    return 'الحالة: $status';
+  }
+
+  @override
+  String get requested => 'تم الطلب';
+
+  @override
+  String get hasPrerequisites => 'توجد متطلبات سابقة';
+
+  @override
+  String get prerequisites => 'المتطلبات السابقة:';
+
+  @override
+  String gpaValue(String gpa) {
+    return 'المعدل: $gpa';
+  }
+
+  @override
+  String get notTaken => 'لم يتم اجتيازه';
+
+  @override
+  String get noAcademicHistory => 'لم يتم العثور على سجل أكاديمي سابق.';
+
+  @override
+  String coursesEnrolled(int count) {
+    return '$count مقررات مسجلة';
+  }
+
+  @override
+  String creditHours(int hours) {
+    return '$hours ساعات';
+  }
+
+  @override
+  String yearLabel(int year) {
+    return 'السنة $year';
+  }
+
+  @override
+  String get noRequestsFound => 'لم يتم العثور على طلبات';
+
+  @override
+  String get studentsLabel => 'الطلاب';
+
+  @override
+  String get currentRequests => 'الطلبات الحالية';
+
+  @override
+  String get academicHistory => 'السجل الأكاديمي';
+
+  @override
+  String get acceptRequest => 'قبول';
+
+  @override
+  String get rejectRequest => 'رفض';
+
+  @override
+  String get rejectRegistrationRequest => 'رفض طلب التسجيل';
+
+  @override
+  String get rejectionReasonPrompt =>
+      'يرجى توضيح سبب رفض هذا الطلب. سيطلع عليه الطالب.';
+
+  @override
+  String get rejectionReasonHint =>
+      'أدخل سبب الرفض (مثل: لم يتم استيفاء المتطلبات السابقة...)';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get confirmRejection => 'تأكيد الرفض';
+
+  @override
+  String get rejectionFailed => 'فشل رفض الطلب';
+
+  @override
+  String get requestRejected => 'تم رفض الطلب';
+
+  @override
+  String get requestRejectedMessage =>
+      'تم نقل الطلب إلى قائمة الطلبات المرفوضة.';
+
+  @override
+  String get approvalFailed => 'فشل الموافقة على الطلب';
+
+  @override
+  String get requestApproved => 'تمت الموافقة على الطلب';
+
+  @override
+  String get requestApprovedMessage => 'تم قبول مقررات الطالب.';
+
+  @override
+  String errorPrefix(String message) {
+    return 'خطأ: $message';
+  }
+
+  @override
+  String get requestsTab => 'الطلبات';
+
+  @override
+  String get analyticsTab => 'التحليلات';
+
+  @override
+  String get analyticsAndReports => 'التحليلات والتقارير';
+
+  @override
+  String get totalStudents => 'إجمالي الطلاب';
+
+  @override
+  String get pendingRequests => 'الطلبات قيد المراجعة';
+
+  @override
+  String get popularCourses => 'المقررات الشائعة';
+
+  @override
+  String get dataStructures => 'هياكل البيانات';
+
+  @override
+  String studentsCount(int count) {
+    return '$count طلاب';
+  }
+
+  @override
+  String get studentPerformanceOverview => 'نظرة عامة على أداء الطلاب';
+
+  @override
+  String gpaAtLeast(String threshold) {
+    return 'المعدل >= $threshold';
+  }
+
+  @override
+  String gpaRange(String minimum, String maximum) {
+    return 'المعدل من $minimum إلى $maximum';
+  }
+
+  @override
+  String gpaBelow(String threshold) {
+    return 'المعدل < $threshold';
+  }
+
+  @override
+  String studentsPercentage(int count, String percentage) {
+    return '$count طلاب ($percentage٪)';
+  }
 }

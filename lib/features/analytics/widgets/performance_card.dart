@@ -1,6 +1,7 @@
 import 'package:edu_advisor/features/analytics/data/models/advisor_dashboard_model.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 class PerformanceCard extends StatelessWidget {
   const PerformanceCard({super.key, required this.distribution});
@@ -15,7 +16,7 @@ class PerformanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Student Performance Overview',
+            context.l10n.studentPerformanceOverview,
             style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 14,
@@ -26,7 +27,7 @@ class PerformanceCard extends StatelessWidget {
 
           _gpaRow(
             context: context,
-            label: 'GPA ≥ 3.5',
+            label: context.l10n.gpaAtLeast('3.5'),
             count: distribution.highGpaCount,
             percentage: distribution.highGpaPercentage,
             color: context.themeColors.success,
@@ -37,7 +38,7 @@ class PerformanceCard extends StatelessWidget {
 
           _gpaRow(
             context: context,
-            label: 'GPA 2.0 - 3.5',
+            label: context.l10n.gpaRange('2.0', '3.5'),
             count: distribution.midGpaCount,
             percentage: distribution.midGpaPercentage,
             color: context.themeColors.warning,
@@ -48,7 +49,7 @@ class PerformanceCard extends StatelessWidget {
 
           _gpaRow(
             context: context,
-            label: 'GPA < 2.0',
+            label: context.l10n.gpaBelow('2.0'),
             count: distribution.lowGpaCount,
             percentage: distribution.lowGpaPercentage,
             color: context.colorScheme.error,
@@ -95,7 +96,10 @@ class PerformanceCard extends StatelessWidget {
               border: Border.all(color: color.withValues(alpha: 0.3)),
             ),
             child: Text(
-              '$count students (${percentage.toStringAsFixed(0)}%)',
+              context.l10n.studentsPercentage(
+                count,
+                percentage.toStringAsFixed(0),
+              ),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,

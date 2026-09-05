@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/di/service_locator.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/features/requests/manager/cubit/prerequisites_cubit.dart';
 import 'package:edu_advisor/features/requests/manager/cubit/prerequisites_state.dart';
@@ -31,10 +32,10 @@ class CourseRequestCard extends StatelessWidget {
                   ? buildBestGpaPerCourse(historyState.history)
                   : <String, double>{};
 
-             final List<PrerequisiteCourseModel> prerequisites =
-    prereqState is PrerequisitesSuccessState
-        ? prereqState.prerequisites
-        : const [];
+              final List<PrerequisiteCourseModel> prerequisites =
+                  prereqState is PrerequisitesSuccessState
+                  ? prereqState.prerequisites
+                  : const [];
 
               final bool hasPrerequisites = prerequisites.isNotEmpty;
               final bool isLoading =
@@ -61,7 +62,9 @@ class CourseRequestCard extends StatelessWidget {
                     _CourseHeader(courseCode: enrollment.courseCode),
                     SizedBox(height: 10.w),
                     Text(
-                      enrollment.courseName,
+                      enrollment.displayCourseName(
+                        Localizations.localeOf(context),
+                      ),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17.sp,
@@ -120,11 +123,8 @@ class _CourseHeader extends StatelessWidget {
           ],
         ),
         Text(
-          "Requested",
-          style: TextStyle(
-            color: context.themeColors.textMuted,
-            fontSize: 12,
-          ),
+          context.l10n.requested,
+          style: TextStyle(color: context.themeColors.textMuted, fontSize: 12),
         ),
       ],
     );
@@ -153,7 +153,7 @@ class _CreditHoursRow extends StatelessWidget {
         ),
         const SizedBox(width: 4),
         Text(
-          "$creditHours Credits",
+          context.l10n.courseCredits(creditHours.toString()),
           style: TextStyle(
             color: context.themeColors.textSecondary,
             fontSize: 13,
@@ -175,7 +175,7 @@ class _CreditHoursRow extends StatelessWidget {
           ),
           SizedBox(width: 4.w),
           Text(
-            "Has Prerequisites",
+            context.l10n.hasPrerequisites,
             style: TextStyle(
               color: context.themeColors.warning,
               fontSize: 12,

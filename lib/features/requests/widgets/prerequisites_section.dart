@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/features/requests/models/prerequisite_model.dart';
 import 'package:edu_advisor/features/requests/widgets/prerequisite_item_tile.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class PrerequisitesSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Prerequisites:",
+            context.l10n.prerequisites,
             style: TextStyle(
               color: context.themeColors.warning,
               fontWeight: FontWeight.bold,
