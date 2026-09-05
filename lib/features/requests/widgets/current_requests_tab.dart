@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
 import 'package:edu_advisor/features/requests/widgets/course_request_card.dart';
 
@@ -47,14 +48,17 @@ class RequestHeaderSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "${request.semesterName} Requests",
-          style: TextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-          ),
+          "${request.semesterName} ${context.l10n.currentRequests}",
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
         ),
         Text(
-          "STATUS: ${request.statusName.toUpperCase()}",
+          context.l10n.statusLabel(
+            request.status == 2
+                ? context.l10n.approved
+                : request.status == 3
+                ? context.l10n.rejected
+                : context.l10n.pending,
+          ),
           style: TextStyle(
             color: _getStatusColor(context),
             fontWeight: FontWeight.bold,
@@ -79,9 +83,7 @@ class CoursesListView extends StatelessWidget {
       itemCount: request.enrollments.length,
       itemBuilder: (context, index) {
         final enrollment = request.enrollments[index];
-        return CourseRequestCard(
-          enrollment: enrollment,
-        );
+        return CourseRequestCard(enrollment: enrollment);
       },
     );
   }

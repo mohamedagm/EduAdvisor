@@ -1747,6 +1747,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Advisor Note:'**
   String get advisorNote;
+
+  /// No description provided for @newRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'New Requests'**
+  String get newRequests;
+
+  /// No description provided for @statusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: {status}'**
+  String statusLabel(String status);
+
+  /// No description provided for @requested.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get requested;
+
+  /// No description provided for @hasPrerequisites.
+  ///
+  /// In en, this message translates to:
+  /// **'Has Prerequisites'**
+  String get hasPrerequisites;
+
+  /// No description provided for @prerequisites.
+  ///
+  /// In en, this message translates to:
+  /// **'Prerequisites:'**
+  String get prerequisites;
+
+  /// No description provided for @gpaValue.
+  ///
+  /// In en, this message translates to:
+  /// **'GPA: {gpa}'**
+  String gpaValue(String gpa);
+
+  /// No description provided for @notTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Taken'**
+  String get notTaken;
+
+  /// No description provided for @noAcademicHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'No previous academic history found.'**
+  String get noAcademicHistory;
+
+  /// No description provided for @coursesEnrolled.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Courses Enrolled'**
+  String coursesEnrolled(int count);
+
+  /// No description provided for @creditHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} Hours'**
+  String creditHours(int hours);
+
+  /// No description provided for @yearLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Year {year}'**
+  String yearLabel(int year);
+
+  /// No description provided for @noRequestsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests found'**
+  String get noRequestsFound;
+
+  /// No description provided for @studentsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Students'**
+  String get studentsLabel;
+
+  /// No description provided for @currentRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Requests'**
+  String get currentRequests;
+
+  /// No description provided for @academicHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Academic History'**
+  String get academicHistory;
+
+  /// No description provided for @acceptRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get acceptRequest;
+
+  /// No description provided for @rejectRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get rejectRequest;
+
+  /// No description provided for @rejectRegistrationRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Registration Request'**
+  String get rejectRegistrationRequest;
+
+  /// No description provided for @rejectionReasonPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Please provide a reason for rejecting this request. This will be shared with the student.'**
+  String get rejectionReasonPrompt;
+
+  /// No description provided for @rejectionReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter rejection reason (e.g., Prerequisites not met...)'**
+  String get rejectionReasonHint;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @confirmRejection.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Rejection'**
+  String get confirmRejection;
+
+  /// No description provided for @rejectionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejection Failed'**
+  String get rejectionFailed;
+
+  /// No description provided for @requestRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Rejected'**
+  String get requestRejected;
+
+  /// No description provided for @requestRejectedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The request has been moved to the rejected list.'**
+  String get requestRejectedMessage;
+
+  /// No description provided for @approvalFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Approval Failed'**
+  String get approvalFailed;
+
+  /// No description provided for @requestApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Approved'**
+  String get requestApproved;
+
+  /// No description provided for @requestApprovedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The student\'s courses have been accepted.'**
+  String get requestApprovedMessage;
+
+  /// No description provided for @errorPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String errorPrefix(String message);
 }
 
 class _AppLocalizationsDelegate

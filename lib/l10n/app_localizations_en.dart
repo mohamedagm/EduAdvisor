@@ -960,4 +960,107 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get advisorNote => 'Advisor Note:';
+
+  @override
+  String get newRequests => 'New Requests';
+
+  @override
+  String statusLabel(String status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String get requested => 'Requested';
+
+  @override
+  String get hasPrerequisites => 'Has Prerequisites';
+
+  @override
+  String get prerequisites => 'Prerequisites:';
+
+  @override
+  String gpaValue(String gpa) {
+    return 'GPA: $gpa';
+  }
+
+  @override
+  String get notTaken => 'Not Taken';
+
+  @override
+  String get noAcademicHistory => 'No previous academic history found.';
+
+  @override
+  String coursesEnrolled(int count) {
+    return '$count Courses Enrolled';
+  }
+
+  @override
+  String creditHours(int hours) {
+    return '$hours Hours';
+  }
+
+  @override
+  String yearLabel(int year) {
+    return 'Year $year';
+  }
+
+  @override
+  String get noRequestsFound => 'No requests found';
+
+  @override
+  String get studentsLabel => 'Students';
+
+  @override
+  String get currentRequests => 'Current Requests';
+
+  @override
+  String get academicHistory => 'Academic History';
+
+  @override
+  String get acceptRequest => 'Accept';
+
+  @override
+  String get rejectRequest => 'Reject';
+
+  @override
+  String get rejectRegistrationRequest => 'Reject Registration Request';
+
+  @override
+  String get rejectionReasonPrompt =>
+      'Please provide a reason for rejecting this request. This will be shared with the student.';
+
+  @override
+  String get rejectionReasonHint =>
+      'Enter rejection reason (e.g., Prerequisites not met...)';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get confirmRejection => 'Confirm Rejection';
+
+  @override
+  String get rejectionFailed => 'Rejection Failed';
+
+  @override
+  String get requestRejected => 'Request Rejected';
+
+  @override
+  String get requestRejectedMessage =>
+      'The request has been moved to the rejected list.';
+
+  @override
+  String get approvalFailed => 'Approval Failed';
+
+  @override
+  String get requestApproved => 'Request Approved';
+
+  @override
+  String get requestApprovedMessage =>
+      'The student\'s courses have been accepted.';
+
+  @override
+  String errorPrefix(String message) {
+    return 'Error: $message';
+  }
 }

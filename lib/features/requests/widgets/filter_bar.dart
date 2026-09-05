@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 class RequestFilterBar extends StatefulWidget {
   final ValueChanged<String> onFilterChanged;
@@ -12,12 +13,17 @@ class RequestFilterBar extends StatefulWidget {
 }
 
 class _RequestFilterBarState extends State<RequestFilterBar> {
-  String selectedFilter = 'New Requests';
-
-  final List<String> filters = ['New Requests', 'Approved', 'Rejected'];
+  String? selectedFilter;
 
   @override
   Widget build(BuildContext context) {
+    final filters = [
+      context.l10n.newRequests,
+      context.l10n.approved,
+      context.l10n.rejected,
+    ];
+    final selected = selectedFilter ?? context.l10n.newRequests;
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
@@ -29,16 +35,16 @@ class _RequestFilterBarState extends State<RequestFilterBar> {
               child: ChoiceChip(
                 label: Text(filter),
 
-                selected: selectedFilter == filter,
+                selected: selected == filter,
 
                 selectedColor: context.colorScheme.primary.withValues(
                   alpha: 0.1,
                 ),
                 labelStyle: TextStyle(
-                  color: selectedFilter == filter
+                  color: selected == filter
                       ? context.colorScheme.primary
                       : context.themeColors.textPrimary,
-                  fontWeight: selectedFilter == filter
+                  fontWeight: selected == filter
                       ? FontWeight.bold
                       : FontWeight.normal,
                 ),
@@ -47,7 +53,7 @@ class _RequestFilterBarState extends State<RequestFilterBar> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.r),
                   side: BorderSide(
-                    color: selectedFilter == filter
+                    color: selected == filter
                         ? context.colorScheme.primary
                         : Colors.transparent,
                   ),

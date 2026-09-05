@@ -2,6 +2,7 @@ import 'package:edu_advisor/features/requests/manager/cubit/student_hestory_cubi
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/di/service_locator.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/requests/manager/cubit/request_cubit.dart';
@@ -71,7 +72,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
 
     if (failure != null) {
       _showToast(
-        title: "Rejection Failed",
+        title: context.l10n.rejectionFailed,
         desc: failure.apiResponse.message,
         isError: true,
       );
@@ -79,8 +80,8 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
     }
 
     _showToast(
-      title: "Request Rejected",
-      desc: "The request has been moved to the rejected list.",
+      title: context.l10n.requestRejected,
+      desc: context.l10n.requestRejectedMessage,
       isError: true,
     );
     Navigator.pop(context);
@@ -98,7 +99,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
 
     if (failure != null) {
       _showToast(
-        title: "Approval Failed",
+        title: context.l10n.approvalFailed,
         desc: failure.apiResponse.message,
         isError: true,
       );
@@ -106,8 +107,8 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
     }
 
     _showToast(
-      title: "Request Approved",
-      desc: "The student's courses have been accepted.",
+      title: context.l10n.requestApproved,
+      desc: context.l10n.requestApprovedMessage,
     );
     Navigator.pop(context);
   }

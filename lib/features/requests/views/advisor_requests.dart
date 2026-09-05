@@ -9,6 +9,7 @@ import 'package:edu_advisor/features/requests/widgets/empty_state.dart';
 import 'package:edu_advisor/features/requests/widgets/filter_bar.dart';
 import 'package:edu_advisor/features/requests/widgets/student_request_list.dart';
 import 'package:edu_advisor/features/widgets/advisor_header.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,12 +35,12 @@ class _AdvisorRequestsView extends StatefulWidget {
 }
 
 class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
-  String _currentFilter = 'New Requests';
+  String? _currentFilter;
   final TextEditingController _searchController = TextEditingController();
 
-  int _getMappedStatus(String filter) {
-    if (filter == 'Approved') return 2;
-    if (filter == 'Rejected') return 3;
+  int _getMappedStatus(BuildContext context, String filter) {
+    if (filter == context.l10n.approved) return 2;
+    if (filter == context.l10n.rejected) return 3;
     return 1; // New Requests / Pending
   }
 
@@ -68,7 +69,7 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                 _searchController.clear();
               });
 
-              final mappedStatus = _getMappedStatus(newStatus);
+              final mappedStatus = _getMappedStatus(context, newStatus);
               context.read<RequestsCubit>().fetchRequests(status: mappedStatus);
             },
           ),
@@ -83,7 +84,9 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                 if (state is RequestsFailure) {
                   return Center(
                     child: Text(
-                      'Error: ${state.failure.apiResponse.message}',
+                      context.l10n.errorPrefix(
+                        state.failure.apiResponse.message,
+                      ),
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.error,
                       ),
@@ -94,9 +97,11 @@ class _AdvisorRequestsViewState extends State<_AdvisorRequestsView> {
                 final successState = state as RequestsSuccess;
                 final List<StudentRequest> requestsToShow;
 
-                if (_currentFilter == 'New Requests') {
+                final currentFilter =
+                    _currentFilter ?? context.l10n.newRequests;
+                if (currentFilter == context.l10n.newRequests) {
                   requestsToShow = successState.pendingRequests;
-                } else if (_currentFilter == 'Approved') {
+                } else if (currentFilter == context.l10n.approved) {
                   requestsToShow = successState.approvedRequests;
                 } else {
                   requestsToShow = successState.rejectedRequests;

@@ -463,5 +463,64 @@
   "enrolledCourses": "Enrolled Courses",
   "academicAdvisor": "Academic Advisor",
   "rejectionReason": "Rejection Reason:",
-  "advisorNote": "Advisor Note:"
+  "advisorNote": "Advisor Note:",
+  "newRequests": "New Requests",
+  "statusLabel": "Status: {status}",
+  "@statusLabel": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "requested": "Requested",
+  "hasPrerequisites": "Has Prerequisites",
+  "prerequisites": "Prerequisites:",
+  "gpaValue": "GPA: {gpa}",
+  "@gpaValue": {
+    "placeholders": {
+      "gpa": {"type": "String"}
+    }
+  },
+  "notTaken": "Not Taken",
+  "noAcademicHistory": "No previous academic history found.",
+  "coursesEnrolled": "{count} Courses Enrolled",
+  "@coursesEnrolled": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "creditHours": "{hours} Hours",
+  "@creditHours": {
+    "placeholders": {
+      "hours": {"type": "int"}
+    }
+  },
+  "yearLabel": "Year {year}",
+  "@yearLabel": {
+    "placeholders": {
+      "year": {"type": "int"}
+    }
+  },
+  "noRequestsFound": "No requests found",
+  "studentsLabel": "Students",
+  "currentRequests": "Current Requests",
+  "academicHistory": "Academic History",
+  "acceptRequest": "Accept",
+  "rejectRequest": "Reject",
+  "rejectRegistrationRequest": "Reject Registration Request",
+  "rejectionReasonPrompt": "Please provide a reason for rejecting this request. This will be shared with the student.",
+  "rejectionReasonHint": "Enter rejection reason (e.g., Prerequisites not met...)",
+  "cancel": "Cancel",
+  "confirmRejection": "Confirm Rejection",
+  "rejectionFailed": "Rejection Failed",
+  "requestRejected": "Request Rejected",
+  "requestRejectedMessage": "The request has been moved to the rejected list.",
+  "approvalFailed": "Approval Failed",
+  "requestApproved": "Request Approved",
+  "requestApprovedMessage": "The student's courses have been accepted.",
+  "errorPrefix": "Error: {message}",
+  "@errorPrefix": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  }
 }

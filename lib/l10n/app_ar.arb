@@ -431,5 +431,64 @@
   "enrolledCourses": "المقررات المسجلة",
   "academicAdvisor": "المرشد الأكاديمي",
   "rejectionReason": "سبب الرفض:",
-  "advisorNote": "ملاحظة المرشد:"
+  "advisorNote": "ملاحظة المرشد:",
+  "newRequests": "طلبات جديدة",
+  "statusLabel": "الحالة: {status}",
+  "@statusLabel": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "requested": "تم الطلب",
+  "hasPrerequisites": "توجد متطلبات سابقة",
+  "prerequisites": "المتطلبات السابقة:",
+  "gpaValue": "المعدل: {gpa}",
+  "@gpaValue": {
+    "placeholders": {
+      "gpa": {"type": "String"}
+    }
+  },
+  "notTaken": "لم يتم اجتيازه",
+  "noAcademicHistory": "لم يتم العثور على سجل أكاديمي سابق.",
+  "coursesEnrolled": "{count} مقررات مسجلة",
+  "@coursesEnrolled": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "creditHours": "{hours} ساعات",
+  "@creditHours": {
+    "placeholders": {
+      "hours": {"type": "int"}
+    }
+  },
+  "yearLabel": "السنة {year}",
+  "@yearLabel": {
+    "placeholders": {
+      "year": {"type": "int"}
+    }
+  },
+  "noRequestsFound": "لم يتم العثور على طلبات",
+  "studentsLabel": "الطلاب",
+  "currentRequests": "الطلبات الحالية",
+  "academicHistory": "السجل الأكاديمي",
+  "acceptRequest": "قبول",
+  "rejectRequest": "رفض",
+  "rejectRegistrationRequest": "رفض طلب التسجيل",
+  "rejectionReasonPrompt": "يرجى توضيح سبب رفض هذا الطلب. سيطلع عليه الطالب.",
+  "rejectionReasonHint": "أدخل سبب الرفض (مثل: لم يتم استيفاء المتطلبات السابقة...)",
+  "cancel": "إلغاء",
+  "confirmRejection": "تأكيد الرفض",
+  "rejectionFailed": "فشل رفض الطلب",
+  "requestRejected": "تم رفض الطلب",
+  "requestRejectedMessage": "تم نقل الطلب إلى قائمة الطلبات المرفوضة.",
+  "approvalFailed": "فشل الموافقة على الطلب",
+  "requestApproved": "تمت الموافقة على الطلب",
+  "requestApprovedMessage": "تم قبول مقررات الطالب.",
+  "errorPrefix": "خطأ: {message}",
+  "@errorPrefix": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  }
 }

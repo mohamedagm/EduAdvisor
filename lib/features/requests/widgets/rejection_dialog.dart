@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 class RejectionDialog extends StatefulWidget {
   final Function(String reason) onConfirm;
@@ -26,7 +27,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
       title: Text(
-        "Reject Registration Request",
+        context.l10n.rejectRegistrationRequest,
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
       ),
       content: Column(
@@ -34,7 +35,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Please provide a reason for rejecting this request. This will be shared with the student.",
+            context.l10n.rejectionReasonPrompt,
             style: TextStyle(
               color: context.themeColors.textMuted,
               fontSize: 13,
@@ -45,8 +46,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
             controller: _controller,
             maxLines: 4,
             decoration: InputDecoration(
-              hintText:
-                  "Enter rejection reason (e.g., Prerequisites not met...)",
+              hintText: context.l10n.rejectionReasonHint,
               hintStyle: TextStyle(
                 fontSize: 13,
                 color: context.themeColors.textMuted,
@@ -74,7 +74,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
                   side: BorderSide(color: context.themeColors.border),
                 ),
                 child: Text(
-                  "Cancel",
+                  context.l10n.cancel,
                   style: TextStyle(color: context.themeColors.textPrimary),
                 ),
               ),
@@ -96,7 +96,7 @@ class _RejectionDialogState extends State<RejectionDialog> {
                   elevation: 0,
                 ),
                 child: Text(
-                  "Confirm Rejection",
+                  context.l10n.confirmRejection,
                   style: TextStyle(
                     color: context.colorScheme.onError,
                     fontSize: 12.sp,

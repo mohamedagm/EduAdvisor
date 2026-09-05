@@ -1,4 +1,5 @@
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/features/requests/models/prerequisite_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,11 +26,7 @@ class PrerequisiteItemTile extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 4.w),
       child: Row(
         children: [
-          Icon(
-            Icons.circle,
-            size: 5.r,
-            color: context.themeColors.warning,
-          ),
+          Icon(Icons.circle, size: 5.r, color: context.themeColors.warning),
           SizedBox(width: 6.w),
           Expanded(
             child: Text(
@@ -65,7 +62,9 @@ class _GpaBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.r),
       ),
       child: Text(
-        wasTaken ? "GPA: $gpa" : "Not Taken",
+        wasTaken
+            ? context.l10n.gpaValue(gpa.toString())
+            : context.l10n.notTaken,
         style: TextStyle(
           fontSize: 11.sp,
           fontWeight: FontWeight.bold,
