@@ -11,6 +11,7 @@ class RequestsCubit extends Cubit<RequestsState> {
   final AdvisorRequestRepo _advisorRepo;
 
   Future<void> fetchRequests({int? status = 1, int page = 1}) async {
+    if (isClosed) return;
     emit(const RequestsLoading());
 
     final result = await _advisorRepo.getRegistrations(
@@ -19,6 +20,7 @@ class RequestsCubit extends Cubit<RequestsState> {
       pageSize: 50,
     );
 
+    if (isClosed) return;
     result.fold((failure) => emit(RequestsFailure(failure)), (data) {
       emit(
         RequestsSuccess(
@@ -41,6 +43,8 @@ class RequestsCubit extends Cubit<RequestsState> {
     final result = await _advisorRepo.approveRequest(id);
     final failure = result.fold((f) => f, (_) => null);
 
+    if (isClosed) return failure;
+
     if (failure != null) {
       emit(RequestsFailure(failure));
       return failure;
@@ -56,6 +60,8 @@ class RequestsCubit extends Cubit<RequestsState> {
   }) async {
     final result = await _advisorRepo.rejectRequest(id, reason: reason);
     final failure = result.fold((f) => f, (_) => null);
+
+    if (isClosed) return failure;
 
     if (failure != null) {
       emit(RequestsFailure(failure));

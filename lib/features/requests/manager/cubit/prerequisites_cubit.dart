@@ -2,17 +2,18 @@ import 'package:edu_advisor/features/requests/data/repo/prerequisites_repository
 import 'package:edu_advisor/features/requests/manager/cubit/prerequisites_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class PrerequisitesCubit extends Cubit<PrerequisitesState> {
   final PrerequisitesRepository _repository;
 
   PrerequisitesCubit(this._repository) : super(PrerequisitesInitialState());
 
   Future<void> fetchCoursePrerequisites(String semesterCourseId) async {
+    if (isClosed) return;
     emit(PrerequisitesLoadingState());
 
     final result = await _repository.getCoursePrerequisites(semesterCourseId);
 
+    if (isClosed) return; 
     result.fold(
       (failure) => emit(PrerequisitesErrorState(failure.message)),
       (prerequisites) => emit(PrerequisitesSuccessState(prerequisites)),

@@ -8,10 +8,12 @@ class StudentHistoryCubit extends Cubit<StudentHistoryState> {
   StudentHistoryCubit(this._repo) : super(const StudentHistoryInitial());
 
   Future<void> fetchStudentHistory(String studentId) async {
+    if (isClosed) return;
     emit(const StudentHistoryLoading());
 
     final result = await _repo.getStudentHistory(studentId);
 
+    if (isClosed) return; 
     result.fold(
       (failure) => emit(StudentHistoryFailure(failure.apiResponse.message)),
       (history) => emit(StudentHistorySuccess(history)),
