@@ -1921,6 +1921,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error: {message}'**
   String errorPrefix(String message);
+
+  /// No description provided for @requestsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get requestsTab;
+
+  /// No description provided for @analyticsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
+  String get analyticsTab;
+
+  /// No description provided for @analyticsAndReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics & Reports'**
+  String get analyticsAndReports;
+
+  /// No description provided for @totalStudents.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Students'**
+  String get totalStudents;
+
+  /// No description provided for @pendingRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Requests'**
+  String get pendingRequests;
+
+  /// No description provided for @popularCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular Courses'**
+  String get popularCourses;
+
+  /// No description provided for @dataStructures.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Structures'**
+  String get dataStructures;
+
+  /// No description provided for @studentsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} students'**
+  String studentsCount(int count);
+
+  /// No description provided for @studentPerformanceOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Student Performance Overview'**
+  String get studentPerformanceOverview;
+
+  /// No description provided for @gpaAtLeast.
+  ///
+  /// In en, this message translates to:
+  /// **'GPA >= {threshold}'**
+  String gpaAtLeast(String threshold);
+
+  /// No description provided for @gpaRange.
+  ///
+  /// In en, this message translates to:
+  /// **'GPA {minimum} - {maximum}'**
+  String gpaRange(String minimum, String maximum);
+
+  /// No description provided for @gpaBelow.
+  ///
+  /// In en, this message translates to:
+  /// **'GPA < {threshold}'**
+  String gpaBelow(String threshold);
+
+  /// No description provided for @studentsPercentage.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} students ({percentage}%)'**
+  String studentsPercentage(int count, String percentage);
 }
 
 class _AppLocalizationsDelegate

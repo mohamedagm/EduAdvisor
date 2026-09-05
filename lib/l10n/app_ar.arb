@@ -490,5 +490,45 @@
     "placeholders": {
       "message": {"type": "String"}
     }
+  },
+  "requestsTab": "الطلبات",
+  "analyticsTab": "التحليلات",
+  "analyticsAndReports": "التحليلات والتقارير",
+  "totalStudents": "إجمالي الطلاب",
+  "pendingRequests": "الطلبات قيد المراجعة",
+  "popularCourses": "المقررات الشائعة",
+  "dataStructures": "هياكل البيانات",
+  "studentsCount": "{count} طلاب",
+  "@studentsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "studentPerformanceOverview": "نظرة عامة على أداء الطلاب",
+  "gpaAtLeast": "المعدل >= {threshold}",
+  "@gpaAtLeast": {
+    "placeholders": {
+      "threshold": {"type": "String"}
+    }
+  },
+  "gpaRange": "المعدل من {minimum} إلى {maximum}",
+  "@gpaRange": {
+    "placeholders": {
+      "minimum": {"type": "String"},
+      "maximum": {"type": "String"}
+    }
+  },
+  "gpaBelow": "المعدل < {threshold}",
+  "@gpaBelow": {
+    "placeholders": {
+      "threshold": {"type": "String"}
+    }
+  },
+  "studentsPercentage": "{count} طلاب ({percentage}٪)",
+  "@studentsPercentage": {
+    "placeholders": {
+      "count": {"type": "int"},
+      "percentage": {"type": "String"}
+    }
   }
 }

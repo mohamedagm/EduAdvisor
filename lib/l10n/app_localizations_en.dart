@@ -1063,4 +1063,53 @@ class AppLocalizationsEn extends AppLocalizations {
   String errorPrefix(String message) {
     return 'Error: $message';
   }
+
+  @override
+  String get requestsTab => 'Requests';
+
+  @override
+  String get analyticsTab => 'Analytics';
+
+  @override
+  String get analyticsAndReports => 'Analytics & Reports';
+
+  @override
+  String get totalStudents => 'Total Students';
+
+  @override
+  String get pendingRequests => 'Pending Requests';
+
+  @override
+  String get popularCourses => 'Popular Courses';
+
+  @override
+  String get dataStructures => 'Data Structures';
+
+  @override
+  String studentsCount(int count) {
+    return '$count students';
+  }
+
+  @override
+  String get studentPerformanceOverview => 'Student Performance Overview';
+
+  @override
+  String gpaAtLeast(String threshold) {
+    return 'GPA >= $threshold';
+  }
+
+  @override
+  String gpaRange(String minimum, String maximum) {
+    return 'GPA $minimum - $maximum';
+  }
+
+  @override
+  String gpaBelow(String threshold) {
+    return 'GPA < $threshold';
+  }
+
+  @override
+  String studentsPercentage(int count, String percentage) {
+    return '$count students ($percentage%)';
+  }
 }

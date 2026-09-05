@@ -1083,4 +1083,53 @@ class AppLocalizationsAr extends AppLocalizations {
   String errorPrefix(String message) {
     return 'خطأ: $message';
   }
+
+  @override
+  String get requestsTab => 'الطلبات';
+
+  @override
+  String get analyticsTab => 'التحليلات';
+
+  @override
+  String get analyticsAndReports => 'التحليلات والتقارير';
+
+  @override
+  String get totalStudents => 'إجمالي الطلاب';
+
+  @override
+  String get pendingRequests => 'الطلبات قيد المراجعة';
+
+  @override
+  String get popularCourses => 'المقررات الشائعة';
+
+  @override
+  String get dataStructures => 'هياكل البيانات';
+
+  @override
+  String studentsCount(int count) {
+    return '$count طلاب';
+  }
+
+  @override
+  String get studentPerformanceOverview => 'نظرة عامة على أداء الطلاب';
+
+  @override
+  String gpaAtLeast(String threshold) {
+    return 'المعدل >= $threshold';
+  }
+
+  @override
+  String gpaRange(String minimum, String maximum) {
+    return 'المعدل من $minimum إلى $maximum';
+  }
+
+  @override
+  String gpaBelow(String threshold) {
+    return 'المعدل < $threshold';
+  }
+
+  @override
+  String studentsPercentage(int count, String percentage) {
+    return '$count طلاب ($percentage٪)';
+  }
 }

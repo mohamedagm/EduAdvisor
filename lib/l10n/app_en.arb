@@ -522,5 +522,45 @@
     "placeholders": {
       "message": {"type": "String"}
     }
+  },
+  "requestsTab": "Requests",
+  "analyticsTab": "Analytics",
+  "analyticsAndReports": "Analytics & Reports",
+  "totalStudents": "Total Students",
+  "pendingRequests": "Pending Requests",
+  "popularCourses": "Popular Courses",
+  "dataStructures": "Data Structures",
+  "studentsCount": "{count} students",
+  "@studentsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "studentPerformanceOverview": "Student Performance Overview",
+  "gpaAtLeast": "GPA >= {threshold}",
+  "@gpaAtLeast": {
+    "placeholders": {
+      "threshold": {"type": "String"}
+    }
+  },
+  "gpaRange": "GPA {minimum} - {maximum}",
+  "@gpaRange": {
+    "placeholders": {
+      "minimum": {"type": "String"},
+      "maximum": {"type": "String"}
+    }
+  },
+  "gpaBelow": "GPA < {threshold}",
+  "@gpaBelow": {
+    "placeholders": {
+      "threshold": {"type": "String"}
+    }
+  },
+  "studentsPercentage": "{count} students ({percentage}%)",
+  "@studentsPercentage": {
+    "placeholders": {
+      "count": {"type": "int"},
+      "percentage": {"type": "String"}
+    }
   }
 }

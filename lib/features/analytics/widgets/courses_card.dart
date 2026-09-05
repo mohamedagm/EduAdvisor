@@ -1,6 +1,7 @@
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/core/localization/localization_extensions.dart';
 
 class CoursesCard extends StatelessWidget {
   const CoursesCard({super.key});
@@ -13,13 +14,17 @@ class CoursesCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Popular Courses',
+            context.l10n.popularCourses,
             style: AppTextStyles.heading3PoppinsReg16.copyWith(
               color: context.themeColors.textPrimary,
             ),
           ),
           const SizedBox(height: 14),
-          const _CourseRow(code: 'CS201', name: 'Data Structures', enrolled: 32),
+          _CourseRow(
+            code: 'CS201',
+            name: context.l10n.dataStructures,
+            enrolled: 32,
+          ),
         ],
       ),
     );
@@ -60,7 +65,7 @@ class _CourseRow extends StatelessWidget {
           ),
         ),
         Text(
-          '$enrolled',
+          context.l10n.studentsCount(enrolled),
           style: AppTextStyles.bodyInterRegular12.copyWith(
             color: context.themeColors.textSecondary,
           ),
