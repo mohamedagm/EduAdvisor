@@ -1,7 +1,7 @@
 import 'package:edu_advisor/core/routing/app_routes.dart';
+import 'package:edu_advisor/features/home/views/widgets/course_tree_card.dart';
 import 'package:edu_advisor/features/home/views/widgets/degree_progress_indicator.dart';
 import 'package:edu_advisor/features/home/views/widgets/recommended_courses_builder.dart';
-import 'package:edu_advisor/features/home/views/widgets/registeration_alert.dart';
 import 'package:edu_advisor/features/home/views/widgets/section_header.dart';
 import 'package:edu_advisor/features/home/views/widgets/welcome_card.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class HomeViewBody extends StatelessWidget {
               ),
               const RecommendedCoursesBuilder(),
               const DegreeProgressIndicator(),
-              const RegisterationAlert(),
+              const CourseTreeCard(),
             ],
           ),
         ),

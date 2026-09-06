@@ -2,6 +2,7 @@ class ApiConstants {
   const ApiConstants._();
 
   static const String baseUrl = 'https://eduadvisor.runasp.net';
+  static const String courseTreeUrl = '$baseUrl/course-tree.html';
   static const String defaultLanguage = 'en';
 
   static const Duration connectTimeout = Duration(seconds: 30);

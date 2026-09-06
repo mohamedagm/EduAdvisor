@@ -288,6 +288,26 @@ class AppLocalizationsEn extends AppLocalizations {
       'Spring 2025 course registration opens in 3 days. Check your saved schedule.';
 
   @override
+  String get courseTreeTitle => 'Course Prerequisites Map';
+
+  @override
+  String get courseTreeMessage =>
+      'Explore every course and check its prerequisites before registration.';
+
+  @override
+  String get courseTreeOpen => 'Open Course Map';
+
+  @override
+  String get courseTreeTooltip => 'View course prerequisites';
+
+  @override
+  String get courseTreeLaunchErrorTitle => 'Can\'t open link';
+
+  @override
+  String get courseTreeLaunchErrorMessage =>
+      'No browser is available to open the course map.';
+
+  @override
   String get degreeProgress => 'Degree Progress';
 
   @override

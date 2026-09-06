@@ -109,6 +109,30 @@
   "@registrationAlertMessage": {
     "description": "Description message for registration alert card"
   },
+  "courseTreeTitle": "خريطة المقررات والمتطلبات السابقة",
+  "@courseTreeTitle": {
+    "description": "Title for the course prerequisites map card"
+  },
+  "courseTreeMessage": "استعرض كل المقررات واكتشف المتطلبات السابقة لكل مقرر قبل التسجيل.",
+  "@courseTreeMessage": {
+    "description": "Description message for the course prerequisites map card"
+  },
+  "courseTreeOpen": "افتح خريطة المقررات",
+  "@courseTreeOpen": {
+    "description": "Action label to open the course prerequisites map in a browser"
+  },
+  "courseTreeTooltip": "عرض المتطلبات السابقة للمقررات",
+  "@courseTreeTooltip": {
+    "description": "Tooltip for the course prerequisites helper button"
+  },
+  "courseTreeLaunchErrorTitle": "تعذر فتح الرابط",
+  "@courseTreeLaunchErrorTitle": {
+    "description": "Title for the error shown when the course map link cannot be opened"
+  },
+  "courseTreeLaunchErrorMessage": "لا يوجد متصفح متاح لفتح خريطة المقررات.",
+  "@courseTreeLaunchErrorMessage": {
+    "description": "Description for the error shown when the course map link cannot be opened"
+  },
   "degreeProgress": "تقدم البرنامج الدراسي",
   "@degreeProgress": {
     "description": "Title for degree progress card"

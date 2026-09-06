@@ -626,6 +626,42 @@ abstract class AppLocalizations {
   /// **'Spring 2025 course registration opens in 3 days. Check your saved schedule.'**
   String get registrationAlertMessage;
 
+  /// Title for the course prerequisites map card
+  ///
+  /// In en, this message translates to:
+  /// **'Course Prerequisites Map'**
+  String get courseTreeTitle;
+
+  /// Description message for the course prerequisites map card
+  ///
+  /// In en, this message translates to:
+  /// **'Explore every course and check its prerequisites before registration.'**
+  String get courseTreeMessage;
+
+  /// Action label to open the course prerequisites map in a browser
+  ///
+  /// In en, this message translates to:
+  /// **'Open Course Map'**
+  String get courseTreeOpen;
+
+  /// Tooltip for the course prerequisites helper button
+  ///
+  /// In en, this message translates to:
+  /// **'View course prerequisites'**
+  String get courseTreeTooltip;
+
+  /// Title for the error shown when the course map link cannot be opened
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t open link'**
+  String get courseTreeLaunchErrorTitle;
+
+  /// Description for the error shown when the course map link cannot be opened
+  ///
+  /// In en, this message translates to:
+  /// **'No browser is available to open the course map.'**
+  String get courseTreeLaunchErrorMessage;
+
   /// Title for degree progress card
   ///
   /// In en, this message translates to:

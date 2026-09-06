@@ -141,6 +141,30 @@
   "@registrationAlertMessage": {
     "description": "Description message for registration alert card"
   },
+  "courseTreeTitle": "Course Prerequisites Map",
+  "@courseTreeTitle": {
+    "description": "Title for the course prerequisites map card"
+  },
+  "courseTreeMessage": "Explore every course and check its prerequisites before registration.",
+  "@courseTreeMessage": {
+    "description": "Description message for the course prerequisites map card"
+  },
+  "courseTreeOpen": "Open Course Map",
+  "@courseTreeOpen": {
+    "description": "Action label to open the course prerequisites map in a browser"
+  },
+  "courseTreeTooltip": "View course prerequisites",
+  "@courseTreeTooltip": {
+    "description": "Tooltip for the course prerequisites helper button"
+  },
+  "courseTreeLaunchErrorTitle": "Can't open link",
+  "@courseTreeLaunchErrorTitle": {
+    "description": "Title for the error shown when the course map link cannot be opened"
+  },
+  "courseTreeLaunchErrorMessage": "No browser is available to open the course map.",
+  "@courseTreeLaunchErrorMessage": {
+    "description": "Description for the error shown when the course map link cannot be opened"
+  },
   "degreeProgress": "Degree Progress",
   "@degreeProgress": {
     "description": "Title for degree progress card"

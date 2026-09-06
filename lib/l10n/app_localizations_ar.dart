@@ -287,6 +287,26 @@ class AppLocalizationsAr extends AppLocalizations {
       'فتح تسجيل المقررات لفصل ربيع 2025 بعد 3 أيام. تحقق من جدولك المحفوظ.';
 
   @override
+  String get courseTreeTitle => 'خريطة المقررات والمتطلبات السابقة';
+
+  @override
+  String get courseTreeMessage =>
+      'استعرض كل المقررات واكتشف المتطلبات السابقة لكل مقرر قبل التسجيل.';
+
+  @override
+  String get courseTreeOpen => 'افتح خريطة المقررات';
+
+  @override
+  String get courseTreeTooltip => 'عرض المتطلبات السابقة للمقررات';
+
+  @override
+  String get courseTreeLaunchErrorTitle => 'تعذر فتح الرابط';
+
+  @override
+  String get courseTreeLaunchErrorMessage =>
+      'لا يوجد متصفح متاح لفتح خريطة المقررات.';
+
+  @override
   String get degreeProgress => 'تقدم البرنامج الدراسي';
 
   @override

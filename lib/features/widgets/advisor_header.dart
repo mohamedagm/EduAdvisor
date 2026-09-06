@@ -1,3 +1,4 @@
+import 'package:edu_advisor/core/api/api_constants.dart';
 import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/routing/session_navigation.dart';
@@ -15,6 +16,7 @@ import 'package:edu_advisor/features/user/manager/current_user_cubit/current_use
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AdvisorHeader extends StatelessWidget {
   final int? studentCount;
@@ -85,6 +87,18 @@ class _AdvisorHeaderContent extends StatefulWidget {
 
 class _AdvisorHeaderContentState extends State<_AdvisorHeaderContent> {
   bool _imageLoadFailed = false;
+
+  Future<void> _openCourseTree(BuildContext context) async {
+    final uri = Uri.parse(ApiConstants.courseTreeUrl);
+    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!opened && context.mounted) {
+      AppToast.error(
+        context,
+        title: context.l10n.courseTreeLaunchErrorTitle,
+        description: context.l10n.courseTreeLaunchErrorMessage,
+      );
+    }
+  }
 
   @override
   void didUpdateWidget(covariant _AdvisorHeaderContent oldWidget) {
@@ -158,6 +172,24 @@ class _AdvisorHeaderContentState extends State<_AdvisorHeaderContent> {
                       ],
                     ),
                   ),
+                  GestureDetector(
+                    onTap: () => _openCourseTree(context),
+                    child: Container(
+                      width: 34.w,
+                      height: 34.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white24,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.help_outline,
+                        color: Colors.white,
+                        size: 18.r,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
