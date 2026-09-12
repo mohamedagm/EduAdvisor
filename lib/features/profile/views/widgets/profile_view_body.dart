@@ -1,6 +1,8 @@
 import 'package:edu_advisor/features/profile/views/widgets/profile_courses_section.dart';
 import 'package:edu_advisor/features/profile/views/widgets/profile_graduation_progress_card.dart';
 import 'package:edu_advisor/features/profile/views/widgets/profile_header.dart';
+import 'package:edu_advisor/features/profile/views/widgets/profile_personal_info_card.dart';
+import 'package:edu_advisor/features/profile/views/widgets/profile_registration_status_card.dart';
 import 'package:edu_advisor/features/profile/views/widgets/profile_stats_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,9 +32,14 @@ class ProfileViewBody extends StatelessWidget {
               ],
             ),
             SizedBox(height: 120.w),
+            const ProfileRegistrationStatusCard(),
+            SizedBox(height: 16.w),
             const ProfileGraduationProgressCard(),
+            SizedBox(height: 16.w),
+            const ProfilePersonalInfoCard(),
             SizedBox(height: 24.w),
             const ProfileCoursesSection(),
+            SizedBox(height: 24.w),
           ],
         ),
       ),
