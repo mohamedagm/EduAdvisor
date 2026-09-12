@@ -103,12 +103,6 @@ class RegistrationStatusCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10.w),
                 _InfoLine(
-                  icon: Icons.menu_book_outlined,
-                  title: context.l10n.coursesTab,
-                  value: context.l10n.coursesCount(request.coursesCount),
-                ),
-                SizedBox(height: 10.w),
-                _InfoLine(
                   icon: Icons.schedule_outlined,
                   title: context.l10n.submitted,
                   value: request.displaySubmittedAt,

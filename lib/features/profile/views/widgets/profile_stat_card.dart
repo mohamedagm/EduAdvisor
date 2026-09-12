@@ -38,7 +38,12 @@ class ProfileStatCard extends StatelessWidget {
             style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
           ),
           SizedBox(height: 4.w),
-          Text(value, style: TextStyle(fontSize: 16.sp)),
+          Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 16.sp),
+          ),
         ],
       ),
     );

@@ -1,12 +1,12 @@
-import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/core/theme/app_colors.dart';
+import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
 import 'package:edu_advisor/features/profile/views/widgets/profile_Stat_card.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileStatsRow extends StatelessWidget {
@@ -19,19 +19,15 @@ class ProfileStatsRow extends StatelessWidget {
         if (state is CurrentUserInitial || state is CurrentUserLoading) {
           return AppShimmer(
             child: Row(
-              children: [
-                Expanded(
-                  child: AppShimmerBox(height: 120.w, borderRadius: 16.r),
+              children: List.generate(
+                3,
+                (index) => Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
+                    child: AppShimmerBox(height: 120.w, borderRadius: 16.r),
+                  ),
                 ),
-                SizedBox(width: 8.w),
-                Expanded(
-                  child: AppShimmerBox(height: 120.w, borderRadius: 16.r),
-                ),
-                SizedBox(width: 8.w),
-                Expanded(
-                  child: AppShimmerBox(height: 120.w, borderRadius: 16.r),
-                ),
-              ],
+              ),
             ),
           );
         }
@@ -43,7 +39,7 @@ class ProfileStatsRow extends StatelessWidget {
             Expanded(
               child: ProfileStatCard(
                 title: context.l10n.gpa,
-                value: user?.displayGpa ?? "--",
+                value: user?.displayGpa ?? '--',
                 icon: Icons.emoji_events,
                 iconColor: context.colorScheme.primary,
               ),
@@ -52,7 +48,7 @@ class ProfileStatsRow extends StatelessWidget {
             Expanded(
               child: ProfileStatCard(
                 title: context.l10n.creditsLabel,
-                value: user?.displayCredits ?? "--",
+                value: user?.displayCredits ?? '--',
                 icon: Icons.menu_book,
                 iconColor: context.colorScheme.secondary,
               ),
@@ -60,9 +56,9 @@ class ProfileStatsRow extends StatelessWidget {
             SizedBox(width: 8.w),
             Expanded(
               child: ProfileStatCard(
-                title: context.l10n.semester,
-                value: user?.displayLevel ?? "--",
-                icon: Icons.calendar_month,
+                title: context.l10n.level,
+                value: user?.displayLevel ?? '--',
+                icon: Icons.workspace_premium_outlined,
                 iconColor: AppColors.aiPink,
               ),
             ),

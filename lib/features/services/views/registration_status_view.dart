@@ -7,7 +7,6 @@ import 'package:edu_advisor/features/services/data/repo/course_registration_repo
 import 'package:edu_advisor/features/services/manager/registration_status_cubit/registration_status_cubit.dart';
 import 'package:edu_advisor/features/services/manager/registration_status_cubit/registration_status_state.dart';
 import 'package:edu_advisor/features/services/views/widgets/registration_status_card.dart';
-import 'package:edu_advisor/features/services/views/widgets/registration_summary_box.dart';
 import 'package:edu_advisor/features/services/views/widgets/service_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,34 +55,6 @@ class _RegistrationStatusBody extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      RegistrationSummaryBox(
-                        icon: Icons.access_time,
-                        color: context.themeColors.warning,
-                        bgColor: context.themeColors.warningContainer,
-                        count: state.pendingCount.toString(),
-                        label: context.l10n.pending,
-                      ),
-                      SizedBox(width: 12.w),
-                      RegistrationSummaryBox(
-                        icon: Icons.check_circle_outline,
-                        color: context.themeColors.success,
-                        bgColor: context.themeColors.successContainer,
-                        count: state.approvedCount.toString(),
-                        label: context.l10n.approved,
-                      ),
-                      SizedBox(width: 12.w),
-                      RegistrationSummaryBox(
-                        icon: Icons.cancel_outlined,
-                        color: context.colorScheme.error,
-                        bgColor: context.themeColors.dangerContainer,
-                        count: state.rejectedCount.toString(),
-                        label: context.l10n.rejected,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 24.w),
                   Text(
                     context.l10n.allRegistrations,
                     style: AppTextStyles.heading1_20b.copyWith(
@@ -126,18 +97,6 @@ class _RegistrationStatusShimmer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: List.generate(
-                3,
-                (index) => Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.w),
-                    child: AppShimmerBox(height: 96.w, borderRadius: 16.r),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 24.w),
             AppShimmerBox(width: 132.w, height: 18.w),
             SizedBox(height: 16.w),
             const _RegistrationStatusSkeletonCard(),

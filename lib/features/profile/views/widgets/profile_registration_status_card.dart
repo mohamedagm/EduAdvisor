@@ -1,11 +1,10 @@
-import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:edu_advisor/core/routing/app_routes.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:edu_advisor/core/utils/app_screen_util.dart';
 import 'package:edu_advisor/core/widgets/app_shimmer.dart';
-import 'package:edu_advisor/features/services/data/repo/course_registration_repo.dart';
+import 'package:edu_advisor/features/services/data/models/registration_request_model.dart';
 import 'package:edu_advisor/features/services/manager/registration_status_cubit/registration_status_cubit.dart';
 import 'package:edu_advisor/features/services/manager/registration_status_cubit/registration_status_state.dart';
 import 'package:flutter/material.dart';
@@ -18,28 +17,23 @@ class ProfileRegistrationStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          RegistrationStatusCubit(repo: getIt<CourseRegistrationRepo>())
-            ..getRegistrationRequests(),
-      child: BlocBuilder<RegistrationStatusCubit, RegistrationStatusState>(
-        builder: (context, state) {
-          if (state is RegistrationStatusLoading ||
-              state is RegistrationStatusInitial) {
-            return const _StatusShimmer();
-          }
+    return BlocBuilder<RegistrationStatusCubit, RegistrationStatusState>(
+      builder: (context, state) {
+        if (state is RegistrationStatusLoading ||
+            state is RegistrationStatusInitial) {
+          return const _StatusShimmer();
+        }
 
-          if (state is RegistrationStatusFailure) {
-            return _StatusError(message: state.failure.message);
-          }
+        if (state is RegistrationStatusFailure) {
+          return _StatusError(message: state.failure.message);
+        }
 
-          if (state is RegistrationStatusLoaded) {
-            return _StatusContents(state: state);
-          }
+        if (state is RegistrationStatusLoaded) {
+          return _StatusContents(state: state);
+        }
 
-          return const SizedBox.shrink();
-        },
-      ),
+        return const SizedBox.shrink();
+      },
     );
   }
 }
@@ -57,10 +51,24 @@ class _StatusContents extends StatelessWidget {
   final RegistrationStatusLoaded state;
 
   _RegistrationState get _activeState {
-    if (state.pendingCount > 0) return _RegistrationState.pending;
-    if (state.approvedCount > 0) return _RegistrationState.approved;
-    if (state.rejectedCount > 0) return _RegistrationState.rejected;
-    return _RegistrationState.none;
+    if (state.requests.isEmpty) return _RegistrationState.none;
+
+    var latest = state.requests.first;
+    for (final request in state.requests) {
+      if (_sortKey(request).isAfter(_sortKey(latest))) latest = request;
+    }
+
+    return switch (latest.status) {
+      1 => _RegistrationState.pending,
+      2 => _RegistrationState.approved,
+      3 => _RegistrationState.rejected,
+      _ => _RegistrationState.none,
+    };
+  }
+
+  DateTime _sortKey(RegistrationRequestModel request) {
+    final raw = request.processedAt ?? request.submittedAt;
+    return DateTime.tryParse(raw) ?? DateTime.fromMillisecondsSinceEpoch(0);
   }
 
   @override
@@ -105,21 +113,18 @@ class _StatusContents extends StatelessWidget {
                   children: [
                     _StatusBox(
                       icon: Icons.access_time,
-                      count: state.pendingCount,
                       label: context.l10n.pending,
                       active: active == _RegistrationState.pending,
                     ),
                     SizedBox(width: 8.w),
                     _StatusBox(
                       icon: Icons.check_circle_outline,
-                      count: state.approvedCount,
                       label: context.l10n.approved,
                       active: active == _RegistrationState.approved,
                     ),
                     SizedBox(width: 8.w),
                     _StatusBox(
                       icon: Icons.cancel_outlined,
-                      count: state.rejectedCount,
                       label: context.l10n.rejected,
                       active: active == _RegistrationState.rejected,
                     ),
@@ -137,13 +142,11 @@ class _StatusContents extends StatelessWidget {
 class _StatusBox extends StatelessWidget {
   const _StatusBox({
     required this.icon,
-    required this.count,
     required this.label,
     required this.active,
   });
 
   final IconData icon;
-  final int count;
   final String label;
   final bool active;
 
@@ -185,14 +188,6 @@ class _StatusBox extends StatelessWidget {
           children: [
             Icon(icon, color: color, size: 20.r),
             SizedBox(height: 6.w),
-            Text(
-              '$count',
-              style: AppTextStyles.heading1_20b.copyWith(
-                fontSize: 18.sp,
-                color: color,
-              ),
-            ),
-            SizedBox(height: 2.w),
             Text(
               label,
               textAlign: TextAlign.center,
