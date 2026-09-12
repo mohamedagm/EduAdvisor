@@ -23,8 +23,6 @@ class AppRoutes {
   static const String courseRegistration = '/services/registration';
   static const String registrationStatus = '/services/registration-status';
 
-  static const String recommendedCoursesList = '/home/recommended-courses';
-
   static const String requestDetails = '/advisor/request-details';
 
   static String signupFor(String role) => '/auth/signup/$role';

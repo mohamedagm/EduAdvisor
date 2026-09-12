@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'package:edu_advisor/core/api/api_constants.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 
 import 'package:edu_advisor/core/theme/app_colors.dart';
 import 'package:edu_advisor/core/theme/app_gradiants.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/utils/app_screen_util.dart';
+import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/CourseCatalog/Manager/cubit/course_catalog_cubit.dart';
 import 'package:edu_advisor/features/CourseCatalog/Manager/cubit/course_catalog_state.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/widgets/course_catalog_builder.dart';
@@ -15,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CourseCatalogViewBody extends StatefulWidget {
   const CourseCatalogViewBody({super.key});
@@ -40,6 +43,18 @@ class _CourseCatalogViewBodyState extends State<CourseCatalogViewBody> {
     });
   }
 
+  Future<void> _openCourseTree(BuildContext context) async {
+    final uri = Uri.parse(ApiConstants.courseTreeUrl);
+    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!opened && context.mounted) {
+      AppToast.error(
+        context,
+        title: context.l10n.courseTreeLaunchErrorTitle,
+        description: context.l10n.courseTreeLaunchErrorMessage,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -59,11 +74,34 @@ class _CourseCatalogViewBodyState extends State<CourseCatalogViewBody> {
               spacing: 12.w,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  context.l10n.courseCatalogTitle,
-                  style: AppTextStyles.heading1_20b.responsive.copyWith(
-                    color: AppColors.white,
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        context.l10n.courseCatalogTitle,
+                        style: AppTextStyles.heading1_20b.responsive.copyWith(
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => _openCourseTree(context),
+                      child: Container(
+                        width: 34.w,
+                        height: 34.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white24,
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Icons.help_outline,
+                          color: AppColors.white,
+                          size: 20.r,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
 
                 SearchTextFormField(onChanged: _onSearchChanged),
