@@ -8,7 +8,9 @@ import 'package:edu_advisor/core/theme/app_theme_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HeaderAiChat extends StatelessWidget {
-  const HeaderAiChat({super.key});
+  const HeaderAiChat({super.key, this.onClose});
+
+  final VoidCallback? onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,26 @@ class HeaderAiChat extends StatelessWidget {
               ],
             ),
           ),
+          if (onClose != null) ...[
+            SizedBox(width: 8.w),
+            GestureDetector(
+              onTap: onClose,
+              child: Container(
+                width: 34.w,
+                height: 34.w,
+                decoration: BoxDecoration(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.close,
+                  color: AppColors.white,
+                  size: 20.r,
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );

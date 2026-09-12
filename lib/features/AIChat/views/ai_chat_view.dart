@@ -1,9 +1,7 @@
-import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/widgets/app_toast.dart';
 import 'package:edu_advisor/features/AIChat/Manager/cubit/ai_chat_cubit.dart';
 import 'package:edu_advisor/features/AIChat/Manager/cubit/ai_chat_state.dart';
 import 'package:edu_advisor/features/AIChat/data/models/ai_chat_request_model.dart';
-import 'package:edu_advisor/features/AIChat/data/repo/ai_chat_repo.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/ai_input_field.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/header_ai_chat.dart';
 import 'package:edu_advisor/features/AIChat/views/widgets/message_bubble.dart';
@@ -16,19 +14,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AIChatView extends StatelessWidget {
-  const AIChatView({super.key});
+  const AIChatView({super.key, this.onClose});
+
+  final VoidCallback? onClose;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AiChatCubit(aiChatRepo: getIt<AiChatRepo>()),
-      child: const _AIChatViewBody(),
-    );
+    return _AIChatViewBody(onClose: onClose);
   }
 }
 
 class _AIChatViewBody extends StatefulWidget {
-  const _AIChatViewBody();
+  const _AIChatViewBody({this.onClose});
+
+  final VoidCallback? onClose;
 
   @override
   State<_AIChatViewBody> createState() => _AIChatViewBodyState();
@@ -110,7 +109,7 @@ class _AIChatViewBodyState extends State<_AIChatViewBody> {
               children: [
                 Column(
                   children: [
-                    const HeaderAiChat(),
+                    HeaderAiChat(onClose: widget.onClose),
                     Expanded(
                       child: ListView.builder(
                         reverse: true,
