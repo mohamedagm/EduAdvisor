@@ -5,7 +5,7 @@ import 'package:edu_advisor/features/AIChat/views/ai_chat_view.dart';
 import 'package:edu_advisor/features/CourseCatalog/views/course_catalog_view.dart';
 import 'package:edu_advisor/features/home/views/home_view.dart';
 import 'package:edu_advisor/features/profile/views/profile_view.dart';
-import 'package:edu_advisor/features/services/views/services_view.dart';
+import 'package:edu_advisor/features/services/views/registration_view.dart';
 import 'package:edu_advisor/features/user/data/repo/user_repo.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _MainViewState extends State<MainView> {
     HomeView(),
     CourseCatalogView(),
     AIChatView(),
-    ServicesView(),
+    RegistrationView(),
     ProfileView(),
   ];
 
@@ -96,11 +96,11 @@ class _MainViewState extends State<MainView> {
               BottomNavigationBarItem(
                 icon: Icon(
                   currentIndex == 3
-                      ? Icons.miscellaneous_services
-                      : Icons.miscellaneous_services_outlined,
+                      ? Icons.assignment_outlined
+                      : Icons.assignment_outlined,
                   size: 24.r,
                 ),
-                label: context.l10n.servicesTab,
+                label: context.l10n.courseRegistrationTitle,
               ),
               BottomNavigationBarItem(
                 icon: Icon(
