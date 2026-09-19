@@ -2047,6 +2047,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose from Gallery'**
   String get chooseFromGallery;
+
+  /// No description provided for @coursesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get coursesLabel;
 }
 
 class _AppLocalizationsDelegate

@@ -1154,8 +1154,11 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get takePhoto => 'Take Photo';
+  String get takePhoto => 'التقاط صورة';
 
   @override
-  String get chooseFromGallery => 'Choose from Gallery';
+  String get chooseFromGallery => 'اختيار من المعرض';
+
+  @override
+  String get coursesLabel => 'المقررات';
 }

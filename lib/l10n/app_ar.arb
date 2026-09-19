@@ -554,5 +554,9 @@
       "count": {"type": "int"},
       "percentage": {"type": "String"}
     }
-  }
+  },
+  "takePhoto": "التقاط صورة",
+  "chooseFromGallery": "اختيار من المعرض",
+  "coursesLabel": "المقررات"
+
 }

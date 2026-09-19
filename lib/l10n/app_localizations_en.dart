@@ -1138,4 +1138,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chooseFromGallery => 'Choose from Gallery';
+
+  @override
+  String get coursesLabel => 'Courses';
 }

@@ -1,4 +1,5 @@
 import 'package:edu_advisor/features/requests/manager/cubit/student_hestory_cubit.dart';
+import 'package:edu_advisor/features/requests/widgets/request_student_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/di/service_locator.dart';
@@ -10,7 +11,7 @@ import 'package:edu_advisor/features/requests/models/student_requests.dart';
 import 'package:edu_advisor/features/requests/widgets/advisor_decision.dart';
 import 'package:edu_advisor/features/requests/widgets/rejection_dialog.dart';
 import 'package:edu_advisor/features/requests/widgets/request_details_body.dart';
-import 'package:edu_advisor/features/widgets/advisor_header.dart';
+import 'package:edu_advisor/features/requests/widgets/student_info_card.dart';
 
 class RequestDetailsScreen extends StatefulWidget {
   final StudentRequest request;
@@ -140,10 +141,22 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
             ..fetchStudentHistory(widget.request.studentId),
       child: Scaffold(
         backgroundColor: context.colorScheme.surface,
+        appBar: AppBar(
+          backgroundColor: context.colorScheme.surface,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: context.themeColors.textPrimary,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
         body: SafeArea(
+          top: false,
           child: Column(
             children: [
-              const AdvisorHeader(studentCount: 0),
+              RequestStudentCard(request: widget.request),
               Expanded(
                 child: RequestDetailsBody(
                   request: widget.request,
