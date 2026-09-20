@@ -1,5 +1,5 @@
 import 'package:edu_advisor/features/requests/manager/cubit/student_hestory_cubit.dart';
-import 'package:edu_advisor/features/requests/widgets/request_student_card.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/available_courses_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/di/service_locator.dart';
@@ -11,7 +11,7 @@ import 'package:edu_advisor/features/requests/models/student_requests.dart';
 import 'package:edu_advisor/features/requests/widgets/advisor_decision.dart';
 import 'package:edu_advisor/features/requests/widgets/rejection_dialog.dart';
 import 'package:edu_advisor/features/requests/widgets/request_details_body.dart';
-import 'package:edu_advisor/features/requests/widgets/student_info_card.dart';
+import 'package:edu_advisor/features/requests/widgets/request_student_card.dart';
 
 class RequestDetailsScreen extends StatefulWidget {
   final StudentRequest request;
@@ -31,7 +31,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this); // 👈 3 بدل 2
     _tabController.addListener(() {
       if (_tabController.indexIsChanging ||
           _tabController.index != _selectedTabIndex) {
@@ -135,10 +135,19 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
     final bool showActionButtons =
         widget.request.status == 1 && _selectedTabIndex == 0;
 
-    return BlocProvider(
-      create: (context) =>
-          getIt<StudentHistoryCubit>()
-            ..fetchStudentHistory(widget.request.studentId),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              getIt<StudentHistoryCubit>()
+                ..fetchStudentHistory(widget.request.studentId),
+        ),
+        BlocProvider(
+          create: (context) =>
+              getIt<AvailableCoursesCubit>()
+                ..fetchAvailableCourses(widget.request.studentId),
+        ),
+      ],
       child: Scaffold(
         backgroundColor: context.colorScheme.surface,
         appBar: AppBar(

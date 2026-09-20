@@ -26,7 +26,7 @@ class PrerequisiteItemTile extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 4.w),
       child: Row(
         children: [
-          Icon(Icons.circle, size: 5.r, color: context.themeColors.warning),
+          Icon(Icons.circle, size: 5.r, color: context.themeColors.textPrimary),
           SizedBox(width: 6.w),
           Expanded(
             child: Text(
@@ -53,12 +53,15 @@ class _GpaBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLowGpa = gpa != null && gpa! < 2.0;
+    final bool isRed = !wasTaken || isLowGpa;
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.w),
       decoration: BoxDecoration(
-        color: wasTaken
-            ? context.colorScheme.surface
-            : context.themeColors.warning.withValues(alpha: 0.15),
+        color: isRed
+            ? context.colorScheme.errorContainer
+            : context.colorScheme.surface,
         borderRadius: BorderRadius.circular(4.r),
       ),
       child: Text(
@@ -68,9 +71,9 @@ class _GpaBadge extends StatelessWidget {
         style: TextStyle(
           fontSize: 11.sp,
           fontWeight: FontWeight.bold,
-          color: wasTaken
-              ? context.themeColors.textPrimary
-              : context.themeColors.warning,
+          color: isRed
+              ? context.colorScheme.error
+              : context.themeColors.textPrimary,
         ),
       ),
     );

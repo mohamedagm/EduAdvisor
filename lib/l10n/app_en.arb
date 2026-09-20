@@ -589,5 +589,32 @@
   },
   "takePhoto": "Take Photo",
   "chooseFromGallery": "Choose from Gallery",
-  "coursesLabel": "Courses"
+  "coursesLabel": "Courses",
+
+  "availableCoursesTab": "Available Courses",
+"@availableCoursesTab": {"description": "Tab label for available courses"},
+"currentRequestsTab": "Current Requests",
+"academicHistoryTab": "Academic History",
+"noAvailableCourses": "No available courses for this student.",
+"requiredLabel": "Required",
+"departmentRequiredLabel": "Dept. Required",
+"departmentElectiveLabel": "Dept. Elective",
+"attemptLabel": "Attempt {count}",
+"@attemptLabel": {
+  "placeholders": {"count": {"type": "int"}}
+},
+"hoursExceedRange": "Requested hours are outside the allowed range ({min}–{max})",
+"@hoursExceedRange": {
+  "placeholders": {
+    "min": {"type": "int"},
+    "max": {"type": "int"}
+  }
+},
+"withinAllowedRange": "Within the allowed range ({min}–{max} hours)",
+"@withinAllowedRange": {
+  "placeholders": {
+    "min": {"type": "int"},
+    "max": {"type": "int"}
+  }
+}
 }

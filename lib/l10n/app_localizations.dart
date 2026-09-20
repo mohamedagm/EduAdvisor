@@ -1655,7 +1655,7 @@ abstract class AppLocalizations {
   /// No description provided for @noAvailableCourses.
   ///
   /// In en, this message translates to:
-  /// **'No available courses.'**
+  /// **'No available courses for this student.'**
   String get noAvailableCourses;
 
   /// No description provided for @retake.
@@ -2053,6 +2053,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Courses'**
   String get coursesLabel;
+
+  /// Tab label for available courses
+  ///
+  /// In en, this message translates to:
+  /// **'Available Courses'**
+  String get availableCoursesTab;
+
+  /// No description provided for @currentRequestsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Requests'**
+  String get currentRequestsTab;
+
+  /// No description provided for @academicHistoryTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Academic History'**
+  String get academicHistoryTab;
+
+  /// No description provided for @requiredLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get requiredLabel;
+
+  /// No description provided for @departmentRequiredLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dept. Required'**
+  String get departmentRequiredLabel;
+
+  /// No description provided for @departmentElectiveLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dept. Elective'**
+  String get departmentElectiveLabel;
+
+  /// No description provided for @attemptLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Attempt {count}'**
+  String attemptLabel(int count);
+
+  /// No description provided for @hoursExceedRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested hours are outside the allowed range ({min}–{max})'**
+  String hoursExceedRange(int min, int max);
+
+  /// No description provided for @withinAllowedRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Within the allowed range ({min}–{max} hours)'**
+  String withinAllowedRange(int min, int max);
 }
 
 class _AppLocalizationsDelegate

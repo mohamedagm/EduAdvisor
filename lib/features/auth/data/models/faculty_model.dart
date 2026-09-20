@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class FacultyModel {
   final String id;
   final String nameEN;
@@ -45,4 +47,10 @@ class FacultyModel {
           : null,
     );
   }
+
+  String nameFor(Locale locale) =>
+      locale.languageCode.toLowerCase() == 'ar' ? nameAR : nameEN;
+
+  String descriptionFor(Locale locale) =>
+      locale.languageCode.toLowerCase() == 'ar' ? descriptionAR : descriptionEN;
 }

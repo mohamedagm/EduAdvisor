@@ -1,8 +1,15 @@
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
-import 'package:edu_advisor/core/theme/app_text_styles.dart';
 import 'package:edu_advisor/core/theme/app_theme_colors.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/academic_record_cubit.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/academic_record_state.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/available_courses_cubit.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/available_courses_state.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
+import 'package:edu_advisor/features/requests/widgets/hours_range_bar.dart';
+import 'package:edu_advisor/features/requests/widgets/request_stat_card.dart';
+import 'package:edu_advisor/features/requests/widgets/request_student_card_skeleton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RequestStudentCard extends StatelessWidget {
@@ -12,87 +19,161 @@ class RequestStudentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.w),
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: context.themeColors.card,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: context.themeColors.mutedSurface),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 24.r,
-                backgroundColor: context.themeColors.mutedSurface,
-                child: Icon(
-                  Icons.person,
-                  color: context.themeColors.textMuted,
-                  size: 26.r,
-                ),
+    return BlocBuilder<AcademicRecordCubit, AcademicRecordState>(
+      builder: (context, academicState) {
+        // Loading with Shimmer
+        if (academicState is AcademicRecordLoadingState) {
+          return const RequestStudentCardSkeleton();
+        }
+
+        if (academicState is AcademicRecordErrorState) {
+          return Container(
+            margin: EdgeInsets.fromLTRB(16.w, 0, 16.w, 8.w),
+            padding: EdgeInsets.all(16.w),
+            decoration: BoxDecoration(
+              color: context.themeColors.card,
+              borderRadius: BorderRadius.circular(16.r),
+              border: Border.all(
+                color: context.colorScheme.error.withValues(alpha: 0.3),
               ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            child: Text(
+              academicState.message,
+              style: TextStyle(
+                color: context.colorScheme.error,
+                fontSize: 13.sp,
+              ),
+            ),
+          );
+        }
+
+        // Success
+        if (academicState is AcademicRecordSuccessState) {
+          final record = academicState.record;
+          final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+          final studentName = isArabic ? record.fullNameAr : record.fullNameEn;
+
+          return Container(
+            margin: EdgeInsets.fromLTRB(16.w, 0, 16.w, 0.w),
+            padding: EdgeInsets.all(16.w),
+            decoration: BoxDecoration(
+              color: context.themeColors.card,
+              borderRadius: BorderRadius.circular(16.r),
+              border: Border.all(color: context.themeColors.mutedSurface),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Student Information
+                Row(
                   children: [
-                    Text(
-                      request.studentName,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: context.themeColors.textPrimary,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w600,
+                    CircleAvatar(
+                      radius: 24.r,
+                      backgroundColor: context.themeColors.mutedSurface,
+                      child: Icon(
+                        Icons.person,
+                        color: context.themeColors.textMuted,
+                        size: 26.r,
                       ),
                     ),
-                    SizedBox(height: 4.w),
-                    Text(
-                      "${request.studentCode} • ${request.semesterName}",
-                      style: TextStyle(
-                        color: context.themeColors.textMuted,
-                        fontSize: 12.sp,
+                    SizedBox(width: 12.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            studentName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: context.themeColors.textPrimary,
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(height: 4.w),
+                          Text(
+                            '${record.studentCode} • Level ${record.currentLevel}',
+                            style: TextStyle(
+                              color: context.themeColors.textMuted,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
+                    _RequestStatusChip(
+                      statusName: request.statusName,
+                      status: request.status,
                     ),
                   ],
                 ),
-              ),
-              _RequestStatusChip(
-                statusName: request.statusName,
-                status: request.status,
-              ),
-            ],
-          ),
-          SizedBox(height: 16.w),
-          Row(
-            children: [
-              _RequestStatCard(
-                icon: Icons.menu_book_rounded,
-                value: request.coursesCount.toString(),
-                label: context.l10n.coursesLabel,
-              ),
-              SizedBox(width: 12.w),
-              _RequestStatCard(
-                icon: Icons.stars_rounded,
-                value: request.totalCreditHours.toString(),
-                label: context.l10n.creditHoursLabel,
-              ),
-            ],
-          ),
-        ],
-      ),
+
+                SizedBox(height: 16.w),
+
+                // GPA & Credit Hours
+                Row(
+                  children: [
+                    RequestStatCard(
+                      icon: Icons.auto_graph_rounded,
+                      value: record.cumulativeGpa.toStringAsFixed(2),
+                      label: 'GPA',
+                    ),
+                    SizedBox(width: 12.w),
+                    RequestStatCard(
+                      icon: Icons.stars_rounded,
+                      value: record.totalCompletedHours.toString(),
+                      label: context.l10n.creditHoursLabel,
+                    ),
+                  ],
+                ),
+
+                BlocBuilder<AvailableCoursesCubit, AvailableCoursesState>(
+                  builder: (context, hoursState) {
+                    int? minHours;
+                    int? maxHours;
+                    if (hoursState is AvailableCoursesSuccess) {
+                      minHours = hoursState.data.minHours;
+                      maxHours = hoursState.data.maxHours;
+                    }
+
+                    final bool hasRange =
+                        minHours != null &&
+                        maxHours != null &&
+                        (minHours > 0 || maxHours > 0);
+
+                    final bool withinRange =
+                        hasRange &&
+                        request.totalCreditHours >= minHours &&
+                        request.totalCreditHours <= maxHours;
+
+                    if (!hasRange) return const SizedBox.shrink();
+
+                    return Column(
+                      children: [
+                        SizedBox(height: 8.w),
+                        HoursRangeBar(
+                          withinRange: withinRange,
+                          minHours: minHours,
+                          maxHours: maxHours,
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+
+        return const SizedBox.shrink();
+      },
     );
   }
 }
 
 class _RequestStatusChip extends StatelessWidget {
-  const _RequestStatusChip({
-    required this.statusName,
-    required this.status,
-  });
+  const _RequestStatusChip({required this.statusName, required this.status});
 
   final String statusName;
   final int status;
@@ -112,6 +193,7 @@ class _RequestStatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _colorFor(context);
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
       decoration: BoxDecoration(
@@ -124,51 +206,6 @@ class _RequestStatusChip extends StatelessWidget {
           color: color,
           fontSize: 11.sp,
           fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-}
-
-class _RequestStatCard extends StatelessWidget {
-  const _RequestStatCard({
-    required this.icon,
-    required this.value,
-    required this.label,
-  });
-
-  final IconData icon;
-  final String value;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12.w),
-        decoration: BoxDecoration(
-          color: context.themeColors.infoContainer,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: Column(
-          children: [
-            Icon(icon, color: context.colorScheme.primary, size: 20.r),
-            SizedBox(height: 6.w),
-            Text(
-              value,
-              style: TextStyle(
-                color: context.themeColors.textPrimary,
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              label,
-              style: AppTextStyles.bodyInterRegular12.copyWith(
-                color: context.themeColors.textSecondary,
-              ),
-            ),
-          ],
         ),
       ),
     );

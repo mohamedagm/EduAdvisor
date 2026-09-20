@@ -5,7 +5,6 @@ import 'package:edu_advisor/core/api/api_endpoints.dart';
 import 'package:edu_advisor/core/errors/exceptions.dart';
 import 'package:edu_advisor/core/errors/failures.dart';
 import 'package:edu_advisor/features/advisor_nav/data/models/my_students_response_model.dart';
-import 'package:edu_advisor/features/requests/models/student_history_model.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
 
 class AdvisorRequestRepo {

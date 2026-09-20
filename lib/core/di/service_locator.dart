@@ -1,5 +1,9 @@
+import 'package:edu_advisor/features/requests/data/repo/academic_record_repo.dart';
+import 'package:edu_advisor/features/requests/data/repo/available_courses_repo.dart';
 import 'package:edu_advisor/features/requests/data/repo/prerequisites_repository.dart';
 import 'package:edu_advisor/features/requests/data/repo/student_history_repo.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/academic_record_cubit.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/available_courses_cubit.dart';
 import 'package:edu_advisor/features/requests/manager/cubit/student_hestory_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -136,6 +140,25 @@ getIt.registerLazySingleton<StudentHistoryRepo>(
 
 getIt.registerFactory<StudentHistoryCubit>(
   () => StudentHistoryCubit(getIt<StudentHistoryRepo>()),
+);
+
+getIt.registerLazySingleton<AvailableCoursesRepo>(
+  () => AvailableCoursesRepo(apiConsumer: getIt<ApiConsumer>()),
+);
+
+
+getIt.registerFactory<AvailableCoursesCubit>(
+  () => AvailableCoursesCubit(getIt<AvailableCoursesRepo>()),
+);
+
+
+getIt.registerLazySingleton<AcademicRecordRepository>(
+  () => AcademicRecordRepository(apiConsumer: getIt<ApiConsumer>()),
+);
+
+
+getIt.registerFactory<AcademicRecordCubit>(
+  () => AcademicRecordCubit(getIt<AcademicRecordRepository>()),
 );
 
 }
