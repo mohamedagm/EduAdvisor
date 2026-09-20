@@ -1,4 +1,6 @@
+import 'package:edu_advisor/core/di/service_locator.dart';
 import 'package:edu_advisor/core/theme/app_text_styles.dart';
+import 'package:edu_advisor/features/requests/manager/cubit/academic_record_cubit.dart';
 import 'package:edu_advisor/features/requests/manager/cubit/request_cubit.dart';
 import 'package:edu_advisor/features/requests/models/student_requests.dart';
 import 'package:edu_advisor/features/requests/views/request_details_screen.dart';
@@ -41,8 +43,15 @@ class StudentRequestCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => BlocProvider.value(
-                  value: requestsCubit,
+                builder: (context) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(value: requestsCubit),
+                    BlocProvider(
+                      create: (_) =>
+                          getIt<AcademicRecordCubit>()
+                            ..fetchStudentAcademicRecord(request.studentId),
+                    ),
+                  ],
                   child: RequestDetailsScreen(request: request),
                 ),
               ),

@@ -21,7 +21,7 @@ class PrerequisitesSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.w),
       decoration: BoxDecoration(
-        color: context.themeColors.warningContainer,
+        // color: context.themeColors.warningContainer,
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Column(

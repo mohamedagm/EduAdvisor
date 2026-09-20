@@ -38,29 +38,34 @@ class CourseRequestCard extends StatelessWidget {
                   : const [];
 
               final bool hasPrerequisites = prerequisites.isNotEmpty;
+
               final bool isLoading =
                   prereqState is PrerequisitesLoadingState ||
                   historyState is StudentHistoryLoading;
+
+              final Color cardColor = hasPrerequisites
+                  ? context.themeColors.infoContainer
+                  : context.themeColors.card;
+
+              final Color borderColor = hasPrerequisites
+                  ? context.colorScheme.primary.withValues(alpha: 0.25)
+                  : context.themeColors.mutedSurface;
 
               return Container(
                 margin: EdgeInsets.only(bottom: 12.w),
                 padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
-                  color: hasPrerequisites
-                      ? context.themeColors.warningContainer
-                      : context.themeColors.card,
+                  color: cardColor,
                   borderRadius: BorderRadius.circular(12.r),
-                  border: Border.all(
-                    color: hasPrerequisites
-                        ? context.themeColors.warning.withValues(alpha: 0.35)
-                        : context.themeColors.mutedSurface,
-                  ),
+                  border: Border.all(color: borderColor),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _CourseHeader(courseCode: enrollment.courseCode),
+
                     SizedBox(height: 10.w),
+
                     Text(
                       enrollment.displayCourseName(
                         Localizations.localeOf(context),
@@ -70,14 +75,17 @@ class CourseRequestCard extends StatelessWidget {
                         fontSize: 17.sp,
                       ),
                     ),
-                    const SizedBox(height: 12),
+
+                    SizedBox(height: 12.w),
+
                     _CreditHoursRow(
                       creditHours: enrollment.creditHours,
                       isLoading: isLoading,
                       hasPrerequisites: hasPrerequisites,
                     ),
                     if (hasPrerequisites) ...[
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.w),
+
                       PrerequisitesSection(
                         prerequisites: prerequisites,
                         bestGpaPerCourse: bestGpaPerCourse,
@@ -111,7 +119,7 @@ class _CourseHeader extends StatelessWidget {
               color: context.colorScheme.primary,
               size: 18.r,
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Text(
               courseCode,
               style: TextStyle(
@@ -124,7 +132,10 @@ class _CourseHeader extends StatelessWidget {
         ),
         Text(
           context.l10n.requested,
-          style: TextStyle(color: context.themeColors.textMuted, fontSize: 12),
+          style: TextStyle(
+            color: context.themeColors.textMuted,
+            fontSize: 12.sp,
+          ),
         ),
       ],
     );
@@ -151,14 +162,17 @@ class _CreditHoursRow extends StatelessWidget {
           size: 16,
           color: context.themeColors.textMuted,
         ),
-        const SizedBox(width: 4),
+
+        SizedBox(width: 4.w),
+
         Text(
           context.l10n.courseCredits(creditHours.toString()),
           style: TextStyle(
             color: context.themeColors.textSecondary,
-            fontSize: 13,
+            fontSize: 13.sp,
           ),
         ),
+
         if (isLoading) ...[
           SizedBox(width: 16.w),
           SizedBox(
@@ -168,16 +182,19 @@ class _CreditHoursRow extends StatelessWidget {
           ),
         ] else if (hasPrerequisites) ...[
           SizedBox(width: 16.w),
+
           Icon(
             Icons.info_outline_rounded,
-            color: context.themeColors.warning,
+            color: context.colorScheme.primary,
             size: 16,
           ),
+
           SizedBox(width: 4.w),
+
           Text(
             context.l10n.hasPrerequisites,
             style: TextStyle(
-              color: context.themeColors.warning,
+              color: context.colorScheme.primary,
               fontSize: 12,
               fontWeight: FontWeight.w600,
             ),

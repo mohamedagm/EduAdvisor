@@ -897,7 +897,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get availableCourses => 'Available Courses';
 
   @override
-  String get noAvailableCourses => 'No available courses.';
+  String get noAvailableCourses => 'No available courses for this student.';
 
   @override
   String get retake => 'Retake';
@@ -1138,4 +1138,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chooseFromGallery => 'Choose from Gallery';
+
+  @override
+  String get coursesLabel => 'Courses';
+
+  @override
+  String get availableCoursesTab => 'Available Courses';
+
+  @override
+  String get currentRequestsTab => 'Current Requests';
+
+  @override
+  String get academicHistoryTab => 'Academic History';
+
+  @override
+  String get requiredLabel => 'Required';
+
+  @override
+  String get departmentRequiredLabel => 'Dept. Required';
+
+  @override
+  String get departmentElectiveLabel => 'Dept. Elective';
+
+  @override
+  String attemptLabel(int count) {
+    return 'Attempt $count';
+  }
+
+  @override
+  String hoursExceedRange(int min, int max) {
+    return 'Requested hours are outside the allowed range ($min–$max)';
+  }
+
+  @override
+  String withinAllowedRange(int min, int max) {
+    return 'Within the allowed range ($min–$max hours)';
+  }
 }

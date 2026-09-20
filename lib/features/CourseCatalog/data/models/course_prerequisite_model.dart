@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class CoursePrerequisiteModel {
   const CoursePrerequisiteModel({
     required this.id,
@@ -28,4 +30,7 @@ class CoursePrerequisiteModel {
       isActive: json['isActive'] as bool? ?? false,
     );
   }
+
+  String displayCourseName(Locale locale) =>
+      locale.languageCode.toLowerCase() == 'ar' ? courseNameAR : courseNameEN;
 }

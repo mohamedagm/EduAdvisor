@@ -46,4 +46,6 @@ static const String   getRegistrations= '/api/Registrations';
       static const String changeProfilePhoto = '/api/Account/change-photo';
       static String getStudentHistory(String studentId) =>
     '/api/Registrations/history?studentId=$studentId';
+    static String getAvailableCourses(String studentId) =>'/api/Advisor/students/$studentId/available-courses';
+    static  String getStudentAcademicRecord(String studentId) => '/api/Advisor/students/$studentId/academic-record';
 }

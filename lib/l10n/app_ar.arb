@@ -554,5 +554,34 @@
       "count": {"type": "int"},
       "percentage": {"type": "String"}
     }
+  },
+  "takePhoto": "التقاط صورة",
+  "chooseFromGallery": "اختيار من المعرض",
+  "coursesLabel": "المقررات",
+  "availableCoursesTab": "المواد المتاحة",
+"currentRequestsTab": "الطلبات الحالية",
+"academicHistoryTab": "السجل الأكاديمي",
+"noAvailableCourses": "لا توجد مواد متاحة لهذا الطالب.",
+"requiredLabel": "إجباري",
+"departmentRequiredLabel": "إجباري قسم",
+"departmentElectiveLabel": "اختياري قسم",
+"attemptLabel": "المحاولة {count}",
+"@attemptLabel": {
+  "placeholders": {"count": {"type": "int"}}
+},
+"hoursExceedRange": "الساعات المطلوبة خارج النطاق المسموح ({min}–{max})",
+"@hoursExceedRange": {
+  "placeholders": {
+    "min": {"type": "int"},
+    "max": {"type": "int"}
   }
+},
+"withinAllowedRange": "ضمن النطاق المسموح ({min}–{max} ساعة)",
+"@withinAllowedRange": {
+  "placeholders": {
+    "min": {"type": "int"},
+    "max": {"type": "int"}
+  }
+}
+
 }

@@ -912,7 +912,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get availableCourses => 'المقررات المتاحة';
 
   @override
-  String get noAvailableCourses => 'لا توجد مقررات متاحة.';
+  String get noAvailableCourses => 'لا توجد مواد متاحة لهذا الطالب.';
 
   @override
   String get retake => 'إعادة دراسة';
@@ -1154,8 +1154,44 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get takePhoto => 'Take Photo';
+  String get takePhoto => 'التقاط صورة';
 
   @override
-  String get chooseFromGallery => 'Choose from Gallery';
+  String get chooseFromGallery => 'اختيار من المعرض';
+
+  @override
+  String get coursesLabel => 'المقررات';
+
+  @override
+  String get availableCoursesTab => 'المواد المتاحة';
+
+  @override
+  String get currentRequestsTab => 'الطلبات الحالية';
+
+  @override
+  String get academicHistoryTab => 'السجل الأكاديمي';
+
+  @override
+  String get requiredLabel => 'إجباري';
+
+  @override
+  String get departmentRequiredLabel => 'إجباري قسم';
+
+  @override
+  String get departmentElectiveLabel => 'اختياري قسم';
+
+  @override
+  String attemptLabel(int count) {
+    return 'المحاولة $count';
+  }
+
+  @override
+  String hoursExceedRange(int min, int max) {
+    return 'الساعات المطلوبة خارج النطاق المسموح ($min–$max)';
+  }
+
+  @override
+  String withinAllowedRange(int min, int max) {
+    return 'ضمن النطاق المسموح ($min–$max ساعة)';
+  }
 }
