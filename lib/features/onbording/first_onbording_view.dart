@@ -20,74 +20,87 @@ class FirstOnBordaingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+    final mediaQuery = MediaQuery.of(context);
+
+    return MediaQuery(
+      data: mediaQuery.copyWith(
+        textScaler: const TextScaler.linear(1.0),
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final circleSize = (constraints.maxWidth * 0.62).clamp(180.0, 260.0);
+
+          return Column(
             children: [
-              CustomTextButton(onTap: onSkip, text: context.l10n.skip),
-            ],
-          ),
-        ),
-        const Spacer(),
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              width: 240.w,
-              height: 240.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: AppGradients.primary,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CustomTextButton(onTap: onSkip, text: context.l10n.skip),
+                  ],
+                ),
               ),
-              child: Padding(
-                padding: EdgeInsets.all(8.w),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: AppColors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/images/Onboardin_one.png',
-                      fit: BoxFit.cover,
+              const Spacer(),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: circleSize,
+                    height: circleSize,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: AppGradients.primary,
                     ),
+                    child: Padding(
+                      padding: EdgeInsets.all((circleSize * 0.032).clamp(6.0, 10.0)),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: AppColors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipOval(
+                          child: Image.asset(
+                            'assets/images/Onboardin_one.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 40.h),
+              Text(
+                context.l10n.aiPoweredRecommendations,
+                style: AppTextStyles.heading1_20b.copyWith(
+                  color: context.themeColors.textPrimary,
+                ),
+              ),
+              SizedBox(height: 16.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 32.w),
+                child: Text(
+                  context.l10n.personalizedCourseSuggestions,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.bodyInterMedium18.copyWith(
+                    color: context.themeColors.textSecondary,
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 40.w),
-        Text(
-          context.l10n.aiPoweredRecommendations,
-          style: AppTextStyles.heading1_20b.copyWith(
-            color: context.themeColors.textPrimary,
-          ),
-        ),
-        SizedBox(height: 16.w),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 32.w),
-          child: Text(
-            context.l10n.personalizedCourseSuggestions,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.bodyInterMedium18.copyWith(
-              color: context.themeColors.textSecondary,
-            ),
-          ),
-        ),
-        const Spacer(flex: 2),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: GradientElevatedButton(
-            buttonText: context.l10n.next,
-            onPressed: onNext,
-          ),
-        ),
-        SizedBox(height: 20.w),
-      ],
+              const Spacer(flex: 2),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: GradientElevatedButton(
+                  buttonText: context.l10n.next,
+                  onPressed: onNext,
+                ),
+              ),
+              SizedBox(height: 20.h),
+            ],
+          );
+        },
+      ),
     );
   }
 }

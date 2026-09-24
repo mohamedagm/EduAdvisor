@@ -16,7 +16,7 @@ class RequestActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20.w),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: context.themeColors.card,
         border: Border(top: BorderSide(color: context.themeColors.border)),
@@ -31,9 +31,9 @@ class RequestActionButtons extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: context.themeColors.success,
                 foregroundColor: context.themeColors.onSuccess,
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: EdgeInsets.symmetric(vertical: 16.h),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
               ),
             ),
@@ -47,9 +47,9 @@ class RequestActionButtons extends StatelessWidget {
               style: OutlinedButton.styleFrom(
                 foregroundColor: context.colorScheme.error,
                 side: BorderSide(color: context.colorScheme.error),
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: EdgeInsets.symmetric(vertical: 16.h),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
               ),
             ),

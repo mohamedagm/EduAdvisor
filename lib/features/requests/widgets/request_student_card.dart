@@ -28,7 +28,7 @@ class RequestStudentCard extends StatelessWidget {
 
         if (academicState is AcademicRecordErrorState) {
           return Container(
-            margin: EdgeInsets.fromLTRB(16.w, 0, 16.w, 8.w),
+            margin: EdgeInsets.fromLTRB(16.w, 0, 16.w, 0.w),
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
               color: context.themeColors.card,
@@ -157,7 +157,7 @@ class RequestStudentCard extends StatelessWidget {
                           minHours: minHours,
                           maxHours: maxHours,
                         ),
-                      ],
+                    ],
                     );
                   },
                 ),

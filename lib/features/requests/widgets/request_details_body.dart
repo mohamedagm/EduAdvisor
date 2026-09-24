@@ -23,6 +23,7 @@ class RequestDetailsBody extends StatelessWidget {
       children: [
         Container(
           color: context.colorScheme.surface,
+          height: 40.h,
           child: TabBar(
             controller: tabController,
             indicatorColor: context.colorScheme.primary,
@@ -30,6 +31,9 @@ class RequestDetailsBody extends StatelessWidget {
             unselectedLabelColor: context.themeColors.textMuted,
             labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
             isScrollable: true,
+            tabAlignment: TabAlignment.start,
+             labelPadding: EdgeInsets.symmetric(horizontal: 12.w),
+                padding: EdgeInsets.zero, 
             tabs: [
               Tab(text: context.l10n.currentRequestsTab),
               Tab(text: context.l10n.availableCoursesTab),

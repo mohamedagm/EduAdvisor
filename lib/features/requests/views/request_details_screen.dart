@@ -150,6 +150,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
       ],
       child: Scaffold(
         backgroundColor: context.colorScheme.surface,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: context.colorScheme.surface,
           elevation: 0,
@@ -176,13 +177,16 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen>
           ),
         ),
         bottomNavigationBar: showActionButtons
-            ? RequestActionButtons(
-                onAccept: () {
-                  if (!_isProcessing) _approveRequest();
-                },
-                onReject: () {
-                  if (!_isProcessing) _showRejectionDialog();
-                },
+            ? SafeArea(
+                bottom: true,
+                child: RequestActionButtons(
+                  onAccept: () {
+                    if (!_isProcessing) _approveRequest();
+                  },
+                  onReject: () {
+                    if (!_isProcessing) _showRejectionDialog();
+                  },
+                ),
               )
             : null,
       ),
