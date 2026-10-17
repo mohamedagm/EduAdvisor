@@ -16,21 +16,25 @@ class AvailableCourseModel {
   final String courseCode;
   final String courseNameAr;
   final String courseNameEn;
-  final int courseType;
+  final String courseType;
   final int creditHours;
   final int attemptCount;
   final String departmentId;
 
   factory AvailableCourseModel.fromJson(Map<String, dynamic> json) {
     return AvailableCourseModel(
-      semesterCourseId: json['semesterCourseId'] as String? ?? '',
-      courseCode: json['courseCode'] as String? ?? '',
-      courseNameAr: json['courseNameAr'] as String? ?? '',
-      courseNameEn: json['courseNameEn'] as String? ?? '',
-      courseType: json['courseType'] as int? ?? 0,
-      creditHours: json['creditHours'] as int? ?? 0,
-      attemptCount: json['attemptCount'] as int? ?? 0,
-      departmentId: json['departmentId'] as String? ?? '',
+      semesterCourseId: json['semesterCourseId']?.toString() ?? '',
+      courseCode: json['courseCode']?.toString() ?? '',
+      courseNameAr: json['courseNameAr']?.toString() ?? '',
+      courseNameEn: json['courseNameEn']?.toString() ?? '',
+      courseType: json['courseType']?.toString() ?? '',
+      creditHours: json['creditHours'] is int
+          ? json['creditHours'] as int
+          : int.tryParse('${json['creditHours']}') ?? 0,
+      attemptCount: json['attemptCount'] is int
+          ? json['attemptCount'] as int
+          : int.tryParse('${json['attemptCount']}') ?? 0,
+      departmentId: json['departmentId']?.toString() ?? '',
     );
   }
 
@@ -39,24 +43,15 @@ class AvailableCourseModel {
           ? (courseNameAr.isNotEmpty ? courseNameAr : courseNameEn)
           : (courseNameEn.isNotEmpty ? courseNameEn : courseNameAr);
 
-  // Helper for Course Type
   String get typeLabel {
     return switch (courseType) {
-      1 => "University Req", // حسب الـ IDs اللي عندك
-      2 => "Faculty Req",
-      4 => "Department Req",
-      5 => "Elective",
-      _ => "Other",
+      'Required' => 'Required',
+      'DepartmentRequired' => 'Department Required',
+      'DepartmentElective' => 'Department Elective',
+      'Elective' => 'Elective',
+      _ => courseType.isEmpty ? 'Other' : courseType,
     };
   }
 
-  Color get typeColor {
-    return switch (courseType) {
-      1 => Colors.blue,
-      2 => Colors.green,
-      4 => Colors.purple,
-      5 => Colors.orange,
-      _ => Colors.grey,
-    };
-  }
+  Color get typeColor => Colors.grey;
 }

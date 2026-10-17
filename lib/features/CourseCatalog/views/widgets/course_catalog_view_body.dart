@@ -16,6 +16,7 @@ import 'package:edu_advisor/features/CourseCatalog/views/widgets/search_text_for
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edu_advisor/core/localization/localization_extensions.dart';
+import 'package:edu_advisor/features/widgets/course_tree_image_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -96,6 +97,30 @@ class _CourseCatalogViewBodyState extends State<CourseCatalogViewBody> {
                         alignment: Alignment.center,
                         child: Icon(
                           Icons.help_outline,
+                          color: AppColors.white,
+                          size: 20.r,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8.w),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const CourseTreeImageView(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 34.w,
+                        height: 34.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white24,
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Icons.account_tree_outlined,
                           color: AppColors.white,
                           size: 20.r,
                         ),

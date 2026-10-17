@@ -17,8 +17,12 @@ class AvailableCoursesResponseModel {
         .toList();
 
     return AvailableCoursesResponseModel(
-      minHours: json['minHours'] as int? ?? 0,
-      maxHours: json['maxHours'] as int? ?? 18,
+      minHours: json['minHours'] is int
+          ? json['minHours'] as int
+          : int.tryParse('${json['minHours']}') ?? 0,
+      maxHours: json['maxHours'] is int
+          ? json['maxHours'] as int
+          : int.tryParse('${json['maxHours']}') ?? 18,
       courses: coursesList,
     );
   }

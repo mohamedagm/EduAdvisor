@@ -10,6 +10,7 @@ import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_cubit.
 import 'package:edu_advisor/features/auth/presentation/Manager/cubit/auth_state.dart';
 import 'package:edu_advisor/features/auth/data/repo/auth_repo.dart';
 import 'package:edu_advisor/features/settings/views/settings_view.dart';
+import 'package:edu_advisor/features/widgets/course_tree_image_view.dart';
 import 'package:edu_advisor/features/user/data/models/current_user_model.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_cubit.dart';
 import 'package:edu_advisor/features/user/manager/current_user_cubit/current_user_state.dart';
@@ -189,13 +190,37 @@ class _AdvisorHeaderContentState extends State<_AdvisorHeaderContent> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => const SettingsView()),
-                      );
-                    },
+                   const SizedBox(width: 8),
+                   GestureDetector(
+                     onTap: () {
+                       Navigator.of(context).push(
+                         MaterialPageRoute(
+                           builder: (_) => const CourseTreeImageView(),
+                         ),
+                       );
+                     },
+                     child: Container(
+                       width: 34.w,
+                       height: 34.w,
+                       decoration: BoxDecoration(
+                         color: Colors.white24,
+                         borderRadius: BorderRadius.circular(10.r),
+                       ),
+                       alignment: Alignment.center,
+                       child: Icon(
+                         Icons.account_tree_outlined,
+                         color: Colors.white,
+                         size: 18.r,
+                       ),
+                     ),
+                   ),
+                   const SizedBox(width: 8),
+                   GestureDetector(
+                     onTap: () {
+                       Navigator.of(context).push(
+                         MaterialPageRoute(builder: (_) => const SettingsView()),
+                       );
+                     },
                     child: Container(
                       width: 34.w,
                       height: 34.w,

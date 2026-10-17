@@ -329,9 +329,7 @@ class _RecommendedCourseCard extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 8.w),
-              _AdvisorScoreBadge(score: course.advisorScore),
-            ],
+             ],
           ),
           SizedBox(height: 16.w),
           Divider(height: 1.w, color: context.themeColors.border),
@@ -351,55 +349,6 @@ class _RecommendedCourseCard extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _AdvisorScoreBadge extends StatelessWidget {
-  const _AdvisorScoreBadge({required this.score});
-
-  final num score;
-
-  int get _percent {
-    if (score <= 1) {
-      return (score * 100).round();
-    }
-    return score.round();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.w),
-      decoration: BoxDecoration(
-        color: context.themeColors.purpleContainer,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.star_rounded, color: AppColors.aiPurple, size: 16.r),
-              SizedBox(width: 2.w),
-              Text(
-                '$_percent%',
-                style: AppTextStyles.bodyInterMedium14.responsive.copyWith(
-                  color: AppColors.aiPurple,
-                ),
-              ),
-            ],
-          ),
-          Text(
-            context.l10n.advisorScore,
-            style: AppTextStyles.bodyInterRegular12.copyWith(
-              fontSize: 10.sp,
-              color: context.themeColors.textMuted,
-            ),
           ),
         ],
       ),

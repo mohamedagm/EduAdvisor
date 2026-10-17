@@ -128,11 +128,16 @@ class AvailableCoursesSheet extends StatelessWidget {
                   selected.fold(0, (sum, c) => sum + c.creditHours);
               final isValid = totalCredits >= min && totalCredits <= max;
 
-              return _SelectedHoursFooter(
-                totalCredits: totalCredits,
-                min: min,
-                max: max,
-                isValid: isValid,
+              return Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewPadding.bottom,
+                ),
+                child: _SelectedHoursFooter(
+                  totalCredits: totalCredits,
+                  min: min,
+                  max: max,
+                  isValid: isValid,
+                ),
               );
             },
           ),
@@ -255,6 +260,21 @@ class _AvailableCourseTile extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
+  String _courseTypeLabel(BuildContext context, String type) {
+    switch (type) {
+      case 'Required':
+      case 'UniversityRequired':
+        return context.l10n.requiredLabel;
+      case 'DepartmentRequired':
+        return context.l10n.departmentRequiredLabel;
+      case 'DepartmentElective':
+      case 'Elective':
+        return context.l10n.departmentElectiveLabel;
+      default:
+        return type.isEmpty ? 'Other' : type;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -303,9 +323,9 @@ class _AvailableCourseTile extends StatelessWidget {
                           color: context.themeColors.infoContainer,
                           borderRadius: BorderRadius.circular(4.r),
                         ),
-                        child: Text(
-                          course.typeLabel,
-                          style: TextStyle(
+                         child: Text(
+                           _courseTypeLabel(context, course.courseType),
+                           style: TextStyle(
                             color: context.themeColors.onInfoContainer,
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w600,

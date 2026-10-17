@@ -25,6 +25,8 @@ dependencies:
   shimmer: ^3.0.0
   get_it: ^9.2.1
   url_launcher: ^6.3.1
+  photo_view: ^0.15.0
+  path_provider: ^2.1.5
   
 
 dev_dependencies:
@@ -62,6 +64,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/tree.png
   fonts:
     - family: Inter
       fonts:
